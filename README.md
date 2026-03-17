@@ -2,8 +2,8 @@
 Wildfire Early Detection System (WEDS) - IoT Project
 
 ## Team Members
-- Ioan Leonard Grigoras - [LinkedIn](LINK)
-- Marco Cotogni - [LinkedIn](LINK)
+- Ioan Leonard Grigoras, 2047652 - [LinkedIn](LINK)
+- Marco Cotogni, 2046546 - [LinkedIn](https://www.linkedin.com/in/marco-cotogni-4737a1305)
 - Flavio Torresi, 2044116 - [LinkedIn](https://www.linkedin.com/in/flavio-torresi-221b721b5)
 
 # First delivery - Project Presentation
