@@ -1,5 +1,6 @@
 #include <Arduino.h>
 
+
 constexpr float PI_F = 3.14159265f;
 constexpr uint8_t ANOMALY_WARMUP_SAMPLES = 20;
 
@@ -7,21 +8,21 @@ typedef struct sensors_sample_t{
     float temp;
     float hum;
     float press;
-    float pm25;
+    float gas_r;
 } sensors_sample_t;
 
 typedef struct anomaly_result_t {
     float temp_baseline;
     float hum_baseline;
-    float smoke_baseline;
+    float gas_baseline;
 
     float temp_stddev;
     float hum_stddev;
-    float smoke_stddev;
+    float gas_stddev;
 
     float temp_score;
     float hum_score;
-    float smoke_score;
+    float gas_score;
 
     float global_score;
 } anomaly_result_t;
@@ -29,6 +30,27 @@ typedef struct anomaly_result_t {
 typedef struct risk_result_t {
     float global_score;
 } risk_result_t;
+
+
+enum anomaly_state {
+    ANOMALY_STARTUP,
+    ANOMALY_WARMUP,
+    NO_ANOMALY,
+    ANOMALY_WARNING,
+    ANOMALY_ALERT
+};
+typedef struct node_state_t
+{
+    float sample_freq; // Samples per minute
+    int samples_seen;
+    int anomaly_warning_streak;
+    anomaly_state an_state;
+    sensors_sample_t anomaly_last_proc_sample;
+    anomaly_result_t anomaly_last_result;
+
+    /* data */
+} node_state_t;
+
 
 // Define a bit to represent the sensor event (Bit 0)
 #define SENSOR_SAMPLED_BIT ( 1UL << 0 ) 
@@ -39,6 +61,16 @@ EventGroupHandle_t sensing_event = xEventGroupCreate(); // Event group to signal
 QueueHandle_t anomaly_queue = xQueueCreate(1, sizeof(anomaly_result_t)); // Queue to hold the latest anomaly score calculated
 QueueHandle_t risk_queue = xQueueCreate(1, sizeof(risk_result_t)); // Queue to hold the latest risk score calculated
 
+node_state_t state = {
+    10, // Sample freq (ideally 0.2 per minute but set to 10 for simulation purposes)
+    0,
+    0,
+    ANOMALY_STARTUP,
+    {0},
+    {0},
+
+
+    };
 // put function declarations here:
 
 
@@ -50,9 +82,9 @@ void printSample(sensors_sample_t sample){
   Serial.print(sample.hum);
   Serial.print(" %, Press: ");
   Serial.print(sample.press);
-  Serial.print(" kPa, PM2.5: ");
-  Serial.print(sample.pm25);
-  Serial.println(" ug/m3");
+  Serial.print(" kPa, Gas resistance: ");
+  Serial.print(sample.gas_r);
+  Serial.println(" ohm");
 }
 
 float sampleNormal(float mean, float stddev){
@@ -91,16 +123,17 @@ float directionalHumScore(float z){
   return positivePart(-z);
 }
 
-float directionalSmokeScore(float z){
-  // PM2.5 alta = rischio
-  return positivePart(z);
+float directionalGasScore(float z){
+  // resistenza ai gas bassa = rischio
+  return positivePart(-z);
 }
 
+// ================== SIMULATION CODE ==================
 
 enum sim_mode_t {
     SIM_MODE_NORMAL,
     SIM_MODE_DRY_PERIOD,
-    SIM_MODE_SMOKE_SPIKE,
+    SIM_MODE_GAS_DROP,
     SIM_MODE_FIRE_EVENT,
     SIM_MODE_SENSOR_FAULT
 };
@@ -117,7 +150,7 @@ typedef struct sim_state_t {
     float fault_temp_value;
     float fault_hum_value;
     float fault_press_value;
-    float fault_pm25_value;
+    float fault_gas_r_value;
 } sim_state_t;
 
 void updateSimulationState(sim_state_t* s){
@@ -143,24 +176,24 @@ sensors_sample_t generateSimulatedSample(sim_state_t* s){
     // -----------------------------
     float temp_base_cycle = 1.0f * sinf(0.10f * t);
     float hum_base_cycle  = -3.0f * sinf(0.10f * t);
-    float pm_base_cycle   = 0.4f * sinf(0.06f * t);
+    float gas_base_cycle  = -80.0f * sinf(0.06f * t);
 
     float temp_noise  = sampleNormal(0.0f, 0.35f);
     float hum_noise   = sampleNormal(0.0f, 1.0f);
     float press_noise = sampleNormal(0.0f, 0.02f);
-    float pm_noise    = sampleNormal(0.0f, 0.8f);
+    float gas_noise   = sampleNormal(0.0f, 120.0f);
 
     float temp = 30.0f + temp_base_cycle + temp_noise;
     float hum  = 76.0f + hum_base_cycle + hum_noise;
     float press = 0.60f + press_noise;
-    float pm25 = 16.0f + pm_base_cycle + pm_noise;
+    float gas_r = 18000.0f + gas_base_cycle + gas_noise;
 
     // During warmup always stay in normal mode
     if (s->in_warmup) {
         sample.temp = temp;
         sample.hum = hum;
         sample.press = press;
-        sample.pm25 = pm25;
+        sample.gas_r = gas_r;
         return sample;
     }
 
@@ -187,10 +220,10 @@ sensors_sample_t generateSimulatedSample(sim_state_t* s){
             break;
         }
 
-        case SIM_MODE_SMOKE_SPIKE: {
-            // one short particulate spike after a few post-warmup samples
+        case SIM_MODE_GAS_DROP: {
+            // short gas resistance drop after a few post-warmup samples
             if (s->mode_tick >= 5 && s->mode_tick <= 8) {
-                pm25 += 12.0f;
+                gas_r -= 2500.0f;
             }
             break;
         }
@@ -205,23 +238,23 @@ sensors_sample_t generateSimulatedSample(sim_state_t* s){
 
                 temp += 2.0f + 4.0f * phase;
                 hum  -= 4.0f + 8.0f * phase;
-                pm25 += 4.0f + 10.0f * phase;
+                gas_r -= 1500.0f + 3500.0f * phase;
             }
             break;
         }
 
         case SIM_MODE_SENSOR_FAULT: {
-            // Example: PM2.5 sensor gets stuck after warmup
+            // Example: gas resistance sensor gets stuck after warmup
             if (!s->fault_initialized) {
                 s->fault_temp_value = temp;
                 s->fault_hum_value = hum;
                 s->fault_press_value = press;
-                s->fault_pm25_value = pm25;
+                s->fault_gas_r_value = gas_r;
                 s->fault_initialized = true;
             }
 
-            // freeze PM2.5 only; others continue normally
-            pm25 = s->fault_pm25_value;
+            // freeze gas resistance only; others continue normally
+            gas_r = s->fault_gas_r_value;
 
             // You can alternatively freeze temp/hum instead if you want:
             // temp = s->fault_temp_value;
@@ -236,7 +269,7 @@ sensors_sample_t generateSimulatedSample(sim_state_t* s){
     sample.temp = temp;
     sample.hum = hum;
     sample.press = press;
-    sample.pm25 = pm25;
+    sample.gas_r = gas_r;
 
     return sample;
 }
@@ -250,8 +283,10 @@ sim_state_t sim_state = {
     0.0f,   // fault_temp_value
     0.0f,   // fault_hum_value
     0.0f,   // fault_press_value
-    0.0f    // fault_pm25_value
+    0.0f    // fault_gas_r_value
 };
+
+// =====================================================
 
 void TaskSampleSensors(void* pvParameters){
     sensors_sample_t results;
@@ -273,8 +308,8 @@ void TaskSampleSensors(void* pvParameters){
                 case SIM_MODE_DRY_PERIOD:
                     Serial.println("DRY_PERIOD");
                     break;
-                case SIM_MODE_SMOKE_SPIKE:
-                    Serial.println("SMOKE_SPIKE");
+                case SIM_MODE_GAS_DROP:
+                    Serial.println("GAS_DROP");
                     break;
                 case SIM_MODE_FIRE_EVENT:
                     Serial.println("FIRE_EVENT");
@@ -321,33 +356,46 @@ void printAnomalyResults(anomaly_result_t result){
     Serial.println("\tBaselines:");
     Serial.println("\t\tTemp_baseline: " + String(result.temp_baseline));
     Serial.println("\t\tHum_baseline: " + String(result.hum_baseline));
-    Serial.println("\t\tSmoke_baseline: " + String(result.smoke_baseline));
+    Serial.println("\t\tGas_baseline: " + String(result.gas_baseline));
     Serial.println("\tStandard deviations:");
     Serial.println("\t\tTemp_stddev: " + String(result.temp_stddev));
     Serial.println("\t\tHum_stddev: " + String(result.hum_stddev));
-    Serial.println("\t\tSmoke_stddev: " + String(result.smoke_stddev));
+    Serial.println("\t\tGas_stddev: " + String(result.gas_stddev));
     Serial.println("\tScores:");
     Serial.println("\t\tTemp_score: " + String(result.temp_score));
     Serial.println("\t\tHum_score: " + String(result.hum_score));
-    Serial.println("\t\tSmoke_score: " + String(result.smoke_score));
+    Serial.println("\t\tGas_score: " + String(result.gas_score));
     Serial.println("\t\tGlobal_score: " + String(result.global_score));
 
     
 }
 
 // TO DO: Fix number of samples for initial baseline, fix weights for global score, adaptive aplha (state based + isteresi) bisogna evitare che l'evento venga assorbito troppo velocemente
-
 void TaskAnomalyDetection(void* pvParameters){
     sensors_sample_t sample = {0};
     anomaly_result_t result = {0};
     EMA<4> temp_filter;
     EMA<4> hum_filter;
-    EMA<4> smoke_filter;
+    EMA<4> gas_filter;
+
     EMA<4> temp_variance_filter;
     EMA<4> hum_variance_filter;
-    EMA<4> smoke_variance_filter;
-    uint8_t samples_seen = 0;
-    
+    EMA<4> gas_variance_filter;
+
+
+    // Persistence counters
+    uint8_t warning_counter = 0;
+    uint8_t alert_counter = 0;
+
+    // Thresholds
+    constexpr float WARNING_THRESHOLD = 1.5f;
+    constexpr float ALERT_THRESHOLD   = 2.5f;
+
+    // Minimum stddev per feature
+    constexpr float MIN_TEMP_STDDEV = 0.2f;
+    constexpr float MIN_HUM_STDDEV  = 1.0f;
+    constexpr float MIN_GAS_STDDEV  = 300.0f;
+
     for(;;){
       EventBits_t uxBits = xEventGroupWaitBits(
         sensing_event,
@@ -356,160 +404,123 @@ void TaskAnomalyDetection(void* pvParameters){
         pdFALSE,
         portMAX_DELAY
       );
-      
+
       if( (uxBits & SENSOR_SAMPLED_BIT) != 0 ) {
         xQueuePeek(sens_result, &sample, 0);
 
-        samples_seen++;
+        state.samples_seen++;
 
         // First sample: initialize filters, no anomaly score yet
-        if (samples_seen == 1) {
+        if (state.an_state == ANOMALY_STARTUP) {
           result.temp_baseline = temp_filter(sample.temp);
-          result.hum_baseline = hum_filter(sample.hum);
-          result.smoke_baseline = smoke_filter(sample.pm25);
+          result.hum_baseline  = hum_filter(sample.hum);
+          result.gas_baseline  = gas_filter(sample.gas_r);
 
           result.temp_stddev = 0.0f;
-          result.hum_stddev = 0.0f;
-          result.smoke_stddev = 0.0f;
+          result.hum_stddev  = 0.0f;
+          result.gas_stddev  = 0.0f;
 
           result.temp_score = 0.0f;
-          result.hum_score = 0.0f;
-          result.smoke_score = 0.0f;
+          result.hum_score  = 0.0f;
+          result.gas_score  = 0.0f;
           result.global_score = 0.0f;
 
-          Serial.println("Warming up anomaly detection... ");
+          state.anomaly_last_proc_sample = sample;
+          state.anomaly_last_result = result;
+          state.an_state = ANOMALY_WARMUP;
+
+          Serial.println("Warming up anomaly detection...");
           printAnomalyResults(result);
           xQueueOverwrite(anomaly_queue, &result);
           continue;
         }
 
+        result = state.anomaly_last_result;
+
         // Use PREVIOUS baseline/stddev for scoring
         float prev_temp_baseline = result.temp_baseline;
-        float prev_hum_baseline = result.hum_baseline;
-        float prev_smoke_baseline = result.smoke_baseline;
+        float prev_hum_baseline  = result.hum_baseline;
+        float prev_gas_baseline  = result.gas_baseline;
 
         float prev_temp_stddev = result.temp_stddev;
-        float prev_hum_stddev = result.hum_stddev;
-        float prev_smoke_stddev = result.smoke_stddev;
+        float prev_hum_stddev  = result.hum_stddev;
+        float prev_gas_stddev  = result.gas_stddev;
 
         // Residuals against PREVIOUS baseline
         float temp_residual = sample.temp - prev_temp_baseline;
-        float hum_residual = sample.hum - prev_hum_baseline;
-        float smoke_residual = sample.pm25 - prev_smoke_baseline;
+        float hum_residual  = sample.hum  - prev_hum_baseline;
+        float gas_residual  = sample.gas_r - prev_gas_baseline;
 
-        if (samples_seen <= ANOMALY_WARMUP_SAMPLES) {
-          result.temp_score = 0.0f;
-          result.hum_score = 0.0f;
-          result.smoke_score = 0.0f;
-          result.global_score = 0.0f;
-          Serial.println("Warming up anomaly detection... ");
-        } else {
-          // Raw z-scores computed with PREVIOUS baseline/stddev
-          float temp_z = computeZScore(sample.temp, prev_temp_baseline, prev_temp_stddev);
-          float hum_z = computeZScore(sample.hum, prev_hum_baseline, prev_hum_stddev);
-          float smoke_z = computeZScore(sample.pm25, prev_smoke_baseline, prev_smoke_stddev);
+        // Delta features
+        float temp_delta = 0.0f;
+        float hum_delta  = 0.0f;
+        float gas_delta  = 0.0f;
+        float delta_time = 1/state.sample_freq; // in minutes
 
-          // Directional scores for wildfire detection:
-          // temp high -> risk
-          // hum low -> risk
-          // pm25 high -> risk
-          result.temp_score = directionalTempScore(temp_z);
-          result.hum_score = directionalHumScore(hum_z);
-          result.smoke_score = directionalSmokeScore(smoke_z);
+        temp_delta = (sample.temp - state.anomaly_last_proc_sample.temp) / delta_time;
+        hum_delta  = (sample.hum  - state.anomaly_last_proc_sample.hum) / delta_time;
+        gas_delta  = (sample.gas_r - state.anomaly_last_proc_sample.gas_r) / delta_time;
+        
+        
+        // Use feature-specific minimum stddev
+        float safe_temp_stddev = fmaxf(prev_temp_stddev, MIN_TEMP_STDDEV);
+        float safe_hum_stddev  = fmaxf(prev_hum_stddev,  MIN_HUM_STDDEV);
+        float safe_gas_stddev  = fmaxf(prev_gas_stddev,  MIN_GAS_STDDEV);
 
-          // Weighted global score
-          constexpr float TEMP_WEIGHT = 0.35f;
-          constexpr float HUM_WEIGHT = 0.25f;
-          constexpr float SMOKE_WEIGHT = 0.40f;
+        // Raw z-scores computed with PREVIOUS baseline/stddev
+        float temp_z = (sample.temp - prev_temp_baseline) / safe_temp_stddev;
+        float hum_z  = (sample.hum  - prev_hum_baseline)  / safe_hum_stddev;
+        float gas_z  = (sample.gas_r - prev_gas_baseline) / safe_gas_stddev;
 
-          result.global_score =
-              TEMP_WEIGHT * result.temp_score +
-              HUM_WEIGHT * result.hum_score +
-              SMOKE_WEIGHT * result.smoke_score;
-        }
+        // Directional scores for wildfire detection
+        result.temp_score = directionalTempScore(temp_z);
+        result.hum_score  = directionalHumScore(hum_z);
+        result.gas_score  = directionalGasScore(gas_z);
+
+        // Weighted global score
+        constexpr float TEMP_WEIGHT = 0.35f;
+        constexpr float HUM_WEIGHT  = 0.25f;
+        constexpr float GAS_WEIGHT  = 0.40f;
+
+        result.global_score =
+            TEMP_WEIGHT * result.temp_score +
+            HUM_WEIGHT  * result.hum_score +
+            GAS_WEIGHT  * result.gas_score;
+
+        // Delta bonus: reward coherent fast changes
+        float delta_bonus = 0.0f;
+
+        if (temp_delta > 0.3f)   delta_bonus += 0.3f;   // temp rising
+        if (hum_delta < -1.0f)   delta_bonus += 0.3f;   // hum falling
+        if (gas_delta < -500.0f) delta_bonus += 0.4f;   // gas resistance falling
+
+        result.global_score += delta_bonus;
+
 
         // Update stddev using residuals against PREVIOUS baseline
         result.temp_stddev = sqrtf(temp_variance_filter(temp_residual * temp_residual));
-        result.hum_stddev = sqrtf(hum_variance_filter(hum_residual * hum_residual));
-        result.smoke_stddev = sqrtf(smoke_variance_filter(smoke_residual * smoke_residual));
+        result.hum_stddev  = sqrtf(hum_variance_filter(hum_residual * hum_residual));
+        result.gas_stddev  = sqrtf(gas_variance_filter(gas_residual * gas_residual));
 
-        // Update baseline AFTER scoring
-        result.temp_baseline = temp_filter(sample.temp);
-        result.hum_baseline = hum_filter(sample.hum);
-        result.smoke_baseline = smoke_filter(sample.pm25);
-        
+        // Update baseline: freeze baseline if anomaly is detected;
+        if (state.an_state < ANOMALY_WARNING) {
+                result.temp_baseline = temp_filter(sample.temp);
+                result.hum_baseline  = hum_filter(sample.hum);
+                result.gas_baseline  = gas_filter(sample.gas_r);
+        } else {
+                Serial.println("Baseline frozen due to anomaly suspicioun.");
+        }
+
+        state.anomaly_last_proc_sample = sample;
+        state.anomaly_last_result = result;
+
+        xQueueOverwrite(anomaly_queue, &result);
         printAnomalyResults(result);
-        xQueueOverwrite(anomaly_queue, &result);            
       }
     }
 }
 
 
-
-// void TaskAnomalyDetection(void* pvParameters){
-//     sensors_sample_t sample = {0};
-//     anomaly_result_t result = {0};
-//     EMA<4> temp_filter; // Example: K=4 for a smoother response
-//     EMA<4> hum_filter;
-//     EMA<4> smoke_filter;
-//     EMA<4> temp_variance_filter;
-//     EMA<4> hum_variance_filter;
-//     EMA<4> smoke_variance_filter;
-//     uint8_t samples_seen = 0;
-    
-//     for(;;){
-//       // Wait for the sensor bit to be set
-//       EventBits_t uxBits = xEventGroupWaitBits(
-//         sensing_event,   // The event group handle
-//         SENSOR_SAMPLED_BIT,  // The bit(s) to wait for
-//         pdTRUE,              // xClearOnExit: Clear the bit when returning
-//         pdFALSE,             // xWaitForAllBits: Doesn't matter for a single bit
-//         portMAX_DELAY        // Wait indefinitely
-//       );
-      
-//       // Check if our specific bit was set (useful if waiting on multiple bits)
-//       if( (uxBits & SENSOR_SAMPLED_BIT) != 0 ) {
-//         // The sensor was sampled! React to the event here
-//         // Read the latest sensor data from the queue
-//         xQueuePeek(sens_result, &sample, 0); // Peek to get the latest sample without removing it from the queue
-//         // Update baselines using the EMA filters
-//         result.temp_baseline = temp_filter(sample.temp);
-//         result.hum_baseline = hum_filter(sample.hum);
-//         result.smoke_baseline = smoke_filter(sample.pm25);
-//         // TO DO: Save baseline also in a part of memory that resists deep sleep
-        
-//         float temp_residual = sample.temp - result.temp_baseline;
-//         float hum_residual = sample.hum - result.hum_baseline;
-//         float smoke_residual = sample.pm25 - result.smoke_baseline;
-
-//         result.temp_stddev = sqrtf(temp_variance_filter(temp_residual * temp_residual));
-//         result.hum_stddev = sqrtf(hum_variance_filter(hum_residual * hum_residual));
-//         result.smoke_stddev = sqrtf(smoke_variance_filter(smoke_residual * smoke_residual));
-
-//         samples_seen++;
-//         if (samples_seen <= ANOMALY_WARMUP_SAMPLES) {
-//           result.temp_score = 0.0f;
-//           result.hum_score = 0.0f;
-//           result.smoke_score = 0.0f;
-//           result.global_score = 0.0f;
-//           Serial.println("Warming up anomaly detection... ");
-//         } else {
-//           // Calculate anomaly scores as directional z-scores.
-//           result.temp_score = computeZScore(sample.temp, result.temp_baseline, result.temp_stddev);
-//           result.hum_score = computeZScore(sample.hum, result.hum_baseline, result.hum_stddev);
-//           result.smoke_score = computeZScore(sample.pm25, result.smoke_baseline, result.smoke_stddev);
-        
-//           // Combine scores into a global score (weighted average)
-//           result.global_score = (fabsf(result.temp_score) + fabsf(result.hum_score) + fabsf(result.smoke_score)) / 3.0f;
-//         }
-        
-//         printAnomalyResults(result);
-//         // Here you can add code to handle the anomaly results, e.g., log them or trigger alerts
-//         xQueueOverwrite(anomaly_queue, &result);            
-//       }
-//     }
-// }
-  
   
 void TaskRiskDetection(void* pvParameters){
     risk_result_t risk_result;
@@ -529,7 +540,9 @@ void TaskRiskDetection(void* pvParameters){
             xQueuePeek(sens_result, &sample, 0); // Peek to get the latest sample without removing it from the queue
             
             // Simple risk calculation based on sensor data (example logic)
-            risk_result.global_score = (sample.temp / 50.0f) + (sample.hum / 100.0f) + (sample.pm25 / 500.0f);
+            constexpr float GAS_REFERENCE = 20000.0f;
+            float gas_risk = positivePart((GAS_REFERENCE - sample.gas_r) / GAS_REFERENCE);
+            risk_result.global_score = (sample.temp / 50.0f) + (sample.hum / 100.0f) + gas_risk;
             
             // Here you can add code to handle the risk results, e.g., log them or trigger alerts
             xQueueOverwrite(risk_queue, &risk_result);
@@ -537,35 +550,67 @@ void TaskRiskDetection(void* pvParameters){
         }
 }
       
-// void TaskMonitoring(void* pvParameters){
-//     anomaly_result_t anomaly_result;
-//     risk_result_t risk_result;
 
-//     for(;;){
-//         // Wait for new anomaly results
-//         if(xQueueReceive(anomaly_queue, &anomaly_result, 5000) == pdPASS) {
-//         // Process the anomaly result (e.g., log it or trigger alerts)
-//         // Serial.print("Anomaly Global Score: ");
-//         // Serial.println(anomaly_result.global_score);
-//         // // Print individual scores for debugging
-//         // Serial.print("Temp Score: ");
-//         // Serial.print(anomaly_result.temp_score);
-//         // Serial.print(" Hum Score: ");
-//         // Serial.print(anomaly_result.hum_score);
-//         // Serial.print(" Smoke Score: ");
-//         // Serial.println(anomaly_result.smoke_score);
-        
-        
-//         }
-        
-//         // Wait for new risk results
-//         if(xQueueReceive(risk_queue, &risk_result, 5000) == pdPASS) {
-//         // Process the risk result (e.g., log it or trigger alerts)
-//         Serial.print("Risk Global Score: ");
-//         Serial.println(risk_result.global_score);
-//         }
-//     }
-// }
+float GAS_WARNING_THRESHOLD = 1.5f;
+float GLOBAL_WARNING_THRESHOLD = 1.5f;
+// Logic of the anomaly state machine
+void ProcessAnomalyResult(anomaly_result_t result){
+    if (state.an_state = NO_ANOMALY){
+        if (result.gas_score > GAS_WARNING_THRESHOLD || result.global_score > GLOBAL_WARNING_THRESHOLD){
+            state.an_state = ANOMALY_WARNING;
+            state.anomaly_warning_streak++;
+        }
+    }
+    else if (state.an_state = ANOMALY_WARNING){
+        if (result.gas_score < GAS_WARNING_THRESHOLD){
+            state.anomaly_warning_streak -= 2;
+        }
+        else {
+            state.anomaly_warning_streak++;
+        }
+    }
+
+}
+
+void TaskStateMachine(void* pvParameters){
+    anomaly_result_t anomaly_result;
+    risk_result_t risk_result;
+
+    for(;;){
+        // Wait for new anomaly results
+        if(xQueueReceive(anomaly_queue, &anomaly_result, 5000) == pdPASS) {
+            if (state.an_state == ANOMALY_WARMUP){
+                if (state.samples_seen > ANOMALY_WARMUP_SAMPLES) {
+                    state.an_state = NO_ANOMALY;
+                    ProcessAnomalyResult(anomaly_result);
+                }
+                else{
+                    Serial.println("Warming up anomaly detection...");
+                }
+                continue;
+            }
+
+            //     // You can print persistence state for debugging
+            // Serial.print("Warning counter: ");
+            // Serial.println(warning_counter);
+            // Serial.print("Alert counter: ");
+            // Serial.println(alert_counter);
+            
+
+            // Decide if current situation is suspicious
+            bool suspicious_event =
+                (warning_counter >= 2) ||
+                (alert_counter >= 3);
+
+            
+        }
+            
+            // Wait for new risk results
+        if(xQueueReceive(risk_queue, &risk_result, 5000) == pdPASS) {
+            // TODO: Risk Processing
+        }
+    }
+}
       
 void setup() {
 // put your setup code here, to run once:
@@ -575,7 +620,6 @@ void setup() {
     xTaskCreate(TaskSampleSensors, "Sample Sensors Task", 2048, NULL, 1, NULL);
     xTaskCreate(TaskAnomalyDetection, "Anomaly Detection Task", 2048, NULL, 1, NULL);
     xTaskCreate(TaskRiskDetection, "Risk Detection Task", 2048, NULL, 1, NULL);
-    // xTaskCreate(TaskMonitoring, "Monitoring Task", 2048, NULL, 1, NULL);
 
 
 }
