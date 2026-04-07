@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "lora_node.h"
 
 
 constexpr float PI_F = 3.14159265f;
@@ -553,20 +554,46 @@ void TaskRiskDetection(void* pvParameters){
 
 float GAS_WARNING_THRESHOLD = 1.5f;
 float GLOBAL_WARNING_THRESHOLD = 1.5f;
+
+void SendNodeStateToGateway(){
+    LoraComm::NodeStatus lora_status = {
+        1,
+        static_cast<uint32_t>(state.samples_seen),
+        static_cast<uint8_t>(state.an_state),
+        state.anomaly_last_proc_sample.temp,
+        state.anomaly_last_proc_sample.hum,
+        state.anomaly_last_proc_sample.press,
+        state.anomaly_last_proc_sample.gas_r,
+        state.anomaly_last_result.global_score,
+        0.0f
+    };
+
+    if (!LoraComm::sendNodeStatus(lora_status)) {
+        Serial.println("Gateway update not sent.");
+    }
+}
+
 // Logic of the anomaly state machine
 void ProcessAnomalyResult(anomaly_result_t result){
-    if (state.an_state = NO_ANOMALY){
+    if (state.an_state == NO_ANOMALY){
         if (result.gas_score > GAS_WARNING_THRESHOLD || result.global_score > GLOBAL_WARNING_THRESHOLD){
             state.an_state = ANOMALY_WARNING;
             state.anomaly_warning_streak++;
         }
     }
-    else if (state.an_state = ANOMALY_WARNING){
+    else if (state.an_state == ANOMALY_WARNING){
         if (result.gas_score < GAS_WARNING_THRESHOLD){
-            state.anomaly_warning_streak -= 2;
+            state.anomaly_warning_streak = max(0, state.anomaly_warning_streak - 2);
         }
         else {
             state.anomaly_warning_streak++;
+        }
+
+        if (state.anomaly_warning_streak <= 0) {
+            state.an_state = NO_ANOMALY;
+            state.anomaly_warning_streak = 0;
+        } else if (state.anomaly_warning_streak >= 3) {
+            state.an_state = ANOMALY_ALERT;
         }
     }
 
@@ -598,9 +625,12 @@ void TaskStateMachine(void* pvParameters){
             
 
             // Decide if current situation is suspicious
-            bool suspicious_event =
-                (warning_counter >= 2) ||
-                (alert_counter >= 3);
+            ProcessAnomalyResult(anomaly_result);
+            bool suspicious_event = (state.an_state >= ANOMALY_WARNING);
+
+            if (suspicious_event) {
+                SendNodeStateToGateway();
+            }
 
             
         }
@@ -617,9 +647,11 @@ void setup() {
     Serial.begin(115200);
     delay(500);
     randomSeed(micros());
-    xTaskCreate(TaskSampleSensors, "Sample Sensors Task", 2048, NULL, 1, NULL);
-    xTaskCreate(TaskAnomalyDetection, "Anomaly Detection Task", 2048, NULL, 1, NULL);
-    xTaskCreate(TaskRiskDetection, "Risk Detection Task", 2048, NULL, 1, NULL);
+    LoraComm::begin();
+    xTaskCreate(TaskSampleSensors, "Sample Sensors Task", 3072, NULL, 1, NULL);
+    xTaskCreate(TaskAnomalyDetection, "Anomaly Detection Task", 4096, NULL, 1, NULL);
+    xTaskCreate(TaskRiskDetection, "Risk Detection Task", 3072, NULL, 1, NULL);
+    xTaskCreate(TaskStateMachine, "State Machine Task", 6144, NULL, 1, NULL);
 
 
 }
