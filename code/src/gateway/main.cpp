@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-#include "lora_gateway.h"
+#include "lora_gateway.hpp"
 #include "secrets.h"
 
 namespace {

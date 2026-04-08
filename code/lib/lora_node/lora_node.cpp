@@ -1,4 +1,4 @@
-#include "lora_node.h"
+#include "lora_node.hpp"
 
 #include <SPI.h>
 #include <RadioLib.h>

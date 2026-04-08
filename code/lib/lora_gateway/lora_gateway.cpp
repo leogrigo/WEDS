@@ -1,4 +1,4 @@
-#include "lora_gateway.h"
+#include "lora_gateway.hpp"
 
 #include <SPI.h>
 #include <RadioLib.h>
