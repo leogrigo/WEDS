@@ -1,0 +1,142 @@
+#include <Arduino.h>
+#include <Wire.h>
+#include <LittleFS.h>
+#include <bsec.h>
+
+// --- PINOUT E CONFIGURAZIONE ---
+#define I2C_SDA 41
+#define I2C_SCL 42
+#define SLEEP_TIME_MIN 5  // BSEC ULP richiede 5 minuti esatti di intervallo
+
+// --- MEMORIA RTC (Sopravvive al Deep Sleep) ---
+RTC_DATA_ATTR uint8_t bsecState[BSEC_MAX_STATE_BLOB_SIZE] = {0};
+RTC_DATA_ATTR bool stateSaved = false;
+RTC_DATA_ATTR int64_t nextSequenceTimeMs = 0; // Tempo virtuale cumulativo in millisecondi
+
+// --- ISTANZA SENSORE ---
+Bsec iaqSensor;
+
+// --- PROTOTIPI ---
+void checkIaqSensorStatus();
+void saveState();
+void loadState();
+
+void setup() {
+  Serial.begin(115200);
+  delay(500); // Breve pausa per stabilizzare seriale e power
+
+  // Inizializza I2C e FileSystem
+  Wire.begin(I2C_SDA, I2C_SCL);
+  if (!LittleFS.begin(true)) {
+    Serial.println("Errore LittleFS!");
+    return;
+  }
+
+  // Crea intestazione CSV se il file non esiste
+  if (!LittleFS.exists("/dati_bme680.csv")) {
+    File file = LittleFS.open("/dati_bme680.csv", FILE_WRITE);
+    if (file) {
+      file.println("Uptime(s),IAQ,Accuracy,Temp(C),Humidity(%),Pressure(hPa),CO2_eq(ppm),bVOC_eq(ppm)");
+      file.close();
+    }
+  }
+  
+  // 1. Inizializzazione BSEC (Indirizzo 0x77, pin SDO su 3.3V)
+  iaqSensor.begin(BME68X_I2C_ADDR_HIGH, Wire);
+  checkIaqSensorStatus();
+
+  // 2. Carica la calibrazione salvata (se presente)
+  loadState();
+
+  // 3. Iscrizione ai canali BSEC in modalità ULP (Ultra Low Power - 1 sample ogni 300s)
+  bsec_virtual_sensor_t sensorList[] = {
+    BSEC_OUTPUT_IAQ,
+    BSEC_OUTPUT_CO2_EQUIVALENT,
+    BSEC_OUTPUT_BREATH_VOC_EQUIVALENT,
+    BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_TEMPERATURE,
+    BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY,
+    BSEC_OUTPUT_RAW_PRESSURE
+  };
+  iaqSensor.updateSubscription(sensorList, 6, BSEC_SAMPLE_RATE_ULP_MEASUREMENT_ON_DEMAND);
+
+  // 4. Calcola il timestamp virtuale in nanosecondi per l'algoritmo
+//   int64_t timeToPassNs = ((int64_t)millis() + nextSequenceTimeMs) * 1000000; NON SERVE, GIà TUTTO GESTITO DENTRO .run()
+  
+  bool newData = false;
+  unsigned long startWait = millis();
+  
+  // Attendiamo che BSEC completi il ciclo di lettura e calcolo (timeout di sicurezza a 2.5s)
+  while(!newData && (millis() - startWait < 2500)) {
+    if (iaqSensor.run()) {
+      newData = true;
+    }
+  }
+
+  // 5. Se abbiamo letto i dati, li salviamo
+  if (newData) {
+    File file = LittleFS.open("/dati_bme680.csv", FILE_APPEND);
+    if (file) {
+      // Scrive nel CSV formattando i valori
+      file.printf("%lld,%.2f,%d,%.2f,%.2f,%.2f,%.2f,%.2f\n", 
+                  nextSequenceTimeMs / 1000,         // Secondi totali di attività
+                  iaqSensor.iaq,                     // Indice qualità dell'aria (0-500)
+                  iaqSensor.iaqAccuracy,             // Accuratezza (0=Inizializzazione, 3=Massima)
+                  iaqSensor.temperature,             // Temp compensata
+                  iaqSensor.humidity,                // Umidità compensata
+                  iaqSensor.pressure / 100.0,        // Pressione in hPa
+                  iaqSensor.co2Equivalent,           // CO2 equivalente
+                  iaqSensor.breathVocEquivalent);    // VOC equivalente
+      file.close();
+      
+      Serial.printf("Dati scritti: IAQ=%.1f (Acc:%d), T=%.1fC, H=%.1f%%, Pressure=%.1f, bVoc=%.1f (Acc=%d), CO2=%.1f (Acc=%d), CompGas=%.1f (Acc=%d), GasPerc=%.1f (Acc=%d)\n", 
+                    iaqSensor.iaq, iaqSensor.iaqAccuracy, iaqSensor.temperature, iaqSensor.humidity, iaqSensor.pressure, iaqSensor.breathVocEquivalent, iaqSensor.breathVocAccuracy, iaqSensor.co2Equivalent, iaqSensor.co2Accuracy, iaqSensor.compGasValue, iaqSensor.compGasAccuracy, iaqSensor.gasPercentage, iaqSensor.gasPercentageAccuracy);
+    } else {
+      Serial.println("Errore nell'apertura del file CSV!");
+    }
+  } else {
+    Serial.println("BSEC non ha restituito dati in tempo.");
+  }
+
+  // 6. Prepara il prossimo ciclo
+  saveState(); 
+  nextSequenceTimeMs += (SLEEP_TIME_MIN * 60 * 1000); // Aggiorna il tempo virtuale di 5 min
+
+  // 7. Entra in Deep Sleep
+  Serial.printf("Vado in Deep Sleep per %d minuti...\n", SLEEP_TIME_MIN);
+  Serial.flush(); // Assicura che i print seriali finiscano prima di spegnere la CPU
+  esp_sleep_enable_timer_wakeup(SLEEP_TIME_MIN * 60 * 1000000ULL);
+  esp_deep_sleep_start();
+}
+
+void loop() {
+  // Non verrà mai eseguito in Deep Sleep
+}
+
+// --- FUNZIONI DI SUPPORTO BSEC ---
+
+void loadState() {
+  if (stateSaved) {
+    Serial.println("BSEC: Carico calibrazione dalla memoria RTC...");
+    iaqSensor.setState(bsecState);
+    checkIaqSensorStatus();
+  } else {
+    Serial.println("BSEC: Prima accensione, avvio calibrazione...");
+  }
+}
+
+void saveState() {
+  // Salviamo lo stato solo se BSEC ha iniziato a calibrare (accuracy >= 1)
+  iaqSensor.getState(bsecState);
+  stateSaved = true;
+  Serial.println("BSEC: Stato calibrazione salvato in RTC.");
+}
+
+void checkIaqSensorStatus() {
+  if (iaqSensor.bsecStatus != BSEC_OK) {
+    if (iaqSensor.bsecStatus < BSEC_OK) {
+      Serial.printf("ERRORE CRITICO BSEC: %d\n", iaqSensor.bsecStatus);
+    } else {
+      Serial.printf("WARNING BSEC: %d\n", iaqSensor.bsecStatus);
+    }
+  }
+}

@@ -11,7 +11,9 @@ const char* password = secret_password;
 WebServer server(80);
 
 // Nome del file da scaricare (lo stesso che abbiamo creato nell'altro sketch)
-const char* filename = "/dati_sensori.csv";
+// const char* filename = "/dati_sensori.csv";
+const char* filename = "/dati_bme680.csv";
+
 
 // --- FUNZIONI DEL SERVER WEB ---
 
