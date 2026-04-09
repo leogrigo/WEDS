@@ -180,11 +180,19 @@ void vTaskReadMQ2(void *pvParameters) {
   SensorData data;
 
   for (;;) {
-    vTaskDelayUntil(&xLastWakeTime, xFrequency);
+    //vTaskDelayUntil(&xLastWakeTime, xFrequency);
 
     int analogValue = analogRead(MQ2_PIN);
     data = SensorData{millis(), "MQ2", 0, 0, 0, (float)analogValue};
-    xQueueSend(dataQueue, &data, portMAX_DELAY);
+    // xQueueOverwrite(dataQueue, &data, portMAX_DELAY);
+
+    File file = LittleFS.open("/dati_mq2.csv", FILE_APPEND);
+      if (file) {
+        file.println(csvBuffer);
+        file.close();
+      } else {
+        Serial.println("Errore nell'apertura del file CSV per l'aggiunta!");
+      }
     
     // UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL);
     // Serial.print("Spazio Stack rimanente nel TaskReadMQ2: ");
