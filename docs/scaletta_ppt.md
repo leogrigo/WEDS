@@ -1,18 +1,10 @@
 # Scaletta PPT
 
-0. The refined Idea
-1. Architecture
-2. Anomaly
-3. Communication with LoRa
-4. Power Consumption
-5. Sensing
-6. Further Implementations
+1. Anomaly Detection
+2. Communicating with the Gateway
+3. Further Implementations
 
-## (0)
-
-Two main features:
-
-### Anomaly Detection
+## (1) Anomaly Detection
 
 _Detecting anomalous scenarios using the MQ-2 sensor to detect smoke spikes._
 
@@ -21,15 +13,18 @@ The idea is that, assuming an optimal sensing position, when a wildfire starts s
 The MQ-2 is very precise but only when environment condition are stable and do not change.
 On the outdoors it is possible to use it but humidity and temperature change may lead to improvise peaks that must be discarded.
 
-To do so the process is: <!-- For n samples >
+To do so the process is:
 
-1. __Computing the Baseline__:
+1. __Computing the Baseline__: _The baseline is computed in a scenario considered 'normal'._
+2. __Computing the Z-Score__: _Given the baseline, we sample and compute the Z-Score, an high Z-Score will generate a warning._
 
-fdd
+To not impact the baseline we applied an EMA filter to sensor readings.
+An anomalous situation won't characterize the baseline.
 
-1. Exponential Moving Average
-2. Computing Variance and Standard Deviation <!-- the baseline >
-3. Computing Z-Score with the Variance and Standard Deviation for each feature
+The problem now is: _how can we be sure to get the spikes?_
+We made some esperiments.
+
+### Experiment 1 (Sensor readings drops exponentially)
 
 We have made an experiment plotting the gas level (buthane) in a slightly ventilated room.
 
@@ -45,20 +40,46 @@ When the gas is spread near the sensor:
 - After 105 seconds gas concentration was been nearly dissolved (90%).
 - 400 seconds to dissolve it completely
 
-### Risk Computation
+In conclusion we may say that __Smoke Concentration drops Exponentially__.
+This implies a larger window to detect a possible spike that happened.
 
-_Computing how much in a scenario a wildfire is likely to start._
+### Experiment 2 (The signal of the fire)
 
+We wanted to observe how a simulated wildfire's fire is detected by the sensor.
 
+## (2) Communicating with the Gateway
 
-## (1)
+Each nodes communicates directly to the gateway via LoRa because the idea is that each node represent an area.
 
-The architecture is star and not manet.
+Whenever the node measures the gas levels it may turn into one of two possible states:
 
-Clustering?
+- __ANOMALY__: _When the Z-Score is high, a `WARNING` message is sent to the gateway, meaning that the node has detected an anomaly._
+- __NO_ANOMALY__: _When the node returns to a non anomalous state._
 
-## (6)
+## (3) What's next?
 
-Risk Computation feature.
+### Gateway comms
 
-Inter-Node communication: _Two near nodes will be able to communicate to enhance adaptive sampling._
+Gateway communications should be discriminated with respect to their importance.
+
+#### Fire and Forget
+
+Every time the anomaly is measured and the state has not changed, the node will send his status as an healtcheck.
+The healtcheck is treated as a fire and forget, there is no need to the gateway to know the last state of the node if it hasn't changed.
+
+#### At Least Once
+
+When the status of a node changes, it is communicated to the gateway at least one time.
+
+This ensures that a Warning is correctly delivered to the gateway and further showed to the client.
+
+### Risk Computation Feature
+
+The second main feature.
+This will make possible to implement adaptive sampling.
+
+The rule will be simple: _The higher the risk, the higher the sampling rate_.
+
+### Inter-Node Communication
+
+Two near nodes will be able to communicate to enhance adaptive sampling.
