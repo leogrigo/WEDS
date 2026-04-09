@@ -16,7 +16,7 @@
 #define ENVIROMENT_SENSING_MODE 0
 #define FILE_SIMULATION_MODE 1
 #define SIMULATION_MODE 2
-#define SENSING_MODE SIMULATION_MODE 
+#define SENSING_MODE ENVIROMENT_SENSING_MODE 
 
 // Queue and Event Group handles
 QueueHandle_t sens_result = xQueueCreate(1, sizeof(sensors_sample_t)); // Queue to hold the latest sensor sample
@@ -328,7 +328,11 @@ void TaskStateMachine(void* pvParameters){
 void setup() {
 // put your setup code here, to run once:
     Serial.begin(115200);
+    if (SENSING_MODE == ENVIROMENT_SENSING_MODE){
+        sensors_begin();
+    }
     delay(500);
+
     randomSeed(micros());
     LoraComm::begin();
     xTaskCreate(TaskSampleSensors, "Sample Sensors Task", 3072, NULL, 1, NULL);
