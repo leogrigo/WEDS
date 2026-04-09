@@ -1,6 +1,10 @@
 #pragma once
 #include <Arduino.h>
+
 #include "states.hpp"
+
+constexpr uint8_t ANOMALY_WARMUP_SAMPLES = 20;
+
 
 enum sim_mode_t {
     SIM_MODE_NORMAL,
@@ -27,5 +31,5 @@ typedef struct sim_state_t {
 
 extern sim_state_t sim_state;
 
-void updateSimulationState(sim_state_t* s);
-sensors_sample_t generateSimulatedSample(sim_state_t* s);
+sensors_sample_t sens_simulation();
+

@@ -2,8 +2,6 @@
 
 #include "anomalies.hpp"
 
-constexpr uint8_t ANOMALY_WARMUP_SAMPLES = 20;
-
 typedef struct sensors_sample_t {
     float temp;
     float hum;

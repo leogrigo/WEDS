@@ -4,9 +4,19 @@
 #include "states.hpp"
 #include "utils.hpp"
 #include "simulation.hpp"
+#include "file_simulation.hpp"
+#include "sensors.hpp"
+
+
 
 // Define a bit to represent the sensor event (Bit 0)
 #define SENSOR_SAMPLED_BIT ( 1UL << 0 ) 
+
+// Define sensing mode between simulation, simulation from files and real enviroment sensing
+#define ENVIROMENT_SENSING_MODE 0
+#define FILE_SIMULATION_MODE 1
+#define SIMULATION_MODE 2
+#define SENSING_MODE SIMULATION_MODE 
 
 // Queue and Event Group handles
 QueueHandle_t sens_result = xQueueCreate(1, sizeof(sensors_sample_t)); // Queue to hold the latest sensor sample
@@ -24,53 +34,19 @@ node_state_t state = {
     };
 
 
-void printSample(sensors_sample_t sample){
-  Serial.println("==========================================");
-  Serial.print("Temp: ");
-  Serial.print(sample.temp);
-  Serial.print(" C, Hum: ");
-  Serial.print(sample.hum);
-  Serial.print(" %, Press: ");
-  Serial.print(sample.press);
-  Serial.print(" kPa, Gas resistance: ");
-  Serial.print(sample.gas_r);
-  Serial.println(" ohm");
-}
+
 
 void TaskSampleSensors(void* pvParameters){
     sensors_sample_t results;
 
     for(;;){
-        updateSimulationState(&sim_state);
-        results = generateSimulatedSample(&sim_state);
+        if(SENSING_MODE == ENVIROMENT_SENSING_MODE)
+            results = sens_enviroment();
+        else if (SENSING_MODE == FILE_SIMULATION_MODE)
+            results = sens_file();
+        else if (SENSING_MODE == SIMULATION_MODE)
+            results = sens_simulation();
 
-        printSample(results);
-
-        Serial.print("Simulation phase: ");
-        if (sim_state.in_warmup) {
-            Serial.println("WARMUP_NORMAL");
-        } else {
-            switch (SELECTED_MODE) {
-                case SIM_MODE_NORMAL:
-                    Serial.println("NORMAL");
-                    break;
-                case SIM_MODE_DRY_PERIOD:
-                    Serial.println("DRY_PERIOD");
-                    break;
-                case SIM_MODE_GAS_DROP:
-                    Serial.println("GAS_DROP");
-                    break;
-                case SIM_MODE_FIRE_EVENT:
-                    Serial.println("FIRE_EVENT");
-                    break;
-                case SIM_MODE_SENSOR_FAULT:
-                    Serial.println("SENSOR_FAULT");
-                    break;
-                default:
-                    Serial.println("UNKNOWN");
-                    break;
-            }
-        }
 
         xQueueOverwrite(sens_result, &results);
         xEventGroupSetBits(sensing_event, SENSOR_SAMPLED_BIT);

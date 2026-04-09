@@ -135,3 +135,51 @@ sensors_sample_t generateSimulatedSample(sim_state_t* s){
 
     return sample;
 }
+
+void printSample(sensors_sample_t sample){
+  Serial.println("==========================================");
+  Serial.print("Temp: ");
+  Serial.print(sample.temp);
+  Serial.print(" C, Hum: ");
+  Serial.print(sample.hum);
+  Serial.print(" %, Press: ");
+  Serial.print(sample.press);
+  Serial.print(" kPa, Gas resistance: ");
+  Serial.print(sample.gas_r);
+  Serial.println(" ohm");
+}
+
+sensors_sample_t sens_simulation(){
+    sensors_sample_t results;
+    updateSimulationState(&sim_state);
+    results = generateSimulatedSample(&sim_state);
+
+    printSample(results);
+
+    Serial.print("Simulation phase: ");
+    if (sim_state.in_warmup) {
+        Serial.println("WARMUP_NORMAL");
+    } else {
+        switch (SELECTED_MODE) {
+            case SIM_MODE_NORMAL:
+                Serial.println("NORMAL");
+                break;
+            case SIM_MODE_DRY_PERIOD:
+                Serial.println("DRY_PERIOD");
+                break;
+            case SIM_MODE_GAS_DROP:
+                Serial.println("GAS_DROP");
+                break;
+            case SIM_MODE_FIRE_EVENT:
+                Serial.println("FIRE_EVENT");
+                break;
+            case SIM_MODE_SENSOR_FAULT:
+                Serial.println("SENSOR_FAULT");
+                break;
+            default:
+                Serial.println("UNKNOWN");
+                break;
+        }
+    }
+    return results;
+}
