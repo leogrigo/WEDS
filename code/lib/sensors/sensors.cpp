@@ -24,10 +24,10 @@ void printSample(sensors_sample_t sample){
     Serial.print("bar Gas: ");
     Serial.print(sample.gas_r*100/4095.0f);
     Serial.println("%");
+    Serial.println("=================");
 }
 
 sensors_sample_t sens_enviroment(){
-    Serial.println("Sensor reached!");
     sensors_event_t humidity, temp;
     float temp2 = bmp.readTemperature();
     float press = bmp.readPressure();

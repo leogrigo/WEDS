@@ -53,23 +53,17 @@ bool configureRadio() {
     return true;
 }
 
-String formatNodeStatus(const LoraComm::NodeStatus& status) {
-    char payload[192];
-    snprintf(
-        payload,
-        sizeof(payload),
-        "id=%lu,samples=%lu,state=%u,temp=%.2f,hum=%.2f,press=%.2f,gas=%.2f,an=%.2f,risk=%.2f",
-        static_cast<unsigned long>(status.nodeId),
-        static_cast<unsigned long>(status.sampleCount),
-        status.anomalyState,
-        status.temperature,
-        status.humidity,
-        status.pressure,
-        status.gasResistance,
-        status.anomalyScore,
-        status.riskScore
-    );
-    return String(payload);
+String formatNodeStatus(const node_state_t status) {
+    String ris = "";
+    ris += "node_id: " + String(status.node_id) + ", ";
+    ris += "n_sample: " + String(status.samples_seen) + ", ";
+    ris += "an_state: " + String(status.an_state == ANOMALY_WARNING ? "WARNING" : "NO_ANOMALY") + ", ";
+    ris += "temp: " + String(status.anomaly_last_proc_sample.temp, 2) + ", ";
+    ris += "hum: " + String(status.anomaly_last_proc_sample.hum, 2) + ", ";
+    ris += "press: " + String(status.anomaly_last_proc_sample.press, 2) + ", ";
+    ris += "gas: " + String(status.anomaly_last_proc_sample.gas_r, 2) + ", ";
+    ris += "an_score: " + String(status.anomaly_last_result.gas_score, 2) + ", ";
+    return ris;
 }
 
 }  // namespace
@@ -139,7 +133,7 @@ bool sendMessage(const String& payload, bool keepRadioOn) {
     return true;
 }
 
-bool sendNodeStatus(const NodeStatus& status, bool keepRadioOn) {
+bool sendNodeStatus(const node_state_t status, bool keepRadioOn) {
     return sendMessage(formatNodeStatus(status), keepRadioOn);
 }
 

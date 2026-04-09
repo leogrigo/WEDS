@@ -38,5 +38,5 @@ float directionalHumScore(float z){
 
 float directionalGasScore(float z){
   // resistenza ai gas bassa = rischio
-  return positivePart(-z);
+  return positivePart(z);
 }

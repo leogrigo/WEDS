@@ -4,19 +4,9 @@
 #include <cstdint>
 
 typedef struct anomaly_result_t {
-    float temp_baseline;
-    float hum_baseline;
     float gas_baseline;
-
-    float temp_stddev;
-    float hum_stddev;
     float gas_stddev;
-
-    float temp_score;
-    float hum_score;
     float gas_score;
-
-    float global_score;
 } anomaly_result_t;
 
 enum anomaly_state {
@@ -24,7 +14,12 @@ enum anomaly_state {
     ANOMALY_WARMUP,
     NO_ANOMALY,
     ANOMALY_WARNING,
-    ANOMALY_ALERT
+    // ANOMALY_ALERT
 };
 
+constexpr float GAS_WARNING_THRESHOLD = 1.5f;
+
 void printAnomalyResults(anomaly_result_t result);
+
+#include "states.hpp"
+anomaly_result_t calculateAnomalyScore(sensors_sample_t sample);
