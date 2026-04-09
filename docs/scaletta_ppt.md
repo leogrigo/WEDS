@@ -25,13 +25,31 @@ To do so the process is: <!-- For n samples >
 
 1. __Computing the Baseline__:
 
+fdd
+
 1. Exponential Moving Average
 2. Computing Variance and Standard Deviation <!-- the baseline >
 3. Computing Z-Score with the Variance and Standard Deviation for each feature
 
+We have made an experiment plotting the gas level (buthane) in a slightly ventilated room.
+
+Looking at the two graphs [1 second Graph]("C:\Users\admin\Pictures\Screenshots\Screenshot 2026-04-09 152538.png") and [1 hour Graph]("C:\Users\admin\Pictures\Screenshots\Screenshot 2026-04-09 145056.png") we may see different things:
+
+1. A peak is relevated istantly.
+2. Smoke concentration drops slowly.
+
+When the gas is spread near the sensor:
+
+- Peak reach the maximum value.
+- After 12 seconds the gas concentration is halved.
+- After 105 seconds gas concentration was been nearly dissolved (90%).
+- 400 seconds to dissolve it completely
+
 ### Risk Computation
 
 _Computing how much in a scenario a wildfire is likely to start._
+
+
 
 ## (1)
 
