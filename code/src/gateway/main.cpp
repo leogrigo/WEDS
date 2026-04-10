@@ -9,11 +9,20 @@ namespace {
 
 WebServer server(80);
 
-String lastNodeStatus = "{}";
-String lastRawPayload = "";
-float lastRssi = 0.0f;
-float lastSnr = 0.0f;
-uint32_t lastUpdateMs = 0;
+constexpr size_t MAX_TRACKED_NODES = 16;
+
+struct NodeStatusEntry {
+    bool used;
+    String nodeId;
+    String payloadJson;
+};
+
+NodeStatusEntry nodeStatuses[MAX_TRACKED_NODES] = {};
+
+struct ParsedPayload {
+    String nodeId;
+    String json;
+};
 
 String escapeJson(const String& input) {
     String out;
@@ -30,10 +39,17 @@ String escapeJson(const String& input) {
     return out;
 }
 
-String payloadToJson(const String& payload, float rssi, float snr, uint32_t updatedMs) {
+String trimCopy(const String& input) {
+    String out = input;
+    out.trim();
+    return out;
+}
+
+ParsedPayload parsePayloadToJson(const String& payload, float rssi, float snr, uint32_t updatedMs) {
     String json = "{";
     bool hasFields = false;
     int start = 0;
+    String nodeId = "";
 
     while (start < payload.length()) {
         int comma = payload.indexOf(',', start);
@@ -41,18 +57,36 @@ String payloadToJson(const String& payload, float rssi, float snr, uint32_t upda
             comma = payload.length();
         }
 
-        String token = payload.substring(start, comma);
-        int eq = token.indexOf('=');
-        if (eq > 0 && eq < token.length() - 1) {
-            String key = token.substring(0, eq);
-            String value = token.substring(eq + 1);
+        String token = trimCopy(payload.substring(start, comma));
+        int sep = token.indexOf(':');
+        if (sep > 0 && sep < token.length() - 1) {
+            String key = trimCopy(token.substring(0, sep));
+            String value = trimCopy(token.substring(sep + 1));
+            String outputKey = key;
+
+            if (key == "id") {
+                outputKey = "node_id";
+            }
+            if (key == "n_sample") {
+                outputKey = "samples";
+            }
+            if (key == "an_state") {
+                outputKey = "state";
+            }
+            if (key == "an_score") {
+                outputKey = "anomaly_score";
+            }
+
+            if (outputKey == "node_id" && nodeId.length() == 0) {
+                nodeId = value;
+            }
 
             if (hasFields) {
                 json += ",";
             }
 
             json += "\"";
-            json += escapeJson(key);
+            json += escapeJson(outputKey);
             json += "\":\"";
             json += escapeJson(value);
             json += "\"";
@@ -66,9 +100,12 @@ String payloadToJson(const String& payload, float rssi, float snr, uint32_t upda
         json += ",";
     }
 
-    json += "\"raw\":\"";
-    json += escapeJson(payload);
-    json += "\",\"rssi\":\"";
+    if (nodeId.length() == 0) {
+        nodeId = "unknown";
+        json += "\"node_id\":\"unknown\",";
+    }
+
+    json += "\"rssi\":\"";
     json += String(rssi, 2);
     json += "\",\"snr\":\"";
     json += String(snr, 2);
@@ -76,6 +113,51 @@ String payloadToJson(const String& payload, float rssi, float snr, uint32_t upda
     json += String(updatedMs);
     json += "\"}";
 
+    return ParsedPayload{nodeId, json};
+}
+
+void updateNodeStatuses(const String& nodeId, const String& payloadJson) {
+    size_t freeIndex = MAX_TRACKED_NODES;
+
+    for (size_t i = 0; i < MAX_TRACKED_NODES; ++i) {
+        if (nodeStatuses[i].used && nodeStatuses[i].nodeId == nodeId) {
+            nodeStatuses[i].payloadJson = payloadJson;
+            return;
+        }
+
+        if (!nodeStatuses[i].used && freeIndex == MAX_TRACKED_NODES) {
+            freeIndex = i;
+        }
+    }
+
+    if (freeIndex < MAX_TRACKED_NODES) {
+        nodeStatuses[freeIndex].used = true;
+        nodeStatuses[freeIndex].nodeId = nodeId;
+        nodeStatuses[freeIndex].payloadJson = payloadJson;
+        return;
+    }
+
+    Serial.println("Node status table full, cannot track more nodes.");
+}
+
+String buildNodeStatusListJson() {
+    String json = "[";
+    bool first = true;
+
+    for (size_t i = 0; i < MAX_TRACKED_NODES; ++i) {
+        if (!nodeStatuses[i].used) {
+            continue;
+        }
+
+        if (!first) {
+            json += ",";
+        }
+
+        json += nodeStatuses[i].payloadJson;
+        first = false;
+    }
+
+    json += "]";
     return json;
 }
 
@@ -88,7 +170,7 @@ void handleRoot() {
 }
 
 void handleNodeStatus() {
-    server.send(200, "application/json", lastNodeStatus);
+    server.send(200, "application/json", buildNodeStatusListJson());
 }
 
 void connectWifi() {
@@ -131,15 +213,15 @@ void loop() {
 
     LoraGateway::ReceivedPacket packet;
     if (LoraGateway::pollReceive(packet)) {
-        lastRawPayload = packet.payload;
-        lastRssi = packet.rssi;
-        lastSnr = packet.snr;
-        lastUpdateMs = millis();
-        lastNodeStatus = payloadToJson(packet.payload, packet.rssi, packet.snr, lastUpdateMs);
+        uint32_t lastUpdateMs = millis();
+        ParsedPayload parsedPayload = parsePayloadToJson(packet.payload, packet.rssi, packet.snr, lastUpdateMs);
+        updateNodeStatuses(parsedPayload.nodeId, parsedPayload.json);
 
         Serial.print("LoRa RX <- ");
         Serial.println(packet.payload);
+        Serial.print("Updated node_id: ");
+        Serial.println(parsedPayload.nodeId);
         Serial.print("Gateway API /node_status -> ");
-        Serial.println(lastNodeStatus);
+        Serial.println(buildNodeStatusListJson());
     }
 }
