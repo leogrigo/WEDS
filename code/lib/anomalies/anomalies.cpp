@@ -33,13 +33,13 @@ anomaly_result_t calculateAnomalyScore(sensors_sample_t sample){
     float gas_residual  = sample.gas_r - prev_gas_baseline;
 
     // Raw z-scores computed with PREVIOUS baseline/stddev
-    float gas_z  = (sample.gas_r - prev_gas_baseline) / max(prev_gas_stddev, 0.01f);
+    float gas_z  = (sample.gas_r - prev_gas_baseline) / max(prev_gas_stddev, 10.0f);
 
     // Directional scores for wildfire detection
     result.gas_score  = directionalGasScore(gas_z);
 
     // Update baseline: freeze baseline if anomaly is detected;
-    if (result.gas_score < GAS_WARNING_THRESHOLD) { 
+    if (result.gas_score < GAS_WARNING_THRESHOLD || state.an_state == ANOMALY_WARMUP) { 
         result.gas_baseline  = gas_filter(sample.gas_r);
         // Update stddev using residuals against PREVIOUS baseline
         result.gas_stddev  = sqrtf(gas_variance_filter(gas_residual * gas_residual));
