@@ -24,6 +24,12 @@ An anomalous situation won't characterize the baseline.
 The problem now is: _how can we be sure to get the spikes?_
 We made some esperiments.
 
+### Minimum Standard Deviation
+
+Z-Score is not reliable when the baseline is too stable implying a low standard deviation.
+
+To solve this problem we set a minimum standard deviation.
+
 ### Experiment 1 (Sensor readings drops exponentially)
 
 We have made an experiment plotting the gas level (buthane) in a slightly ventilated room.
@@ -46,6 +52,9 @@ This implies a larger window to detect a possible spike that happened.
 ### Experiment 2 (The signal of the fire)
 
 We wanted to observe how a simulated wildfire's fire is detected by the sensor.
+
+We have observed that the wind blows in the same direction for a consistent quantity of time.
+This means that on average wind direction remains the same.
 
 ## (2) Communicating with the Gateway
 
@@ -83,3 +92,94 @@ The rule will be simple: _The higher the risk, the higher the sampling rate_.
 ### Inter-Node Communication
 
 Two near nodes will be able to communicate to enhance adaptive sampling.
+
+## The Workflow of the PowerPoint
+
+The ppt should follow this structure:
+
+1. The Idea
+2. Sensing
+3. Further Implementation
+
+## (1) The Idea
+
+__Goal__: _Detect wildfires in their early stages through the installation of multiple nodes covering different areas._
+
+
+The idea consist in two main features:
+
+1. Anomaly Detection
+2. Risk Computation
+
+### Anomaly Detection
+
+We use anomaly detection to detect the presence of wildfires by the smoke produced by them.
+
+The idea is that smoke is not present, in the most part of the world, unless there is a fire or something that generates it, most likely to be a fire.
+
+Furthermore we can distinguish between a car passing or a fire through the level of gasses in the air.
+
+### Risk Detection
+
+We will use risk detection to predict when a fire is more likely to start.
+
+The idea is that an area where condition are favourable, low humidity and high temperature, a fire is more likely to start. This naive assumption will let us calculate a _'Risk Score'_ that can be used to adapt the sampling frequency. More risk implies higher sampling frequency rates.
+
+To calculate it we will use __TinyML__ to make each node capable of calculating its own risk by itselfes.
+
+## (2) Sensing
+
+### Sensors
+
+We use two sensor:
+
+- __MQ-2__: _Relevates the percentage of gasses present in the environment._
+- __AHT20 + BMP280__: _A sensor that is a combination of two sensors, it senses the level of humidity, temperature and pression of the environment._
+
+### How we use them
+
+The two sensors are used for two different tasks.
+
+The __MQ-2__ is used in the __Anomaly Detection__. In fact, as already said, the presence of a wildfire is easily spottable if smoke is detected.
+
+While the other sensor will be used in __Risk Computation__. Humidity and Temperature are two key aspect for a wildfire to start. Combining the two measures and the presence of flammable gasses, with the __MQ-2__, we can calculate a precise __Risk Score__.
+
+### The MQ-2 Problem
+
+The __MQ-2__ need pre-heating in order to work properly. Skipping the warming phase may lead to unstable readings or even totally wrong ones.
+
+We should compute well how many time we measure and when to go to sleep.
+
+### Anomaly Detection Schema
+
+The whole process starts calculating the baseline in a _non-presence of fire_ condition.
+With respect to the baseline the standard deviation is calculated. To prevent the Z-Score on being too high due to a low standard deviation, this is set to a predetermined value if below a given treshold.
+We are also using an __EMA__ filter to update the baseline favouring the latest read values.
+Another problem was that smoke peaks would have modified the baseline drastically. To prevent it, when an anomalous condition is detected, the read values won't be part of the baseline.
+
+After the calculation of the _Z-Score_ the node may set it status to __ANOMALY__ or __NO_ANOMALY__ depending on the _Z-Score_.
+
+Each time the node set is new status, this is communicated to the gateway via LoRa, which keep tracks of the whole network.
+
+### Risk Detection Schema
+
+TBD
+
+### Network Architecture
+
+Nodes -> Gateway (aggregates different perspectives) -> Cloud
+
+## (3) Further Implementation
+
+In program we have two further implementations
+
+### Risk Detect
+
+We already talked about it.
+
+### Inter-Node Communications
+
+The idea is to make possible to near nodes to communicate between them, allowing a node to talk to his _'neighbors'_.
+
+This will enhance coordination between nodes making possible to a node to influence another node.
+For example if a node is in a __WARNING__ state, the message can be spread to near nodes in order to make them sample more often.
