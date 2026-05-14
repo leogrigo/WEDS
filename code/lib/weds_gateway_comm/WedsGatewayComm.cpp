@@ -3,6 +3,29 @@
 #include <heltec_unofficial.h>
 #include "WedsGatewayConfig.h"
 
+namespace {
+
+const char* messageTypeName(uint8_t msg_type) {
+    switch (msg_type) {
+        case WEDS_MSG_NODE_STATUS:
+            return "NODE_STATUS";
+        case WEDS_MSG_NODE_ALERT:
+            return "NODE_ALERT";
+        case WEDS_MSG_ACK:
+            return "ACK";
+        case WEDS_MSG_ALERT_MODE_ENABLE:
+            return "ALERT_MODE_ENABLE";
+        default:
+            return "UNKNOWN";
+    }
+}
+
+const char* detectionStateName(uint8_t state) {
+    return state == WEDS_DETECTION_ALERT ? "ALERT" : "NORMAL";
+}
+
+}  // namespace
+
 WedsGatewayComm::WedsGatewayComm()
     : registry_(nullptr),
       initialized_(false),
@@ -90,8 +113,8 @@ void WedsGatewayComm::handleReceivedPacket(uint8_t* buffer, size_t len) {
     Serial.print("[GATEWAY_COMM] Packet received len=");
     Serial.println(len);
 
-    Serial.print("[GATEWAY_COMM] HEX: ");
-    printBufferHex(buffer, len);
+    // Serial.print("[GATEWAY_COMM] HEX: ");
+    // printBufferHex(buffer, len);
 
     WedsPacket packet;
 
@@ -122,8 +145,8 @@ void WedsGatewayComm::handleReceivedPacket(uint8_t* buffer, size_t len) {
         return;
     }
 
-    Serial.print("[GATEWAY_COMM] Unsupported msg_type=0x");
-    Serial.println(packet.header.msg_type, HEX);
+    Serial.print("[GATEWAY_COMM] Unsupported msg_type=");
+    Serial.println(messageTypeName(packet.header.msg_type));
 }
 
 void WedsGatewayComm::handleNodeStatusPacket(const WedsPacket& packet) {
@@ -167,8 +190,8 @@ void WedsGatewayComm::handleNodeStatusPacket(const WedsPacket& packet) {
         Serial.print(" seq=");
         Serial.print(packet.header.sequence_id);
 
-        Serial.print(" msg_type=0x");
-        Serial.println(packet.header.msg_type, HEX);
+        Serial.print(" msg_type=");
+        Serial.println(messageTypeName(packet.header.msg_type));
 
         Serial.println("[GATEWAY_COMM] Duplicate will not be processed again");
 
@@ -251,8 +274,8 @@ bool WedsGatewayComm::sendAck(
     Serial.print(" acked_seq=");
     Serial.print(acked_sequence_id);
 
-    Serial.print(" acked_msg_type=0x");
-    Serial.println(acked_msg_type, HEX);
+    Serial.print(" acked_msg_type=");
+    Serial.println(messageTypeName(acked_msg_type));
 
     return sendPacket(ack_packet);
 }
@@ -273,8 +296,8 @@ bool WedsGatewayComm::sendPacket(const WedsPacket& packet) {
         return false;
     }
 
-    Serial.print("[GATEWAY_COMM] TX msg_type=0x");
-    Serial.print(packet.header.msg_type, HEX);
+    Serial.print("[GATEWAY_COMM] TX msg_type=");
+    Serial.print(messageTypeName(packet.header.msg_type));
 
     Serial.print(" seq=");
     Serial.print(packet.header.sequence_id);
@@ -285,8 +308,8 @@ bool WedsGatewayComm::sendPacket(const WedsPacket& packet) {
     Serial.print(" len=");
     Serial.println(encoded_len);
 
-    Serial.print("[GATEWAY_COMM] TX HEX: ");
-    printBufferHex(buffer, encoded_len);
+    // Serial.print("[GATEWAY_COMM] TX HEX: ");
+    // printBufferHex(buffer, encoded_len);
 
     int state = radio.transmit(buffer, encoded_len);
 
@@ -319,50 +342,29 @@ void WedsGatewayComm::printNodeStatus(
 ) {
     Serial.println();
 
-    if (packet.header.msg_type == WEDS_MSG_NODE_STATUS) {
-        Serial.println("[GATEWAY_COMM] Message type: NODE_STATUS");
-    } else {
-        Serial.println("[GATEWAY_COMM] Message type: NODE_ALERT");
-    }
-
-    Serial.print("[GATEWAY_COMM] src_node_id: ");
-    Serial.println(packet.header.src_node_id);
-
-    Serial.print("[GATEWAY_COMM] sequence_id: ");
-    Serial.println(packet.header.sequence_id);
-
-    Serial.print("[GATEWAY_COMM] ack_required: ");
-    Serial.println(packet.header.ack_required);
-
-    Serial.print("[GATEWAY_COMM] timestamp_s: ");
-    Serial.println(status.timestamp_s);
-
-    Serial.print("[GATEWAY_COMM] temperature: ");
-    Serial.println(status.temperature);
-
-    Serial.print("[GATEWAY_COMM] humidity: ");
-    Serial.println(status.humidity);
-
-    Serial.print("[GATEWAY_COMM] pressure: ");
-    Serial.println(status.pressure);
-
-    Serial.print("[GATEWAY_COMM] gas_resistance: ");
-    Serial.println(status.gas_resistance);
-
-    Serial.print("[GATEWAY_COMM] battery_level: ");
-    Serial.println(status.battery_level);
-
-    Serial.print("[GATEWAY_COMM] anomaly_state: ");
-    Serial.println(status.anomaly_state);
-
-    Serial.print("[GATEWAY_COMM] anomaly_score: ");
-    Serial.println(status.anomaly_score);
-
-    Serial.print("[GATEWAY_COMM] risk_state: ");
-    Serial.println(status.risk_state);
-
-    Serial.print("[GATEWAY_COMM] risk_score: ");
-    Serial.println(status.risk_score);
+    Serial.printf(
+        "[GATEWAY_COMM] %s node=%lu seq=%u ack=%u time=%lu\n",
+        messageTypeName(packet.header.msg_type),
+        static_cast<unsigned long>(packet.header.src_node_id),
+        packet.header.sequence_id,
+        packet.header.ack_required,
+        static_cast<unsigned long>(status.timestamp_s)
+    );
+    Serial.printf(
+        "[GATEWAY_COMM] sample temp=%.2f C hum=%.2f %% pressure=%.2f Pa gas=%.0f battery=%.1f %%\n",
+        status.temperature,
+        status.humidity,
+        status.pressure,
+        status.gas_resistance,
+        status.battery_level
+    );
+    Serial.printf(
+        "[GATEWAY_COMM] anomaly=%s score=%.2f risk=%s score=%.2f\n",
+        detectionStateName(status.anomaly_state),
+        status.anomaly_score,
+        detectionStateName(status.risk_state),
+        status.risk_score
+    );
 }
 
 bool WedsGatewayComm::waitForAck(
@@ -454,8 +456,8 @@ bool WedsGatewayComm::isExpectedAck(
     Serial.print("[GATEWAY_COMM] ACK payload: acked_seq=");
     Serial.print(ack.acked_sequence_id);
 
-    Serial.print(" acked_msg_type=0x");
-    Serial.print(ack.acked_msg_type, HEX);
+    Serial.print(" acked_msg_type=");
+    Serial.print(messageTypeName(ack.acked_msg_type));
 
     Serial.print(" status=");
     Serial.println(ack.status_code);

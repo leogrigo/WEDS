@@ -3,19 +3,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
-// Radio profile for the WEDS deployment area (EU/Italy 868 MHz ISM band).
-static constexpr float WEDS_LORA_FREQUENCY_MHZ = 868.0f;
-static constexpr float WEDS_LORA_BANDWIDTH_KHZ = 125.0f;
-static constexpr uint8_t WEDS_LORA_SPREADING_FACTOR = 7;
-static constexpr uint8_t WEDS_LORA_CODING_RATE = 5;
-static constexpr uint8_t WEDS_LORA_SYNC_WORD = 0x12;
-static constexpr int8_t WEDS_LORA_OUTPUT_POWER_DBM = 14;
-static constexpr uint16_t WEDS_LORA_PREAMBLE_LENGTH = 8;
+#include "WedsRadioConfig.h"
 
 // Reliable gateway-to-node command delivery.
-static constexpr uint32_t WEDS_GATEWAY_ACK_TIMEOUT_MS = 1500;   // Time to wait for an ACK before retrying a command.
-static constexpr uint8_t WEDS_GATEWAY_COMMAND_MAX_RETRIES = 2;  // Maximum number of retries for a command before giving up and marking it failed.
-static constexpr uint32_t WEDS_GATEWAY_COMMAND_BACKOFF_MS = 300;    // Time to wait between retries to avoid radio congestion and improve chances of success on retry attempts.
+static constexpr uint32_t WEDS_GATEWAY_ACK_TIMEOUT_MS = 1500;
+static constexpr uint8_t WEDS_GATEWAY_COMMAND_MAX_RETRIES = 2;
+static constexpr uint32_t WEDS_GATEWAY_COMMAND_BACKOFF_MS = 300;
 
 // Gateway registry sizing. Keep fixed-size buffers for embedded RAM safety.
 static constexpr size_t WEDS_MAX_NODES = 16;
@@ -26,10 +19,10 @@ static constexpr size_t WEDS_TREND_POINTS_PER_NODE = 60;
 static constexpr uint32_t WEDS_TREND_SAMPLE_INTERVAL_SEC =
     WEDS_TREND_SAMPLE_INTERVAL_SEC_OVERRIDE;
 #else
-static constexpr uint32_t WEDS_TREND_SAMPLE_INTERVAL_SEC = 60;  // WEDS_TREND_POINTS_PER_NODE * WEDS_TREND_SAMPLE_INTERVAL_SEC = max historical data duration per node (e.g. 60 points * 60 sec = 1 hour). Adjust as needed for longer/shorter trend history.
+static constexpr uint32_t WEDS_TREND_SAMPLE_INTERVAL_SEC = 60;
 #endif
 
-static constexpr double WEDS_NEIGHBOR_RADIUS_M = 50.0;  // Radius in meters to consider nodes as neighbors for alert mode command propagation. Adjust based on expected node density and communication range.
+static constexpr double WEDS_NEIGHBOR_RADIUS_M = 50.0;
 
 // Alert-mode command generated for neighbor nodes during an alert event.
 static constexpr uint16_t WEDS_ALERT_MODE_DURATION_SEC = 600;
@@ -37,7 +30,7 @@ static constexpr uint16_t WEDS_ALERT_MODE_SAMPLING_INTERVAL_SEC = 2;
 
 // Persistent gateway config.
 static constexpr const char* WEDS_GATEWAY_CONFIG_PATH = "/weds_config.json";
-static constexpr uint32_t WEDS_MIN_VALID_EPOCH_S = 1704067200UL; // 2024-01-01 UTC
+static constexpr uint32_t WEDS_MIN_VALID_EPOCH_S = 1704067200UL;
 
 // WiFi/API timing.
 static constexpr uint16_t WEDS_HTTP_PORT = 80;
@@ -79,6 +72,3 @@ static constexpr WedsSelfTestNodeConfig WEDS_SELF_TEST_NODES[WEDS_SELF_TEST_NODE
     {100003, true, 41.904000, 12.498000},
     {100004, false, 0.0, 0.0},
 };
-
-
-

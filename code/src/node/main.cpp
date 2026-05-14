@@ -1,145 +1,247 @@
 #include <Arduino.h>
-#include <anomalies.hpp>
-#include "lora_node.hpp"
-#include "states.hpp"
-#include "utils.hpp"
-#include "simulation.hpp"
-#include "file_simulation.hpp"
-#include "sensors.hpp"
+#include <freertos/FreeRTOS.h>
+#include <freertos/event_groups.h>
+#include <freertos/semphr.h>
+#include <freertos/task.h>
 
+#include "WedsNodeComm.h"
+#include "WedsNodeState.h"
+#include "WedsAnomalyDetector.h"
+#include "WedsNodeSimulation.h"
+#include "WedsRiskScore.h"
+#include "WedsSensors.h"
+#include "WedsNodeConfig.h"
 
+namespace {
 
-// Define a bit to represent the sensor event (Bit 0)
-#define SENSOR_SAMPLED_BIT ( 1UL << 0 ) 
+constexpr uint32_t NODE_RX_WINDOW_BIT = 1UL << 0;
 
-// Define sensing mode between simulation, simulation from files and real enviroment sensing
-#define ENVIROMENT_SENSING_MODE 0
-#define FILE_SIMULATION_MODE 1
-#define SIMULATION_MODE 2
-#define SENSING_MODE ENVIROMENT_SENSING_MODE 
+WedsNodeComm nodeComm;
+WedsNodeState nodeState;
+WedsAnomalyDetector anomalyDetector;
+WedsRiskScoreCalculator riskScoreCalculator;
 
-// Queue and Event Group handles
-QueueHandle_t sens_result = xQueueCreate(1, sizeof(sensors_sample_t)); // Queue to hold the latest sensor sample
-EventGroupHandle_t sensing_event = xEventGroupCreate(); // Event group to signal sensor sampling
-QueueHandle_t anomaly_queue = xQueueCreate(1, sizeof(anomaly_result_t)); // Queue to hold the latest anomaly score calculated
+EventGroupHandle_t nodeEvents = nullptr;
+SemaphoreHandle_t commMutex = nullptr;
+SemaphoreHandle_t stateMutex = nullptr;
 
-node_state_t state = {
-    .node_id = ESP.getEfuseMac(),
-    .sample_freq = 30.0f, // 30 samples per minute
-    .samples_seen = 0,
-    .an_state = ANOMALY_STARTUP,
-    .anomaly_last_proc_sample = {0},
-    .anomaly_last_result = {0}
-};
+void fatalError(const char* message) {
+    Serial.print("[NODE_FATAL] ");
+    Serial.println(message);
 
-
-void TaskSampleSensors(void* pvParameters){
-    sensors_sample_t results;
-
-    for(;;){
-        if(SENSING_MODE == ENVIROMENT_SENSING_MODE)
-            results = sens_enviroment();
-        else if (SENSING_MODE == FILE_SIMULATION_MODE)
-            results = sens_file();
-        else if (SENSING_MODE == SIMULATION_MODE)
-            results = sens_simulation();
-
-
-        xQueueOverwrite(sens_result, &results);
-        xEventGroupSetBits(sensing_event, SENSOR_SAMPLED_BIT);
-        vTaskDelay(pdMS_TO_TICKS(2000));
+    for (;;) {
+        vTaskDelay(pdMS_TO_TICKS(WEDS_NODE_ERROR_TASK_DELAY_MS));
     }
 }
 
-
-void TaskAnomalyDetection(void* pvParameters){
-    sensors_sample_t sample;
-    anomaly_result_t result;
-
-    for(;;){
-      EventBits_t uxBits = xEventGroupWaitBits(
-        sensing_event,
-        SENSOR_SAMPLED_BIT,
-        pdTRUE,
-        pdFALSE,
-        portMAX_DELAY
-      );
-
-      if( (uxBits & SENSOR_SAMPLED_BIT) != 0 ) {
-        xQueuePeek(sens_result, &sample, 0);
-        result = calculateAnomalyScore(sample);
-        xQueueOverwrite(anomaly_queue, &result);
-        printAnomalyResults(result);
-      }
+void lockComm() {
+    if (commMutex != nullptr) {
+        xSemaphoreTake(commMutex, portMAX_DELAY);
     }
 }
 
-
-void SendNodeStateToGateway(){
-    if (!LoraComm::sendNodeStatus(state)){
-        Serial.println("Failed to send node status to gateway.");
-    } 
+void unlockComm() {
+    if (commMutex != nullptr) {
+        xSemaphoreGive(commMutex);
+    }
 }
 
-// State machine task: handles state transitions and gateway communication based on anomaly results
-void TaskStateMachine(void* pvParameters){
-    anomaly_result_t anomaly_result;
-    u_int8_t no_anomaly_counter = 0;
+void lockState() {
+    if (stateMutex != nullptr) {
+        xSemaphoreTake(stateMutex, portMAX_DELAY);
+    }
+}
 
-    for(;;){
-        // Wait for new anomaly results
-        if(xQueueReceive(anomaly_queue, &anomaly_result, 5000) == pdPASS) {
-            if (state.an_state == ANOMALY_WARMUP){
-                // After ANOMALY_WARMUP_SAMPLES samples, exit warmup state (or after stddev < threshold)
-                if(state.samples_seen > ANOMALY_WARMUP_SAMPLES){
-                    state.an_state = NO_ANOMALY;
-                }
+void unlockState() {
+    if (stateMutex != nullptr) {
+        xSemaphoreGive(stateMutex);
+    }
+}
+
+WedsSensorSample readSensors() {
+    if (WEDS_NODE_SENSING_MODE == WEDS_NODE_ENVIRONMENT_SENSING) {
+        return weds_read_environment_sample();
+    }
+
+    return weds_read_simulated_sample();
+}
+
+bool isAlertPayload(const WedsNodeStatusPayload& payload) {
+    return payload.anomaly_state == WEDS_DETECTION_ALERT ||
+        payload.risk_state == WEDS_DETECTION_ALERT;
+}
+
+bool sendPayload(const WedsNodeStatusPayload& payload) {
+    lockComm();
+    const bool sent = isAlertPayload(payload)
+        ? nodeComm.sendAlert(payload)
+        : nodeComm.sendStatus(payload);
+    unlockComm();
+
+    return sent;
+}
+
+void NodeRxTask(void* pvParameters) {
+    (void)pvParameters;
+
+    for (;;) {
+        xEventGroupWaitBits(
+            nodeEvents,
+            NODE_RX_WINDOW_BIT,
+            pdFALSE,
+            pdFALSE,
+            portMAX_DELAY
+        );
+
+        while ((xEventGroupGetBits(nodeEvents) & NODE_RX_WINDOW_BIT) != 0) {
+            WedsAlertModeEnablePayload command{};
+
+            lockComm();
+            const bool received = nodeComm.pollAlertModeEnable(
+                command,
+                WEDS_NODE_RX_POLL_CHUNK_MS
+            );
+            unlockComm();
+
+            if (received) {
+                lockState();
+                nodeState.applyAlertModeCommand(command);
+                unlockState();
             }
 
-            else if (state.an_state == NO_ANOMALY){
-                if (anomaly_result.gas_score > GAS_WARNING_THRESHOLD){
-                    state.an_state = ANOMALY_WARNING;
-                    SendNodeStateToGateway(); // Send update to gateway on anomaly detection
-                    no_anomaly_counter = 0;
-                }
-                else{
-                    no_anomaly_counter += 1;
-                    if (no_anomaly_counter >= 5){
-                        SendNodeStateToGateway(); // Send periodic update to gateway every 5 samples without anomaly
-                        no_anomaly_counter = 0;
-                    }
-                }
-            }
-
-            else if (state.an_state == ANOMALY_WARNING){
-                if (anomaly_result.gas_score < GAS_WARNING_THRESHOLD){
-                    state.an_state = NO_ANOMALY;
-                    SendNodeStateToGateway(); // Send update to gateway on anomaly detection
-                }
-                else{ //TODO: wait for gateway ack
-                    SendNodeStateToGateway(); // Send update to gateway on anomaly detection
-                }
-            }
-            
+            vTaskDelay(pdMS_TO_TICKS(1));
         }
     }
 }
-      
-void setup() {
-// put your setup code here, to run once:
-    Serial.begin(115200);
-    if (SENSING_MODE == ENVIROMENT_SENSING_MODE){
-        sensors_begin();
+
+void NodeCycleTask(void* pvParameters) {
+    (void)pvParameters;
+
+    for (;;) {
+        Serial.println();
+
+        lockState();
+        nodeState.refreshAlertMode();
+        nodeState.setSleepEnabled(false);
+        unlockState();
+
+        const uint32_t rx_window_start_ms = millis();
+        xEventGroupSetBits(nodeEvents, NODE_RX_WINDOW_BIT);
+
+        const WedsSensorSample sample = readSensors();
+        const WedsAnomalyResult anomaly = anomalyDetector.update(sample);
+        printAnomalyResults(anomaly);
+
+        const WedsRiskResult risk = riskScoreCalculator.update(sample);
+
+        lockState();
+        const WedsNodeStatusPayload payload = nodeState.buildPayload(sample, anomaly, risk);
+        unlockState();
+
+        const uint32_t elapsed_rx_ms = millis() - rx_window_start_ms;
+        if (elapsed_rx_ms < WEDS_NODE_MIN_RX_WINDOW_MS) {
+            vTaskDelay(pdMS_TO_TICKS(WEDS_NODE_MIN_RX_WINDOW_MS - elapsed_rx_ms));
+        }
+
+        xEventGroupClearBits(nodeEvents, NODE_RX_WINDOW_BIT);
+
+        const bool sent = sendPayload(payload);
+        if (!sent) {
+            Serial.println("[NODE] Failed to send payload to gateway");
+        }
+
+        lockState();
+        nodeState.refreshAlertMode();
+        nodeState.setSleepEnabled(!nodeState.alertModeActive());
+        const uint32_t next_sample_delay_ms = nodeState.sampleIntervalMs();
+        unlockState();
+
+        vTaskDelay(pdMS_TO_TICKS(next_sample_delay_ms));
     }
-    delay(500);
+}
+
+void createNodeTasks() {
+    BaseType_t ok = xTaskCreatePinnedToCore(
+        NodeRxTask,
+        "NodeRxTask",
+        WEDS_NODE_RX_TASK_STACK_BYTES,
+        nullptr,
+        WEDS_NODE_RX_TASK_PRIORITY,
+        nullptr,
+        WEDS_NODE_RX_TASK_CORE
+    );
+
+    if (ok != pdPASS) {
+        fatalError("Failed to create NodeRxTask");
+    }
+
+    ok = xTaskCreatePinnedToCore(
+        NodeCycleTask,
+        "NodeCycleTask",
+        WEDS_NODE_CYCLE_TASK_STACK_BYTES,
+        nullptr,
+        WEDS_NODE_CYCLE_TASK_PRIORITY,
+        nullptr,
+        WEDS_NODE_CYCLE_TASK_CORE
+    );
+
+    if (ok != pdPASS) {
+        fatalError("Failed to create NodeCycleTask");
+    } else {
+        Serial.println("[NODE] FreeRTOS tasks created successfully");
+    }
+}
+
+}  // namespace
+
+void setup() {
+    Serial.begin(115200);
+    delay(WEDS_NODE_BOOT_DELAY_MS);
+
+    Serial.println();
+    Serial.println("=== WEDS Node Firmware ===");
+
+    nodeEvents = xEventGroupCreate();
+    if (nodeEvents == nullptr) {
+        fatalError("Failed to create node event group");
+    }
+
+    commMutex = xSemaphoreCreateMutex();
+    if (commMutex == nullptr) {
+        fatalError("Failed to create communication mutex");
+    }
+
+    stateMutex = xSemaphoreCreateMutex();
+    if (stateMutex == nullptr) {
+        fatalError("Failed to create state mutex");
+    }
+
+    if (WEDS_NODE_SENSING_MODE == WEDS_NODE_ENVIRONMENT_SENSING) {
+        weds_sensors_begin();
+    }
 
     randomSeed(micros());
-    LoraComm::begin();
-    xTaskCreate(TaskSampleSensors, "Sample Sensors Task", 4096, NULL, 1, NULL);
-    xTaskCreate(TaskAnomalyDetection, "Anomaly Detection Task", 4096, NULL, 1, NULL);
-    xTaskCreate(TaskStateMachine, "State Machine Task", 8192, NULL, 1, NULL);
+
+    lockComm();
+    const bool commReady = nodeComm.begin();
+    unlockComm();
+
+    if (!commReady) {
+        fatalError("Node communication init failed");
+    }
+
+    lockState();
+    nodeState.begin(nodeComm.getNodeId());
+    unlockState();
+
+    createNodeTasks();
+    Serial.println("[NODE] FreeRTOS tasks started");
 }
 
 void loop() {
-// put your main code here, to run repeatedly:
+    lockComm();
+    nodeComm.loop();
+    unlockComm();
+
+    vTaskDelay(pdMS_TO_TICKS(WEDS_NODE_LOOP_IDLE_DELAY_MS));
 }
