@@ -1,227 +1,154 @@
 #include <Arduino.h>
-#include <WiFi.h>
-#include <WebServer.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
 
-#include "lora_gateway.hpp"
+#include "WedsGatewayApi.h"
+#include "WedsGatewayConfig.h"
+#include "WedsGatewayComm.h"
+#include "WedsGatewayRegistry.h"
 #include "secrets.h"
+
+SET_LOOP_TASK_STACK_SIZE(24 * 1024);
 
 namespace {
 
-WebServer server(80);
+WedsGatewayRegistry registry;
+WedsGatewayComm gatewayComm;
+WedsGatewayApi gatewayApi;
 
-constexpr size_t MAX_TRACKED_NODES = 16;
+SemaphoreHandle_t registryMutex = nullptr;
 
-struct NodeStatusEntry {
-    bool used;
-    String nodeId;
-    String payloadJson;
-};
+void fatalError(const char* message) {
+    Serial.print("[FATAL] ");
+    Serial.println(message);
 
-NodeStatusEntry nodeStatuses[MAX_TRACKED_NODES] = {};
-
-struct ParsedPayload {
-    String nodeId;
-    String json;
-};
-
-String escapeJson(const String& input) {
-    String out;
-    out.reserve(input.length() + 8);
-
-    for (size_t i = 0; i < input.length(); ++i) {
-        char c = input[i];
-        if (c == '\"' || c == '\\') {
-            out += '\\';
-        }
-        out += c;
+    for (;;) {
+        vTaskDelay(pdMS_TO_TICKS(WEDS_GATEWAY_ERROR_TASK_DELAY_MS));
     }
-
-    return out;
 }
 
-String trimCopy(const String& input) {
-    String out = input;
-    out.trim();
-    return out;
+void lockRegistry() {
+    if (registryMutex != nullptr) {
+        xSemaphoreTake(registryMutex, portMAX_DELAY);
+    }
 }
 
-ParsedPayload parsePayloadToJson(const String& payload, float rssi, float snr, uint32_t updatedMs) {
-    String json = "{";
-    bool hasFields = false;
-    int start = 0;
-    String nodeId = "";
-
-    while (start < payload.length()) {
-        int comma = payload.indexOf(',', start);
-        if (comma < 0) {
-            comma = payload.length();
-        }
-
-        String token = trimCopy(payload.substring(start, comma));
-        int sep = token.indexOf(':');
-        if (sep > 0 && sep < token.length() - 1) {
-            String key = trimCopy(token.substring(0, sep));
-            String value = trimCopy(token.substring(sep + 1));
-            String outputKey = key;
-
-            if (key == "id") {
-                outputKey = "node_id";
-            }
-            if (key == "n_sample") {
-                outputKey = "samples";
-            }
-            if (key == "an_state") {
-                outputKey = "state";
-            }
-            if (key == "an_score") {
-                outputKey = "anomaly_score";
-            }
-
-            if (outputKey == "node_id" && nodeId.length() == 0) {
-                nodeId = value;
-            }
-
-            if (hasFields) {
-                json += ",";
-            }
-
-            json += "\"";
-            json += escapeJson(outputKey);
-            json += "\":\"";
-            json += escapeJson(value);
-            json += "\"";
-            hasFields = true;
-        }
-
-        start = comma + 1;
+void unlockRegistry() {
+    if (registryMutex != nullptr) {
+        xSemaphoreGive(registryMutex);
     }
-
-    if (hasFields) {
-        json += ",";
-    }
-
-    if (nodeId.length() == 0) {
-        nodeId = "unknown";
-        json += "\"node_id\":\"unknown\",";
-    }
-
-    json += "\"rssi\":\"";
-    json += String(rssi, 2);
-    json += "\",\"snr\":\"";
-    json += String(snr, 2);
-    json += "\",\"updated_ms\":\"";
-    json += String(updatedMs);
-    json += "\"}";
-
-    return ParsedPayload{nodeId, json};
 }
 
-void updateNodeStatuses(const String& nodeId, const String& payloadJson) {
-    size_t freeIndex = MAX_TRACKED_NODES;
+void GatewayRadioTask(void* pvParameters) {
+    (void)pvParameters;
 
-    for (size_t i = 0; i < MAX_TRACKED_NODES; ++i) {
-        if (nodeStatuses[i].used && nodeStatuses[i].nodeId == nodeId) {
-            nodeStatuses[i].payloadJson = payloadJson;
-            return;
-        }
+    for (;;) {
+        gatewayComm.loop();
 
-        if (!nodeStatuses[i].used && freeIndex == MAX_TRACKED_NODES) {
-            freeIndex = i;
-        }
+        lockRegistry();
+        gatewayComm.poll();
+        unlockRegistry();
+
+        vTaskDelay(pdMS_TO_TICKS(WEDS_GATEWAY_RADIO_TASK_DELAY_MS));
     }
-
-    if (freeIndex < MAX_TRACKED_NODES) {
-        nodeStatuses[freeIndex].used = true;
-        nodeStatuses[freeIndex].nodeId = nodeId;
-        nodeStatuses[freeIndex].payloadJson = payloadJson;
-        return;
-    }
-
-    Serial.println("Node status table full, cannot track more nodes.");
 }
 
-String buildNodeStatusListJson() {
-    String json = "[";
-    bool first = true;
+void GatewayApiTask(void* pvParameters) {
+    (void)pvParameters;
 
-    for (size_t i = 0; i < MAX_TRACKED_NODES; ++i) {
-        if (!nodeStatuses[i].used) {
-            continue;
-        }
+    for (;;) {
+        lockRegistry();
+        gatewayApi.handleClient();
+        unlockRegistry();
 
-        if (!first) {
-            json += ",";
-        }
+        vTaskDelay(pdMS_TO_TICKS(WEDS_GATEWAY_API_TASK_DELAY_MS));
+    }
+}
 
-        json += nodeStatuses[i].payloadJson;
-        first = false;
+void createGatewayTasks() {
+    BaseType_t ok = xTaskCreatePinnedToCore(
+        GatewayRadioTask,
+        "GatewayRadioTask",
+        WEDS_GATEWAY_TASK_STACK_BYTES,
+        nullptr,
+        WEDS_GATEWAY_RADIO_TASK_PRIORITY,
+        nullptr,
+        WEDS_GATEWAY_RADIO_TASK_CORE
+    );
+
+    if (ok != pdPASS) {
+        fatalError("Failed to create GatewayRadioTask");
     }
 
-    json += "]";
-    return json;
-}
+    ok = xTaskCreatePinnedToCore(
+        GatewayApiTask,
+        "GatewayApiTask",
+        WEDS_GATEWAY_TASK_STACK_BYTES,
+        nullptr,
+        WEDS_GATEWAY_API_TASK_PRIORITY,
+        nullptr,
+        WEDS_GATEWAY_API_TASK_CORE
+    );
 
-void handleRoot() {
-    String html = "<!DOCTYPE html><html><head><title>LoRa Gateway</title></head><body>";
-    html += "<h1>LoRa Gateway</h1>";
-    html += "<p>Endpoint disponibile: <a href=\"/node_status\">/node_status</a></p>";
-    html += "</body></html>";
-    server.send(200, "text/html", html);
-}
-
-void handleNodeStatus() {
-    server.send(200, "application/json", buildNodeStatusListJson());
-}
-
-void connectWifi() {
-    Serial.print("Connecting to WiFi ");
-    Serial.println(secret_wifi);
-
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(secret_wifi, secret_password);
-
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
+    if (ok != pdPASS) {
+        fatalError("Failed to create GatewayApiTask");
     }
-
-    Serial.println();
-    Serial.print("WiFi connected, IP: ");
-    Serial.println(WiFi.localIP());
 }
 
 }  // namespace
 
 void setup() {
     Serial.begin(115200);
-    delay(1000);
+    delay(2000);
 
     Serial.println();
-    Serial.println("Minimal LoRa gateway boot");
-    connectWifi();
+    Serial.println("=== WEDS Gateway Firmware ===");
 
-    server.on("/", handleRoot);
-    server.on("/node_status", HTTP_GET, handleNodeStatus);
-    server.begin();
-    Serial.println("HTTP server ready");
+    registryMutex = xSemaphoreCreateMutex();
+    if (registryMutex == nullptr) {
+        fatalError("Failed to create registry mutex");
+    }
 
-    LoraGateway::begin();
+    lockRegistry();
+    const bool registryReady = registry.begin();
+    unlockRegistry();
+
+    if (!registryReady) {
+        fatalError("Gateway registry init failed");
+    }
+
+    lockRegistry();
+    const bool configLoaded = registry.loadPersistentConfig();
+    unlockRegistry();
+
+    if (!configLoaded) {
+        Serial.println("[WARN] Gateway persistent config load failed");
+    }
+
+    lockRegistry();
+    const bool apiReady = gatewayApi.begin(secret_wifi, secret_password, &registry);
+    unlockRegistry();
+
+    if (!apiReady) {
+        fatalError("Gateway REST API init failed");
+    }
+
+    lockRegistry();
+    const bool commReady = gatewayComm.begin(&registry);
+    unlockRegistry();
+
+    if (!commReady) {
+        fatalError("Gateway communication init failed");
+    }
+
+    createGatewayTasks();
+    Serial.println("[GATEWAY] FreeRTOS tasks started");
 }
 
 void loop() {
-    server.handleClient();
-
-    LoraGateway::ReceivedPacket packet;
-    if (LoraGateway::pollReceive(packet)) {
-        uint32_t lastUpdateMs = millis();
-        ParsedPayload parsedPayload = parsePayloadToJson(packet.payload, packet.rssi, packet.snr, lastUpdateMs);
-        updateNodeStatuses(parsedPayload.nodeId, parsedPayload.json);
-
-        Serial.print("LoRa RX <- ");
-        Serial.println(packet.payload);
-        Serial.print("Updated node_id: ");
-        Serial.println(parsedPayload.nodeId);
-        Serial.print("Gateway API /node_status -> ");
-        Serial.println(buildNodeStatusListJson());
-    }
+    vTaskDelay(pdMS_TO_TICKS(WEDS_GATEWAY_LOOP_IDLE_DELAY_MS));
 }
+
+
+
