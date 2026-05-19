@@ -1,6 +1,9 @@
 #include "WedsSensors.h"
 
 #include <Arduino.h>
+
+#ifdef WEDS_LEGACY_SENSORS
+
 #include <Adafruit_AHTX0.h>
 #include <Adafruit_BMP280.h>
 
@@ -55,3 +58,86 @@ WedsSensorSample weds_read_environment_sample() {
     printSample(sample);
     return sample;
 }
+
+#else
+
+#define I2C_ADDRESS BME68X_I2C_ADDR_HIGH
+#define BSEC_SENSOR_RATE BSEC_SAMPLE_RATE_LP
+
+Bsec bmeSensor;
+
+
+uint8_t bsecState[BSEC_MAX_STATE_BLOB_SIZE] = {0};
+int64_t rtc_simulated_millis = 0;
+uint64_t read_count = 0;
+
+bool checkBmeSensorStatus(void) {
+  if (bmeSensor.bsecStatus != BSEC_OK || bmeSensor.bme68xStatus != BME68X_OK) {
+    Serial.println("ERRORE SENSORE - Controllo cablaggio e I2C!");
+    Serial.println("Errore num: " + String(iaqSensor.bme68xStatus));
+    Serial.flush();
+    return false;
+  }
+  return true;
+}
+
+bool weds_sensors_begin(){
+    if(!Wire1.begin(SDA_PIN, SCL_PIN)){
+        Serial.println("[SENSOR] I2C init failed");
+        return false;
+    }
+
+    bmeSensor.begin(I2C_ADDRESS, Wire1);
+
+    bsec_virtual_sensor_t sensorList[7] = {
+        BSEC_OUTPUT_RAW_PRESSURE,
+        BSEC_OUTPUT_RAW_GAS,
+        BSEC_OUTPUT_STATIC_IAQ,
+        BSEC_OUTPUT_CO2_EQUIVALENT,
+        BSEC_OUTPUT_BREATH_VOC_EQUIVALENT,
+        BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_TEMPERATURE,
+        BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY,
+    };
+
+    bmeSensor.updateSubscription(sensorList, 7, BSEC_SENSOR_RATE);
+
+    return checkBmeSensorStatus();
+
+}
+
+bool weds_sensor_save_state(){
+    bmeSensor.getState(bsecState);
+    //TODO: Add FS saving of bsecState
+    return checkBmeSensorStatus();
+}
+
+bool weds_sensor_load_state(uint8_t *state){
+    if(state == nullptr || state == NULL){
+        //TODO: Add FS loading of bsecState
+        bmeSensor.setState(bsecState);
+    }
+    else{
+        memcpy(bsecState, state, BSEC_MAX_STATE_BLOB_SIZE);
+        bmeSensor.setState(bsecState);
+    }
+    return checkBmeSensorStatus();
+}
+
+WedsSensorSample weds_read_environment_sample(){
+    WedsSensorSample sample{};
+    if(bmeSensor.run()) {
+        sample.temperature = bmeSensor.temperature;
+        sample.humidity = bmeSensor.humidity;
+        sample.pressure = bmeSensor.pressure;
+        sample.gas_resistance = bmeSensor.gas_resistance;
+    }
+    return sample;
+}
+
+int64_t weds_sensor_next_call_ms(){
+    if(!checkBmeSensorStatus()) return -1;
+    return bmeSensor.nextCall;
+}
+
+
+#endif
