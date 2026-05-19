@@ -477,9 +477,162 @@ def build_precision_model(input_shape):
 model_v5 = build_precision_model((X_train_scaled.shape[1],))
 model_v5.summary()
 
+import tensorflow as tf
+from tensorflow.keras import layers, models
+
+def build_precision_model(input_shape):
+    model = models.Sequential([
+        layers.Input(shape=input_shape),
+
+        # Standard funnel - much cleaner for Backpropagation
+        layers.Dense(512),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+        layers.Dropout(0.3),
+
+        layers.Dense(256),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+        layers.Dropout(0.2),
+
+        layers.Dense(512),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+        layers.Dropout(0.3),
+
+        layers.Dense(256),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+        layers.Dropout(0.2),
+
+        layers.Dense(128),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+
+        layers.Dense(64, activation='relu'),
+        layers.Dense(16, activation='relu'),
+        layers.Dense(1, activation='sigmoid')
+    ])
+
+    opt = tf.keras.optimizers.Adam(learning_rate=0.001)
+
+    model.compile(
+        optimizer=opt,
+        loss='binary_crossentropy',
+        metrics=[
+            tf.keras.metrics.Recall(name='recall'),
+            tf.keras.metrics.Precision(name='precision'),
+            tf.keras.metrics.AUC(name='pr_auc', curve='PR'),
+            tf.keras.metrics.FalseNegatives(name='fn'),
+            tf.keras.metrics.FalsePositives(name='fp')
+        ]
+    )
+    return model
+
+# Crea il modello
+model_v6 = build_precision_model((X_train_scaled.shape[1],))
+model_v6.summary()
+
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras import backend as K
+from tensorflow.keras import layers, models
+
+def binary_focal_loss(alpha=0.80, gamma=2.5):
+    """
+    Focal Loss corretta per classificazione binaria ad alto sbilanciamento.
+    """
+    def focal_loss_fixed(y_true, y_pred):
+        y_true = tf.cast(y_true, tf.float32)
+
+        # Clip per stabilità numerica
+        y_pred = K.clip(y_pred, K.epsilon(), 1.0 - K.epsilon())
+
+        # Calcolo di p_t e alpha_t coerenti con la formula originale
+        p_t = (y_true * y_pred) + ((1.0 - y_true) * (1.0 - y_pred))
+        alpha_t = (y_true * alpha) + ((1.0 - y_true) * (1.0 - alpha))
+
+        # Calcolo della loss puntuale
+        loss = -alpha_t * K.pow(1.0 - p_t, gamma) * K.log(p_t)
+
+        # Calcoliamo la media sull'intero batch in modo pulito
+        return tf.reduce_mean(loss)
+
+    return focal_loss_fixed
+
+def build_precision_model(input_shape):
+    # CHICCA INGEGNERISTICA: Calcoliamo il bias iniziale basato sullo sbilanciamento dello 0.21%
+    # Questo dice alla rete fin dal primo millisecondo che gli incendi sono rari,
+    # evitando che l'output saturi istantaneamente a zero per "paura" degli errori.
+    pos_events = 13486  # I tuoi dati dal notebook
+    neg_events = 6446780
+    initial_bias = np.log([pos_events / neg_events])
+    bias_init = tf.keras.initializers.Constant(initial_bias)
+
+    model = models.Sequential([
+        layers.Input(shape=input_shape),
+
+        # Il tuo funnel standard
+        layers.Dense(512),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+        layers.Dropout(0.3),
+
+        layers.Dense(256),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+        layers.Dropout(0.2),
+
+        layers.Dense(512),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+        layers.Dropout(0.3),
+
+        layers.Dense(256),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+        layers.Dropout(0.2),
+
+        layers.Dense(128),
+        layers.LeakyReLU(0.01),
+        layers.BatchNormalization(),
+
+        layers.Dense(64, activation='relu'),
+        layers.Dense(16, activation='relu'),
+
+        # AGGIORNATO: Applichiamo il bias di partenza qui
+        layers.Dense(1, activation='sigmoid', bias_initializer=bias_init)
+    ])
+
+    # Abbassiamo leggermente il learning rate a 0.0005 per dare tempo
+    # alla Focal Loss di calibrare i pesi complessi senza oscillare troppo
+    opt = tf.keras.optimizers.Adam(learning_rate=0.0005)
+
+    model.compile(
+        optimizer=opt,
+        loss=binary_focal_loss(alpha=0.85, gamma=2.5), # Alpha alto dà più peso all'incendio
+        metrics=[
+            tf.keras.metrics.Recall(name='recall'),
+            tf.keras.metrics.Precision(name='precision'),
+            tf.keras.metrics.AUC(name='pr_auc', curve='PR'),
+            tf.keras.metrics.FalseNegatives(name='fn'),
+            tf.keras.metrics.FalsePositives(name='fp')
+        ]
+    )
+    return model
+
+# Inizializza il modello aggiornato
+model_v7 = build_precision_model((X_train_scaled.shape[1],))
+model_v7.summary()
+
 """## Specify model"""
 
-model = model_v5
+model = model_v6
+MODEL = "model_v6"
+
+"""## Handling Class Imbalance
+
+"""
 
 import numpy as np
 
@@ -492,30 +645,46 @@ class_weights = {0: weight_for_0, 1: weight_for_1}
 
 early_stop = tf.keras.callbacks.EarlyStopping(
     monitor='val_pr_auc',
-    patience=5,
+    patience=50,
     restore_best_weights=True,
     mode='max'
 )
 
-early_stop_prec = tf.keras.callbacks.EarlyStopping(
-    monitor='val_pr_auc',
-    patience=10,
+early_stop_recall = tf.keras.callbacks.EarlyStopping(
+    monitor='val_recall',
+    patience=50,
     restore_best_weights=True,
     mode='max'
 )
+
+"""## Training"""
 
 print("Starting training...")
 
-history = model.fit(
-    X_train_scaled,
-    y_train,
-    validation_data=(X_val_scaled, y_val),
-    epochs=1000,
-    batch_size=8192,
-    class_weight=class_weights,
-    #callbacks=[early_stop_prec],
-    verbose=1
-)
+if MODEL != "model_v7":
+
+  history = model.fit(
+      X_train_scaled,
+      y_train,
+      validation_data=(X_val_scaled, y_val),
+      epochs=1000,
+      batch_size=8192,
+      class_weight=class_weights,
+      callbacks=[early_stop_recall],
+      verbose=1
+  )
+
+else:
+
+    history = model.fit(
+      X_train_scaled,
+      y_train,
+      validation_data=(X_val_scaled, y_val),
+      epochs=1000,
+      batch_size=8192,
+      callbacks=[early_stop_recall],
+      verbose=1
+  )
 
 results = model.evaluate(X_test_scaled, y_test, verbose=1)
 print(f"AUC test: {results[2]:.4f}")
@@ -529,17 +698,50 @@ from sklearn.metrics import classification_report, confusion_matrix
 print("\nConfusion Matrix:")
 print(classification_report(y_test, y_pred))
 
+"""## Save The Model"""
+
 import joblib
 
 # Save the scaler
-joblib.dump(scaler, '/content/drive/MyDrive/Models/WEDS - RiskScore/data_scaler_v5_1000.pkl')
+joblib.dump(scaler, '/content/drive/MyDrive/Models/WEDS - RiskScore/data_scaler_v6f.pkl')
 
 # Save the model
-model_v5.save('/content/drive/MyDrive/Models/WEDS - RiskScore/fire_risk_model_v5_1000.keras')
+model.save('/content/drive/MyDrive/Models/WEDS - RiskScore/fire_risk_model_v6f.keras')
 
-print("<SUCCESS> Model saved as fire_risk_model_v4.keras")
+print("<SUCCESS> Model saved as fire_risk_model_v7.keras")
 
-"""## Statistics"""
+"""# TinyML
+
+Then it is time to transform from a model to a tinyML model.
+
+"""
+
+to_tiny_path = '/content/drive/MyDrive/Models/WEDS - RiskScore/tiny/'
+version_number = "6f"
+
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+tflite_model = converter.convert()
+
+open(f"{to_tiny_path}fire_risk_tmodel_v{version_number}.tflite", "wb").write(tflite_model)
+
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+converter.optimizations = [tf.lite.Optimize.DEFAULT] # This enables quantization
+
+tflite_quant_model = converter.convert()
+
+# Save for Deployment
+with open(f"{to_tiny_path}fire_risk_tmodel_quant_v{version_number}.tflite", "wb") as f:
+    f.write(tflite_quant_model)
+
+"""# Load The Model"""
+
+import joblib
+import tensorflow as tf
+
+scaler = joblib.load('/content/drive/MyDrive/Models/WEDS - RiskScore/data_scaler_v6f.pkl')
+model = tf.keras.models.load_model('/content/drive/MyDrive/Models/WEDS - RiskScore/fire_risk_model_v6f.keras')
+
+"""## Training Statistics"""
 
 import matplotlib.pyplot as plt
 
@@ -605,6 +807,8 @@ plt.ylabel('Real')
 plt.title('Confusion Matrix')
 plt.show()
 
+"""## Prediction Statistics"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -612,7 +816,7 @@ def plot_probability_distribution(model, X_test_scaled):
     """
     Plots the recurrence (frequency) of each risk score probability.
     """
-    # 1. Get raw Sigmoid outputs (values between 0 and 1)
+
     print("Generating predictions...")
     y_probs = model.predict(X_test_scaled, batch_size=8192).flatten()
 
@@ -654,8 +858,9 @@ def plot_risk_separation(model, X_test_scaled, y_test):
     """
     Plots the distribution of Risk Scores separated by actual Fire / No Fire labels.
     """
-    print("Calculating predictions...")
+    print("Generating predictions...")
     y_probs = model.predict(X_test_scaled, batch_size=8192).flatten()
+
 
     plt.figure(figsize=(12, 7))
 
@@ -682,35 +887,246 @@ def plot_risk_separation(model, X_test_scaled, y_test):
     plt.legend()
 
     # Add descriptive text
-    plt.annotate('Overlap Area = Uncertainty', xy=(0.5, 0.1), xytext=(0.4, 0.5),
+    """plt.annotate('Overlap Area = Uncertainty', xy=(0.5, 0.1), xytext=(0.4, 0.5),
                  arrowprops=dict(facecolor='black', shrink=0.05),
                  fontsize=12, color='black')
-
+"""
     plt.show()
 
 # Run the plot
 plot_risk_separation(model, X_test_scaled, y_test)
 
-"""# TinyML
+"""## Map the RiskScore to the Probability of Fire"""
 
-Then it is time to transform from a model to a tinyML model.
+import numpy as np
+from sklearn.calibration import calibration_curve
 
-"""
+y_scores_raw = model.predict(X_val_scaled, batch_size=8192).flatten()
 
-to_tiny_path = '/content/drive/MyDrive/Models/WEDS - RiskScore/tiny/'
-version_number = 5_500
+prob_true, prob_pred = calibration_curve(y_val, y_scores_raw, n_bins=10, strategy='uniform')
 
+print("Model Risk Score -> Real-World Fire Probability")
+print("-" * 50)
+for idx in range(len(prob_pred)):
+    print(f"Score around {prob_pred[idx]:.2f}  ->  True Probability: {prob_true[idx]:.2%}")
+
+import matplotlib.pyplot as plt
+
+plt.plot(prob_pred, prob_true, 'o-', color='#d9534f', linewidth=3, label='Current Model Mapping')
+#plt.plot([0, 1], [0, 1], 'k--', alpha=0.3, label='Perfect 1:1 Reference')
+
+plt.xlabel('Computed Risk Score (Uncalibrated)', fontsize=12)
+plt.ylabel('True Probability of Wildfire', fontsize=12)
+plt.title('Empirical Risk Lookup Curve', fontsize=14, fontweight='bold')
+plt.legend(loc='lower right')
+plt.grid(True, linestyle=':', alpha=0.5)
+plt.tight_layout()
+plt.show()
+
+def get_true_probability(raw_score):
+    return np.interp(raw_score, prob_pred, prob_true)
+
+# Example usage
+sample_score = 0.5
+true_risk = get_true_probability(sample_score)
+print(f"A raw model score of {sample_score} corresponds to a true fire probability of {true_risk:.2%}")
+
+"""### Compute with Normalization"""
+
+import numpy as np
+from sklearn.calibration import calibration_curve
+from sklearn.isotonic import IsotonicRegression
+
+y_scores_raw = model.predict(X_val_scaled, batch_size=8192).flatten()
+
+calibrator = IsotonicRegression(out_of_bounds='clip')
+calibrator.fit(y_scores_raw, y_val)
+
+y_scores_calibrated = calibrator.transform(y_scores_raw)
+
+prob_true_raw, prob_pred_raw = calibration_curve(y_val, y_scores_raw, n_bins=10)
+prob_true_cal, prob_pred_cal = calibration_curve(y_val, y_scores_calibrated, n_bins=10)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+fig, ax1 = plt.subplots(figsize=(11, 7))
+
+sns.kdeplot(data=y_scores_raw[y_val == 0], ax=ax1, color='#1f77b4', fill=True, alpha=0.12, linewidth=2, linestyle=':', label='No Fire Density (Class 0)')
+sns.kdeplot(data=y_scores_raw[y_val == 1], ax=ax1, color='#ff7f0e', fill=True, alpha=0.18, linewidth=2, label='Fire Density (Class 1)')
+
+ax1.set_xlabel('Computed Risk Score (Raw Model Output)', fontsize=12, fontweight='bold')
+ax1.set_ylabel('Sample Density Population', color='black', fontsize=12)
+ax1.tick_params(axis='y', labelcolor='black')
+
+ax2 = ax1.twinx()
+ax2.plot(prob_pred_raw, prob_true_raw, 'o-', color='#d9534f', linewidth=3, label='Empirical Mapping (True Risk Curve)')
+ax2.plot([0, 1], [0, 1], 'k--', alpha=0.4, label='Ideal 1:1 Calibration Line')
+
+ax2.set_ylabel('True Probability of Wildfire Occurence', color='#d9534f', fontsize=12, fontweight='bold')
+ax2.tick_params(axis='y', labelcolor='#d9534f')
+ax2.set_ylim(-0.05, 1.05)
+
+lines_1, labels_1 = ax1.get_legend_handles_labels()
+lines_2, labels_2 = ax2.get_legend_handles_labels()
+ax1.legend(lines_1 + lines_2, labels_1 + labels_2, loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=2)
+
+plt.title('Risk Profile: Raw Score Distribution vs. True Wildfire Probability', fontsize=14, fontweight='bold', pad=15)
+plt.grid(True, linestyle=':', alpha=0.5)
+plt.tight_layout()
+plt.show()
+
+def evaluate_true_probability(new_sensor_telemetry):
+    scaled_telemetry = scaler.transform(new_sensor_telemetry)
+    raw_score = model_v7.predict(scaled_telemetry, verbose=0).flatten()
+    true_probabilistic_risk = calibrator.transform(raw_score)
+    return true_probabilistic_risk
+
+"""### Proviamo di nuovo"""
+
+import numpy as np
+import json
+from sklearn.calibration import calibration_curve
+
+y_scores_raw = model.predict(X_val_scaled, batch_size=8192).flatten()
+
+prob_true, prob_pred = calibration_curve(y_val, y_scores_raw, n_bins=10)
+
+prob_pred = np.insert(prob_pred, 0, 0.0)
+prob_true = np.insert(prob_true, 0, 0.0)
+prob_pred = np.append(prob_pred, 1.0)
+prob_true = np.append(prob_true, prob_true[-1])
+
+mapping_data = {
+    'raw_scores': prob_pred.tolist(),
+    'true_probabilities': prob_true.tolist()
+}
+
+path = '/content/drive/MyDrive/Datasets/WEDS - RiskScore/result_data/risk_mapping_v6f.json'
+
+with open(path, 'w') as f:
+    json.dump(mapping_data, f)
+
+print("Mapping saved successfully.")
+
+import numpy as np
+import json
+
+with open(path, 'r') as f:
+    mapping_data = json.load(f)
+
+ref_scores = np.array(mapping_data['raw_scores'])
+ref_probs = np.array(mapping_data['true_probabilities'])
+
+def get_true_risk(raw_model_score):
+    return np.interp(raw_model_score, ref_scores, ref_probs)
+
+# Example execution
+new_telemetry_score = 0.35
+actual_fire_risk = get_true_risk(new_telemetry_score)
+
+print(f"Model Output: {new_telemetry_score} -> True Field Risk: {actual_fire_risk:.2%}")
+
+import json
+import matplotlib.pyplot as plt
+from matplotlib.ticker import PercentFormatter
+
+# 1. Load the dynamic mapping
+with open(path, 'r') as f:
+    mapping_data = json.load(f)
+
+scores = mapping_data['raw_scores']
+true_probs = mapping_data['true_probabilities']
+
+# 2. Plot the graph
+plt.figure(figsize=(10, 6))
+
+plt.plot(scores, true_probs, 'o-', color='#d9534f', linewidth=3, markersize=8)
+
+# Assuming 0.21% is your baseline, keep it as a visual reference
+plt.axhline(y=0.0021, color='k', linestyle='--', alpha=0.5, label='Historical Baseline (0.21%)')
+
+plt.xlabel('Computed Risk Score', fontsize=12, fontweight='bold')
+plt.ylabel('True Probability of Wildfire', fontsize=12, fontweight='bold')
+plt.title('Empirical Risk Lookup Curve', fontsize=14, fontweight='bold', pad=15)
+
+plt.gca().yaxis.set_major_formatter(PercentFormatter(1.0))
+plt.legend(loc='upper left')
+plt.grid(True, linestyle=':', alpha=0.6)
+plt.tight_layout()
+
+plt.show()
+
+"""## Testing TinyML Model"""
+
+import tensorflow as tf
+import numpy as np
+import time
+import os
+
+# 1. CONVERT TO TFLITE (TinyML Optimization)
+print("1. Converting and quantizing model to TensorFlow Lite...")
 converter = tf.lite.TFLiteConverter.from_keras_model(model)
+# Apply dynamic range quantization to shrink the model size for microcontrollers
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
 tflite_model = converter.convert()
 
-open(f"{to_tiny_path}fire_risk_tmodel_v{version_number}.tflite", "wb").write(tflite_model)
+tflite_path = "/content/drive/MyDrive/Models/WEDS - RiskScore/tiny/fire_risk_tmodel_quant_v6f.tflite"
+with open(tflite_path, "wb") as f:
+    f.write(tflite_model)
 
-converter = tf.lite.TFLiteConverter.from_keras_model(model)
-converter.optimizations = [tf.lite.Optimize.DEFAULT] # This enables quantization
+# 2. FILE SIZE COMPARISON
+# Replace with your actual .keras file path if different
+keras_path = '/content/drive/MyDrive/Models/WEDS - RiskScore/fire_risk_model_v6f.keras'
+keras_size = os.path.getsize(keras_path) / 1024 # Convert bytes to KB
+tflite_size = os.path.getsize(tflite_path) / 1024
 
-tflite_quant_model = converter.convert()
+# 3. SETUP TFLITE INTERPRETER
+# TFLite requires manual memory allocation and tensor sizing
+X_val_float32 = X_val_scaled.astype(np.float32)
 
-# Save for Deployment
-with open(f"{to_tiny_path}fire_risk_tmodel_quant_v{version_number}.tflite", "wb") as f:
-    f.write(tflite_quant_model)
+interpreter = tf.lite.Interpreter(model_path=tflite_path)
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+
+# Resize the TFLite input tensor to process the whole validation array at once
+interpreter.resize_tensor_input(input_details[0]['index'], X_val_float32.shape)
+interpreter.allocate_tensors()
+
+# 4. RUN KERAS INFERENCE
+print("2. Running standard Keras inference...")
+start_time = time.perf_counter()
+keras_preds = model.predict(X_val_scaled, batch_size=8192, verbose=0).flatten()
+keras_time = time.perf_counter() - start_time
+
+# 5. RUN TFLITE INFERENCE
+print("3. Running TinyML TFLite inference...")
+start_time = time.perf_counter()
+interpreter.set_tensor(input_details[0]['index'], X_val_float32)
+interpreter.invoke()
+tflite_preds = interpreter.get_tensor(output_details[0]['index']).flatten()
+tflite_time = time.perf_counter() - start_time
+
+# 6. CALCULATE ACCURACY LOSS
+# We measure the exact mathematical distance between Keras output and TFLite output
+mae = np.mean(np.abs(keras_preds - tflite_preds))
+max_error = np.max(np.abs(keras_preds - tflite_preds))
+
+# 7. PRINT FINAL BENCHMARK REPORT
+print("\n" + "="*50)
+print("🚀 TINYML VS STANDARD MODEL REPORT 🚀")
+print("="*50)
+print("MODEL SIZE (Storage footprint):")
+print(f" - Standard (Keras): {keras_size:.2f} KB")
+print(f" - TinyML (TFLite):  {tflite_size:.2f} KB")
+print(f"   -> Compression Ratio: {keras_size/tflite_size:.1f}x smaller")
+
+print(f"\nINFERENCE SPEED (Tested on {len(X_val_scaled)} samples):")
+print(f" - Standard (Keras): {keras_time:.4f} seconds")
+print(f" - TinyML (TFLite):  {tflite_time:.4f} seconds")
+
+print("\nPREDICTION DRIFT (Quantization Error):")
+print(f" - Mean Absolute Error: {mae:.6f}")
+print(f" - Maximum Single Error: {max_error:.6f}")
+print("="*50)
 
