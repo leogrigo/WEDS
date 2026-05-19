@@ -150,3 +150,22 @@ HIGH RISK (Orange): Model Score 0.65 to 0.85 (Risk is 2x to 4x higher than avera
 CRITICAL RISK (Red): Model Score > 0.85 (Risk is 5x to 18x+ higher than average. Dispatch drones for active monitoring).
 
 Final Verdict: Yes, the model is good. It has successfully separated the "safe" weather patterns from the "dangerous" ones. You do not need to recalibrate it; you just need to update your threshold logic to trigger alerts when the score crosses 0.75 or 0.82.
+
+## Model vs TinyML
+
+==================================================
+🚀 TINYML VS STANDARD MODEL REPORT 🚀
+==================================================
+MODEL SIZE (Storage footprint):
+ - Standard (Keras): 5312.83 KB
+ - TinyML (TFLite):  461.20 KB
+   -> Compression Ratio: 11.5x smaller
+
+INFERENCE SPEED (Tested on 1292053 samples):
+ - Standard (Keras): 41.3839 seconds
+ - TinyML (TFLite):  28.1317 seconds
+
+PREDICTION DRIFT (Quantization Error):
+ - Mean Absolute Error: 0.001759
+ - Maximum Single Error: 0.093145
+==================================================
