@@ -58,6 +58,7 @@ void unlockState() {
     }
 }
 
+#ifdef WEDS_LEGACY_SENSORS
 WedsSensorSample readSensors() {
     if (WEDS_NODE_SENSING_MODE == WEDS_NODE_ENVIRONMENT_SENSING) {
         return weds_read_environment_sample();
@@ -65,6 +66,21 @@ WedsSensorSample readSensors() {
 
     return weds_read_simulated_sample();
 }
+#else
+
+WedsSensorSample readSensors() {
+    if (WEDS_NODE_SENSING_MODE == WEDS_NODE_ENVIRONMENT_SENSING) {
+        int64_t time_to_wait = weds_sensor_next_call_ms() - millis();
+        if(time_to_wait > 0){
+            xTaskDelayUntil(xTaskGetTickCount(),pdMS_TO_TICKS(time_to_wait));
+        }
+        return weds_read_environment_sample();
+    }
+
+    return weds_read_simulated_sample();
+}
+
+#endif
 
 bool isAlertPayload(const WedsNodeStatusPayload& payload) {
     return payload.anomaly_state == WEDS_DETECTION_ALERT ||
