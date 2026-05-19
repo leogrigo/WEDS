@@ -18,6 +18,9 @@ public:
         uint32_t timeout_ms
     );  // Polls for an incoming Alert Mode Enable command from the gateway, with a specified timeout
 
+    void sleepRadio();  // Puts the LoRa radio in low-power sleep mode between node cycles
+    void wakeRadio();   // Wakes the LoRa radio before transmit or receive operations
+
     uint32_t getNodeId() const; // Returns the unique node ID of this device
     uint16_t getCurrentSequenceId() const;  // Returns the current sequence ID that will be used for the next outgoing message (before incrementing)
 
@@ -25,6 +28,7 @@ private:
     uint32_t node_id_;
     uint16_t sequence_id_;
     bool initialized_;
+    bool radio_sleeping_;
     bool has_last_gateway_command_;
     uint16_t last_gateway_command_sequence_id_;
     uint8_t last_gateway_command_msg_type_;

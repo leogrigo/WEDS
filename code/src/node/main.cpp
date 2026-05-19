@@ -152,9 +152,16 @@ void NodeCycleTask(void* pvParameters) {
 
         lockState();
         nodeState.refreshAlertMode();
-        nodeState.setSleepEnabled(!nodeState.alertModeActive());
+        const bool sleep_enabled = !nodeState.alertModeActive();
+        nodeState.setSleepEnabled(sleep_enabled);
         const uint32_t next_sample_delay_ms = nodeState.sampleIntervalMs();
         unlockState();
+
+        if (sleep_enabled) {
+            lockComm();
+            nodeComm.sleepRadio();
+            unlockComm();
+        }
 
         vTaskDelay(pdMS_TO_TICKS(next_sample_delay_ms));
     }

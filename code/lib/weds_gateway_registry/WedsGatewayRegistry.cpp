@@ -120,7 +120,7 @@ bool WedsGatewayRegistry::savePersistentConfig() {
     for (size_t i = 0; i < WEDS_MAX_NODES; ++i) {
         const WedsNodeRecord& record = records_[i];
 
-        if (!record.used) {
+        if (!record.used || !record.location_known) {
             continue;
         }
 
