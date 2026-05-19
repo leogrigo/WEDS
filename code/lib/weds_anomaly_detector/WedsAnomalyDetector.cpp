@@ -76,8 +76,12 @@ float WedsAnomalyDetector::positivePart(float value) {
     return value > 0.0f ? value : 0.0f;
 }
 
+float WedsAnomalyDetector::negativePart(float value) {
+    return value < 0.0f ? value*-1.0f : 0.0f;
+}
+
 float WedsAnomalyDetector::directionalGasScore(float gas_z) {
-    return positivePart(gas_z);
+    return negativePart(gas_z);
 }
 
 void printAnomalyResults(const WedsAnomalyResult& result) {

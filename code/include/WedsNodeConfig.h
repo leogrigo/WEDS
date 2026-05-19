@@ -5,8 +5,8 @@
 #include "WedsRadioConfig.h"
 
 enum WedsNodeSensingMode : uint8_t {
-    WEDS_NODE_ENVIRONMENT_SENSING = 0,
-    WEDS_NODE_SIMULATION = 1
+    WEDS_NODE_ENVIRONMENT_SENSING = 1,
+    WEDS_NODE_SIMULATION = 0
 };
 
 enum WedsSimulationMode : uint8_t {

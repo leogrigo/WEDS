@@ -46,6 +46,7 @@ private:
     };
 
     static float positivePart(float value);
+    static float negativePart(float value);
     static float directionalGasScore(float gas_z);
 
     bool started_;

@@ -61,6 +61,9 @@ WedsSensorSample weds_read_environment_sample() {
 
 #else
 
+#include <bsec.h>
+#include <Wire.h>
+
 #define I2C_ADDRESS BME68X_I2C_ADDR_HIGH
 #define BSEC_SENSOR_RATE BSEC_SAMPLE_RATE_LP
 
@@ -74,7 +77,8 @@ uint64_t read_count = 0;
 bool checkBmeSensorStatus(void) {
   if (bmeSensor.bsecStatus != BSEC_OK || bmeSensor.bme68xStatus != BME68X_OK) {
     Serial.println("ERRORE SENSORE - Controllo cablaggio e I2C!");
-    Serial.println("Errore num: " + String(iaqSensor.bme68xStatus));
+    Serial.println("Codice bme68xStatus: " + String(bmeSensor.bme68xStatus));
+    Serial.println("Codice bsecStatus: " + String(bmeSensor.bsecStatus));
     Serial.flush();
     return false;
   }
@@ -82,7 +86,7 @@ bool checkBmeSensorStatus(void) {
 }
 
 bool weds_sensors_begin(){
-    if(!Wire1.begin(SDA_PIN, SCL_PIN)){
+    if(!Wire1.begin(WEDS_I2C_SDA, WEDS_I2C_SCL)){
         Serial.println("[SENSOR] I2C init failed");
         return false;
     }
@@ -129,7 +133,7 @@ WedsSensorSample weds_read_environment_sample(){
         sample.temperature = bmeSensor.temperature;
         sample.humidity = bmeSensor.humidity;
         sample.pressure = bmeSensor.pressure;
-        sample.gas_resistance = bmeSensor.gas_resistance;
+        sample.gas_resistance = bmeSensor.gasResistance;
     }
     return sample;
 }

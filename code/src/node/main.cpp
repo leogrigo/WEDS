@@ -72,7 +72,8 @@ WedsSensorSample readSensors() {
     if (WEDS_NODE_SENSING_MODE == WEDS_NODE_ENVIRONMENT_SENSING) {
         int64_t time_to_wait = weds_sensor_next_call_ms() - millis();
         if(time_to_wait > 0){
-            xTaskDelayUntil(xTaskGetTickCount(),pdMS_TO_TICKS(time_to_wait));
+            TickType_t current_ticks = xTaskGetTickCount();
+            xTaskDelayUntil(&current_ticks,pdMS_TO_TICKS(time_to_wait));
         }
         return weds_read_environment_sample();
     }
