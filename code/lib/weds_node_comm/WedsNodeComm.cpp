@@ -21,6 +21,7 @@ WedsNodeComm::WedsNodeComm()
     : node_id_(0),
       sequence_id_(1),
       initialized_(false),
+      radio_sleeping_(false),
       has_last_gateway_command_(false),
       last_gateway_command_sequence_id_(0),
       last_gateway_command_msg_type_(0) {}
@@ -65,6 +66,7 @@ bool WedsNodeComm::initRadio() {
     );
 
     if (state == RADIOLIB_ERR_NONE) {
+        radio_sleeping_ = false;
         Serial.println("[NODE_COMM] LoRa init OK");
         return true;
     }
@@ -72,6 +74,26 @@ bool WedsNodeComm::initRadio() {
     Serial.print("[NODE_COMM] LoRa init failed, code=");
     Serial.println(state);
     return false;
+}
+
+void WedsNodeComm::sleepRadio() {
+    if (!initialized_ || radio_sleeping_) {
+        return;
+    }
+
+    radio.sleep();
+    radio_sleeping_ = true;
+    Serial.println("[NODE_COMM] LoRa radio sleep");
+}
+
+void WedsNodeComm::wakeRadio() {
+    if (!initialized_ || !radio_sleeping_) {
+        return;
+    }
+
+    radio.standby();
+    radio_sleeping_ = false;
+    Serial.println("[NODE_COMM] LoRa radio wake");
 }
 
 bool WedsNodeComm::sendStatus(const WedsNodeStatusPayload& status) {
@@ -163,6 +185,8 @@ bool WedsNodeComm::sendAlert(const WedsNodeStatusPayload& status) {
 }
 
 bool WedsNodeComm::sendPacket(const WedsPacket& packet) {
+    wakeRadio();
+
     uint8_t buffer[WEDS_MAX_PACKET_SIZE];
     size_t encoded_len = 0;
 
@@ -210,6 +234,8 @@ bool WedsNodeComm::waitForAck(
     uint8_t expected_acked_msg_type,
     uint32_t timeout_ms
 ) {
+    wakeRadio();
+
     const uint32_t start_ms = millis();
 
     while (millis() - start_ms < timeout_ms) {
@@ -369,6 +395,8 @@ bool WedsNodeComm::pollAlertModeEnable(
         Serial.println("[NODE_COMM] pollAlertModeEnable failed: not initialized");
         return false;
     }
+
+    wakeRadio();
 
     const uint32_t start_ms = millis();
 
