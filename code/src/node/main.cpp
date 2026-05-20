@@ -25,6 +25,9 @@ EventGroupHandle_t nodeEvents = nullptr;
 SemaphoreHandle_t commMutex = nullptr;
 SemaphoreHandle_t stateMutex = nullptr;
 
+/**
+ * @brief Halts the system and blinks an error code if a critical boot failure occurs.
+ */
 void fatalError(const char* message) {
     Serial.print("[NODE_FATAL] ");
     Serial.println(message);
@@ -98,6 +101,9 @@ bool sendPayload(const WedsNodeStatusPayload& payload) {
     return sent;
 }
 
+/**
+ * @brief Dedicated FreeRTOS task for receiving Gateway commands via LoRa.
+ */
 void NodeRxTask(void* pvParameters) {
     (void)pvParameters;
 
@@ -131,6 +137,9 @@ void NodeRxTask(void* pvParameters) {
     }
 }
 
+/**
+ * @brief Main execution cycle. Reads sensors, runs ML inferences, and transmits data.
+ */
 void NodeCycleTask(void* pvParameters) {
     (void)pvParameters;
 
@@ -145,16 +154,38 @@ void NodeCycleTask(void* pvParameters) {
         const uint32_t rx_window_start_ms = millis();
         xEventGroupSetBits(nodeEvents, NODE_RX_WINDOW_BIT);
 
-        const WedsSensorSample sample = readSensors();
+        // --- 1. SENSOR READING ---
+        // Note: Removed 'const' so we can inject the simulated timestamp
+        WedsSensorSample sample = readSensors();
+
+        // --- 2. TIMESTAMP INJECTION (CRITICAL FIX) ---
+        // Inject a simulated UNIX timestamp using the device uptime (seconds).
+        // We add 86400 (1 day) to ensure current_day never evaluates to 0 on boot,
+        // which prevents the negative modulo crash in the risk score calculator.
+        sample.timestamp = (millis() / 1000) + 86400;
+
+        if (!sample.valid) {
+            xEventGroupClearBits(nodeEvents, NODE_RX_WINDOW_BIT);
+            vTaskDelay(pdMS_TO_TICKS(1000));
+            continue;
+        }
+
+        // --- 3. ANOMALY DETECTION ---
         const WedsAnomalyResult anomaly = anomalyDetector.update(sample);
         printAnomalyResults(anomaly);
 
+        // --- 4. TINYML RISK PREDICTION ---
         const WedsRiskResult risk = riskScoreCalculator.update(sample);
+        
+        // Print the calculated probability to the Serial Monitor
+        Serial.printf("[NODE] Fire Risk Score: %.2f%%\n", risk.score * 100.0f);
 
+        // --- 5. PAYLOAD CONSTRUCTION ---
         lockState();
         const WedsNodeStatusPayload payload = nodeState.buildPayload(sample, anomaly, risk);
         unlockState();
 
+        // Maintain the receive window timing
         const uint32_t elapsed_rx_ms = millis() - rx_window_start_ms;
         if (elapsed_rx_ms < WEDS_NODE_MIN_RX_WINDOW_MS) {
             vTaskDelay(pdMS_TO_TICKS(WEDS_NODE_MIN_RX_WINDOW_MS - elapsed_rx_ms));
@@ -162,11 +193,13 @@ void NodeCycleTask(void* pvParameters) {
 
         xEventGroupClearBits(nodeEvents, NODE_RX_WINDOW_BIT);
 
+        // --- 6. TRANSMISSION ---
         const bool sent = sendPayload(payload);
         if (!sent) {
             Serial.println("[NODE] Failed to send payload to gateway");
         }
 
+        // --- 7. SLEEP MANAGEMENT ---
         lockState();
         nodeState.refreshAlertMode();
         const bool sleep_enabled = !nodeState.alertModeActive();
@@ -180,6 +213,7 @@ void NodeCycleTask(void* pvParameters) {
             unlockComm();
         }
 
+        // Yield execution to the RTOS scheduler until the next reading is due
         vTaskDelay(pdMS_TO_TICKS(next_sample_delay_ms));
     }
 }
@@ -257,6 +291,12 @@ void setup() {
     lockState();
     nodeState.begin(nodeComm.getNodeId());
     unlockState();
+
+    // --- INITIALIZE TINYML MODEL ---
+    Serial.println("[NODE] Initializing TinyML Model...");
+    if (!riskScoreCalculator.begin()) {
+        fatalError("Failed to initialize Risk Score Model");
+    }
 
     createNodeTasks();
     Serial.println("[NODE] FreeRTOS tasks started");

@@ -2,8 +2,23 @@
 
 #include <Arduino.h>
 
+/**
+ * @class WedsGatewayWeb
+ * @brief Provides static HTML content for the gateway web interface.
+ */
 class WedsGatewayWeb {
 public:
-    static const char* indexHtml(); // Returns the HTML content for the index page
-    static const char* adminHtml(); // Returns the HTML content for the admin page
+    /**
+     * @brief Returns the HTML content for the dashboard index page.
+     * 
+     * @return const char* Pointer to the PROGMEM string containing the index HTML.
+     */
+    static const char* indexHtml();
+
+    /**
+     * @brief Returns the HTML content for the administration page.
+     * 
+     * @return const char* Pointer to the PROGMEM string containing the admin HTML.
+     */
+    static const char* adminHtml();
 };

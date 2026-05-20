@@ -1,0 +1,25 @@
+var annotated_dup =
+[
+    [ "DailyBucket", "struct_daily_bucket.html", "struct_daily_bucket" ],
+    [ "WedsAckPayload", "struct_weds_ack_payload.html", "struct_weds_ack_payload" ],
+    [ "WedsAlertModeEnablePayload", "struct_weds_alert_mode_enable_payload.html", "struct_weds_alert_mode_enable_payload" ],
+    [ "WedsAnomalyDetector", "class_weds_anomaly_detector.html", "class_weds_anomaly_detector" ],
+    [ "WedsAnomalyResult", "struct_weds_anomaly_result.html", "struct_weds_anomaly_result" ],
+    [ "WedsGatewayApi", "class_weds_gateway_api.html", "class_weds_gateway_api" ],
+    [ "WedsGatewayComm", "class_weds_gateway_comm.html", "class_weds_gateway_comm" ],
+    [ "WedsGatewayRegistry", "class_weds_gateway_registry.html", "class_weds_gateway_registry" ],
+    [ "WedsGatewayWeb", "class_weds_gateway_web.html", "class_weds_gateway_web" ],
+    [ "WedsNodeComm", "class_weds_node_comm.html", "class_weds_node_comm" ],
+    [ "WedsNodeEvent", "struct_weds_node_event.html", "struct_weds_node_event" ],
+    [ "WedsNodeRecord", "struct_weds_node_record.html", "struct_weds_node_record" ],
+    [ "WedsNodeState", "class_weds_node_state.html", "class_weds_node_state" ],
+    [ "WedsNodeStatusPayload", "struct_weds_node_status_payload.html", "struct_weds_node_status_payload" ],
+    [ "WedsPacket", "struct_weds_packet.html", "struct_weds_packet" ],
+    [ "WedsPacketHeader", "struct_weds_packet_header.html", "struct_weds_packet_header" ],
+    [ "WedsRiskResult", "struct_weds_risk_result.html", "struct_weds_risk_result" ],
+    [ "WedsRiskScoreCalculator", "class_weds_risk_score_calculator.html", "class_weds_risk_score_calculator" ],
+    [ "WedsSelfTestNodeConfig", "struct_weds_self_test_node_config.html", "struct_weds_self_test_node_config" ],
+    [ "WedsSensorSample", "struct_weds_sensor_sample.html", "struct_weds_sensor_sample" ],
+    [ "WedsSimulationState", "struct_weds_simulation_state.html", "struct_weds_simulation_state" ],
+    [ "WedsTrendPoint", "struct_weds_trend_point.html", "struct_weds_trend_point" ]
+];

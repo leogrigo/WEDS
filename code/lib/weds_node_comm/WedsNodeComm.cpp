@@ -2,6 +2,11 @@
 #include <heltec_unofficial.h>
 #include "WedsNodeConfig.h"
 
+/**
+ * @brief Returns a string representation of the given message type.
+ * @param msg_type The message type identifier.
+ * @return const char* String representing the message type.
+ */
 const char* messageTypeName(uint8_t msg_type) {
     switch (msg_type) {
         case WEDS_MSG_NODE_STATUS:
@@ -214,9 +219,6 @@ bool WedsNodeComm::sendPacket(const WedsPacket& packet) {
     Serial.print(" len=");
     Serial.println(encoded_len);
 
-    // Serial.print("[NODE_COMM] HEX: ");
-    // printBufferHex(buffer, encoded_len);
-
     int state = radio.transmit(buffer, encoded_len);
 
     if (state == RADIOLIB_ERR_NONE) {
@@ -250,9 +252,6 @@ bool WedsNodeComm::waitForAck(
 
             Serial.print("[NODE_COMM] RX while waiting ACK len=");
             Serial.println(len);
-
-            // Serial.print("[NODE_COMM] RX HEX: ");
-            // printBufferHex(rx_buffer, len);
 
             WedsPacket packet;
 
@@ -416,9 +415,6 @@ bool WedsNodeComm::pollAlertModeEnable(
 
             Serial.print("[NODE_COMM] Command packet received len=");
             Serial.println(len);
-
-            // Serial.print("[NODE_COMM] RX HEX: ");
-            // printBufferHex(rx_buffer, len);
 
             WedsPacket packet;
 

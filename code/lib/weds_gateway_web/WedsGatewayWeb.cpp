@@ -1,5 +1,8 @@
 #include "WedsGatewayWeb.h"
 
+/**
+ * @brief PROGMEM string containing the HTML content for the main dashboard page.
+ */
 static const char INDEX_HTML[] PROGMEM = R"rawliteral(
 <!doctype html>
 <html lang="en">
@@ -222,6 +225,9 @@ static const char INDEX_HTML[] PROGMEM = R"rawliteral(
 </html>
 )rawliteral";
 
+/**
+ * @brief PROGMEM string containing the HTML content for the administration page.
+ */
 static const char ADMIN_HTML[] PROGMEM = R"rawliteral(
 <!doctype html>
 <html lang="en">

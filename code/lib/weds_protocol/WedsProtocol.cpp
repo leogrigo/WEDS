@@ -6,13 +6,6 @@
 #include <Arduino.h>
 #endif
 
-// =========================
-// Internal little-endian helpers
-// =========================
-
-// CRC16-CCITT-FALSE
-// Polynomial: 0x1021
-// Initial value: 0xFFFF
 static uint16_t weds_crc16_ccitt(const uint8_t* data, size_t len) {
     uint16_t crc = 0xFFFF;
 
@@ -101,10 +94,6 @@ static bool read_float_le(const uint8_t* buffer, size_t len, size_t& offset, flo
     return true;
 }
 
-// =========================
-// Node ID helper
-// =========================
-
 uint32_t weds_get_node_id_from_mac() {
 #if defined(ARDUINO)
     uint64_t mac = ESP.getEfuseMac();
@@ -113,10 +102,6 @@ uint32_t weds_get_node_id_from_mac() {
     return 0;
 #endif
 }
-
-// =========================
-// Packet serialization
-// =========================
 
 bool weds_serialize_packet(
     const WedsPacket& packet,
@@ -216,10 +201,6 @@ bool weds_deserialize_packet(
     return true;
 }
 
-// =========================
-// NODE_STATUS / NODE_ALERT payload
-// =========================
-
 bool weds_encode_node_status_payload(
     const WedsNodeStatusPayload& payload,
     uint8_t* buffer,
@@ -271,10 +252,6 @@ bool weds_decode_node_status_payload(
     return offset == len;
 }
 
-// =========================
-// ACK payload
-// =========================
-
 bool weds_encode_ack_payload(
     const WedsAckPayload& payload,
     uint8_t* buffer,
@@ -306,10 +283,6 @@ bool weds_decode_ack_payload(
     return offset == len;
 }
 
-// =========================
-// ALERT_MODE_ENABLE payload
-// =========================
-
 bool weds_encode_alert_mode_enable_payload(
     const WedsAlertModeEnablePayload& payload,
     uint8_t* buffer,
@@ -340,10 +313,6 @@ bool weds_decode_alert_mode_enable_payload(
 
     return offset == len;
 }
-
-// =========================
-// Packet builders
-// =========================
 
 bool weds_build_node_status_packet(
     uint32_t src_node_id,
