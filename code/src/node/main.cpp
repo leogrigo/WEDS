@@ -112,10 +112,10 @@ void setup() {
     }
     sample.timestamp = rtc_virtual_timestamp;
 
-    if (!sample.valid) {
-        Serial.println("[NODE] Sensor read invalid, entering low-risk sleep");
-        rtc_virtual_timestamp += WEDS_SLEEP_SEC_RISK_LOW;
-        esp_deep_sleep((uint64_t)WEDS_SLEEP_SEC_RISK_LOW * 1000000ULL);
+    if (!sample.valid || isnan(sample.temperature) || isnan(sample.humidity)) {
+        Serial.println("[NODE_WARN] Sensor fault detected (NaN or invalid read) — retrying in 5s");
+        Serial.flush();
+        esp_deep_sleep(5000000ULL);
         return;
     }
 

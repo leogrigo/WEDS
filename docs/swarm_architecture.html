@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEDS Swarm Architecture — Technical Reference</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:          #090e1a;
+            --bg2:         #0f1829;
+            --bg3:         #162035;
+            --bg4:         #1e2d4a;
+            --border:      rgba(255,255,255,0.07);
+            --border-h:    rgba(99,102,241,0.45);
+            --text1:       #f1f5f9;
+            --text2:       #94a3b8;
+            --text3:       #64748b;
+            --cyan:        #22d3ee;
+            --indigo:      #818cf8;
+            --violet:      #a78bfa;
+            --emerald:     #34d399;
+            --amber:       #fbbf24;
+            --rose:        #fb7185;
+            --orange:      #fb923c;
+            --tr: all 0.25s cubic-bezier(.4,0,.2,1);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text1);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(9,14,26,0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        nav .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: linear-gradient(90deg, var(--cyan), var(--indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+        nav a {
+            color: var(--text2);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--tr);
+        }
+        nav a:hover { color: var(--text1); }
+
+        /* ── LAYOUT ── */
+        .page { max-width: 1140px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+        /* ── HERO ── */
+        .hero { text-align: center; margin-bottom: 4rem; }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.9rem;
+            border-radius: 99px;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            color: var(--indigo);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #f1f5f9 30%, var(--indigo) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            max-width: 640px;
+            margin: 0 auto;
+            color: var(--text2);
+            font-size: 1.05rem;
+        }
+
+        /* ── SECTION ── */
+        section { margin-bottom: 3.5rem; }
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        h2::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 1.4rem;
+            border-radius: 4px;
+            background: linear-gradient(180deg, var(--cyan), var(--indigo));
+            flex-shrink: 0;
+        }
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.6rem;
+            color: var(--text1);
+        }
+        p { color: var(--text2); margin-bottom: 0.9rem; }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            transition: var(--tr);
+        }
+        .card:hover {
+            border-color: var(--border-h);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(99,102,241,0.08);
+        }
+        .card-grid {
+            display: grid;
+            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            margin-bottom: 1.5rem;
+        }
+        .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .card h3 { margin-top: 0; color: var(--text1); font-size: 1rem; }
+        .card p { font-size: 0.88rem; margin-bottom: 0; }
+
+        /* ── PACKET TABLE ── */
+        .table-wrap { overflow-x: auto; margin: 1rem 0; border-radius: 12px; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        th {
+            background: var(--bg3);
+            color: var(--text2);
+            font-weight: 600;
+            text-align: left;
+            padding: 0.7rem 1rem;
+            letter-spacing: 0.04em;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+        }
+        td { padding: 0.65rem 1rem; border-top: 1px solid var(--border); color: var(--text2); }
+        tr:hover td { background: rgba(255,255,255,0.015); }
+        .mono { font-family: 'JetBrains Mono', monospace; color: var(--cyan); font-size: 0.82rem; }
+        .badge {
+            display: inline-block;
+            padding: 0.18rem 0.55rem;
+            border-radius: 99px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .badge-cyan    { background: rgba(34,211,238,0.1); color: var(--cyan);    border: 1px solid rgba(34,211,238,0.2); }
+        .badge-indigo  { background: rgba(129,140,248,0.1); color: var(--indigo); border: 1px solid rgba(129,140,248,0.2); }
+        .badge-emerald { background: rgba(52,211,153,0.1); color: var(--emerald); border: 1px solid rgba(52,211,153,0.2); }
+        .badge-amber   { background: rgba(251,191,36,0.1); color: var(--amber);   border: 1px solid rgba(251,191,36,0.2); }
+        .badge-rose    { background: rgba(251,113,133,0.1); color: var(--rose);   border: 1px solid rgba(251,113,133,0.2); }
+
+        /* ── STEP LIST ── */
+        .steps { display: flex; flex-direction: column; gap: 0; }
+        .step {
+            display: flex;
+            gap: 1.25rem;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        .step:last-child { padding-bottom: 0; }
+        .step-line {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            flex-shrink: 0;
+            box-shadow: 0 0 14px rgba(34,211,238,0.25);
+        }
+        .step-connector {
+            flex: 1;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(34,211,238,0.3), rgba(99,102,241,0.05));
+            margin: 4px 0;
+        }
+        .step:last-child .step-connector { display: none; }
+        .step-body { padding-top: 4px; }
+        .step-body h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--text1);
+        }
+        .step-body p { font-size: 0.88rem; margin-bottom: 0; color: var(--text2); }
+        .step-body code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg3);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            color: var(--amber);
+        }
+
+        /* ── DIAGRAM CONTAINER ── */
+        .diagram-wrap {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+            display: flex;
+            justify-content: center;
+        }
+        .diagram-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text3);
+            margin-bottom: 0.75rem;
+        }
+
+        /* ── CALLOUT ── */
+        .callout {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .callout-note    { background: rgba(129,140,248,0.07); border-left: 3px solid var(--indigo); color: var(--text2); }
+        .callout-warning { background: rgba(251,191,36,0.07);  border-left: 3px solid var(--amber);  color: var(--text2); }
+        .callout-key     { background: rgba(34,211,238,0.07);  border-left: 3px solid var(--cyan);   color: var(--text2); }
+        .callout-icon { flex-shrink: 0; font-size: 1.1rem; }
+
+        /* ── DIVIDER ── */
+        hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <span class="logo">🔥 WEDS Swarm Docs</span>
+    <a href="#topology">Topology</a>
+    <a href="#propagation">Alert Propagation</a>
+    <a href="#packet">Packet Lifecycle</a>
+    <a href="#diagrams">Diagrams</a>
+    <a href="#timing">Timing & Duty Cycle</a>
+</nav>
+
+<div class="page">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-eyebrow">Technical Architecture Reference</div>
+        <h1>WEDS Swarm Communication Architecture</h1>
+        <p>A deep-dive into the gateway-orchestrated star topology, alert propagation mechanics, LoRa packet lifecycle, and node duty-cycle state machine of the Wildfire Early Detection System.</p>
+    </div>
+
+    <!-- SECTION 1 — TOPOLOGY -->
+    <section id="topology">
+        <h2>Network Topology</h2>
+        <p>WEDS uses a <strong>centrally-orchestrated Star topology</strong>, where a single gateway acts as the hub for all inter-node communication. Nodes do not communicate directly with each other; all coordination flows through the gateway.</p>
+
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-icon">📡</div>
+                <h3>Gateway (Hub)</h3>
+                <p>Heltec ESP32 LoRa V3. Runs continuously, listening for incoming <code>NODE_STATUS</code> and <code>NODE_ALERT</code> packets. Maintains the <code>WedsGatewayRegistry</code> — a live in-memory database of all known nodes. Hosts a REST/WebSocket API for the dashboard. NTP-synced for authoritative timestamps.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌿</div>
+                <h3>Sensor Nodes (Spokes)</h3>
+                <p>Heltec ESP32 LoRa V3 + BME688. Execute a linear <em>wake → sense → infer → transmit → sleep</em> cycle. Deep-sleep between cycles to conserve battery. Nodes listen for <code>ALERT_MODE_ENABLE</code> commands from the gateway during their post-TX RX window.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🗺️</div>
+                <h3>Geospatial Neighbor Map</h3>
+                <p>The gateway stores GPS coordinates per node (loaded from LittleFS config). When an alert fires, <code>findNeighbors()</code> uses the Haversine formula to identify all nodes within <code>WEDS_NEIGHBOR_RADIUS_M</code> metres of the alerting node and queues <code>ALERT_MODE_ENABLE</code> commands for each.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-note">
+            <span class="callout-icon">ℹ️</span>
+            <span>There is <strong>no node-to-node LoRa link</strong>. The "swarm" effect is achieved by the gateway acting as a coordinator: it observes an alert from Node A and proactively commands Nodes B and C to enter heightened-alert duty cycles. Nodes are unaware of each other's existence.</span>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- SECTION 2 — ALERT PROPAGATION -->
+    <section id="propagation">
+        <h2>Alert Propagation — The Swarm Effect</h2>
+        <p>When any node crosses an alert threshold (anomaly or TinyML risk score), the system orchestrates a cascade that compresses the duty cycles of all geographically neighbouring nodes. Here is the precise step-by-step flow:</p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-dot">1</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h4>Node A — TinyML Threshold Breach</h4>
+                    <p>Node A's <code>WedsAnomalyDetector</code> or <code>WedsRiskScoreCalculator</code> returns a result where <code>detection_state == WEDS_DETECTION_ALERT</code> (risk score &gt; 0.75 or anomaly score beyond 3σ EMA baseline). The <code>isAlertPayload()</code> helper in <code>main.cpp</code> routes the uplink to <code>nodeComm.sendAlert()</code> instead of <code>sendStatus()</code>.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-dot">2</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h4>Node A — Reliable Alert Transmission</h4>
+                    <p><code>sendAlert()</code> builds a <code>NODE_ALERT</code> packet (msg_type <code>0x02</code>) with <code>ack_required = WEDS_ACK_REQUIRED</code>. It enters a retry loop (up to <code>WEDS_NODE_ALERT_MAX_RETRIES = 3</code> attempts, with <code>WEDS_NODE_RETRY_BACKOFF_MS = 300 ms</code> between retries). Each attempt calls <code>waitForAck()</code> with a <code>WEDS_NODE_ACK_TIMEOUT_MS = 1500 ms</code> window.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-dot">3</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h4>Gateway — Packet Reception &amp; Registry Update</h4>
+                    <p><code>WedsGatewayComm::poll()</code> receives the packet via <code>radio.receive()</code>. <code>handleReceivedPacket()</code> deserializes it and validates the destination (<code>dst_node_id == WEDS_GATEWAY_ID == 0</code>) and magic byte (<code>0xA7</code>). <code>isDuplicateReliablePacket()</code> checks the last sequence ID and msg_type stored in the node's registry record to prevent double-processing on retry. If new, <code>updateNodeStatus()</code> persists the telemetry and updates the event streak log.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-dot">4</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h4>Gateway — ACK &amp; Neighbor Discovery</h4>
+                    <p>The gateway immediately sends an <code>ACK</code> packet back to Node A's <code>node_id</code>. Because the packet is a <code>NODE_ALERT</code>, <code>handleNodeStatusPacket()</code> then calls <code>registry_-&gt;createAlertCommandsForNeighbors(source_node_id, status)</code>. This function checks <code>isAlertStatus()</code> and runs <code>findNeighbors()</code> using the Haversine formula against all nodes with known GPS coordinates within <code>WEDS_NEIGHBOR_RADIUS_M</code>.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-dot">5</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h4>Gateway — Queuing Pending Commands</h4>
+                    <p>For each neighbor (e.g., Node B, Node C), <code>setPendingAlertCommand()</code> stores a <code>WedsAlertModeEnablePayload</code> in the neighbor's registry record with: <code>alert_source_node_id = Node A's ID</code>, <code>duration_sec = WEDS_ALERT_MODE_DURATION_SEC</code>, <code>sampling_interval_sec = WEDS_ALERT_MODE_SAMPLING_INTERVAL_SEC</code>. The command is held pending until that node's next uplink.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-dot">6</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h4>Gateway — Opportunistic Command Delivery</h4>
+                    <p>After every received packet (status or alert), <code>deliverPendingCommandIfAny(node_id)</code> is called for the sender. If the sender has a pending command, <code>sendAlertModeEnableReliable()</code> immediately attempts delivery: it transmits an <code>ALERT_MODE_ENABLE</code> packet (msg_type <code>0x10</code>, with <code>ack_required</code>) and waits up to <code>WEDS_GATEWAY_ACK_TIMEOUT_MS</code> for the target node's ACK. On success, <code>clearPendingAlertCommand()</code> removes the pending entry.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-dot">7</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h4>Node B / C — Alert Mode Activation</h4>
+                    <p>During the RX window that follows Node B's next transmission (a 250 ms polling loop in <code>main.cpp</code>), <code>nodeComm.pollAlertModeEnable()</code> receives the <code>ALERT_MODE_ENABLE</code> packet. After validation (correct <code>dst_node_id</code>, <code>src == WEDS_GATEWAY_ID</code>, not a duplicate), it sends an <code>ACK</code> and returns the decoded payload. <code>nodeState.applyAlertModeCommand()</code> then sets <code>alert_mode_active_ = true</code>, records <code>alert_source_node_id_</code>, sets the deadline <code>alert_mode_until_ms_</code>, and overrides the sleep duration. Crucially, it also calls <code>sleep_enabled_ = false</code>, which (in the legacy FreeRTOS path) would prevent the radio from sleeping.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-dot">8</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h4>Node B / C — Alert Mode Expiry</h4>
+                    <p><code>refreshAlertMode()</code> (called each cycle) checks <code>static_cast&lt;int32_t&gt;(millis() - alert_mode_until_ms_) &lt; 0</code>. Using signed subtraction makes this wrap-safe for durations up to ~24.8 days. Once the timer expires: <code>alert_mode_active_</code> is cleared, <code>alert_source_node_id_</code> resets to 0, <code>active_sample_interval_ms_</code> reverts to <code>normal_sample_interval_ms_</code>, and <code>sleep_enabled_</code> returns to <code>true</code>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- SECTION 3 — PACKET LIFECYCLE -->
+    <section id="packet">
+        <h2>Packet Lifecycle &amp; Wire Format</h2>
+        <p>Every WEDS transmission follows a fixed binary protocol with a 14-byte header, a variable payload (max 64 bytes), and a 16-bit CRC appended after the payload. The magic byte <code>0xA7</code> validates that a received frame belongs to WEDS.</p>
+
+        <h3>Header Layout (14 bytes)</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Field</th><th>Type</th><th>Size</th><th>Description</th></tr></thead>
+                <tbody>
+                    <tr><td class="mono">magic</td><td>uint8</td><td>1 B</td><td>Always <code>0xA7</code> — WEDS frame identifier</td></tr>
+                    <tr><td class="mono">msg_type</td><td>uint8</td><td>1 B</td><td><code>0x01</code> NODE_STATUS · <code>0x02</code> NODE_ALERT · <code>0x03</code> ACK · <code>0x10</code> ALERT_MODE_ENABLE</td></tr>
+                    <tr><td class="mono">ack_required</td><td>uint8</td><td>1 B</td><td>1 = reliable delivery required (NODE_ALERT, ALERT_MODE_ENABLE), 0 = fire-and-forget</td></tr>
+                    <tr><td class="mono">src_node_id</td><td>uint32</td><td>4 B</td><td>Sender MAC-derived ID. Gateway always uses ID <code>0x00000000</code></td></tr>
+                    <tr><td class="mono">dst_node_id</td><td>uint32</td><td>4 B</td><td>Recipient ID. Nodes target gateway ID <code>0</code>; gateway addresses individual nodes by their MAC ID</td></tr>
+                    <tr><td class="mono">sequence_id</td><td>uint16</td><td>2 B</td><td>Monotonically incrementing per-sender counter. Used for duplicate detection</td></tr>
+                    <tr><td class="mono">payload_len</td><td>uint8</td><td>1 B</td><td>Byte length of the payload that follows the header</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Payload Structures</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Packet Type</th><th>Payload Struct</th><th>Key Fields</th><th>Direction</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge badge-emerald">NODE_STATUS</span></td>
+                        <td class="mono">WedsNodeStatusPayload</td>
+                        <td>temperature, humidity, pressure, gas_resistance, battery_level, anomaly_state, anomaly_score, risk_state, risk_score</td>
+                        <td>Node → Gateway</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-rose">NODE_ALERT</span></td>
+                        <td class="mono">WedsNodeStatusPayload</td>
+                        <td>Same structure as STATUS, but <code>ack_required=1</code> and retried up to 3×</td>
+                        <td>Node → Gateway</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-cyan">ACK</span></td>
+                        <td class="mono">WedsAckPayload</td>
+                        <td>acked_sequence_id, acked_msg_type, status_code (0=OK)</td>
+                        <td>Bidirectional</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-amber">ALERT_MODE_ENABLE</span></td>
+                        <td class="mono">WedsAlertModeEnablePayload</td>
+                        <td><strong>alert_source_node_id</strong> (triggering node), duration_sec, sampling_interval_sec</td>
+                        <td>Gateway → Node</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="callout callout-key">
+            <span class="callout-icon">🔑</span>
+            <span><strong>alert_source_node_id</strong> — This field inside <code>WedsAlertModeEnablePayload</code> is the propagation link. It carries the node ID of the originally alerting node into every neighbouring node's state (<code>alert_source_node_id_</code> in <code>WedsNodeState</code>). This is how a node knows <em>which peer triggered its elevated duty cycle</em>, enabling the gateway dashboard to trace alert propagation chains.</span>
+        </div>
+
+        <h3>Duplicate Suppression</h3>
+        <p>Two independent deduplication systems prevent double-processing of retried reliable packets:</p>
+        <ul style="color:var(--text2); padding-left:1.25rem; font-size:0.9rem; display:flex; flex-direction:column; gap:0.4rem; margin-bottom:0.9rem;">
+            <li><strong>Gateway side:</strong> <code>WedsGatewayRegistry::isDuplicateReliablePacket()</code> compares the incoming <code>(sequence_id, msg_type)</code> pair against the stored <code>last_sequence_id</code> and <code>last_msg_type</code> for that node. On match, the ACK is re-sent but the registry is not updated again.</li>
+            <li><strong>Node side:</strong> <code>WedsNodeComm::isDuplicateGatewayCommand()</code> compares the incoming packet's <code>(src_node_id==gateway, sequence_id, msg_type)</code> against the last processed gateway command. On match, a re-ACK is sent but <code>applyAlertModeCommand()</code> is never called twice.</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <!-- SECTION 4 — DIAGRAMS -->
+    <section id="diagrams">
+        <h2>Interactive Diagrams</h2>
+
+        <!-- DIAGRAM 1: Sequence -->
+        <h3>Diagram 1 — Alert Propagation Sequence</h3>
+        <p>The timeline from Node 1 anomaly detection through gateway orchestration to Node 2 duty-cycle compression.</p>
+        <div class="diagram-label">Sequence diagram — Alert cascade (Node 1 → Gateway → Node 2)</div>
+        <div class="diagram-wrap">
+            <pre class="mermaid">
+sequenceDiagram
+    participant N1 as Node 1 (Alerting)
+    participant GW as Gateway
+    participant REG as Registry
+    participant N2 as Node 2 (Neighbor)
+
+    Note over N1: TinyML risk_score > 0.75
+    N1->>GW: NODE_ALERT [ack_required=1, seq=42]
+    GW->>REG: updateNodeStatus(node1, seq=42, ALERT)
+    GW->>REG: isDuplicateReliablePacket? → false
+    REG-->>GW: OK, new packet
+    GW->>N1: ACK [acked_seq=42, status=OK]
+    N1-->>N1: sendAlert() returns true
+
+    GW->>REG: createAlertCommandsForNeighbors(node1)
+    REG->>REG: findNeighbors() via Haversine
+    REG->>REG: setPendingAlertCommand(node2, src=node1, dur=600s, interval=30s)
+
+    Note over N2: Node 2 wakes, sends routine status
+    N2->>GW: NODE_STATUS [seq=17]
+    GW->>REG: updateNodeStatus(node2, seq=17)
+    GW->>GW: deliverPendingCommandIfAny(node2)
+    GW->>N2: ALERT_MODE_ENABLE [src=node1, dur=600s, interval=30s, ack=1]
+
+    N2->>GW: ACK [acked_seq=ALERT_MODE_SEQ, status=OK]
+    GW->>REG: clearPendingAlertCommand(node2)
+    N2-->>N2: applyAlertModeCommand()
+    Note over N2: alert_mode_active=true<br/>sampling_interval=30s<br/>alert_source=Node 1
+            </pre>
+        </div>
+
+        <!-- DIAGRAM 2: State Machine -->
+        <h3>Diagram 2 — Node Duty-Cycle State Machine</h3>
+        <p>The state transitions for a sensor node as it moves between normal deep-sleep cycles and the alert-mode compressed duty cycle.</p>
+        <div class="diagram-label">State diagram — Node operational states</div>
+        <div class="diagram-wrap">
+            <pre class="mermaid">
+stateDiagram-v2
+    [*] --> NormalOp : Power On / Wakeup
+
+    state NormalOp {
+        [*] --> Sensing
+        Sensing --> Inference : Valid sample
+        Sensing --> FaultSleep : NaN or invalid (5 s retry)
+        Inference --> Transmitting : Build payload
+        Transmitting --> RxWindow : STATUS or ALERT sent
+        RxWindow --> DeepSleep : No command received
+        RxWindow --> AlertMode : ALERT_MODE_ENABLE received
+        DeepSleep --> [*] : Timer expires (Low=1800s / Med=600s / High=120s)
+        FaultSleep --> [*] : 5 s timer expires
+    }
+
+    state AlertMode {
+        [*] --> AlertSensing
+        AlertSensing --> AlertInference : Valid sample
+        AlertInference --> AlertTransmitting
+        AlertTransmitting --> AlertRxWindow
+        AlertRxWindow --> AlertSleep : Continue alert cycle
+        AlertSleep --> [*] : Short sleep (sampling_interval_sec)
+    }
+
+    NormalOp --> AlertMode : ALERT_MODE_ENABLE from Gateway
+    AlertMode --> NormalOp : refreshAlertMode() — deadline expired\nalert_mode_until_ms elapsed
+            </pre>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- SECTION 5 — TIMING -->
+    <section id="timing">
+        <h2>Timing &amp; Duty Cycle Configuration</h2>
+        <p>The node's sleep duration is determined by two independent mechanisms that can overlap:</p>
+
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-icon">🧠</div>
+                <h3>Dynamic Duty Cycle (TinyML-driven)</h3>
+                <p>After every successful cycle, <code>sleepDurationSec(risk.score)</code> maps the model output to a sleep target:</p>
+                <div class="table-wrap" style="margin-top:0.75rem;">
+                    <table>
+                        <thead><tr><th>Risk Band</th><th>Threshold</th><th>Sleep</th></tr></thead>
+                        <tbody>
+                            <tr><td style="color:var(--emerald)">Low</td><td>&lt; 35 %</td><td class="mono">1800 s</td></tr>
+                            <tr><td style="color:var(--amber)">Medium</td><td>35–65 %</td><td class="mono">600 s</td></tr>
+                            <tr><td style="color:var(--rose)">High</td><td>≥ 65 %</td><td class="mono">120 s</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📢</div>
+                <h3>Swarm Alert Mode (Gateway-driven)</h3>
+                <p>When an <code>ALERT_MODE_ENABLE</code> command is received, the gateway dictates both the period and the duration:</p>
+                <ul style="color:var(--text2); font-size:0.88rem; padding-left:1rem; display:flex; flex-direction:column; gap:0.35rem; margin-top:0.5rem;">
+                    <li><strong>duration_sec</strong> — How long the node stays in alert mode (set from <code>WEDS_ALERT_MODE_DURATION_SEC</code>)</li>
+                    <li><strong>sampling_interval_sec</strong> — Replaces the normal sleep period (set from <code>WEDS_ALERT_MODE_SAMPLING_INTERVAL_SEC</code>)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-icon">⏱️</div>
+                <h3>RX Window Timing</h3>
+                <p>After every transmission, the node keeps its radio active for a minimum <code>WEDS_NODE_MIN_RX_WINDOW_MS = 250 ms</code> polling window. The window polls every <code>WEDS_NODE_RX_POLL_CHUNK_MS = 50 ms</code>. This is the only period when a node can receive a gateway command. There is no persistent listen mode — commands are exclusively opportunistic.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <span class="callout-icon">⚠️</span>
+            <span><strong>Command Delivery Latency:</strong> Because the gateway only delivers pending commands when a node next checks in, the worst-case command delivery latency equals the node's current sleep duration (up to 1800 s = 30 min in low-risk mode). Neighbours with low risk scores may take up to 30 minutes to receive their <code>ALERT_MODE_ENABLE</code> command after a nearby alert fires.</span>
+        </div>
+    </section>
+
+</div>
+
+<!-- MERMAID -->
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        securityLevel: 'loose',
+        sequence: { actorMargin: 60, messageMargin: 40 },
+        themeVariables: {
+            background: 'transparent',
+            primaryColor: '#162035',
+            primaryTextColor: '#f1f5f9',
+            primaryBorderColor: '#818cf8',
+            lineColor: '#22d3ee',
+            secondaryColor: '#0f1829',
+            tertiaryColor: '#0f1829',
+            actorBkg: '#162035',
+            actorBorder: '#818cf8',
+            actorTextColor: '#f1f5f9',
+            signalColor: '#22d3ee',
+            signalTextColor: '#94a3b8',
+            noteBkgColor: '#1e2d4a',
+            noteTextColor: '#f1f5f9',
+            noteBorderColor: '#818cf8',
+            loopTextColor: '#94a3b8',
+            labelBoxBkgColor: '#162035',
+            labelBoxBorderColor: '#818cf8',
+            labelTextColor: '#f1f5f9'
+        }
+    });
+</script>
+
+</body>
+</html>
