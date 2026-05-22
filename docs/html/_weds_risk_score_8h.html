@@ -135,7 +135,37 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A memory-efficient structure representing a 24-hour aggregation of sensor data. Used within a ring buffer to calculate multi-day rolling averages without storing high-frequency arrays.  <a href="struct_daily_bucket.html#details">More...</a><br /></td></tr>
 <tr class="memitem:WedsRiskScoreCalculator" id="r_WedsRiskScoreCalculator"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="class_weds_risk_score_calculator.html">WedsRiskScoreCalculator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages the execution and state of the TinyML fire risk prediction model.  <a href="class_weds_risk_score_calculator.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aa3962bb7f11807102b9f96664295b102" id="r_aa3962bb7f11807102b9f96664295b102"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#aa3962bb7f11807102b9f96664295b102">rtc_virtual_timestamp</a></td></tr>
+<tr class="memdesc:aa3962bb7f11807102b9f96664295b102"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC-retained virtual clock (seconds). Advance this by awake time + sleep duration before calling esp_deep_sleep() so the TinyML bucketing algorithm stays synchronised across hardware resets.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="aa3962bb7f11807102b9f96664295b102" name="aa3962bb7f11807102b9f96664295b102"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3962bb7f11807102b9f96664295b102">&#9670;&#160;</a></span>rtc_virtual_timestamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t rtc_virtual_timestamp</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel extern">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>RTC-retained virtual clock (seconds). Advance this by awake time + sleep duration before calling esp_deep_sleep() so the TinyML bucketing algorithm stays synchronised across hardware resets. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

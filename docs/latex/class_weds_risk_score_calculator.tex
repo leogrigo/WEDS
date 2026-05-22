@@ -1,0 +1,159 @@
+\doxysection{Weds\+Risk\+Score\+Calculator Class Reference}
+\hypertarget{class_weds_risk_score_calculator}{}\label{class_weds_risk_score_calculator}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+
+
+Manages the execution and state of the Tiny\+ML fire risk prediction model.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Risk\+Score.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_weds_risk_score_calculator_acb0296a97993ee66e1502c21dfd271c2}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Allocates tensor memory and initializes the neural network interpreter. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_weds_risk_result}{Weds\+Risk\+Result}} \doxymbox{\hyperlink{class_weds_risk_score_calculator_a795b807e484a1a496191afe556e885f8}{update}} (const \doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} \&sample)
+\begin{DoxyCompactList}\small\item\em Processes a new sensor reading, updates the historical rolling buffers, and runs an inference pass. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \doxymbox{\hyperlink{class_weds_risk_score_calculator_a59d0e5fc0e664dd45569c88d1b96624b}{k\+History\+Size}} = 7
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const tflite::\+\+Model \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_weds_risk_score_calculator_a1a13b3552b86d8246a7a99ed05bbe090}{model\+\_\+}} = nullptr
+\item 
+tflite::\+\+Micro\+Interpreter \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_weds_risk_score_calculator_aab68c637afba965bd724c5aeb63af8ae}{interpreter\+\_\+}} = nullptr
+\item 
+Tf\+Lite\+Tensor \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_weds_risk_score_calculator_aa9e49bb9a658d6e2d3ebf33f7b315b0b}{input\+\_\+}} = nullptr
+\item 
+Tf\+Lite\+Tensor \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_weds_risk_score_calculator_a2350fddc6915f04c5ab61e23f3da700b}{output\+\_\+}} = nullptr
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{class_weds_risk_score_calculator_a586ecd70ddc4f6310c6fe2b9ddeb3db2}{tensor\+\_\+arena\+\_\+}} \+[\doxymbox{\hyperlink{class_weds_risk_score_calculator_aea07e11f0dcbfe52d14344fbec74fbd5}{k\+Tensor\+Arena\+Size}}]\+
+\item 
+float \doxymbox{\hyperlink{class_weds_risk_score_calculator_aae52639772c608d2fbf0dd31d2ea1dc3}{scaler\+\_\+means\+\_\+}} \+[\doxymbox{\hyperlink{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}{k\+Num\+Features}}]\+
+\item 
+float \doxymbox{\hyperlink{class_weds_risk_score_calculator_add3e127bd1bf65d3de1599ca58e263c8}{scaler\+\_\+scales\+\_\+}} \+[\doxymbox{\hyperlink{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}{k\+Num\+Features}}]\+
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \doxymbox{\hyperlink{class_weds_risk_score_calculator_aea07e11f0dcbfe52d14344fbec74fbd5}{k\+Tensor\+Arena\+Size}} = 15 \texorpdfstring{$\ast$}{*} 1024
+\item 
+static const int \doxymbox{\hyperlink{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}{k\+Num\+Features}} = 7
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages the execution and state of the Tiny\+ML fire risk prediction model. 
+
+This class maintains a 7-\/day rolling history of environmental data to compute the required time-\/series features (averages and deltas) before feeding them into the quantized Tensor\+Flow Lite neural network. The rolling history is stored in RTC-\/retained memory so it survives hardware deep-\/sleep resets. 
+
+\label{class_weds_risk_score_calculator_doc-func-members}
+\Hypertarget{class_weds_risk_score_calculator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_weds_risk_score_calculator_acb0296a97993ee66e1502c21dfd271c2}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!begin@{begin}}
+\index{begin@{begin}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_acb0296a97993ee66e1502c21dfd271c2} 
+bool Weds\+Risk\+Score\+Calculator::\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Allocates tensor memory and initializes the neural network interpreter. 
+
+\begin{DoxyReturn}{Returns}
+true if the model loaded and memory allocated successfully, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_risk_score_calculator_a795b807e484a1a496191afe556e885f8}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!update@{update}}
+\index{update@{update}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_a795b807e484a1a496191afe556e885f8} 
+\doxymbox{\hyperlink{struct_weds_risk_result}{Weds\+Risk\+Result}} Weds\+Risk\+Score\+Calculator::\+update (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} \&}]{sample}{}\end{DoxyParamCaption})}
+
+
+
+Processes a new sensor reading, updates the historical rolling buffers, and runs an inference pass. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sample} & The latest environmental readings containing temperature, humidity, pressure, and timestamp. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \doxylink{struct_weds_risk_result}{Weds\+Risk\+Result} containing the computed probability score and alert state. 
+\end{DoxyReturn}
+
+
+\label{class_weds_risk_score_calculator_doc-variable-members}
+\Hypertarget{class_weds_risk_score_calculator_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_weds_risk_score_calculator_aa9e49bb9a658d6e2d3ebf33f7b315b0b}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!input\_@{input\_}}
+\index{input\_@{input\_}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{input\_}{input\_}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_aa9e49bb9a658d6e2d3ebf33f7b315b0b} 
+Tf\+Lite\+Tensor\texorpdfstring{$\ast$}{*} Weds\+Risk\+Score\+Calculator::\+input\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+Pointer to the model\textquotesingle{}s input tensor. \Hypertarget{class_weds_risk_score_calculator_aab68c637afba965bd724c5aeb63af8ae}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!interpreter\_@{interpreter\_}}
+\index{interpreter\_@{interpreter\_}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{interpreter\_}{interpreter\_}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_aab68c637afba965bd724c5aeb63af8ae} 
+tflite::\+\+Micro\+Interpreter\texorpdfstring{$\ast$}{*} Weds\+Risk\+Score\+Calculator::\+interpreter\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+Interpreter for running inference. \Hypertarget{class_weds_risk_score_calculator_a59d0e5fc0e664dd45569c88d1b96624b}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!kHistorySize@{kHistorySize}}
+\index{kHistorySize@{kHistorySize}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{kHistorySize}{kHistorySize}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_a59d0e5fc0e664dd45569c88d1b96624b} 
+const int Weds\+Risk\+Score\+Calculator::\+k\+History\+Size = 7\hspace{0.3cm}{\ttfamily [static]}}
+
+Number of days in the rolling history buffer. \Hypertarget{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!kNumFeatures@{kNumFeatures}}
+\index{kNumFeatures@{kNumFeatures}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{kNumFeatures}{kNumFeatures}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30} 
+const int Weds\+Risk\+Score\+Calculator::\+k\+Num\+Features = 7\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+Number of input features to the model. \Hypertarget{class_weds_risk_score_calculator_aea07e11f0dcbfe52d14344fbec74fbd5}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!kTensorArenaSize@{kTensorArenaSize}}
+\index{kTensorArenaSize@{kTensorArenaSize}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{kTensorArenaSize}{kTensorArenaSize}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_aea07e11f0dcbfe52d14344fbec74fbd5} 
+const int Weds\+Risk\+Score\+Calculator::\+k\+Tensor\+Arena\+Size = 15 \texorpdfstring{$\ast$}{*} 1024\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+Memory arena size for TFLite allocations. \Hypertarget{class_weds_risk_score_calculator_a1a13b3552b86d8246a7a99ed05bbe090}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!model\_@{model\_}}
+\index{model\_@{model\_}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{model\_}{model\_}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_a1a13b3552b86d8246a7a99ed05bbe090} 
+const tflite::\+\+Model\texorpdfstring{$\ast$}{*} Weds\+Risk\+Score\+Calculator::\+model\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+Pointer to the parsed TFLite model. \Hypertarget{class_weds_risk_score_calculator_a2350fddc6915f04c5ab61e23f3da700b}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!output\_@{output\_}}
+\index{output\_@{output\_}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{output\_}{output\_}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_a2350fddc6915f04c5ab61e23f3da700b} 
+Tf\+Lite\+Tensor\texorpdfstring{$\ast$}{*} Weds\+Risk\+Score\+Calculator::\+output\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+Pointer to the model\textquotesingle{}s output tensor. \Hypertarget{class_weds_risk_score_calculator_aae52639772c608d2fbf0dd31d2ea1dc3}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!scaler\_means\_@{scaler\_means\_}}
+\index{scaler\_means\_@{scaler\_means\_}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{scaler\_means\_}{scaler\_means\_}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_aae52639772c608d2fbf0dd31d2ea1dc3} 
+float Weds\+Risk\+Score\+Calculator::\+scaler\+\_\+means\+\_\+\+[\doxymbox{\hyperlink{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}{k\+Num\+Features}}]\+\hspace{0.3cm}{\ttfamily [private]}}
+
+Means for feature scaling. \Hypertarget{class_weds_risk_score_calculator_add3e127bd1bf65d3de1599ca58e263c8}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!scaler\_scales\_@{scaler\_scales\_}}
+\index{scaler\_scales\_@{scaler\_scales\_}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{scaler\_scales\_}{scaler\_scales\_}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_add3e127bd1bf65d3de1599ca58e263c8} 
+float Weds\+Risk\+Score\+Calculator::\+scaler\+\_\+scales\+\_\+\+[\doxymbox{\hyperlink{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}{k\+Num\+Features}}]\+\hspace{0.3cm}{\ttfamily [private]}}
+
+Scales for feature scaling. \Hypertarget{class_weds_risk_score_calculator_a586ecd70ddc4f6310c6fe2b9ddeb3db2}\index{WedsRiskScoreCalculator@{WedsRiskScoreCalculator}!tensor\_arena\_@{tensor\_arena\_}}
+\index{tensor\_arena\_@{tensor\_arena\_}!WedsRiskScoreCalculator@{WedsRiskScoreCalculator}}
+\doxysubsubsection{\texorpdfstring{tensor\_arena\_}{tensor\_arena\_}}
+{\footnotesize\ttfamily \label{class_weds_risk_score_calculator_a586ecd70ddc4f6310c6fe2b9ddeb3db2} 
+uint8\+\_\+t Weds\+Risk\+Score\+Calculator::\+tensor\+\_\+arena\+\_\+\+[\doxymbox{\hyperlink{class_weds_risk_score_calculator_aea07e11f0dcbfe52d14344fbec74fbd5}{k\+Tensor\+Arena\+Size}}]\+\hspace{0.3cm}{\ttfamily [private]}}
+
+Buffer for the tensor arena. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+risk\+\_\+score/\+\doxymbox{\hyperlink{_weds_risk_score_8h}{Weds\+Risk\+Score.\+h}}\item 
+code/\+lib/\+weds\+\_\+risk\+\_\+score/\+\doxymbox{\hyperlink{_weds_risk_score_8cpp}{Weds\+Risk\+Score.\+cpp}}\end{DoxyCompactItemize}

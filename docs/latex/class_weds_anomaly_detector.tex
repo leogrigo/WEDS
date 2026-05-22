@@ -1,0 +1,190 @@
+\doxysection{Weds\+Anomaly\+Detector Class Reference}
+\hypertarget{class_weds_anomaly_detector}{}\label{class_weds_anomaly_detector}\index{WedsAnomalyDetector@{WedsAnomalyDetector}}
+
+
+Anomaly detector that evaluates sensor samples to detect abnormal gas levels.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Anomaly\+Detector.\+h$>$}
+
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{Ema\+Filter}}
+\begin{DoxyCompactList}\small\item\em Exponential Moving Average (EMA) filter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_weds_anomaly_detector_a6e6011be42e5a146b36c7d4fe6224dc2}{Weds\+Anomaly\+Detector}} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \doxylink{class_weds_anomaly_detector}{Weds\+Anomaly\+Detector} instance. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}} \doxymbox{\hyperlink{class_weds_anomaly_detector_aeeac71c0e87485933194b6ce6240f6db}{update}} (const \doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} \&sample)
+\begin{DoxyCompactList}\small\item\em Updates the detector with a new sensor sample. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}} \& \doxymbox{\hyperlink{class_weds_anomaly_detector_ab05190fa1846e3083ae21d57acb87da1}{last\+Result}} () const
+\begin{DoxyCompactList}\small\item\em Gets the most recent anomaly result. \end{DoxyCompactList}\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_anomaly_detector_a5db8ba0a165a8902408e6f7b70068a4e}{samples\+Seen}} () const
+\begin{DoxyCompactList}\small\item\em Gets the total number of samples processed. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_anomaly_detector_ab8dcf42262d087a0a4873587f6120527}{is\+Warmup}} () const
+\begin{DoxyCompactList}\small\item\em Checks if the detector is currently in the warmup phase. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static float \doxymbox{\hyperlink{class_weds_anomaly_detector_a83e5742ea03803c70e06798a755a76b7}{positive\+Part}} (float value)
+\item 
+static float \doxymbox{\hyperlink{class_weds_anomaly_detector_a42445337072de47aa54f018db8082f26}{negative\+Part}} (float value)
+\item 
+static float \doxymbox{\hyperlink{class_weds_anomaly_detector_aebd5cf245f5fe931f98a09a31ef1f56c}{directional\+Gas\+Score}} (float gas\+\_\+z)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_weds_anomaly_detector_a9d8c9373575fd8e443df4e4c7ba6cceb}{started\+\_\+}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_anomaly_detector_aefa8fb4487705eae18aa79c76c1970a7}{samples\+\_\+seen\+\_\+}}
+\item 
+\doxymbox{\hyperlink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}} \doxymbox{\hyperlink{class_weds_anomaly_detector_afd25778f1b18cb2b4f04787283847ee5}{last\+\_\+result\+\_\+}}
+\item 
+\doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{Ema\+Filter}}$<$ 4 $>$ \doxymbox{\hyperlink{class_weds_anomaly_detector_afd2b8e9c7d1c8995e1b23bec9c3cced5}{gas\+\_\+filter\+\_\+}}
+\item 
+\doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{Ema\+Filter}}$<$ 4 $>$ \doxymbox{\hyperlink{class_weds_anomaly_detector_a7c19f6674ed86b2ac8e771bc5d3a899a}{gas\+\_\+variance\+\_\+filter\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Anomaly detector that evaluates sensor samples to detect abnormal gas levels. 
+
+\label{class_weds_anomaly_detector_doc-constructors}
+\Hypertarget{class_weds_anomaly_detector_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_weds_anomaly_detector_a6e6011be42e5a146b36c7d4fe6224dc2}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\index{WedsAnomalyDetector@{WedsAnomalyDetector}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{WedsAnomalyDetector()}{WedsAnomalyDetector()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_a6e6011be42e5a146b36c7d4fe6224dc2} 
+Weds\+Anomaly\+Detector::\+\+Weds\+Anomaly\+Detector (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructs a new \doxylink{class_weds_anomaly_detector}{Weds\+Anomaly\+Detector} instance. 
+
+
+
+\label{class_weds_anomaly_detector_doc-func-members}
+\Hypertarget{class_weds_anomaly_detector_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_weds_anomaly_detector_aebd5cf245f5fe931f98a09a31ef1f56c}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!directionalGasScore@{directionalGasScore}}
+\index{directionalGasScore@{directionalGasScore}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{directionalGasScore()}{directionalGasScore()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_aebd5cf245f5fe931f98a09a31ef1f56c} 
+float Weds\+Anomaly\+Detector::\+directional\+Gas\+Score (\begin{DoxyParamCaption}\item[{float}]{gas\+\_\+z}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_weds_anomaly_detector_ab8dcf42262d087a0a4873587f6120527}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!isWarmup@{isWarmup}}
+\index{isWarmup@{isWarmup}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{isWarmup()}{isWarmup()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_ab8dcf42262d087a0a4873587f6120527} 
+bool Weds\+Anomaly\+Detector::\+is\+Warmup (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks if the detector is currently in the warmup phase. 
+
+\begin{DoxyReturn}{Returns}
+True if in warmup, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_anomaly_detector_ab05190fa1846e3083ae21d57acb87da1}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!lastResult@{lastResult}}
+\index{lastResult@{lastResult}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{lastResult()}{lastResult()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_ab05190fa1846e3083ae21d57acb87da1} 
+const \doxymbox{\hyperlink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}} \& Weds\+Anomaly\+Detector::\+last\+Result (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the most recent anomaly result. 
+
+\begin{DoxyReturn}{Returns}
+A constant reference to the last computed \doxylink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_anomaly_detector_a42445337072de47aa54f018db8082f26}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!negativePart@{negativePart}}
+\index{negativePart@{negativePart}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{negativePart()}{negativePart()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_a42445337072de47aa54f018db8082f26} 
+float Weds\+Anomaly\+Detector::\+negative\+Part (\begin{DoxyParamCaption}\item[{float}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_weds_anomaly_detector_a83e5742ea03803c70e06798a755a76b7}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!positivePart@{positivePart}}
+\index{positivePart@{positivePart}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{positivePart()}{positivePart()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_a83e5742ea03803c70e06798a755a76b7} 
+float Weds\+Anomaly\+Detector::\+positive\+Part (\begin{DoxyParamCaption}\item[{float}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_weds_anomaly_detector_a5db8ba0a165a8902408e6f7b70068a4e}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!samplesSeen@{samplesSeen}}
+\index{samplesSeen@{samplesSeen}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{samplesSeen()}{samplesSeen()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_a5db8ba0a165a8902408e6f7b70068a4e} 
+uint32\+\_\+t Weds\+Anomaly\+Detector::\+samples\+Seen (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the total number of samples processed. 
+
+\begin{DoxyReturn}{Returns}
+The number of samples seen. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_anomaly_detector_aeeac71c0e87485933194b6ce6240f6db}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!update@{update}}
+\index{update@{update}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_aeeac71c0e87485933194b6ce6240f6db} 
+\doxymbox{\hyperlink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}} Weds\+Anomaly\+Detector::\+update (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} \&}]{sample}{}\end{DoxyParamCaption})}
+
+
+
+Updates the detector with a new sensor sample. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sample} & The latest sensor sample to process. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The updated anomaly result. 
+\end{DoxyReturn}
+
+
+\label{class_weds_anomaly_detector_doc-variable-members}
+\Hypertarget{class_weds_anomaly_detector_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_weds_anomaly_detector_afd2b8e9c7d1c8995e1b23bec9c3cced5}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!gas\_filter\_@{gas\_filter\_}}
+\index{gas\_filter\_@{gas\_filter\_}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{gas\_filter\_}{gas\_filter\_}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_afd2b8e9c7d1c8995e1b23bec9c3cced5} 
+\doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{Ema\+Filter}}$<$4$>$ Weds\+Anomaly\+Detector::\+gas\+\_\+filter\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+Filter for computing the gas resistance baseline. \Hypertarget{class_weds_anomaly_detector_a7c19f6674ed86b2ac8e771bc5d3a899a}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!gas\_variance\_filter\_@{gas\_variance\_filter\_}}
+\index{gas\_variance\_filter\_@{gas\_variance\_filter\_}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{gas\_variance\_filter\_}{gas\_variance\_filter\_}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_a7c19f6674ed86b2ac8e771bc5d3a899a} 
+\doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{Ema\+Filter}}$<$4$>$ Weds\+Anomaly\+Detector::\+gas\+\_\+variance\+\_\+filter\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+Filter for computing the gas resistance variance. \Hypertarget{class_weds_anomaly_detector_afd25778f1b18cb2b4f04787283847ee5}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!last\_result\_@{last\_result\_}}
+\index{last\_result\_@{last\_result\_}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{last\_result\_}{last\_result\_}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_afd25778f1b18cb2b4f04787283847ee5} 
+\doxymbox{\hyperlink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}} Weds\+Anomaly\+Detector::\+last\+\_\+result\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+The most recently computed result. \Hypertarget{class_weds_anomaly_detector_aefa8fb4487705eae18aa79c76c1970a7}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!samples\_seen\_@{samples\_seen\_}}
+\index{samples\_seen\_@{samples\_seen\_}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{samples\_seen\_}{samples\_seen\_}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_aefa8fb4487705eae18aa79c76c1970a7} 
+uint32\+\_\+t Weds\+Anomaly\+Detector::\+samples\+\_\+seen\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+Count of total processed samples. \Hypertarget{class_weds_anomaly_detector_a9d8c9373575fd8e443df4e4c7ba6cceb}\index{WedsAnomalyDetector@{WedsAnomalyDetector}!started\_@{started\_}}
+\index{started\_@{started\_}!WedsAnomalyDetector@{WedsAnomalyDetector}}
+\doxysubsubsection{\texorpdfstring{started\_}{started\_}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_a9d8c9373575fd8e443df4e4c7ba6cceb} 
+bool Weds\+Anomaly\+Detector::\+started\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+Flag indicating if the detector has started processing. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+anomaly\+\_\+detector/\+\doxymbox{\hyperlink{_weds_anomaly_detector_8h}{Weds\+Anomaly\+Detector.\+h}}\item 
+code/\+lib/\+weds\+\_\+anomaly\+\_\+detector/\+\doxymbox{\hyperlink{_weds_anomaly_detector_8cpp}{Weds\+Anomaly\+Detector.\+cpp}}\end{DoxyCompactItemize}

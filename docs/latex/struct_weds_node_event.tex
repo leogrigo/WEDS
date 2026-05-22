@@ -1,0 +1,131 @@
+\doxysection{Weds\+Node\+Event Struct Reference}
+\hypertarget{struct_weds_node_event}{}\label{struct_weds_node_event}\index{WedsNodeEvent@{WedsNodeEvent}}
+
+
+Represents a specific event triggered by a node.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Gateway\+Registry.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_node_event_acda0a508f1b812302e98b56934047af6}{used}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_event_a9814925cb5f432aa1dc773b8922cc737}{event\+\_\+id}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_event_a9639f1b5c05fe083dfa82b32e1fbcbe1}{node\+\_\+id}}
+\item 
+\doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}} \doxymbox{\hyperlink{struct_weds_node_event_a0c92524fd622ad9d6987f2a34169537b}{type}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_event_a0c8c8cbcc0293fe78138d3bcd65597b6}{start\+\_\+timestamp\+\_\+s}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_event_ab556e6d3fa96b2f3f52b7485314a3c38}{end\+\_\+timestamp\+\_\+s}}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_node_event_abeb129c297d30035b3212aeebbeb15dd}{still\+\_\+open}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_event_a73358cc59dd3b7ce1a392099b02a3618}{peak\+\_\+anomaly\+\_\+score}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_event_a1d88a663f0040d60cbfadb63438cb27d}{peak\+\_\+risk\+\_\+score}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_event_a4cc0f74a88e0e1aed8ba6e2b5f368e9c}{max\+\_\+temperature}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_event_a7c1ad0fc127be03af82932bae5550319}{min\+\_\+humidity}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_event_a775a357bfd1455ea9bf06dda8dcfe08f}{min\+\_\+gas\+\_\+resistance}}
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_weds_node_event_ae6697228843b2173146b1000c002cc57}{sample\+\_\+count}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a specific event triggered by a node. 
+
+\label{struct_weds_node_event_doc-variable-members}
+\Hypertarget{struct_weds_node_event_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_weds_node_event_ab556e6d3fa96b2f3f52b7485314a3c38}\index{WedsNodeEvent@{WedsNodeEvent}!end\_timestamp\_s@{end\_timestamp\_s}}
+\index{end\_timestamp\_s@{end\_timestamp\_s}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{end\_timestamp\_s}{end\_timestamp\_s}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_ab556e6d3fa96b2f3f52b7485314a3c38} 
+uint32\+\_\+t Weds\+Node\+Event::\+end\+\_\+timestamp\+\_\+s}
+
+\Hypertarget{struct_weds_node_event_a9814925cb5f432aa1dc773b8922cc737}\index{WedsNodeEvent@{WedsNodeEvent}!event\_id@{event\_id}}
+\index{event\_id@{event\_id}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{event\_id}{event\_id}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a9814925cb5f432aa1dc773b8922cc737} 
+uint32\+\_\+t Weds\+Node\+Event::\+event\+\_\+id}
+
+\Hypertarget{struct_weds_node_event_a4cc0f74a88e0e1aed8ba6e2b5f368e9c}\index{WedsNodeEvent@{WedsNodeEvent}!max\_temperature@{max\_temperature}}
+\index{max\_temperature@{max\_temperature}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{max\_temperature}{max\_temperature}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a4cc0f74a88e0e1aed8ba6e2b5f368e9c} 
+float Weds\+Node\+Event::\+max\+\_\+temperature}
+
+\Hypertarget{struct_weds_node_event_a775a357bfd1455ea9bf06dda8dcfe08f}\index{WedsNodeEvent@{WedsNodeEvent}!min\_gas\_resistance@{min\_gas\_resistance}}
+\index{min\_gas\_resistance@{min\_gas\_resistance}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{min\_gas\_resistance}{min\_gas\_resistance}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a775a357bfd1455ea9bf06dda8dcfe08f} 
+float Weds\+Node\+Event::\+min\+\_\+gas\+\_\+resistance}
+
+\Hypertarget{struct_weds_node_event_a7c1ad0fc127be03af82932bae5550319}\index{WedsNodeEvent@{WedsNodeEvent}!min\_humidity@{min\_humidity}}
+\index{min\_humidity@{min\_humidity}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{min\_humidity}{min\_humidity}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a7c1ad0fc127be03af82932bae5550319} 
+float Weds\+Node\+Event::\+min\+\_\+humidity}
+
+\Hypertarget{struct_weds_node_event_a9639f1b5c05fe083dfa82b32e1fbcbe1}\index{WedsNodeEvent@{WedsNodeEvent}!node\_id@{node\_id}}
+\index{node\_id@{node\_id}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{node\_id}{node\_id}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a9639f1b5c05fe083dfa82b32e1fbcbe1} 
+uint32\+\_\+t Weds\+Node\+Event::\+node\+\_\+id}
+
+\Hypertarget{struct_weds_node_event_a73358cc59dd3b7ce1a392099b02a3618}\index{WedsNodeEvent@{WedsNodeEvent}!peak\_anomaly\_score@{peak\_anomaly\_score}}
+\index{peak\_anomaly\_score@{peak\_anomaly\_score}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{peak\_anomaly\_score}{peak\_anomaly\_score}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a73358cc59dd3b7ce1a392099b02a3618} 
+float Weds\+Node\+Event::\+peak\+\_\+anomaly\+\_\+score}
+
+\Hypertarget{struct_weds_node_event_a1d88a663f0040d60cbfadb63438cb27d}\index{WedsNodeEvent@{WedsNodeEvent}!peak\_risk\_score@{peak\_risk\_score}}
+\index{peak\_risk\_score@{peak\_risk\_score}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{peak\_risk\_score}{peak\_risk\_score}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a1d88a663f0040d60cbfadb63438cb27d} 
+float Weds\+Node\+Event::\+peak\+\_\+risk\+\_\+score}
+
+\Hypertarget{struct_weds_node_event_ae6697228843b2173146b1000c002cc57}\index{WedsNodeEvent@{WedsNodeEvent}!sample\_count@{sample\_count}}
+\index{sample\_count@{sample\_count}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{sample\_count}{sample\_count}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_ae6697228843b2173146b1000c002cc57} 
+uint16\+\_\+t Weds\+Node\+Event::\+sample\+\_\+count}
+
+\Hypertarget{struct_weds_node_event_a0c8c8cbcc0293fe78138d3bcd65597b6}\index{WedsNodeEvent@{WedsNodeEvent}!start\_timestamp\_s@{start\_timestamp\_s}}
+\index{start\_timestamp\_s@{start\_timestamp\_s}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{start\_timestamp\_s}{start\_timestamp\_s}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a0c8c8cbcc0293fe78138d3bcd65597b6} 
+uint32\+\_\+t Weds\+Node\+Event::\+start\+\_\+timestamp\+\_\+s}
+
+\Hypertarget{struct_weds_node_event_abeb129c297d30035b3212aeebbeb15dd}\index{WedsNodeEvent@{WedsNodeEvent}!still\_open@{still\_open}}
+\index{still\_open@{still\_open}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{still\_open}{still\_open}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_abeb129c297d30035b3212aeebbeb15dd} 
+bool Weds\+Node\+Event::\+still\+\_\+open}
+
+\Hypertarget{struct_weds_node_event_a0c92524fd622ad9d6987f2a34169537b}\index{WedsNodeEvent@{WedsNodeEvent}!type@{type}}
+\index{type@{type}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_a0c92524fd622ad9d6987f2a34169537b} 
+\doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}} Weds\+Node\+Event::\+type}
+
+\Hypertarget{struct_weds_node_event_acda0a508f1b812302e98b56934047af6}\index{WedsNodeEvent@{WedsNodeEvent}!used@{used}}
+\index{used@{used}!WedsNodeEvent@{WedsNodeEvent}}
+\doxysubsubsection{\texorpdfstring{used}{used}}
+{\footnotesize\ttfamily \label{struct_weds_node_event_acda0a508f1b812302e98b56934047af6} 
+bool Weds\+Node\+Event::\+used}
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+gateway\+\_\+registry/\+\doxymbox{\hyperlink{_weds_gateway_registry_8h}{Weds\+Gateway\+Registry.\+h}}\end{DoxyCompactItemize}

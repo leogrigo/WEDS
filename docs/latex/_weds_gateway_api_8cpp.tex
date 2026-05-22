@@ -1,0 +1,52 @@
+\doxysection{code/\+lib/\+weds\+\_\+gateway\+\_\+api/\+\+Weds\+Gateway\+Api.cpp File Reference}
+\hypertarget{_weds_gateway_api_8cpp}{}\label{_weds_gateway_api_8cpp}\index{code/lib/weds\_gateway\_api/WedsGatewayApi.cpp@{code/lib/weds\_gateway\_api/WedsGatewayApi.cpp}}
+{\ttfamily \+\#include "{}Weds\+Gateway\+Api.\+h"{}}\newline
+{\ttfamily \+\#include $<$Arduino\+Json.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$time.\+h$>$}\newline
+{\ttfamily \+\#include "{}Weds\+Gateway\+Config.\+h"{}}\newline
+{\ttfamily \+\#include "{}Weds\+Gateway\+Web.\+h"{}}\newline
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \doxymbox{\hyperlink{_weds_gateway_api_8cpp_a91f3438f0eebff69e94035330e252990}{api\+\_\+record\+\_\+buffer}} \+[\doxymbox{\hyperlink{_weds_gateway_config_8h_ad33d4e2e7788a097b6d36d84603dbf6b}{WEDS\+\_\+\+MAX\+\_\+\+NODES}}]\+
+\begin{DoxyCompactList}\small\item\em Buffer for API operations retrieving node records. \end{DoxyCompactList}\item 
+static \doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} \doxymbox{\hyperlink{_weds_gateway_api_8cpp_ad12aa7960f8c1b1ce8bd360fd5985370}{api\+\_\+event\+\_\+buffer}} \+[\doxymbox{\hyperlink{_weds_gateway_config_8h_ac1c301fbaf244efa1320d48ddf71744e}{WEDS\+\_\+\+MAX\+\_\+\+EVENTS\+\_\+\+PER\+\_\+\+NODE}}]\+
+\begin{DoxyCompactList}\small\item\em Buffer for API operations retrieving node events. \end{DoxyCompactList}\item 
+static \doxymbox{\hyperlink{struct_weds_trend_point}{Weds\+Trend\+Point}} \doxymbox{\hyperlink{_weds_gateway_api_8cpp_a40cae94c69c749e61b0557f6f0b38d19}{api\+\_\+trend\+\_\+buffer}} \+[\doxymbox{\hyperlink{_weds_gateway_config_8h_a9491d336819b3df3a36943aab0df1330}{WEDS\+\_\+\+TREND\+\_\+\+POINTS\+\_\+\+PER\+\_\+\+NODE}}]\+
+\begin{DoxyCompactList}\small\item\em Buffer for API operations retrieving node trend data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_gateway_api_8cpp_doc-var-members}
+\Hypertarget{_weds_gateway_api_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_weds_gateway_api_8cpp_ad12aa7960f8c1b1ce8bd360fd5985370}\index{WedsGatewayApi.cpp@{WedsGatewayApi.cpp}!api\_event\_buffer@{api\_event\_buffer}}
+\index{api\_event\_buffer@{api\_event\_buffer}!WedsGatewayApi.cpp@{WedsGatewayApi.cpp}}
+\doxysubsubsection{\texorpdfstring{api\_event\_buffer}{api\_event\_buffer}}
+{\footnotesize\ttfamily \label{_weds_gateway_api_8cpp_ad12aa7960f8c1b1ce8bd360fd5985370} 
+\doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} api\+\_\+event\+\_\+buffer\+[\doxymbox{\hyperlink{_weds_gateway_config_8h_ac1c301fbaf244efa1320d48ddf71744e}{WEDS\+\_\+\+MAX\+\_\+\+EVENTS\+\_\+\+PER\+\_\+\+NODE}}]\+\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Buffer for API operations retrieving node events. 
+
+\Hypertarget{_weds_gateway_api_8cpp_a91f3438f0eebff69e94035330e252990}\index{WedsGatewayApi.cpp@{WedsGatewayApi.cpp}!api\_record\_buffer@{api\_record\_buffer}}
+\index{api\_record\_buffer@{api\_record\_buffer}!WedsGatewayApi.cpp@{WedsGatewayApi.cpp}}
+\doxysubsubsection{\texorpdfstring{api\_record\_buffer}{api\_record\_buffer}}
+{\footnotesize\ttfamily \label{_weds_gateway_api_8cpp_a91f3438f0eebff69e94035330e252990} 
+\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} api\+\_\+record\+\_\+buffer\+[\doxymbox{\hyperlink{_weds_gateway_config_8h_ad33d4e2e7788a097b6d36d84603dbf6b}{WEDS\+\_\+\+MAX\+\_\+\+NODES}}]\+\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Buffer for API operations retrieving node records. 
+
+\Hypertarget{_weds_gateway_api_8cpp_a40cae94c69c749e61b0557f6f0b38d19}\index{WedsGatewayApi.cpp@{WedsGatewayApi.cpp}!api\_trend\_buffer@{api\_trend\_buffer}}
+\index{api\_trend\_buffer@{api\_trend\_buffer}!WedsGatewayApi.cpp@{WedsGatewayApi.cpp}}
+\doxysubsubsection{\texorpdfstring{api\_trend\_buffer}{api\_trend\_buffer}}
+{\footnotesize\ttfamily \label{_weds_gateway_api_8cpp_a40cae94c69c749e61b0557f6f0b38d19} 
+\doxymbox{\hyperlink{struct_weds_trend_point}{Weds\+Trend\+Point}} api\+\_\+trend\+\_\+buffer\+[\doxymbox{\hyperlink{_weds_gateway_config_8h_a9491d336819b3df3a36943aab0df1330}{WEDS\+\_\+\+TREND\+\_\+\+POINTS\+\_\+\+PER\+\_\+\+NODE}}]\+\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Buffer for API operations retrieving node trend data. 
+

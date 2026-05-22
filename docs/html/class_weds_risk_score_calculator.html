@@ -131,6 +131,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a795b807e484a1a496191afe556e885f8" id="r_a795b807e484a1a496191afe556e885f8"><td class="memItemLeft"><a class="el" href="struct_weds_risk_result.html">WedsRiskResult</a>&#160;</td><td class="memItemRight"><a class="el" href="#a795b807e484a1a496191afe556e885f8">update</a> (const <a class="el" href="struct_weds_sensor_sample.html">WedsSensorSample</a> &amp;sample)</td></tr>
 <tr class="memdesc:a795b807e484a1a496191afe556e885f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a new sensor reading, updates the historical rolling buffers, and runs an inference pass.  <br /></td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a59d0e5fc0e664dd45569c88d1b96624b" id="r_a59d0e5fc0e664dd45569c88d1b96624b"><td class="memItemLeft">static const int&#160;</td><td class="memItemRight"><a class="el" href="#a59d0e5fc0e664dd45569c88d1b96624b">kHistorySize</a> = 7</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a1a13b3552b86d8246a7a99ed05bbe090" id="r_a1a13b3552b86d8246a7a99ed05bbe090"><td class="memItemLeft">const tflite::Model *&#160;</td><td class="memItemRight"><a class="el" href="#a1a13b3552b86d8246a7a99ed05bbe090">model_</a> = nullptr</td></tr>
@@ -140,7 +144,6 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a586ecd70ddc4f6310c6fe2b9ddeb3db2" id="r_a586ecd70ddc4f6310c6fe2b9ddeb3db2"><td class="memItemLeft">uint8_t&#160;</td><td class="memItemRight"><a class="el" href="#a586ecd70ddc4f6310c6fe2b9ddeb3db2">tensor_arena_</a> [<a class="el" href="#aea07e11f0dcbfe52d14344fbec74fbd5">kTensorArenaSize</a>]</td></tr>
 <tr class="memitem:aae52639772c608d2fbf0dd31d2ea1dc3" id="r_aae52639772c608d2fbf0dd31d2ea1dc3"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#aae52639772c608d2fbf0dd31d2ea1dc3">scaler_means_</a> [<a class="el" href="#a009b169a0890b74524afe9777c87ab30">kNumFeatures</a>]</td></tr>
 <tr class="memitem:add3e127bd1bf65d3de1599ca58e263c8" id="r_add3e127bd1bf65d3de1599ca58e263c8"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#add3e127bd1bf65d3de1599ca58e263c8">scaler_scales_</a> [<a class="el" href="#a009b169a0890b74524afe9777c87ab30">kNumFeatures</a>]</td></tr>
-<tr class="memitem:a175afc950da191f5add4eac86927e2a8" id="r_a175afc950da191f5add4eac86927e2a8"><td class="memItemLeft"><a class="el" href="struct_daily_bucket.html">DailyBucket</a>&#160;</td><td class="memItemRight"><a class="el" href="#a175afc950da191f5add4eac86927e2a8">history_</a> [7]</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-static-attribs" class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -149,7 +152,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages the execution and state of the TinyML fire risk prediction model. </p>
-<p>This class maintains a 7-day rolling history of environmental data to compute the required time-series features (averages and deltas) before feeding them into the quantized TensorFlow Lite neural network. </p>
+<p>This class maintains a 7-day rolling history of environmental data to compute the required time-series features (averages and deltas) before feeding them into the quantized TensorFlow Lite neural network. The rolling history is stored in RTC-retained memory so it survives hardware deep-sleep resets. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="acb0296a97993ee66e1502c21dfd271c2" name="acb0296a97993ee66e1502c21dfd271c2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acb0296a97993ee66e1502c21dfd271c2">&#9670;&#160;</a></span>begin()</h2>
@@ -198,29 +201,6 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
-<a id="a175afc950da191f5add4eac86927e2a8" name="a175afc950da191f5add4eac86927e2a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a175afc950da191f5add4eac86927e2a8">&#9670;&#160;</a></span>history_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_daily_bucket.html">DailyBucket</a> WedsRiskScoreCalculator::history_[7]</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel private">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>7-day rolling history of sensor readings. </p>
-
-</div>
-</div>
 <a id="aa9e49bb9a658d6e2d3ebf33f7b315b0b" name="aa9e49bb9a658d6e2d3ebf33f7b315b0b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa9e49bb9a658d6e2d3ebf33f7b315b0b">&#9670;&#160;</a></span>input_</h2>
 
@@ -264,6 +244,29 @@ Static Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Interpreter for running inference. </p>
+
+</div>
+</div>
+<a id="a59d0e5fc0e664dd45569c88d1b96624b" name="a59d0e5fc0e664dd45569c88d1b96624b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59d0e5fc0e664dd45569c88d1b96624b">&#9670;&#160;</a></span>kHistorySize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int WedsRiskScoreCalculator::kHistorySize = 7</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Number of days in the rolling history buffer. </p>
 
 </div>
 </div>

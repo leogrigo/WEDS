@@ -1,0 +1,60 @@
+\doxysection{code/\+lib/\+weds\+\_\+node\+\_\+simulation/\+\+Weds\+Node\+Simulation.cpp File Reference}
+\hypertarget{_weds_node_simulation_8cpp}{}\label{_weds_node_simulation_8cpp}\index{code/lib/weds\_node\_simulation/WedsNodeSimulation.cpp@{code/lib/weds\_node\_simulation/WedsNodeSimulation.cpp}}
+{\ttfamily \+\#include "{}Weds\+Node\+Simulation.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} \doxymbox{\hyperlink{_weds_node_simulation_8cpp_a62de14ee70736a582a8e420ac81da776}{weds\+\_\+read\+\_\+simulated\+\_\+sample}} ()
+\begin{DoxyCompactList}\small\item\em Reads a simulated sensor sample based on the current simulation state and mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_weds_simulation_state}{Weds\+Simulation\+State}} \doxymbox{\hyperlink{_weds_node_simulation_8cpp_a633416008e59c2e0d1683cb80dcefaf0}{weds\+\_\+simulation\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em Global simulation state instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_node_simulation_8cpp_doc-func-members}
+\Hypertarget{_weds_node_simulation_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_weds_node_simulation_8cpp_a62de14ee70736a582a8e420ac81da776}\index{WedsNodeSimulation.cpp@{WedsNodeSimulation.cpp}!weds\_read\_simulated\_sample@{weds\_read\_simulated\_sample}}
+\index{weds\_read\_simulated\_sample@{weds\_read\_simulated\_sample}!WedsNodeSimulation.cpp@{WedsNodeSimulation.cpp}}
+\doxysubsubsection{\texorpdfstring{weds\_read\_simulated\_sample()}{weds\_read\_simulated\_sample()}}
+{\footnotesize\ttfamily \label{_weds_node_simulation_8cpp_a62de14ee70736a582a8e420ac81da776} 
+\doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} weds\+\_\+read\+\_\+simulated\+\_\+sample (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Reads a simulated sensor sample based on the current simulation state and mode. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample} The generated sensor sample. 
+\end{DoxyReturn}
+
+
+\label{_weds_node_simulation_8cpp_doc-var-members}
+\Hypertarget{_weds_node_simulation_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_weds_node_simulation_8cpp_a633416008e59c2e0d1683cb80dcefaf0}\index{WedsNodeSimulation.cpp@{WedsNodeSimulation.cpp}!weds\_simulation\_state@{weds\_simulation\_state}}
+\index{weds\_simulation\_state@{weds\_simulation\_state}!WedsNodeSimulation.cpp@{WedsNodeSimulation.cpp}}
+\doxysubsubsection{\texorpdfstring{weds\_simulation\_state}{weds\_simulation\_state}}
+{\footnotesize\ttfamily \label{_weds_node_simulation_8cpp_a633416008e59c2e0d1683cb80dcefaf0} 
+\doxymbox{\hyperlink{struct_weds_simulation_state}{Weds\+Simulation\+State}} weds\+\_\+simulation\+\_\+state}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ 0,}
+\DoxyCodeLine{\ \ \ \ 0,}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{true},}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{false},}
+\DoxyCodeLine{\ \ \ \ 0.0f,}
+\DoxyCodeLine{\ \ \ \ 0.0f,}
+\DoxyCodeLine{\ \ \ \ 0.0f,}
+\DoxyCodeLine{\ \ \ \ 0.0f}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Global simulation state instance. 
+

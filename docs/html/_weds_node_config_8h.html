@@ -188,6 +188,16 @@ Variables</h2></td></tr>
 <tr class="memdesc:abf5135280bdc037b9ea67cf4b5bdccf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Voltage representing a fully charged battery.  <br /></td></tr>
 <tr class="memitem:acc2429a10ee888c28a709bca6d22dd93" id="r_acc2429a10ee888c28a709bca6d22dd93"><td class="memItemLeft">static constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#acc2429a10ee888c28a709bca6d22dd93">WEDS_NODE_BATTERY_PERCENT_PER_V</a></td></tr>
 <tr class="memdesc:acc2429a10ee888c28a709bca6d22dd93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conversion factor from voltage to battery percentage.  <br /></td></tr>
+<tr class="memitem:a858a7b1937437e60b346e3ffb8c1a9b9" id="r_a858a7b1937437e60b346e3ffb8c1a9b9"><td class="memItemLeft">static constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a858a7b1937437e60b346e3ffb8c1a9b9">WEDS_RISK_THRESHOLD_LOW</a> = 0.35f</td></tr>
+<tr class="memdesc:a858a7b1937437e60b346e3ffb8c1a9b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire risk score threshold below which the node is considered Low risk. Scores in [0.0, WEDS_RISK_THRESHOLD_LOW) are treated as low risk.  <br /></td></tr>
+<tr class="memitem:a084043e098237c98c50082fdbfa5c2d3" id="r_a084043e098237c98c50082fdbfa5c2d3"><td class="memItemLeft">static constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a084043e098237c98c50082fdbfa5c2d3">WEDS_RISK_THRESHOLD_MED</a> = 0.65f</td></tr>
+<tr class="memdesc:a084043e098237c98c50082fdbfa5c2d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fire risk score threshold below which the node is considered Medium risk. Scores in [WEDS_RISK_THRESHOLD_LOW, WEDS_RISK_THRESHOLD_MED) are medium risk. Scores at or above this threshold are treated as high risk.  <br /></td></tr>
+<tr class="memitem:a85598025f4aa0b6312901613e093d722" id="r_a85598025f4aa0b6312901613e093d722"><td class="memItemLeft">static constexpr uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#a85598025f4aa0b6312901613e093d722">WEDS_SLEEP_SEC_RISK_LOW</a> = 1800U</td></tr>
+<tr class="memdesc:a85598025f4aa0b6312901613e093d722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deep sleep duration in seconds when fire risk is Low. Default: 30 minutes. Tune to reduce network traffic in benign conditions.  <br /></td></tr>
+<tr class="memitem:aba774bb34d7af9ae4f3ca979f68630ce" id="r_aba774bb34d7af9ae4f3ca979f68630ce"><td class="memItemLeft">static constexpr uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#aba774bb34d7af9ae4f3ca979f68630ce">WEDS_SLEEP_SEC_RISK_MED</a> = 600U</td></tr>
+<tr class="memdesc:aba774bb34d7af9ae4f3ca979f68630ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deep sleep duration in seconds when fire risk is Medium. Default: 10 minutes. Increases sampling frequency as risk rises.  <br /></td></tr>
+<tr class="memitem:a016de697b61f738c90716f7ee1b489f8" id="r_a016de697b61f738c90716f7ee1b489f8"><td class="memItemLeft">static constexpr uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#a016de697b61f738c90716f7ee1b489f8">WEDS_SLEEP_SEC_RISK_HIGH</a> = 120U</td></tr>
+<tr class="memdesc:a016de697b61f738c90716f7ee1b489f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deep sleep duration in seconds when fire risk is High. Default: 2 minutes. Maximum polling rate during elevated danger conditions.  <br /></td></tr>
 </table>
 <a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
 <a id="a60cc55dd1be7a17f7446654eeb850dad" name="a60cc55dd1be7a17f7446654eeb850dad"></a>
@@ -776,6 +786,54 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a858a7b1937437e60b346e3ffb8c1a9b9" name="a858a7b1937437e60b346e3ffb8c1a9b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a858a7b1937437e60b346e3ffb8c1a9b9">&#9670;&#160;</a></span>WEDS_RISK_THRESHOLD_LOW</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float WEDS_RISK_THRESHOLD_LOW = 0.35f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fire risk score threshold below which the node is considered Low risk. Scores in [0.0, WEDS_RISK_THRESHOLD_LOW) are treated as low risk. </p>
+
+</div>
+</div>
+<a id="a084043e098237c98c50082fdbfa5c2d3" name="a084043e098237c98c50082fdbfa5c2d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a084043e098237c98c50082fdbfa5c2d3">&#9670;&#160;</a></span>WEDS_RISK_THRESHOLD_MED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float WEDS_RISK_THRESHOLD_MED = 0.65f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fire risk score threshold below which the node is considered Medium risk. Scores in [WEDS_RISK_THRESHOLD_LOW, WEDS_RISK_THRESHOLD_MED) are medium risk. Scores at or above this threshold are treated as high risk. </p>
+
+</div>
+</div>
 <a id="af043c19ed446d3f6dd66fc01e1654185" name="af043c19ed446d3f6dd66fc01e1654185"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af043c19ed446d3f6dd66fc01e1654185">&#9670;&#160;</a></span>WEDS_SELECTED_SIMULATION_MODE</h2>
 
@@ -800,6 +858,78 @@ Variables</h2></td></tr>
 <div class="ttc" id="a_weds_node_config_8h_html_af1931b61ac712380f335deda117934efaa6bef5eff8bca92b46814ff3cf87422d"><div class="ttname"><a href="#af1931b61ac712380f335deda117934efaa6bef5eff8bca92b46814ff3cf87422d">WEDS_SIM_MODE_FIRE_EVENT</a></div><div class="ttdeci">@ WEDS_SIM_MODE_FIRE_EVENT</div><div class="ttdoc">Simulated fire event.</div><div class="ttdef"><b>Definition</b> WedsNodeConfig.h:28</div></div>
 </div><!-- fragment -->
 <p>Selected simulation scenario for the node. </p>
+
+</div>
+</div>
+<a id="a016de697b61f738c90716f7ee1b489f8" name="a016de697b61f738c90716f7ee1b489f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a016de697b61f738c90716f7ee1b489f8">&#9670;&#160;</a></span>WEDS_SLEEP_SEC_RISK_HIGH</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t WEDS_SLEEP_SEC_RISK_HIGH = 120U</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deep sleep duration in seconds when fire risk is High. Default: 2 minutes. Maximum polling rate during elevated danger conditions. </p>
+
+</div>
+</div>
+<a id="a85598025f4aa0b6312901613e093d722" name="a85598025f4aa0b6312901613e093d722"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85598025f4aa0b6312901613e093d722">&#9670;&#160;</a></span>WEDS_SLEEP_SEC_RISK_LOW</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t WEDS_SLEEP_SEC_RISK_LOW = 1800U</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deep sleep duration in seconds when fire risk is Low. Default: 30 minutes. Tune to reduce network traffic in benign conditions. </p>
+
+</div>
+</div>
+<a id="aba774bb34d7af9ae4f3ca979f68630ce" name="aba774bb34d7af9ae4f3ca979f68630ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba774bb34d7af9ae4f3ca979f68630ce">&#9670;&#160;</a></span>WEDS_SLEEP_SEC_RISK_MED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t WEDS_SLEEP_SEC_RISK_MED = 600U</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Deep sleep duration in seconds when fire risk is Medium. Default: 10 minutes. Increases sampling frequency as risk rises. </p>
 
 </div>
 </div>

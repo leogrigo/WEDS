@@ -51,8 +51,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_weds_anomaly_detector_8cpp.html",
-"class_weds_gateway_api.html#aea000f6c5c6b2e3da15c3fb6e41eacdb",
-"struct_weds_node_status_payload.html#a6b67485e97c61374f8a66f8e0635c5a2"
+"class_weds_gateway_api.html#a8fbbd1107a1778b3cf615b90d53c3dec",
+"struct_weds_node_record.html#ae6baef9b98db0c2d7533aad8f51a49b4"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

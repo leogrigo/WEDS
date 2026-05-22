@@ -1,0 +1,33 @@
+\doxysection{Weds\+Sensors.\+h}
+\hypertarget{_weds_sensors_8h_source}{}\label{_weds_sensors_8h_source}\index{code/lib/weds\_sensors/WedsSensors.h@{code/lib/weds\_sensors/WedsSensors.h}}
+\doxymbox{\hyperlink{_weds_sensors_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_sensor_sample_8h}{WedsSensorSample.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ WEDS\_I2C\_SDA\ 41}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ WEDS\_I2C\_SCL\ 42}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifdef\ WEDS\_LEGACY\_SENSORS}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ WEDS\_MQ2\_PIN\ 4}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_weds_sensors_8h_aefeeabf78e4a505bd699014d1f593bff}{weds\_sensors\_begin}}();}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00020\ \doxymbox{\hyperlink{struct_weds_sensor_sample}{WedsSensorSample}}\ \doxymbox{\hyperlink{_weds_sensors_8h_ab540bc22abc8f7abe724643770451c5e}{weds\_read\_environment\_sample}}();}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00028\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_sensors_8h_aefeeabf78e4a505bd699014d1f593bff}{weds\_sensors\_begin}}();}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00034\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_sensors_8h_ab8b9eaecafd3b8d3b9f55689c4dc9177}{weds\_sensor\_save\_state}}();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_sensors_8h_a4458767bf182278e4b2f51f731955bf6}{weds\_sensor\_load\_state}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *state);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00047\ \doxymbox{\hyperlink{struct_weds_sensor_sample}{WedsSensorSample}}\ \doxymbox{\hyperlink{_weds_sensors_8h_ab540bc22abc8f7abe724643770451c5e}{weds\_read\_environment\_sample}}();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ \doxymbox{\hyperlink{_weds_sensors_8h_a4ef77ebd0d896d1c6f316c6bb01a773b}{weds\_sensor\_next\_call\_ms}}();}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

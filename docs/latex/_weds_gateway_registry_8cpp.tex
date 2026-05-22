@@ -1,0 +1,36 @@
+\doxysection{code/\+lib/\+weds\+\_\+gateway\+\_\+registry/\+\+Weds\+Gateway\+Registry.cpp File Reference}
+\hypertarget{_weds_gateway_registry_8cpp}{}\label{_weds_gateway_registry_8cpp}\index{code/lib/weds\_gateway\_registry/WedsGatewayRegistry.cpp@{code/lib/weds\_gateway\_registry/WedsGatewayRegistry.cpp}}
+{\ttfamily \+\#include "{}Weds\+Gateway\+Registry.\+h"{}}\newline
+{\ttfamily \+\#include $<$Arduino\+Json.\+h$>$}\newline
+{\ttfamily \+\#include $<$Little\+FS.\+h$>$}\newline
+{\ttfamily \+\#include $<$math.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$time.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_registry_8cpp_a1efc37294530188d3d4d7bac95d757fb}{gateway\+Timestamp\+Or\+Fallback}} (uint32\+\_\+t fallback\+\_\+timestamp\+\_\+s)
+\begin{DoxyCompactList}\small\item\em Returns the current gateway time if NTP is synced, otherwise falls back to a provided timestamp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_gateway_registry_8cpp_doc-func-members}
+\Hypertarget{_weds_gateway_registry_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_weds_gateway_registry_8cpp_a1efc37294530188d3d4d7bac95d757fb}\index{WedsGatewayRegistry.cpp@{WedsGatewayRegistry.cpp}!gatewayTimestampOrFallback@{gatewayTimestampOrFallback}}
+\index{gatewayTimestampOrFallback@{gatewayTimestampOrFallback}!WedsGatewayRegistry.cpp@{WedsGatewayRegistry.cpp}}
+\doxysubsubsection{\texorpdfstring{gatewayTimestampOrFallback()}{gatewayTimestampOrFallback()}}
+{\footnotesize\ttfamily \label{_weds_gateway_registry_8cpp_a1efc37294530188d3d4d7bac95d757fb} 
+uint32\+\_\+t gateway\+Timestamp\+Or\+Fallback (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{fallback\+\_\+timestamp\+\_\+s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Returns the current gateway time if NTP is synced, otherwise falls back to a provided timestamp. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fallback\+\_\+timestamp\+\_\+s} & Fallback timestamp in seconds. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t The resolved timestamp in seconds. 
+\end{DoxyReturn}

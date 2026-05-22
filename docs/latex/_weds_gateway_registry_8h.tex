@@ -1,0 +1,66 @@
+\doxysection{code/\+lib/\+weds\+\_\+gateway\+\_\+registry/\+\+Weds\+Gateway\+Registry.h File Reference}
+\hypertarget{_weds_gateway_registry_8h}{}\label{_weds_gateway_registry_8h}\index{code/lib/weds\_gateway\_registry/WedsGatewayRegistry.h@{code/lib/weds\_gateway\_registry/WedsGatewayRegistry.h}}
+{\ttfamily \+\#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \+\#include "{}Weds\+Gateway\+Config.\+h"{}}\newline
+{\ttfamily \+\#include "{}Weds\+Protocol.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}}
+\begin{DoxyCompactList}\small\item\em Represents a specific event triggered by a node. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_weds_trend_point}{Weds\+Trend\+Point}}
+\begin{DoxyCompactList}\small\item\em A single data point representing a node\textquotesingle{}s telemetry at a specific time. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}}
+\begin{DoxyCompactList}\small\item\em Holds all relevant information about a node, including state, config, and trends. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}}
+\begin{DoxyCompactList}\small\item\em Maintains the state, location, events, and trends of all known nodes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}} :\+ uint8\+\_\+t \{ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71a69ea59f51591c3dd7b830588bb72c3ef}{WEDS\+\_\+\+EVENT\+\_\+\+NONE}} = 0
+, \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71ac154a39ebc619702bbfb7a3cfc67cbd9}{WEDS\+\_\+\+EVENT\+\_\+\+ANOMALY\+\_\+\+ALERT}} = 1
+, \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71aeea2bf5e0b9b514d4b2197d2db514c64}{WEDS\+\_\+\+EVENT\+\_\+\+RISK\+\_\+\+ALERT}} = 2
+, \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71ad765ec34e10594a78f1247bd0158a834}{WEDS\+\_\+\+EVENT\+\_\+\+BOTH\+\_\+\+ALERT}} = 3
+ \}
+\begin{DoxyCompactList}\small\item\em Represents the type of an alert event. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_gateway_registry_8h_doc-enum-members}
+\Hypertarget{_weds_gateway_registry_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}\index{WedsGatewayRegistry.h@{WedsGatewayRegistry.h}!WedsEventType@{WedsEventType}}
+\index{WedsEventType@{WedsEventType}!WedsGatewayRegistry.h@{WedsGatewayRegistry.h}}
+\doxysubsubsection{\texorpdfstring{WedsEventType}{WedsEventType}}
+{\footnotesize\ttfamily \label{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71} 
+enum \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}} :\+ uint8\+\_\+t}
+
+
+
+Represents the type of an alert event. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_EVENT\_NONE@{WEDS\_EVENT\_NONE}!WedsGatewayRegistry.h@{WedsGatewayRegistry.h}}
+\index{WedsGatewayRegistry.h@{WedsGatewayRegistry.h}!WEDS\_EVENT\_NONE@{WEDS\_EVENT\_NONE}}
+}\Hypertarget{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71a69ea59f51591c3dd7b830588bb72c3ef}\label{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71a69ea59f51591c3dd7b830588bb72c3ef} 
+WEDS\+\_\+\+EVENT\+\_\+\+NONE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_EVENT\_ANOMALY\_ALERT@{WEDS\_EVENT\_ANOMALY\_ALERT}!WedsGatewayRegistry.h@{WedsGatewayRegistry.h}}
+\index{WedsGatewayRegistry.h@{WedsGatewayRegistry.h}!WEDS\_EVENT\_ANOMALY\_ALERT@{WEDS\_EVENT\_ANOMALY\_ALERT}}
+}\Hypertarget{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71ac154a39ebc619702bbfb7a3cfc67cbd9}\label{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71ac154a39ebc619702bbfb7a3cfc67cbd9} 
+WEDS\+\_\+\+EVENT\+\_\+\+ANOMALY\+\_\+\+ALERT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_EVENT\_RISK\_ALERT@{WEDS\_EVENT\_RISK\_ALERT}!WedsGatewayRegistry.h@{WedsGatewayRegistry.h}}
+\index{WedsGatewayRegistry.h@{WedsGatewayRegistry.h}!WEDS\_EVENT\_RISK\_ALERT@{WEDS\_EVENT\_RISK\_ALERT}}
+}\Hypertarget{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71aeea2bf5e0b9b514d4b2197d2db514c64}\label{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71aeea2bf5e0b9b514d4b2197d2db514c64} 
+WEDS\+\_\+\+EVENT\+\_\+\+RISK\+\_\+\+ALERT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_EVENT\_BOTH\_ALERT@{WEDS\_EVENT\_BOTH\_ALERT}!WedsGatewayRegistry.h@{WedsGatewayRegistry.h}}
+\index{WedsGatewayRegistry.h@{WedsGatewayRegistry.h}!WEDS\_EVENT\_BOTH\_ALERT@{WEDS\_EVENT\_BOTH\_ALERT}}
+}\Hypertarget{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71ad765ec34e10594a78f1247bd0158a834}\label{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71ad765ec34e10594a78f1247bd0158a834} 
+WEDS\+\_\+\+EVENT\+\_\+\+BOTH\+\_\+\+ALERT&\\
+\hline
+
+\end{DoxyEnumFields}

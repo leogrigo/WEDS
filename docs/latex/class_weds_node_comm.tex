@@ -1,0 +1,319 @@
+\doxysection{Weds\+Node\+Comm Class Reference}
+\hypertarget{class_weds_node_comm}{}\label{class_weds_node_comm}\index{WedsNodeComm@{WedsNodeComm}}
+
+
+Handles Lo\+Ra communication for the sensor node, including status, alerts, and command polling.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Node\+Comm.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_weds_node_comm_ac87cdbca2cc43aaef9f8bb5b40081d96}{Weds\+Node\+Comm}} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \doxylink{class_weds_node_comm}{Weds\+Node\+Comm} object. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_aa0edd0ffb4ea2283a33077ed72ebd616}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the communication module and the Lo\+Ra radio. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_node_comm_a794bf3c4b318393489cace9fa60a8f28}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Handles incoming messages and maintains communication state. Must be called regularly. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_ae69e2ef254901f9a46245703e0b696db}{send\+Status}} (const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\begin{DoxyCompactList}\small\item\em Sends a status update payload to the gateway. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_abb5ef83955287d5d3fb94ff52514d9be}{send\+Alert}} (const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\begin{DoxyCompactList}\small\item\em Sends an alert to the gateway, ensuring delivery through retries and ACK handling. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_ada2cddc618d9040df122ed68930447d4}{poll\+Alert\+Mode\+Enable}} (\doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&out\+\_\+command, uint32\+\_\+t timeout\+\_\+ms)
+\begin{DoxyCompactList}\small\item\em Polls for an incoming Alert Mode Enable command from the gateway. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_node_comm_aedfff052bf92365266e3dc7edfc5331f}{sleep\+Radio}} ()
+\begin{DoxyCompactList}\small\item\em Puts the Lo\+Ra radio into a low-\/power sleep state. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_node_comm_a19dbc9757c8c5a01bac632ca7f774173}{wake\+Radio}} ()
+\begin{DoxyCompactList}\small\item\em Wakes the Lo\+Ra radio from sleep mode. \end{DoxyCompactList}\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_comm_a93fe7b65db91951abbf1c6daa12ba36f}{get\+Node\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Gets the unique identifier for this node. \end{DoxyCompactList}\item 
+uint16\+\_\+t \doxymbox{\hyperlink{class_weds_node_comm_a3c3d1a877d78b0e0c6b5661cd8324198}{get\+Current\+Sequence\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Gets the current sequence ID for outgoing messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_a10fe4546d0234cd8d698d29266d97faa}{init\+Radio}} ()
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_a5e489a86c4808b3dfc5f4d5f7ae352fb}{send\+Packet}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet)
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_a3be1132af8837c7451e5ba8e078127bf}{wait\+For\+Ack}} (uint16\+\_\+t expected\+\_\+acked\+\_\+sequence\+\_\+id, uint8\+\_\+t expected\+\_\+acked\+\_\+msg\+\_\+type, uint32\+\_\+t timeout\+\_\+ms)
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_ab9c3cb48508def9d53440a5d4dc49d11}{is\+Expected\+Ack}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet, uint16\+\_\+t expected\+\_\+acked\+\_\+sequence\+\_\+id, uint8\+\_\+t expected\+\_\+acked\+\_\+msg\+\_\+type)
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_a98c6bd0c08836c37153bd28dcca2b237}{send\+Ack}} (uint32\+\_\+t dst\+\_\+node\+\_\+id, uint16\+\_\+t acked\+\_\+sequence\+\_\+id, uint8\+\_\+t acked\+\_\+msg\+\_\+type, uint8\+\_\+t status\+\_\+code)
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_af5171c1106c491bf6aa18e49c262ad30}{is\+Duplicate\+Gateway\+Command}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet) const
+\item 
+void \doxymbox{\hyperlink{class_weds_node_comm_a9970923f4eb3242df0482cb0df39e704}{mark\+Gateway\+Command\+Processed}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet)
+\item 
+void \doxymbox{\hyperlink{class_weds_node_comm_aee17f34425fa127bf65deee8d16e4c01}{print\+Buffer\+Hex}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t len)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_comm_a6c208c68c95fb7e0268ad934f4396b81}{node\+\_\+id\+\_\+}}
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{class_weds_node_comm_ae92e432657e4e51b7b2c50c4119b7654}{sequence\+\_\+id\+\_\+}}
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_acfb204e4aab3ce977592e1c1df21c020}{initialized\+\_\+}}
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_a9d70fda934a4ecff772a6b83cc2a68c9}{radio\+\_\+sleeping\+\_\+}}
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_comm_a725285babc2c7e993dbbb1294401b868}{has\+\_\+last\+\_\+gateway\+\_\+command\+\_\+}}
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{class_weds_node_comm_a8d4288f4c9f81c6698820beeb6f396fa}{last\+\_\+gateway\+\_\+command\+\_\+sequence\+\_\+id\+\_\+}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{class_weds_node_comm_ada48431ca1d7d2dadd6b2bfabee1158f}{last\+\_\+gateway\+\_\+command\+\_\+msg\+\_\+type\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles Lo\+Ra communication for the sensor node, including status, alerts, and command polling. 
+
+\label{class_weds_node_comm_doc-constructors}
+\Hypertarget{class_weds_node_comm_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_weds_node_comm_ac87cdbca2cc43aaef9f8bb5b40081d96}\index{WedsNodeComm@{WedsNodeComm}!WedsNodeComm@{WedsNodeComm}}
+\index{WedsNodeComm@{WedsNodeComm}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{WedsNodeComm()}{WedsNodeComm()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_ac87cdbca2cc43aaef9f8bb5b40081d96} 
+Weds\+Node\+Comm::\+\+Weds\+Node\+Comm (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructs a new \doxylink{class_weds_node_comm}{Weds\+Node\+Comm} object. 
+
+
+
+\label{class_weds_node_comm_doc-func-members}
+\Hypertarget{class_weds_node_comm_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_weds_node_comm_aa0edd0ffb4ea2283a33077ed72ebd616}\index{WedsNodeComm@{WedsNodeComm}!begin@{begin}}
+\index{begin@{begin}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_aa0edd0ffb4ea2283a33077ed72ebd616} 
+bool Weds\+Node\+Comm::\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the communication module and the Lo\+Ra radio. 
+
+\begin{DoxyReturn}{Returns}
+true if initialization was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_comm_a3c3d1a877d78b0e0c6b5661cd8324198}\index{WedsNodeComm@{WedsNodeComm}!getCurrentSequenceId@{getCurrentSequenceId}}
+\index{getCurrentSequenceId@{getCurrentSequenceId}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{getCurrentSequenceId()}{getCurrentSequenceId()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a3c3d1a877d78b0e0c6b5661cd8324198} 
+uint16\+\_\+t Weds\+Node\+Comm::\+get\+Current\+Sequence\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the current sequence ID for outgoing messages. 
+
+\begin{DoxyReturn}{Returns}
+uint16\+\_\+t The sequence ID. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_comm_a93fe7b65db91951abbf1c6daa12ba36f}\index{WedsNodeComm@{WedsNodeComm}!getNodeId@{getNodeId}}
+\index{getNodeId@{getNodeId}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{getNodeId()}{getNodeId()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a93fe7b65db91951abbf1c6daa12ba36f} 
+uint32\+\_\+t Weds\+Node\+Comm::\+get\+Node\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the unique identifier for this node. 
+
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t The node ID. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_comm_a10fe4546d0234cd8d698d29266d97faa}\index{WedsNodeComm@{WedsNodeComm}!initRadio@{initRadio}}
+\index{initRadio@{initRadio}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{initRadio()}{initRadio()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a10fe4546d0234cd8d698d29266d97faa} 
+bool Weds\+Node\+Comm::\+init\+Radio (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_af5171c1106c491bf6aa18e49c262ad30}\index{WedsNodeComm@{WedsNodeComm}!isDuplicateGatewayCommand@{isDuplicateGatewayCommand}}
+\index{isDuplicateGatewayCommand@{isDuplicateGatewayCommand}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{isDuplicateGatewayCommand()}{isDuplicateGatewayCommand()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_af5171c1106c491bf6aa18e49c262ad30} 
+bool Weds\+Node\+Comm::\+is\+Duplicate\+Gateway\+Command (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_ab9c3cb48508def9d53440a5d4dc49d11}\index{WedsNodeComm@{WedsNodeComm}!isExpectedAck@{isExpectedAck}}
+\index{isExpectedAck@{isExpectedAck}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{isExpectedAck()}{isExpectedAck()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_ab9c3cb48508def9d53440a5d4dc49d11} 
+bool Weds\+Node\+Comm::\+is\+Expected\+Ack (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{, }\item[{uint16\+\_\+t}]{expected\+\_\+acked\+\_\+sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{expected\+\_\+acked\+\_\+msg\+\_\+type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_a794bf3c4b318393489cace9fa60a8f28}\index{WedsNodeComm@{WedsNodeComm}!loop@{loop}}
+\index{loop@{loop}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a794bf3c4b318393489cace9fa60a8f28} 
+void Weds\+Node\+Comm::\+loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Handles incoming messages and maintains communication state. Must be called regularly. 
+
+\Hypertarget{class_weds_node_comm_a9970923f4eb3242df0482cb0df39e704}\index{WedsNodeComm@{WedsNodeComm}!markGatewayCommandProcessed@{markGatewayCommandProcessed}}
+\index{markGatewayCommandProcessed@{markGatewayCommandProcessed}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{markGatewayCommandProcessed()}{markGatewayCommandProcessed()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a9970923f4eb3242df0482cb0df39e704} 
+void Weds\+Node\+Comm::\+mark\+Gateway\+Command\+Processed (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_ada2cddc618d9040df122ed68930447d4}\index{WedsNodeComm@{WedsNodeComm}!pollAlertModeEnable@{pollAlertModeEnable}}
+\index{pollAlertModeEnable@{pollAlertModeEnable}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{pollAlertModeEnable()}{pollAlertModeEnable()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_ada2cddc618d9040df122ed68930447d4} 
+bool Weds\+Node\+Comm::\+poll\+Alert\+Mode\+Enable (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&}]{out\+\_\+command}{, }\item[{uint32\+\_\+t}]{timeout\+\_\+ms}{}\end{DoxyParamCaption})}
+
+
+
+Polls for an incoming Alert Mode Enable command from the gateway. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+\_\+command} & The structure to populate with the command payload. \\
+\hline
+{\em timeout\+\_\+ms} & The maximum time to wait for a command, in milliseconds. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if a command was received and decoded successfully. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_comm_aee17f34425fa127bf65deee8d16e4c01}\index{WedsNodeComm@{WedsNodeComm}!printBufferHex@{printBufferHex}}
+\index{printBufferHex@{printBufferHex}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{printBufferHex()}{printBufferHex()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_aee17f34425fa127bf65deee8d16e4c01} 
+void Weds\+Node\+Comm::\+print\+Buffer\+Hex (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{len}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_a98c6bd0c08836c37153bd28dcca2b237}\index{WedsNodeComm@{WedsNodeComm}!sendAck@{sendAck}}
+\index{sendAck@{sendAck}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{sendAck()}{sendAck()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a98c6bd0c08836c37153bd28dcca2b237} 
+bool Weds\+Node\+Comm::\+send\+Ack (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{dst\+\_\+node\+\_\+id}{, }\item[{uint16\+\_\+t}]{acked\+\_\+sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{acked\+\_\+msg\+\_\+type}{, }\item[{uint8\+\_\+t}]{status\+\_\+code}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_abb5ef83955287d5d3fb94ff52514d9be}\index{WedsNodeComm@{WedsNodeComm}!sendAlert@{sendAlert}}
+\index{sendAlert@{sendAlert}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{sendAlert()}{sendAlert()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_abb5ef83955287d5d3fb94ff52514d9be} 
+bool Weds\+Node\+Comm::\+send\+Alert (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})}
+
+
+
+Sends an alert to the gateway, ensuring delivery through retries and ACK handling. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & The alert status payload. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the alert was successfully sent and acknowledged. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_comm_a5e489a86c4808b3dfc5f4d5f7ae352fb}\index{WedsNodeComm@{WedsNodeComm}!sendPacket@{sendPacket}}
+\index{sendPacket@{sendPacket}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{sendPacket()}{sendPacket()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a5e489a86c4808b3dfc5f4d5f7ae352fb} 
+bool Weds\+Node\+Comm::\+send\+Packet (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_ae69e2ef254901f9a46245703e0b696db}\index{WedsNodeComm@{WedsNodeComm}!sendStatus@{sendStatus}}
+\index{sendStatus@{sendStatus}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{sendStatus()}{sendStatus()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_ae69e2ef254901f9a46245703e0b696db} 
+bool Weds\+Node\+Comm::\+send\+Status (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})}
+
+
+
+Sends a status update payload to the gateway. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & The status payload to send. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the transmission was initiated successfully. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_comm_aedfff052bf92365266e3dc7edfc5331f}\index{WedsNodeComm@{WedsNodeComm}!sleepRadio@{sleepRadio}}
+\index{sleepRadio@{sleepRadio}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{sleepRadio()}{sleepRadio()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_aedfff052bf92365266e3dc7edfc5331f} 
+void Weds\+Node\+Comm::\+sleep\+Radio (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Puts the Lo\+Ra radio into a low-\/power sleep state. 
+
+\Hypertarget{class_weds_node_comm_a3be1132af8837c7451e5ba8e078127bf}\index{WedsNodeComm@{WedsNodeComm}!waitForAck@{waitForAck}}
+\index{waitForAck@{waitForAck}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{waitForAck()}{waitForAck()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a3be1132af8837c7451e5ba8e078127bf} 
+bool Weds\+Node\+Comm::\+wait\+For\+Ack (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{expected\+\_\+acked\+\_\+sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{expected\+\_\+acked\+\_\+msg\+\_\+type}{, }\item[{uint32\+\_\+t}]{timeout\+\_\+ms}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_a19dbc9757c8c5a01bac632ca7f774173}\index{WedsNodeComm@{WedsNodeComm}!wakeRadio@{wakeRadio}}
+\index{wakeRadio@{wakeRadio}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{wakeRadio()}{wakeRadio()}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a19dbc9757c8c5a01bac632ca7f774173} 
+void Weds\+Node\+Comm::\+wake\+Radio (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Wakes the Lo\+Ra radio from sleep mode. 
+
+
+
+\label{class_weds_node_comm_doc-variable-members}
+\Hypertarget{class_weds_node_comm_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_weds_node_comm_a725285babc2c7e993dbbb1294401b868}\index{WedsNodeComm@{WedsNodeComm}!has\_last\_gateway\_command\_@{has\_last\_gateway\_command\_}}
+\index{has\_last\_gateway\_command\_@{has\_last\_gateway\_command\_}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{has\_last\_gateway\_command\_}{has\_last\_gateway\_command\_}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a725285babc2c7e993dbbb1294401b868} 
+bool Weds\+Node\+Comm::\+has\+\_\+last\+\_\+gateway\+\_\+command\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_acfb204e4aab3ce977592e1c1df21c020}\index{WedsNodeComm@{WedsNodeComm}!initialized\_@{initialized\_}}
+\index{initialized\_@{initialized\_}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{initialized\_}{initialized\_}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_acfb204e4aab3ce977592e1c1df21c020} 
+bool Weds\+Node\+Comm::\+initialized\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_ada48431ca1d7d2dadd6b2bfabee1158f}\index{WedsNodeComm@{WedsNodeComm}!last\_gateway\_command\_msg\_type\_@{last\_gateway\_command\_msg\_type\_}}
+\index{last\_gateway\_command\_msg\_type\_@{last\_gateway\_command\_msg\_type\_}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{last\_gateway\_command\_msg\_type\_}{last\_gateway\_command\_msg\_type\_}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_ada48431ca1d7d2dadd6b2bfabee1158f} 
+uint8\+\_\+t Weds\+Node\+Comm::\+last\+\_\+gateway\+\_\+command\+\_\+msg\+\_\+type\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_a8d4288f4c9f81c6698820beeb6f396fa}\index{WedsNodeComm@{WedsNodeComm}!last\_gateway\_command\_sequence\_id\_@{last\_gateway\_command\_sequence\_id\_}}
+\index{last\_gateway\_command\_sequence\_id\_@{last\_gateway\_command\_sequence\_id\_}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{last\_gateway\_command\_sequence\_id\_}{last\_gateway\_command\_sequence\_id\_}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a8d4288f4c9f81c6698820beeb6f396fa} 
+uint16\+\_\+t Weds\+Node\+Comm::\+last\+\_\+gateway\+\_\+command\+\_\+sequence\+\_\+id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_a6c208c68c95fb7e0268ad934f4396b81}\index{WedsNodeComm@{WedsNodeComm}!node\_id\_@{node\_id\_}}
+\index{node\_id\_@{node\_id\_}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{node\_id\_}{node\_id\_}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a6c208c68c95fb7e0268ad934f4396b81} 
+uint32\+\_\+t Weds\+Node\+Comm::\+node\+\_\+id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_a9d70fda934a4ecff772a6b83cc2a68c9}\index{WedsNodeComm@{WedsNodeComm}!radio\_sleeping\_@{radio\_sleeping\_}}
+\index{radio\_sleeping\_@{radio\_sleeping\_}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{radio\_sleeping\_}{radio\_sleeping\_}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_a9d70fda934a4ecff772a6b83cc2a68c9} 
+bool Weds\+Node\+Comm::\+radio\+\_\+sleeping\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_comm_ae92e432657e4e51b7b2c50c4119b7654}\index{WedsNodeComm@{WedsNodeComm}!sequence\_id\_@{sequence\_id\_}}
+\index{sequence\_id\_@{sequence\_id\_}!WedsNodeComm@{WedsNodeComm}}
+\doxysubsubsection{\texorpdfstring{sequence\_id\_}{sequence\_id\_}}
+{\footnotesize\ttfamily \label{class_weds_node_comm_ae92e432657e4e51b7b2c50c4119b7654} 
+uint16\+\_\+t Weds\+Node\+Comm::\+sequence\+\_\+id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+node\+\_\+comm/\+\doxymbox{\hyperlink{_weds_node_comm_8h}{Weds\+Node\+Comm.\+h}}\item 
+code/\+lib/\+weds\+\_\+node\+\_\+comm/\+\doxymbox{\hyperlink{_weds_node_comm_8cpp}{Weds\+Node\+Comm.\+cpp}}\end{DoxyCompactItemize}

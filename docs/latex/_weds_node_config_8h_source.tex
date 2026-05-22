@@ -1,0 +1,87 @@
+\doxysection{Weds\+Node\+Config.\+h}
+\hypertarget{_weds_node_config_8h_source}{}\label{_weds_node_config_8h_source}\index{code/include/WedsNodeConfig.h@{code/include/WedsNodeConfig.h}}
+\doxymbox{\hyperlink{_weds_node_config_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_radio_config_8h}{WedsRadioConfig.h}}"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dad}{WedsNodeSensingMode}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dadafedaec3f56eeb751e2c6d1b596c93038}{WEDS\_NODE\_ENVIRONMENT\_SENSING}}\ =\ 1,}
+\DoxyCodeLine{00014\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dada52a140aece678c2082816236e24822ad}{WEDS\_NODE\_SIMULATION}}\ =\ 0}
+\DoxyCodeLine{00015\ \};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934ef}{WedsSimulationMode}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efab31dd8dbf967da7083e4e3f824456e8d}{WEDS\_SIM\_MODE\_NORMAL}},}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efad7d89e931493e86c0857dbf8d5c766d5}{WEDS\_SIM\_MODE\_DRY\_PERIOD}},}
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efa99154e2e7a99268506352ba9fbfcf5ea}{WEDS\_SIM\_MODE\_GAS\_DROP}},}
+\DoxyCodeLine{00028\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efaa6bef5eff8bca92b46814ff3cf87422d}{WEDS\_SIM\_MODE\_FIRE\_EVENT}},}
+\DoxyCodeLine{00030\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efa9419ba3e6bceff50421e699af06eee14}{WEDS\_SIM\_MODE\_SENSOR\_FAULT}}}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dad}{WedsNodeSensingMode}}\ \doxymbox{\hyperlink{_weds_node_config_8h_a7465983412784f2ea8aa217814e64d7b}{WEDS\_NODE\_SENSING\_MODE}}\ =}
+\DoxyCodeLine{00035\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dadafedaec3f56eeb751e2c6d1b596c93038}{WEDS\_NODE\_ENVIRONMENT\_SENSING}};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934ef}{WedsSimulationMode}}\ \doxymbox{\hyperlink{_weds_node_config_8h_af043c19ed446d3f6dd66fc01e1654185}{WEDS\_SELECTED\_SIMULATION\_MODE}}\ =}
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efaa6bef5eff8bca92b46814ff3cf87422d}{WEDS\_SIM\_MODE\_FIRE\_EVENT}};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a9a906fb57f3c68798f79a532c5012823}{WEDS\_NODE\_DEFAULT\_SAMPLE\_INTERVAL\_MS}}\ =\ 2000;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_af641074031921ea61faef57cd81c5c86}{WEDS\_NODE\_ACK\_TIMEOUT\_MS}}\ =\ 1500;}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint8\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_abf6e49061e92c51a99d330cea148873f}{WEDS\_NODE\_ALERT\_MAX\_RETRIES}}\ =\ 3;}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_aea7045793f120e9d647b3ec083abee94}{WEDS\_NODE\_RETRY\_BACKOFF\_MS}}\ =\ 300;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_ab2736af63e59d37fae6d661a8e896361}{WEDS\_NODE\_BOOT\_DELAY\_MS}}\ =\ 500;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a65bc8a42f326db61b76e12fe5a319802}{WEDS\_NODE\_ERROR\_TASK\_DELAY\_MS}}\ =\ 1000;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a91905d8157827ac6480ea75d7f271aa0}{WEDS\_NODE\_LOOP\_IDLE\_DELAY\_MS}}\ =\ 1000;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_afe9f3f2a54db6262eab7f938c41f05b8}{WEDS\_NODE\_MIN\_RX\_WINDOW\_MS}}\ =\ 250;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a196cc87d266c206dc6207286b1bce772}{WEDS\_NODE\_RX\_POLL\_CHUNK\_MS}}\ =\ 50;}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_ad79b64315dd9a671decbcb6fa2c5d799}{WEDS\_NODE\_CYCLE\_TASK\_STACK\_BYTES}}\ =\ 8192;}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a92d8b583dea2cc1a33a56374dfeb9204}{WEDS\_NODE\_RX\_TASK\_STACK\_BYTES}}\ =\ 8192;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint8\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a5899c0261672a73c62aa1f859e8f8263}{WEDS\_NODE\_CYCLE\_TASK\_PRIORITY}}\ =\ 2;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint8\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a2bbda49ea26f2eb8b9e51d11c0f6b4e8}{WEDS\_NODE\_RX\_TASK\_PRIORITY}}\ =\ 3;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ int8\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a7a6142c4bb843fd3234cdf768be70e48}{WEDS\_NODE\_CYCLE\_TASK\_CORE}}\ =\ 1;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ int8\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_af9178679010d5b2268eab6a75a24ddbe}{WEDS\_NODE\_RX\_TASK\_CORE}}\ =\ 0;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint8\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a0ba1eac125c6415a88ee534ea2e40f1b}{WEDS\_NODE\_HELTEC\_VBAT\_CTRL\_PIN}}\ =\ 37;}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00090\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint8\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_af3dbcaafc7981e48d5ed59425f692bd2}{WEDS\_NODE\_HELTEC\_VBAT\_ADC\_PIN}}\ =\ 1;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_weds_node_config_8h_a106e91fe3b10086050b810e528a0ec1e}{WEDS\_NODE\_HELTEC\_ADC\_TO\_VBAT}}\ =\ 1.0f\ /\ 238.7f;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00096\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_weds_node_config_8h_a9c00e839f54776c3cdb03315336e2abb}{WEDS\_NODE\_BATTERY\_EMPTY\_V}}\ =\ 3.04f;}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_weds_node_config_8h_abf5135280bdc037b9ea67cf4b5bdccf2}{WEDS\_NODE\_BATTERY\_FULL\_V}}\ =\ 4.26f;}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_weds_node_config_8h_acc2429a10ee888c28a709bca6d22dd93}{WEDS\_NODE\_BATTERY\_PERCENT\_PER\_V}}\ =}
+\DoxyCodeLine{00103\ \ \ \ \ 100.0f\ /\ (\doxymbox{\hyperlink{_weds_node_config_8h_abf5135280bdc037b9ea67cf4b5bdccf2}{WEDS\_NODE\_BATTERY\_FULL\_V}}\ -\/\ \doxymbox{\hyperlink{_weds_node_config_8h_a9c00e839f54776c3cdb03315336e2abb}{WEDS\_NODE\_BATTERY\_EMPTY\_V}});}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00106\ \textcolor{comment}{//\ Dynamic\ Duty\ Cycle\ Config}}
+\DoxyCodeLine{00107\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_weds_node_config_8h_a858a7b1937437e60b346e3ffb8c1a9b9}{WEDS\_RISK\_THRESHOLD\_LOW}}\ \ =\ 0.35f;}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{_weds_node_config_8h_a084043e098237c98c50082fdbfa5c2d3}{WEDS\_RISK\_THRESHOLD\_MED}}\ \ =\ 0.65f;}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00126\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a85598025f4aa0b6312901613e093d722}{WEDS\_SLEEP\_SEC\_RISK\_LOW}}\ \ =\ 1800U;}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00132\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_aba774bb34d7af9ae4f3ca979f68630ce}{WEDS\_SLEEP\_SEC\_RISK\_MED}}\ \ =\ 600U;}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00138\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_node_config_8h_a016de697b61f738c90716f7ee1b489f8}{WEDS\_SLEEP\_SEC\_RISK\_HIGH}}\ =\ 120U;}
+
+\end{DoxyCode}

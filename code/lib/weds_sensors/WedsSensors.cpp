@@ -58,7 +58,13 @@ WedsSensorSample weds_read_environment_sample() {
     sample.humidity = humidity.relative_humidity;
     sample.pressure = pressure;
     sample.gas_resistance = static_cast<float>(analogRead(WEDS_MQ2_PIN));
-    sample.valid = true;
+    
+    if (isnan(sample.temperature) || isnan(sample.humidity) || isnan(sample.pressure)) {
+        sample.valid = false;
+        Serial.println("[SENSOR] Error: read NaN from environmental sensors");
+    } else {
+        sample.valid = true;
+    }
 
     printSample(sample);
     return sample;

@@ -1,0 +1,274 @@
+\doxysection{Weds\+Node\+State Class Reference}
+\hypertarget{class_weds_node_state}{}\label{class_weds_node_state}\index{WedsNodeState@{WedsNodeState}}
+
+
+Manages the operational state and configuration of a sensor node.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Node\+State.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_weds_node_state_a63e2829684263889589ce8ab480de2c2}{Weds\+Node\+State}} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \doxylink{class_weds_node_state}{Weds\+Node\+State} object with default values. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_node_state_a3924316472576717d54f9857c8f5e60f}{begin}} (uint32\+\_\+t node\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Initializes the node state. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \doxymbox{\hyperlink{class_weds_node_state_acc8ac43773810226eb2a31c4daf5f88e}{build\+Payload}} (const \doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} \&sample, const \doxymbox{\hyperlink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}} \&anomaly, const \doxymbox{\hyperlink{struct_weds_risk_result}{Weds\+Risk\+Result}} \&risk) const
+\begin{DoxyCompactList}\small\item\em Builds a status payload for transmission. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_node_state_a6453ede0cd3b7efb96e6bbfda79f8738}{set\+Sleep\+Enabled}} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Enables or disables the node\textquotesingle{}s ability to sleep. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_node_state_a608e91640fd33e2bc05602205b88df28}{sleep\+Enabled}} () const
+\begin{DoxyCompactList}\small\item\em Checks whether sleep mode is enabled. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_node_state_adf6d046a803b121cf0880bcce0f08897}{apply\+Alert\+Mode\+Command}} (const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&command)
+\begin{DoxyCompactList}\small\item\em Applies an alert mode command received from the network. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_node_state_a416ae024c6e90fedaa703fedea2eb9e2}{refresh\+Alert\+Mode}} ()
+\begin{DoxyCompactList}\small\item\em Updates the alert mode state, disabling it if the duration has expired. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_node_state_ace89a246280a64b3bcf89c7a0aa01ceb}{alert\+Mode\+Active}} () const
+\begin{DoxyCompactList}\small\item\em Checks if alert mode is currently active. \end{DoxyCompactList}\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_state_ab27078e9f856ad0134176acd92e4e3f9}{sample\+Interval\+Ms}} () const
+\begin{DoxyCompactList}\small\item\em Gets the current sampling interval in milliseconds. \end{DoxyCompactList}\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_state_a52a93c959ae75dcfa62ef180c56a7402}{node\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Gets the unique node identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{class_weds_node_state_a05bf28964835d6708731773f345ce7e0}{read\+Battery\+Level}} () const
+\begin{DoxyCompactList}\small\item\em Reads the battery level of the node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_state_a99b3ff619c0f14d3cdbbf2d5bc13ba7f}{node\+\_\+id\+\_\+}}
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_state_a4f11b95999966a883b13de6e84d3674d}{sleep\+\_\+enabled\+\_\+}}
+\item 
+bool \doxymbox{\hyperlink{class_weds_node_state_a53212cac386a0cef310574f23d7d6f92}{alert\+\_\+mode\+\_\+active\+\_\+}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_state_a3a883d17670098dedd32b273fa362d87}{alert\+\_\+mode\+\_\+until\+\_\+ms\+\_\+}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_state_a0bde4c95d7c7f7b9a719c6ad76315b40}{normal\+\_\+sample\+\_\+interval\+\_\+ms\+\_\+}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_state_adb39318c6db502953bbcdd73bd02c265}{active\+\_\+sample\+\_\+interval\+\_\+ms\+\_\+}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_node_state_ab554c3d70afc00733c68b8ddc5299ab9}{alert\+\_\+source\+\_\+node\+\_\+id\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages the operational state and configuration of a sensor node. 
+
+\label{class_weds_node_state_doc-constructors}
+\Hypertarget{class_weds_node_state_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_weds_node_state_a63e2829684263889589ce8ab480de2c2}\index{WedsNodeState@{WedsNodeState}!WedsNodeState@{WedsNodeState}}
+\index{WedsNodeState@{WedsNodeState}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{WedsNodeState()}{WedsNodeState()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a63e2829684263889589ce8ab480de2c2} 
+Weds\+Node\+State::\+\+Weds\+Node\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructs a new \doxylink{class_weds_node_state}{Weds\+Node\+State} object with default values. 
+
+
+
+\label{class_weds_node_state_doc-func-members}
+\Hypertarget{class_weds_node_state_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_weds_node_state_ace89a246280a64b3bcf89c7a0aa01ceb}\index{WedsNodeState@{WedsNodeState}!alertModeActive@{alertModeActive}}
+\index{alertModeActive@{alertModeActive}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{alertModeActive()}{alertModeActive()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_ace89a246280a64b3bcf89c7a0aa01ceb} 
+bool Weds\+Node\+State::\+alert\+Mode\+Active (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks if alert mode is currently active. 
+
+\begin{DoxyReturn}{Returns}
+true if active, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_state_adf6d046a803b121cf0880bcce0f08897}\index{WedsNodeState@{WedsNodeState}!applyAlertModeCommand@{applyAlertModeCommand}}
+\index{applyAlertModeCommand@{applyAlertModeCommand}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{applyAlertModeCommand()}{applyAlertModeCommand()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_adf6d046a803b121cf0880bcce0f08897} 
+void Weds\+Node\+State::\+apply\+Alert\+Mode\+Command (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&}]{command}{}\end{DoxyParamCaption})}
+
+
+
+Applies an alert mode command received from the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & The alert mode command payload. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_node_state_a3924316472576717d54f9857c8f5e60f}\index{WedsNodeState@{WedsNodeState}!begin@{begin}}
+\index{begin@{begin}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a3924316472576717d54f9857c8f5e60f} 
+void Weds\+Node\+State::\+begin (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the node state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & The unique identifier for this node. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_node_state_acc8ac43773810226eb2a31c4daf5f88e}\index{WedsNodeState@{WedsNodeState}!buildPayload@{buildPayload}}
+\index{buildPayload@{buildPayload}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{buildPayload()}{buildPayload()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_acc8ac43773810226eb2a31c4daf5f88e} 
+\doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} Weds\+Node\+State::\+build\+Payload (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} \&}]{sample}{, }\item[{const \doxymbox{\hyperlink{struct_weds_anomaly_result}{Weds\+Anomaly\+Result}} \&}]{anomaly}{, }\item[{const \doxymbox{\hyperlink{struct_weds_risk_result}{Weds\+Risk\+Result}} \&}]{risk}{}\end{DoxyParamCaption}) const}
+
+
+
+Builds a status payload for transmission. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sample} & The latest sensor sample. \\
+\hline
+{\em anomaly} & The anomaly detection result. \\
+\hline
+{\em risk} & The risk score result. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload} The constructed payload. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_state_a52a93c959ae75dcfa62ef180c56a7402}\index{WedsNodeState@{WedsNodeState}!nodeId@{nodeId}}
+\index{nodeId@{nodeId}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{nodeId()}{nodeId()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a52a93c959ae75dcfa62ef180c56a7402} 
+uint32\+\_\+t Weds\+Node\+State::\+node\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the unique node identifier. 
+
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t The node ID. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_state_a05bf28964835d6708731773f345ce7e0}\index{WedsNodeState@{WedsNodeState}!readBatteryLevel@{readBatteryLevel}}
+\index{readBatteryLevel@{readBatteryLevel}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{readBatteryLevel()}{readBatteryLevel()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a05bf28964835d6708731773f345ce7e0} 
+float Weds\+Node\+State::\+read\+Battery\+Level (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Reads the battery level of the node. 
+
+\begin{DoxyReturn}{Returns}
+float The battery level percentage (0.\+0 to 100.\+0). 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_state_a416ae024c6e90fedaa703fedea2eb9e2}\index{WedsNodeState@{WedsNodeState}!refreshAlertMode@{refreshAlertMode}}
+\index{refreshAlertMode@{refreshAlertMode}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{refreshAlertMode()}{refreshAlertMode()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a416ae024c6e90fedaa703fedea2eb9e2} 
+void Weds\+Node\+State::\+refresh\+Alert\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Updates the alert mode state, disabling it if the duration has expired. 
+
+\Hypertarget{class_weds_node_state_ab27078e9f856ad0134176acd92e4e3f9}\index{WedsNodeState@{WedsNodeState}!sampleIntervalMs@{sampleIntervalMs}}
+\index{sampleIntervalMs@{sampleIntervalMs}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{sampleIntervalMs()}{sampleIntervalMs()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_ab27078e9f856ad0134176acd92e4e3f9} 
+uint32\+\_\+t Weds\+Node\+State::\+sample\+Interval\+Ms (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the current sampling interval in milliseconds. 
+
+\begin{DoxyReturn}{Returns}
+uint32\+\_\+t The sampling interval. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_node_state_a6453ede0cd3b7efb96e6bbfda79f8738}\index{WedsNodeState@{WedsNodeState}!setSleepEnabled@{setSleepEnabled}}
+\index{setSleepEnabled@{setSleepEnabled}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{setSleepEnabled()}{setSleepEnabled()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a6453ede0cd3b7efb96e6bbfda79f8738} 
+void Weds\+Node\+State::\+set\+Sleep\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})}
+
+
+
+Enables or disables the node\textquotesingle{}s ability to sleep. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enabled} & True to enable sleep, false otherwise. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_node_state_a608e91640fd33e2bc05602205b88df28}\index{WedsNodeState@{WedsNodeState}!sleepEnabled@{sleepEnabled}}
+\index{sleepEnabled@{sleepEnabled}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{sleepEnabled()}{sleepEnabled()}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a608e91640fd33e2bc05602205b88df28} 
+bool Weds\+Node\+State::\+sleep\+Enabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks whether sleep mode is enabled. 
+
+\begin{DoxyReturn}{Returns}
+true if sleep is enabled, false otherwise. 
+\end{DoxyReturn}
+
+
+\label{class_weds_node_state_doc-variable-members}
+\Hypertarget{class_weds_node_state_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_weds_node_state_adb39318c6db502953bbcdd73bd02c265}\index{WedsNodeState@{WedsNodeState}!active\_sample\_interval\_ms\_@{active\_sample\_interval\_ms\_}}
+\index{active\_sample\_interval\_ms\_@{active\_sample\_interval\_ms\_}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{active\_sample\_interval\_ms\_}{active\_sample\_interval\_ms\_}}
+{\footnotesize\ttfamily \label{class_weds_node_state_adb39318c6db502953bbcdd73bd02c265} 
+uint32\+\_\+t Weds\+Node\+State::\+active\+\_\+sample\+\_\+interval\+\_\+ms\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_state_a53212cac386a0cef310574f23d7d6f92}\index{WedsNodeState@{WedsNodeState}!alert\_mode\_active\_@{alert\_mode\_active\_}}
+\index{alert\_mode\_active\_@{alert\_mode\_active\_}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{alert\_mode\_active\_}{alert\_mode\_active\_}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a53212cac386a0cef310574f23d7d6f92} 
+bool Weds\+Node\+State::\+alert\+\_\+mode\+\_\+active\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_state_a3a883d17670098dedd32b273fa362d87}\index{WedsNodeState@{WedsNodeState}!alert\_mode\_until\_ms\_@{alert\_mode\_until\_ms\_}}
+\index{alert\_mode\_until\_ms\_@{alert\_mode\_until\_ms\_}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{alert\_mode\_until\_ms\_}{alert\_mode\_until\_ms\_}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a3a883d17670098dedd32b273fa362d87} 
+uint32\+\_\+t Weds\+Node\+State::\+alert\+\_\+mode\+\_\+until\+\_\+ms\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_state_ab554c3d70afc00733c68b8ddc5299ab9}\index{WedsNodeState@{WedsNodeState}!alert\_source\_node\_id\_@{alert\_source\_node\_id\_}}
+\index{alert\_source\_node\_id\_@{alert\_source\_node\_id\_}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{alert\_source\_node\_id\_}{alert\_source\_node\_id\_}}
+{\footnotesize\ttfamily \label{class_weds_node_state_ab554c3d70afc00733c68b8ddc5299ab9} 
+uint32\+\_\+t Weds\+Node\+State::\+alert\+\_\+source\+\_\+node\+\_\+id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_state_a99b3ff619c0f14d3cdbbf2d5bc13ba7f}\index{WedsNodeState@{WedsNodeState}!node\_id\_@{node\_id\_}}
+\index{node\_id\_@{node\_id\_}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{node\_id\_}{node\_id\_}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a99b3ff619c0f14d3cdbbf2d5bc13ba7f} 
+uint32\+\_\+t Weds\+Node\+State::\+node\+\_\+id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_state_a0bde4c95d7c7f7b9a719c6ad76315b40}\index{WedsNodeState@{WedsNodeState}!normal\_sample\_interval\_ms\_@{normal\_sample\_interval\_ms\_}}
+\index{normal\_sample\_interval\_ms\_@{normal\_sample\_interval\_ms\_}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{normal\_sample\_interval\_ms\_}{normal\_sample\_interval\_ms\_}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a0bde4c95d7c7f7b9a719c6ad76315b40} 
+uint32\+\_\+t Weds\+Node\+State::\+normal\+\_\+sample\+\_\+interval\+\_\+ms\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_node_state_a4f11b95999966a883b13de6e84d3674d}\index{WedsNodeState@{WedsNodeState}!sleep\_enabled\_@{sleep\_enabled\_}}
+\index{sleep\_enabled\_@{sleep\_enabled\_}!WedsNodeState@{WedsNodeState}}
+\doxysubsubsection{\texorpdfstring{sleep\_enabled\_}{sleep\_enabled\_}}
+{\footnotesize\ttfamily \label{class_weds_node_state_a4f11b95999966a883b13de6e84d3674d} 
+bool Weds\+Node\+State::\+sleep\+\_\+enabled\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+node\+\_\+state/\+\doxymbox{\hyperlink{_weds_node_state_8h}{Weds\+Node\+State.\+h}}\item 
+code/\+lib/\+weds\+\_\+node\+\_\+state/\+\doxymbox{\hyperlink{_weds_node_state_8cpp}{Weds\+Node\+State.\+cpp}}\end{DoxyCompactItemize}

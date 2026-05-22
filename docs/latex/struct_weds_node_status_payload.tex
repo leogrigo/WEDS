@@ -1,0 +1,109 @@
+\doxysection{Weds\+Node\+Status\+Payload Struct Reference}
+\hypertarget{struct_weds_node_status_payload}{}\label{struct_weds_node_status_payload}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+
+
+Payload for NODE\+\_\+\+STATUS and NODE\+\_\+\+ALERT messages.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Packet.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_status_payload_aa104f1c514644436e811a3bf852d2da4}{timestamp\+\_\+s}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_status_payload_a9acf6846456576ab9b4a82d32a6e3834}{temperature}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_status_payload_abc24078552f35d4348c02dc0fca654b9}{humidity}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_status_payload_a3de4e2f1925560c75d7f671cd498300b}{pressure}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_status_payload_a9a1fc3ffaace228e0eb5570a13dc3d73}{gas\+\_\+resistance}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_status_payload_a1d75239eaecbe86160ed60614d3f98c4}{battery\+\_\+level}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_node_status_payload_a6971a3e9b7810ec97fcfcf8b48a8ea5e}{anomaly\+\_\+state}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_status_payload_a020deed5ac89325a4de73bf62bf182b8}{anomaly\+\_\+score}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_node_status_payload_a809ce9b9e3e3e27ccea4fd982177ab2b}{risk\+\_\+state}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_node_status_payload_a6b67485e97c61374f8a66f8e0635c5a2}{risk\+\_\+score}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Payload for NODE\+\_\+\+STATUS and NODE\+\_\+\+ALERT messages. 
+
+These two message types share the same payload structure, differing only in the msg\+\_\+type and ack\+\_\+required fields of the header. 
+
+\label{struct_weds_node_status_payload_doc-variable-members}
+\Hypertarget{struct_weds_node_status_payload_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_weds_node_status_payload_a020deed5ac89325a4de73bf62bf182b8}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!anomaly\_score@{anomaly\_score}}
+\index{anomaly\_score@{anomaly\_score}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{anomaly\_score}{anomaly\_score}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_a020deed5ac89325a4de73bf62bf182b8} 
+float Weds\+Node\+Status\+Payload::\+anomaly\+\_\+score}
+
+Computed anomaly score. \Hypertarget{struct_weds_node_status_payload_a6971a3e9b7810ec97fcfcf8b48a8ea5e}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!anomaly\_state@{anomaly\_state}}
+\index{anomaly\_state@{anomaly\_state}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{anomaly\_state}{anomaly\_state}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_a6971a3e9b7810ec97fcfcf8b48a8ea5e} 
+uint8\+\_\+t Weds\+Node\+Status\+Payload::\+anomaly\+\_\+state}
+
+Current anomaly state. \Hypertarget{struct_weds_node_status_payload_a1d75239eaecbe86160ed60614d3f98c4}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!battery\_level@{battery\_level}}
+\index{battery\_level@{battery\_level}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{battery\_level}{battery\_level}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_a1d75239eaecbe86160ed60614d3f98c4} 
+float Weds\+Node\+Status\+Payload::\+battery\+\_\+level}
+
+Battery voltage or percentage. \Hypertarget{struct_weds_node_status_payload_a9a1fc3ffaace228e0eb5570a13dc3d73}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!gas\_resistance@{gas\_resistance}}
+\index{gas\_resistance@{gas\_resistance}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{gas\_resistance}{gas\_resistance}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_a9a1fc3ffaace228e0eb5570a13dc3d73} 
+float Weds\+Node\+Status\+Payload::\+gas\+\_\+resistance}
+
+Measured gas resistance. \Hypertarget{struct_weds_node_status_payload_abc24078552f35d4348c02dc0fca654b9}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!humidity@{humidity}}
+\index{humidity@{humidity}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{humidity}{humidity}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_abc24078552f35d4348c02dc0fca654b9} 
+float Weds\+Node\+Status\+Payload::\+humidity}
+
+Relative humidity percentage. \Hypertarget{struct_weds_node_status_payload_a3de4e2f1925560c75d7f671cd498300b}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!pressure@{pressure}}
+\index{pressure@{pressure}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{pressure}{pressure}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_a3de4e2f1925560c75d7f671cd498300b} 
+float Weds\+Node\+Status\+Payload::\+pressure}
+
+Atmospheric pressure. \Hypertarget{struct_weds_node_status_payload_a6b67485e97c61374f8a66f8e0635c5a2}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!risk\_score@{risk\_score}}
+\index{risk\_score@{risk\_score}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{risk\_score}{risk\_score}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_a6b67485e97c61374f8a66f8e0635c5a2} 
+float Weds\+Node\+Status\+Payload::\+risk\+\_\+score}
+
+Computed fire risk score. \Hypertarget{struct_weds_node_status_payload_a809ce9b9e3e3e27ccea4fd982177ab2b}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!risk\_state@{risk\_state}}
+\index{risk\_state@{risk\_state}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{risk\_state}{risk\_state}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_a809ce9b9e3e3e27ccea4fd982177ab2b} 
+uint8\+\_\+t Weds\+Node\+Status\+Payload::\+risk\+\_\+state}
+
+Current fire risk state. \Hypertarget{struct_weds_node_status_payload_a9acf6846456576ab9b4a82d32a6e3834}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!temperature@{temperature}}
+\index{temperature@{temperature}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{temperature}{temperature}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_a9acf6846456576ab9b4a82d32a6e3834} 
+float Weds\+Node\+Status\+Payload::\+temperature}
+
+Temperature in degrees Celsius. \Hypertarget{struct_weds_node_status_payload_aa104f1c514644436e811a3bf852d2da4}\index{WedsNodeStatusPayload@{WedsNodeStatusPayload}!timestamp\_s@{timestamp\_s}}
+\index{timestamp\_s@{timestamp\_s}!WedsNodeStatusPayload@{WedsNodeStatusPayload}}
+\doxysubsubsection{\texorpdfstring{timestamp\_s}{timestamp\_s}}
+{\footnotesize\ttfamily \label{struct_weds_node_status_payload_aa104f1c514644436e811a3bf852d2da4} 
+uint32\+\_\+t Weds\+Node\+Status\+Payload::\+timestamp\+\_\+s}
+
+Unix timestamp in seconds. 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+protocol/\+\doxymbox{\hyperlink{_weds_packet_8h}{Weds\+Packet.\+h}}\end{DoxyCompactItemize}

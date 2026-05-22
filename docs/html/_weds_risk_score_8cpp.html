@@ -122,7 +122,53 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_weds_risk_sco
 <code>#include &lt;Arduino.h&gt;</code><br />
 <code>#include &quot;model_data_v6f.h&quot;</code><br />
 <code>#include &quot;tensorflow/lite/micro/micro_error_reporter.h&quot;</code><br />
-</div></div><!-- contents -->
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a6170f9c1a70ffee721929cff519fbaff" id="r_a6170f9c1a70ffee721929cff519fbaff"><td class="memItemLeft">static RTC_DATA_ATTR <a class="el" href="struct_daily_bucket.html">DailyBucket</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6170f9c1a70ffee721929cff519fbaff">rtc_history</a> [<a class="el" href="class_weds_risk_score_calculator.html#a59d0e5fc0e664dd45569c88d1b96624b">WedsRiskScoreCalculator::kHistorySize</a>]</td></tr>
+<tr class="memitem:ad1ccdab270589fe5bacef16413848def" id="r_ad1ccdab270589fe5bacef16413848def"><td class="memItemLeft">RTC_DATA_ATTR uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ad1ccdab270589fe5bacef16413848def">rtc_virtual_timestamp</a> = 0</td></tr>
+<tr class="memdesc:ad1ccdab270589fe5bacef16413848def"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC-retained virtual clock (seconds). Advance this by awake time + sleep duration before calling esp_deep_sleep() so the TinyML bucketing algorithm stays synchronised across hardware resets.  <br /></td></tr>
+</table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="a6170f9c1a70ffee721929cff519fbaff" name="a6170f9c1a70ffee721929cff519fbaff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6170f9c1a70ffee721929cff519fbaff">&#9670;&#160;</a></span>rtc_history</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">RTC_DATA_ATTR <a class="el" href="struct_daily_bucket.html">DailyBucket</a> rtc_history[<a class="el" href="class_weds_risk_score_calculator.html#a59d0e5fc0e664dd45569c88d1b96624b">WedsRiskScoreCalculator::kHistorySize</a>]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad1ccdab270589fe5bacef16413848def" name="ad1ccdab270589fe5bacef16413848def"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1ccdab270589fe5bacef16413848def">&#9670;&#160;</a></span>rtc_virtual_timestamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RTC_DATA_ATTR uint32_t rtc_virtual_timestamp = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RTC-retained virtual clock (seconds). Advance this by awake time + sleep duration before calling esp_deep_sleep() so the TinyML bucketing algorithm stays synchronised across hardware resets. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

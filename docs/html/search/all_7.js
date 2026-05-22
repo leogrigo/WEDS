@@ -14,6 +14,5 @@ var searchData=
   ['has_5flast_5fgateway_5fcommand_5f_11',['has_last_gateway_command_',['../class_weds_node_comm.html#a725285babc2c7e993dbbb1294401b868',1,'WedsNodeComm']]],
   ['haspendingalertcommand_12',['hasPendingAlertCommand',['../class_weds_gateway_registry.html#a22065dc78ba8b534e6281f4467a97f63',1,'WedsGatewayRegistry']]],
   ['header_13',['header',['../struct_weds_packet.html#a64ab70f4b1a974079e66f595be08ad8c',1,'WedsPacket']]],
-  ['history_5f_14',['history_',['../class_weds_risk_score_calculator.html#a175afc950da191f5add4eac86927e2a8',1,'WedsRiskScoreCalculator']]],
-  ['humidity_15',['humidity',['../struct_weds_trend_point.html#a82398d7ee28ea1b3721361fcbd19ccb6',1,'WedsTrendPoint::humidity'],['../struct_weds_node_status_payload.html#abc24078552f35d4348c02dc0fca654b9',1,'WedsNodeStatusPayload::humidity'],['../struct_weds_sensor_sample.html#a7d8908f90cfc64b5bf7f2e57f7cecb7a',1,'WedsSensorSample::humidity']]]
+  ['humidity_14',['humidity',['../struct_weds_trend_point.html#a82398d7ee28ea1b3721361fcbd19ccb6',1,'WedsTrendPoint::humidity'],['../struct_weds_node_status_payload.html#abc24078552f35d4348c02dc0fca654b9',1,'WedsNodeStatusPayload::humidity'],['../struct_weds_sensor_sample.html#a7d8908f90cfc64b5bf7f2e57f7cecb7a',1,'WedsSensorSample::humidity']]]
 ];

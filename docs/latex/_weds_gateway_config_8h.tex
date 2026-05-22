@@ -1,0 +1,436 @@
+\doxysection{code/\+include/\+\+Weds\+Gateway\+Config.h File Reference}
+\hypertarget{_weds_gateway_config_8h}{}\label{_weds_gateway_config_8h}\index{code/include/WedsGatewayConfig.h@{code/include/WedsGatewayConfig.h}}
+{\ttfamily \+\#include $<$stddef.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+{\ttfamily \+\#include "{}Weds\+Radio\+Config.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_weds_self_test_node_config}{Weds\+Self\+Test\+Node\+Config}}
+\begin{DoxyCompactList}\small\item\em Configuration structure for self-\/test simulated nodes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_acf23de4b7f9889d565ae20126dfd4027}{WEDS\+\_\+\+GATEWAY\+\_\+\+ACK\+\_\+\+TIMEOUT\+\_\+\+MS}} = 1500
+\begin{DoxyCompactList}\small\item\em Timeout for gateway-\/to-\/node acknowledgment in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a74e7ee8eace560ed5eb0dd4bbaca9011}{WEDS\+\_\+\+GATEWAY\+\_\+\+COMMAND\+\_\+\+MAX\+\_\+\+RETRIES}} = 2
+\begin{DoxyCompactList}\small\item\em Maximum number of retry attempts for command delivery. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_aefe1cf9502b834cf4338ade563fb0a45}{WEDS\+\_\+\+GATEWAY\+\_\+\+COMMAND\+\_\+\+BACKOFF\+\_\+\+MS}} = 300
+\begin{DoxyCompactList}\small\item\em Delay before retrying a command transmission in milliseconds. \end{DoxyCompactList}\item 
+static constexpr size\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_ad33d4e2e7788a097b6d36d84603dbf6b}{WEDS\+\_\+\+MAX\+\_\+\+NODES}} = 16
+\begin{DoxyCompactList}\small\item\em Maximum number of nodes supported by the gateway. \end{DoxyCompactList}\item 
+static constexpr size\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_ac1c301fbaf244efa1320d48ddf71744e}{WEDS\+\_\+\+MAX\+\_\+\+EVENTS\+\_\+\+PER\+\_\+\+NODE}} = 32
+\begin{DoxyCompactList}\small\item\em Maximum number of queued events per node. \end{DoxyCompactList}\item 
+static constexpr size\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a9491d336819b3df3a36943aab0df1330}{WEDS\+\_\+\+TREND\+\_\+\+POINTS\+\_\+\+PER\+\_\+\+NODE}} = 60
+\begin{DoxyCompactList}\small\item\em Number of trend points stored per node. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a560e13411f8da1c70b8e835e4c816427}{WEDS\+\_\+\+TREND\+\_\+\+SAMPLE\+\_\+\+INTERVAL\+\_\+\+SEC}} = 60
+\begin{DoxyCompactList}\small\item\em Default trend sampling interval in seconds. \end{DoxyCompactList}\item 
+static constexpr double \doxymbox{\hyperlink{_weds_gateway_config_8h_a47f019105b7de9bda3edde0772d056f6}{WEDS\+\_\+\+NEIGHBOR\+\_\+\+RADIUS\+\_\+M}} = 50.\+0
+\begin{DoxyCompactList}\small\item\em Radius in meters to consider nodes as neighbors. \end{DoxyCompactList}\item 
+static constexpr uint16\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_aef07c475c424eedddc6dc41ff9d326ff}{WEDS\+\_\+\+ALERT\+\_\+\+MODE\+\_\+\+DURATION\+\_\+\+SEC}} = 600
+\begin{DoxyCompactList}\small\item\em Duration of alert mode for neighbor nodes in seconds. \end{DoxyCompactList}\item 
+static constexpr uint16\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a7bdb698e5b63ce4ede72934b5ef9a07d}{WEDS\+\_\+\+ALERT\+\_\+\+MODE\+\_\+\+SAMPLING\+\_\+\+INTERVAL\+\_\+\+SEC}} = 2
+\begin{DoxyCompactList}\small\item\em Sampling interval during alert mode in seconds. \end{DoxyCompactList}\item 
+static constexpr const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{_weds_gateway_config_8h_a573c928652bc230a58fed2f2a6d6f642}{WEDS\+\_\+\+GATEWAY\+\_\+\+CONFIG\+\_\+\+PATH}} = "{}/\+weds\+\_\+config.\+json"{}
+\begin{DoxyCompactList}\small\item\em File path for storing persistent gateway configuration. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a2eb9dc58a482f795f6a75235d7142a68}{WEDS\+\_\+\+MIN\+\_\+\+VALID\+\_\+\+EPOCH\+\_\+S}} = 1704067200\+UL
+\begin{DoxyCompactList}\small\item\em Minimum valid timestamp (epoch in seconds) to ensure correct NTP sync. \end{DoxyCompactList}\item 
+static constexpr uint16\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a459311616fb45f0b796b681288b19420}{WEDS\+\_\+\+HTTP\+\_\+\+PORT}} = 80
+\begin{DoxyCompactList}\small\item\em Port used for the gateway HTTP API. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a93cf3b5157ed6595ed2a22ae0e8bf9b9}{WEDS\+\_\+\+WIFI\+\_\+\+CONNECT\+\_\+\+TIMEOUT\+\_\+\+MS}} = 20000
+\begin{DoxyCompactList}\small\item\em Timeout for Wi\+Fi connection attempts in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_ad1a8c41876dc7f8907c52c3098be6da6}{WEDS\+\_\+\+WIFI\+\_\+\+CONNECT\+\_\+\+PRINT\+\_\+\+INTERVAL\+\_\+\+MS}} = 500
+\begin{DoxyCompactList}\small\item\em Interval between status prints during Wi\+Fi connection in milliseconds. \end{DoxyCompactList}\item 
+static constexpr bool \doxymbox{\hyperlink{_weds_gateway_config_8h_ae5edb46a59dbd82f8f3429876417910d}{WEDS\+\_\+\+WIFI\+\_\+\+MODEM\+\_\+\+SLEEP\+\_\+\+ENABLED}} = true
+\begin{DoxyCompactList}\small\item\em Indicates whether Wi\+Fi modem sleep is enabled to save power. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_aa29facc16d744f5e25fe2f4df61b3c0b}{WEDS\+\_\+\+NTP\+\_\+\+SYNC\+\_\+\+TIMEOUT\+\_\+\+MS}} = 5000
+\begin{DoxyCompactList}\small\item\em Timeout for NTP time synchronization in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a3c2205c67a88018ab8a463d27f7e6eb7}{WEDS\+\_\+\+NTP\+\_\+\+SYNC\+\_\+\+POLL\+\_\+\+MS}} = 200
+\begin{DoxyCompactList}\small\item\em Polling interval while waiting for NTP synchronization in milliseconds. \end{DoxyCompactList}\item 
+static constexpr const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{_weds_gateway_config_8h_a4c94227e36e781430d1ac62d5b2fbf98}{WEDS\+\_\+\+NTP\+\_\+\+SERVER\+\_\+1}} = "{}pool.\+ntp.\+org"{}
+\begin{DoxyCompactList}\small\item\em Primary NTP server address. \end{DoxyCompactList}\item 
+static constexpr const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{_weds_gateway_config_8h_a954f0ca5b85ba74818fa3e3162f51e6d}{WEDS\+\_\+\+NTP\+\_\+\+SERVER\+\_\+2}} = "{}time.\+google.\+com"{}
+\begin{DoxyCompactList}\small\item\em Secondary NTP server address. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_af395e06f0fb2532c680d85705e9ff52e}{WEDS\+\_\+\+GATEWAY\+\_\+\+API\+\_\+\+TASK\+\_\+\+DELAY\+\_\+\+MS}} = 10
+\begin{DoxyCompactList}\small\item\em Delay within the API task loop in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_ac3c2a0b2e694d5ca9fc4ed5375f9a1b9}{WEDS\+\_\+\+GATEWAY\+\_\+\+RADIO\+\_\+\+TASK\+\_\+\+DELAY\+\_\+\+MS}} = 5
+\begin{DoxyCompactList}\small\item\em Delay within the radio task loop in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_ae24c1f406fae23da293add9230a1a419}{WEDS\+\_\+\+GATEWAY\+\_\+\+ERROR\+\_\+\+TASK\+\_\+\+DELAY\+\_\+\+MS}} = 1000
+\begin{DoxyCompactList}\small\item\em Delay within the error handling task loop in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a7080e92d7278ad36445c0c29be868506}{WEDS\+\_\+\+GATEWAY\+\_\+\+LOOP\+\_\+\+IDLE\+\_\+\+DELAY\+\_\+\+MS}} = 1000
+\begin{DoxyCompactList}\small\item\em Delay within the main idle loop in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_ab984f91decf479738c334b11eb192224}{WEDS\+\_\+\+GATEWAY\+\_\+\+TASK\+\_\+\+STACK\+\_\+\+BYTES}} = 8192
+\begin{DoxyCompactList}\small\item\em Stack size allocated for gateway tasks in bytes. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a0210653c160cd1b2074dab1acb4394a9}{WEDS\+\_\+\+GATEWAY\+\_\+\+RADIO\+\_\+\+TASK\+\_\+\+PRIORITY}} = 3
+\begin{DoxyCompactList}\small\item\em Priority level for the gateway radio task. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a2a7834afd17647286851a19d15ff2126}{WEDS\+\_\+\+GATEWAY\+\_\+\+API\+\_\+\+TASK\+\_\+\+PRIORITY}} = 2
+\begin{DoxyCompactList}\small\item\em Priority level for the gateway API task. \end{DoxyCompactList}\item 
+static constexpr int8\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_ae5a43880777a70d5de6f051c7067c688}{WEDS\+\_\+\+GATEWAY\+\_\+\+RADIO\+\_\+\+TASK\+\_\+\+CORE}} = 1
+\begin{DoxyCompactList}\small\item\em Core assignment for the gateway radio task. \end{DoxyCompactList}\item 
+static constexpr int8\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_acc24b1757d694c6cdf8b319aa6823b94}{WEDS\+\_\+\+GATEWAY\+\_\+\+API\+\_\+\+TASK\+\_\+\+CORE}} = 0
+\begin{DoxyCompactList}\small\item\em Core assignment for the gateway API task. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_af841ab66818699d002a8d83f5fcf5916}{WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+UPDATE\+\_\+\+PERIOD\+\_\+\+MS}} = 2000
+\begin{DoxyCompactList}\small\item\em Update period for self-\/test simulated data in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a82be6ce1d46ba8e19c77f4ea1bc0b8f0}{WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+DATA\+\_\+\+TASK\+\_\+\+PRIORITY}} = 1
+\begin{DoxyCompactList}\small\item\em Priority level for the self-\/test data task. \end{DoxyCompactList}\item 
+static constexpr int8\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a9e2a2727420e99abf121e10a1a527acd}{WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+DATA\+\_\+\+TASK\+\_\+\+CORE}} = 1
+\begin{DoxyCompactList}\small\item\em Core assignment for the self-\/test data task. \end{DoxyCompactList}\item 
+static constexpr size\+\_\+t \doxymbox{\hyperlink{_weds_gateway_config_8h_a5b8eda52b7e39c10e6efb8a5800a29bc}{WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+NODE\+\_\+\+COUNT}} = 4
+\begin{DoxyCompactList}\small\item\em Number of simulated nodes used during self-\/test. \end{DoxyCompactList}\item 
+static constexpr \doxymbox{\hyperlink{struct_weds_self_test_node_config}{Weds\+Self\+Test\+Node\+Config}} \doxymbox{\hyperlink{_weds_gateway_config_8h_a7d78b5a59143be9e4132369e154eac00}{WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+NODES}} \+[\doxymbox{\hyperlink{_weds_gateway_config_8h_a5b8eda52b7e39c10e6efb8a5800a29bc}{WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+NODE\+\_\+\+COUNT}}]\+
+\begin{DoxyCompactList}\small\item\em Array of configuration profiles for self-\/test simulated nodes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_gateway_config_8h_doc-var-members}
+\Hypertarget{_weds_gateway_config_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_weds_gateway_config_8h_aef07c475c424eedddc6dc41ff9d326ff}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_ALERT\_MODE\_DURATION\_SEC@{WEDS\_ALERT\_MODE\_DURATION\_SEC}}
+\index{WEDS\_ALERT\_MODE\_DURATION\_SEC@{WEDS\_ALERT\_MODE\_DURATION\_SEC}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_ALERT\_MODE\_DURATION\_SEC}{WEDS\_ALERT\_MODE\_DURATION\_SEC}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_aef07c475c424eedddc6dc41ff9d326ff} 
+uint16\+\_\+t WEDS\+\_\+\+ALERT\+\_\+\+MODE\+\_\+\+DURATION\+\_\+\+SEC = 600\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Duration of alert mode for neighbor nodes in seconds. 
+
+\Hypertarget{_weds_gateway_config_8h_a7bdb698e5b63ce4ede72934b5ef9a07d}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_ALERT\_MODE\_SAMPLING\_INTERVAL\_SEC@{WEDS\_ALERT\_MODE\_SAMPLING\_INTERVAL\_SEC}}
+\index{WEDS\_ALERT\_MODE\_SAMPLING\_INTERVAL\_SEC@{WEDS\_ALERT\_MODE\_SAMPLING\_INTERVAL\_SEC}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_ALERT\_MODE\_SAMPLING\_INTERVAL\_SEC}{WEDS\_ALERT\_MODE\_SAMPLING\_INTERVAL\_SEC}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a7bdb698e5b63ce4ede72934b5ef9a07d} 
+uint16\+\_\+t WEDS\+\_\+\+ALERT\+\_\+\+MODE\+\_\+\+SAMPLING\+\_\+\+INTERVAL\+\_\+\+SEC = 2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Sampling interval during alert mode in seconds. 
+
+\Hypertarget{_weds_gateway_config_8h_acf23de4b7f9889d565ae20126dfd4027}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_ACK\_TIMEOUT\_MS@{WEDS\_GATEWAY\_ACK\_TIMEOUT\_MS}}
+\index{WEDS\_GATEWAY\_ACK\_TIMEOUT\_MS@{WEDS\_GATEWAY\_ACK\_TIMEOUT\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_ACK\_TIMEOUT\_MS}{WEDS\_GATEWAY\_ACK\_TIMEOUT\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_acf23de4b7f9889d565ae20126dfd4027} 
+uint32\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+ACK\+\_\+\+TIMEOUT\+\_\+\+MS = 1500\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Timeout for gateway-\/to-\/node acknowledgment in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_acc24b1757d694c6cdf8b319aa6823b94}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_API\_TASK\_CORE@{WEDS\_GATEWAY\_API\_TASK\_CORE}}
+\index{WEDS\_GATEWAY\_API\_TASK\_CORE@{WEDS\_GATEWAY\_API\_TASK\_CORE}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_API\_TASK\_CORE}{WEDS\_GATEWAY\_API\_TASK\_CORE}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_acc24b1757d694c6cdf8b319aa6823b94} 
+int8\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+API\+\_\+\+TASK\+\_\+\+CORE = 0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Core assignment for the gateway API task. 
+
+\Hypertarget{_weds_gateway_config_8h_af395e06f0fb2532c680d85705e9ff52e}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_API\_TASK\_DELAY\_MS@{WEDS\_GATEWAY\_API\_TASK\_DELAY\_MS}}
+\index{WEDS\_GATEWAY\_API\_TASK\_DELAY\_MS@{WEDS\_GATEWAY\_API\_TASK\_DELAY\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_API\_TASK\_DELAY\_MS}{WEDS\_GATEWAY\_API\_TASK\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_af395e06f0fb2532c680d85705e9ff52e} 
+uint32\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+API\+\_\+\+TASK\+\_\+\+DELAY\+\_\+\+MS = 10\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay within the API task loop in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_a2a7834afd17647286851a19d15ff2126}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_API\_TASK\_PRIORITY@{WEDS\_GATEWAY\_API\_TASK\_PRIORITY}}
+\index{WEDS\_GATEWAY\_API\_TASK\_PRIORITY@{WEDS\_GATEWAY\_API\_TASK\_PRIORITY}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_API\_TASK\_PRIORITY}{WEDS\_GATEWAY\_API\_TASK\_PRIORITY}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a2a7834afd17647286851a19d15ff2126} 
+uint8\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+API\+\_\+\+TASK\+\_\+\+PRIORITY = 2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Priority level for the gateway API task. 
+
+\Hypertarget{_weds_gateway_config_8h_aefe1cf9502b834cf4338ade563fb0a45}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_COMMAND\_BACKOFF\_MS@{WEDS\_GATEWAY\_COMMAND\_BACKOFF\_MS}}
+\index{WEDS\_GATEWAY\_COMMAND\_BACKOFF\_MS@{WEDS\_GATEWAY\_COMMAND\_BACKOFF\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_COMMAND\_BACKOFF\_MS}{WEDS\_GATEWAY\_COMMAND\_BACKOFF\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_aefe1cf9502b834cf4338ade563fb0a45} 
+uint32\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+COMMAND\+\_\+\+BACKOFF\+\_\+\+MS = 300\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay before retrying a command transmission in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_a74e7ee8eace560ed5eb0dd4bbaca9011}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_COMMAND\_MAX\_RETRIES@{WEDS\_GATEWAY\_COMMAND\_MAX\_RETRIES}}
+\index{WEDS\_GATEWAY\_COMMAND\_MAX\_RETRIES@{WEDS\_GATEWAY\_COMMAND\_MAX\_RETRIES}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_COMMAND\_MAX\_RETRIES}{WEDS\_GATEWAY\_COMMAND\_MAX\_RETRIES}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a74e7ee8eace560ed5eb0dd4bbaca9011} 
+uint8\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+COMMAND\+\_\+\+MAX\+\_\+\+RETRIES = 2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Maximum number of retry attempts for command delivery. 
+
+\Hypertarget{_weds_gateway_config_8h_a573c928652bc230a58fed2f2a6d6f642}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_CONFIG\_PATH@{WEDS\_GATEWAY\_CONFIG\_PATH}}
+\index{WEDS\_GATEWAY\_CONFIG\_PATH@{WEDS\_GATEWAY\_CONFIG\_PATH}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_CONFIG\_PATH}{WEDS\_GATEWAY\_CONFIG\_PATH}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a573c928652bc230a58fed2f2a6d6f642} 
+const char\texorpdfstring{$\ast$}{*} WEDS\+\_\+\+GATEWAY\+\_\+\+CONFIG\+\_\+\+PATH = "{}/\+weds\+\_\+config.\+json"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+File path for storing persistent gateway configuration. 
+
+\Hypertarget{_weds_gateway_config_8h_ae24c1f406fae23da293add9230a1a419}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_ERROR\_TASK\_DELAY\_MS@{WEDS\_GATEWAY\_ERROR\_TASK\_DELAY\_MS}}
+\index{WEDS\_GATEWAY\_ERROR\_TASK\_DELAY\_MS@{WEDS\_GATEWAY\_ERROR\_TASK\_DELAY\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_ERROR\_TASK\_DELAY\_MS}{WEDS\_GATEWAY\_ERROR\_TASK\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_ae24c1f406fae23da293add9230a1a419} 
+uint32\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+ERROR\+\_\+\+TASK\+\_\+\+DELAY\+\_\+\+MS = 1000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay within the error handling task loop in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_a7080e92d7278ad36445c0c29be868506}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_LOOP\_IDLE\_DELAY\_MS@{WEDS\_GATEWAY\_LOOP\_IDLE\_DELAY\_MS}}
+\index{WEDS\_GATEWAY\_LOOP\_IDLE\_DELAY\_MS@{WEDS\_GATEWAY\_LOOP\_IDLE\_DELAY\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_LOOP\_IDLE\_DELAY\_MS}{WEDS\_GATEWAY\_LOOP\_IDLE\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a7080e92d7278ad36445c0c29be868506} 
+uint32\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+LOOP\+\_\+\+IDLE\+\_\+\+DELAY\+\_\+\+MS = 1000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay within the main idle loop in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_ae5a43880777a70d5de6f051c7067c688}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_RADIO\_TASK\_CORE@{WEDS\_GATEWAY\_RADIO\_TASK\_CORE}}
+\index{WEDS\_GATEWAY\_RADIO\_TASK\_CORE@{WEDS\_GATEWAY\_RADIO\_TASK\_CORE}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_RADIO\_TASK\_CORE}{WEDS\_GATEWAY\_RADIO\_TASK\_CORE}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_ae5a43880777a70d5de6f051c7067c688} 
+int8\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+RADIO\+\_\+\+TASK\+\_\+\+CORE = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Core assignment for the gateway radio task. 
+
+\Hypertarget{_weds_gateway_config_8h_ac3c2a0b2e694d5ca9fc4ed5375f9a1b9}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_RADIO\_TASK\_DELAY\_MS@{WEDS\_GATEWAY\_RADIO\_TASK\_DELAY\_MS}}
+\index{WEDS\_GATEWAY\_RADIO\_TASK\_DELAY\_MS@{WEDS\_GATEWAY\_RADIO\_TASK\_DELAY\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_RADIO\_TASK\_DELAY\_MS}{WEDS\_GATEWAY\_RADIO\_TASK\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_ac3c2a0b2e694d5ca9fc4ed5375f9a1b9} 
+uint32\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+RADIO\+\_\+\+TASK\+\_\+\+DELAY\+\_\+\+MS = 5\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay within the radio task loop in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_a0210653c160cd1b2074dab1acb4394a9}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_RADIO\_TASK\_PRIORITY@{WEDS\_GATEWAY\_RADIO\_TASK\_PRIORITY}}
+\index{WEDS\_GATEWAY\_RADIO\_TASK\_PRIORITY@{WEDS\_GATEWAY\_RADIO\_TASK\_PRIORITY}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_RADIO\_TASK\_PRIORITY}{WEDS\_GATEWAY\_RADIO\_TASK\_PRIORITY}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a0210653c160cd1b2074dab1acb4394a9} 
+uint8\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+RADIO\+\_\+\+TASK\+\_\+\+PRIORITY = 3\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Priority level for the gateway radio task. 
+
+\Hypertarget{_weds_gateway_config_8h_ab984f91decf479738c334b11eb192224}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_GATEWAY\_TASK\_STACK\_BYTES@{WEDS\_GATEWAY\_TASK\_STACK\_BYTES}}
+\index{WEDS\_GATEWAY\_TASK\_STACK\_BYTES@{WEDS\_GATEWAY\_TASK\_STACK\_BYTES}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_TASK\_STACK\_BYTES}{WEDS\_GATEWAY\_TASK\_STACK\_BYTES}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_ab984f91decf479738c334b11eb192224} 
+uint32\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+TASK\+\_\+\+STACK\+\_\+\+BYTES = 8192\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Stack size allocated for gateway tasks in bytes. 
+
+\Hypertarget{_weds_gateway_config_8h_a459311616fb45f0b796b681288b19420}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_HTTP\_PORT@{WEDS\_HTTP\_PORT}}
+\index{WEDS\_HTTP\_PORT@{WEDS\_HTTP\_PORT}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_HTTP\_PORT}{WEDS\_HTTP\_PORT}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a459311616fb45f0b796b681288b19420} 
+uint16\+\_\+t WEDS\+\_\+\+HTTP\+\_\+\+PORT = 80\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Port used for the gateway HTTP API. 
+
+\Hypertarget{_weds_gateway_config_8h_ac1c301fbaf244efa1320d48ddf71744e}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_MAX\_EVENTS\_PER\_NODE@{WEDS\_MAX\_EVENTS\_PER\_NODE}}
+\index{WEDS\_MAX\_EVENTS\_PER\_NODE@{WEDS\_MAX\_EVENTS\_PER\_NODE}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_MAX\_EVENTS\_PER\_NODE}{WEDS\_MAX\_EVENTS\_PER\_NODE}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_ac1c301fbaf244efa1320d48ddf71744e} 
+size\+\_\+t WEDS\+\_\+\+MAX\+\_\+\+EVENTS\+\_\+\+PER\+\_\+\+NODE = 32\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Maximum number of queued events per node. 
+
+\Hypertarget{_weds_gateway_config_8h_ad33d4e2e7788a097b6d36d84603dbf6b}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_MAX\_NODES@{WEDS\_MAX\_NODES}}
+\index{WEDS\_MAX\_NODES@{WEDS\_MAX\_NODES}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_MAX\_NODES}{WEDS\_MAX\_NODES}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_ad33d4e2e7788a097b6d36d84603dbf6b} 
+size\+\_\+t WEDS\+\_\+\+MAX\+\_\+\+NODES = 16\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Maximum number of nodes supported by the gateway. 
+
+\Hypertarget{_weds_gateway_config_8h_a2eb9dc58a482f795f6a75235d7142a68}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_MIN\_VALID\_EPOCH\_S@{WEDS\_MIN\_VALID\_EPOCH\_S}}
+\index{WEDS\_MIN\_VALID\_EPOCH\_S@{WEDS\_MIN\_VALID\_EPOCH\_S}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_MIN\_VALID\_EPOCH\_S}{WEDS\_MIN\_VALID\_EPOCH\_S}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a2eb9dc58a482f795f6a75235d7142a68} 
+uint32\+\_\+t WEDS\+\_\+\+MIN\+\_\+\+VALID\+\_\+\+EPOCH\+\_\+S = 1704067200\+UL\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Minimum valid timestamp (epoch in seconds) to ensure correct NTP sync. 
+
+\Hypertarget{_weds_gateway_config_8h_a47f019105b7de9bda3edde0772d056f6}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_NEIGHBOR\_RADIUS\_M@{WEDS\_NEIGHBOR\_RADIUS\_M}}
+\index{WEDS\_NEIGHBOR\_RADIUS\_M@{WEDS\_NEIGHBOR\_RADIUS\_M}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NEIGHBOR\_RADIUS\_M}{WEDS\_NEIGHBOR\_RADIUS\_M}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a47f019105b7de9bda3edde0772d056f6} 
+double WEDS\+\_\+\+NEIGHBOR\+\_\+\+RADIUS\+\_\+M = 50.\+0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Radius in meters to consider nodes as neighbors. 
+
+\Hypertarget{_weds_gateway_config_8h_a4c94227e36e781430d1ac62d5b2fbf98}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_NTP\_SERVER\_1@{WEDS\_NTP\_SERVER\_1}}
+\index{WEDS\_NTP\_SERVER\_1@{WEDS\_NTP\_SERVER\_1}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NTP\_SERVER\_1}{WEDS\_NTP\_SERVER\_1}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a4c94227e36e781430d1ac62d5b2fbf98} 
+const char\texorpdfstring{$\ast$}{*} WEDS\+\_\+\+NTP\+\_\+\+SERVER\+\_\+1 = "{}pool.\+ntp.\+org"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Primary NTP server address. 
+
+\Hypertarget{_weds_gateway_config_8h_a954f0ca5b85ba74818fa3e3162f51e6d}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_NTP\_SERVER\_2@{WEDS\_NTP\_SERVER\_2}}
+\index{WEDS\_NTP\_SERVER\_2@{WEDS\_NTP\_SERVER\_2}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NTP\_SERVER\_2}{WEDS\_NTP\_SERVER\_2}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a954f0ca5b85ba74818fa3e3162f51e6d} 
+const char\texorpdfstring{$\ast$}{*} WEDS\+\_\+\+NTP\+\_\+\+SERVER\+\_\+2 = "{}time.\+google.\+com"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Secondary NTP server address. 
+
+\Hypertarget{_weds_gateway_config_8h_a3c2205c67a88018ab8a463d27f7e6eb7}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_NTP\_SYNC\_POLL\_MS@{WEDS\_NTP\_SYNC\_POLL\_MS}}
+\index{WEDS\_NTP\_SYNC\_POLL\_MS@{WEDS\_NTP\_SYNC\_POLL\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NTP\_SYNC\_POLL\_MS}{WEDS\_NTP\_SYNC\_POLL\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a3c2205c67a88018ab8a463d27f7e6eb7} 
+uint32\+\_\+t WEDS\+\_\+\+NTP\+\_\+\+SYNC\+\_\+\+POLL\+\_\+\+MS = 200\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Polling interval while waiting for NTP synchronization in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_aa29facc16d744f5e25fe2f4df61b3c0b}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_NTP\_SYNC\_TIMEOUT\_MS@{WEDS\_NTP\_SYNC\_TIMEOUT\_MS}}
+\index{WEDS\_NTP\_SYNC\_TIMEOUT\_MS@{WEDS\_NTP\_SYNC\_TIMEOUT\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NTP\_SYNC\_TIMEOUT\_MS}{WEDS\_NTP\_SYNC\_TIMEOUT\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_aa29facc16d744f5e25fe2f4df61b3c0b} 
+uint32\+\_\+t WEDS\+\_\+\+NTP\+\_\+\+SYNC\+\_\+\+TIMEOUT\+\_\+\+MS = 5000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Timeout for NTP time synchronization in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_a9e2a2727420e99abf121e10a1a527acd}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_SELF\_TEST\_DATA\_TASK\_CORE@{WEDS\_SELF\_TEST\_DATA\_TASK\_CORE}}
+\index{WEDS\_SELF\_TEST\_DATA\_TASK\_CORE@{WEDS\_SELF\_TEST\_DATA\_TASK\_CORE}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SELF\_TEST\_DATA\_TASK\_CORE}{WEDS\_SELF\_TEST\_DATA\_TASK\_CORE}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a9e2a2727420e99abf121e10a1a527acd} 
+int8\+\_\+t WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+DATA\+\_\+\+TASK\+\_\+\+CORE = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Core assignment for the self-\/test data task. 
+
+\Hypertarget{_weds_gateway_config_8h_a82be6ce1d46ba8e19c77f4ea1bc0b8f0}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_SELF\_TEST\_DATA\_TASK\_PRIORITY@{WEDS\_SELF\_TEST\_DATA\_TASK\_PRIORITY}}
+\index{WEDS\_SELF\_TEST\_DATA\_TASK\_PRIORITY@{WEDS\_SELF\_TEST\_DATA\_TASK\_PRIORITY}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SELF\_TEST\_DATA\_TASK\_PRIORITY}{WEDS\_SELF\_TEST\_DATA\_TASK\_PRIORITY}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a82be6ce1d46ba8e19c77f4ea1bc0b8f0} 
+uint8\+\_\+t WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+DATA\+\_\+\+TASK\+\_\+\+PRIORITY = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Priority level for the self-\/test data task. 
+
+\Hypertarget{_weds_gateway_config_8h_a5b8eda52b7e39c10e6efb8a5800a29bc}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_SELF\_TEST\_NODE\_COUNT@{WEDS\_SELF\_TEST\_NODE\_COUNT}}
+\index{WEDS\_SELF\_TEST\_NODE\_COUNT@{WEDS\_SELF\_TEST\_NODE\_COUNT}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SELF\_TEST\_NODE\_COUNT}{WEDS\_SELF\_TEST\_NODE\_COUNT}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a5b8eda52b7e39c10e6efb8a5800a29bc} 
+size\+\_\+t WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+NODE\+\_\+\+COUNT = 4\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Number of simulated nodes used during self-\/test. 
+
+\Hypertarget{_weds_gateway_config_8h_a7d78b5a59143be9e4132369e154eac00}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_SELF\_TEST\_NODES@{WEDS\_SELF\_TEST\_NODES}}
+\index{WEDS\_SELF\_TEST\_NODES@{WEDS\_SELF\_TEST\_NODES}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SELF\_TEST\_NODES}{WEDS\_SELF\_TEST\_NODES}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a7d78b5a59143be9e4132369e154eac00} 
+\doxymbox{\hyperlink{struct_weds_self_test_node_config}{Weds\+Self\+Test\+Node\+Config}} WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+NODES\+[\doxymbox{\hyperlink{_weds_gateway_config_8h_a5b8eda52b7e39c10e6efb8a5800a29bc}{WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+NODE\+\_\+\+COUNT}}]\+\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ \{100001,\ \textcolor{keyword}{true},\ 41.902800,\ 12.496400\},}
+\DoxyCodeLine{\ \ \ \ \{100002,\ \textcolor{keyword}{true},\ 41.902900,\ 12.496500\},}
+\DoxyCodeLine{\ \ \ \ \{100003,\ \textcolor{keyword}{true},\ 41.904000,\ 12.498000\},}
+\DoxyCodeLine{\ \ \ \ \{100004,\ \textcolor{keyword}{false},\ 0.0,\ 0.0\},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Array of configuration profiles for self-\/test simulated nodes. 
+
+\Hypertarget{_weds_gateway_config_8h_af841ab66818699d002a8d83f5fcf5916}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_SELF\_TEST\_UPDATE\_PERIOD\_MS@{WEDS\_SELF\_TEST\_UPDATE\_PERIOD\_MS}}
+\index{WEDS\_SELF\_TEST\_UPDATE\_PERIOD\_MS@{WEDS\_SELF\_TEST\_UPDATE\_PERIOD\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SELF\_TEST\_UPDATE\_PERIOD\_MS}{WEDS\_SELF\_TEST\_UPDATE\_PERIOD\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_af841ab66818699d002a8d83f5fcf5916} 
+uint32\+\_\+t WEDS\+\_\+\+SELF\+\_\+\+TEST\+\_\+\+UPDATE\+\_\+\+PERIOD\+\_\+\+MS = 2000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Update period for self-\/test simulated data in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_a9491d336819b3df3a36943aab0df1330}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_TREND\_POINTS\_PER\_NODE@{WEDS\_TREND\_POINTS\_PER\_NODE}}
+\index{WEDS\_TREND\_POINTS\_PER\_NODE@{WEDS\_TREND\_POINTS\_PER\_NODE}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_TREND\_POINTS\_PER\_NODE}{WEDS\_TREND\_POINTS\_PER\_NODE}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a9491d336819b3df3a36943aab0df1330} 
+size\+\_\+t WEDS\+\_\+\+TREND\+\_\+\+POINTS\+\_\+\+PER\+\_\+\+NODE = 60\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Number of trend points stored per node. 
+
+\Hypertarget{_weds_gateway_config_8h_a560e13411f8da1c70b8e835e4c816427}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_TREND\_SAMPLE\_INTERVAL\_SEC@{WEDS\_TREND\_SAMPLE\_INTERVAL\_SEC}}
+\index{WEDS\_TREND\_SAMPLE\_INTERVAL\_SEC@{WEDS\_TREND\_SAMPLE\_INTERVAL\_SEC}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_TREND\_SAMPLE\_INTERVAL\_SEC}{WEDS\_TREND\_SAMPLE\_INTERVAL\_SEC}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a560e13411f8da1c70b8e835e4c816427} 
+uint32\+\_\+t WEDS\+\_\+\+TREND\+\_\+\+SAMPLE\+\_\+\+INTERVAL\+\_\+\+SEC = 60\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Default trend sampling interval in seconds. 
+
+\Hypertarget{_weds_gateway_config_8h_ad1a8c41876dc7f8907c52c3098be6da6}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_WIFI\_CONNECT\_PRINT\_INTERVAL\_MS@{WEDS\_WIFI\_CONNECT\_PRINT\_INTERVAL\_MS}}
+\index{WEDS\_WIFI\_CONNECT\_PRINT\_INTERVAL\_MS@{WEDS\_WIFI\_CONNECT\_PRINT\_INTERVAL\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_WIFI\_CONNECT\_PRINT\_INTERVAL\_MS}{WEDS\_WIFI\_CONNECT\_PRINT\_INTERVAL\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_ad1a8c41876dc7f8907c52c3098be6da6} 
+uint32\+\_\+t WEDS\+\_\+\+WIFI\+\_\+\+CONNECT\+\_\+\+PRINT\+\_\+\+INTERVAL\+\_\+\+MS = 500\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Interval between status prints during Wi\+Fi connection in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_a93cf3b5157ed6595ed2a22ae0e8bf9b9}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_WIFI\_CONNECT\_TIMEOUT\_MS@{WEDS\_WIFI\_CONNECT\_TIMEOUT\_MS}}
+\index{WEDS\_WIFI\_CONNECT\_TIMEOUT\_MS@{WEDS\_WIFI\_CONNECT\_TIMEOUT\_MS}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_WIFI\_CONNECT\_TIMEOUT\_MS}{WEDS\_WIFI\_CONNECT\_TIMEOUT\_MS}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_a93cf3b5157ed6595ed2a22ae0e8bf9b9} 
+uint32\+\_\+t WEDS\+\_\+\+WIFI\+\_\+\+CONNECT\+\_\+\+TIMEOUT\+\_\+\+MS = 20000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Timeout for Wi\+Fi connection attempts in milliseconds. 
+
+\Hypertarget{_weds_gateway_config_8h_ae5edb46a59dbd82f8f3429876417910d}\index{WedsGatewayConfig.h@{WedsGatewayConfig.h}!WEDS\_WIFI\_MODEM\_SLEEP\_ENABLED@{WEDS\_WIFI\_MODEM\_SLEEP\_ENABLED}}
+\index{WEDS\_WIFI\_MODEM\_SLEEP\_ENABLED@{WEDS\_WIFI\_MODEM\_SLEEP\_ENABLED}!WedsGatewayConfig.h@{WedsGatewayConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_WIFI\_MODEM\_SLEEP\_ENABLED}{WEDS\_WIFI\_MODEM\_SLEEP\_ENABLED}}
+{\footnotesize\ttfamily \label{_weds_gateway_config_8h_ae5edb46a59dbd82f8f3429876417910d} 
+bool WEDS\+\_\+\+WIFI\+\_\+\+MODEM\+\_\+\+SLEEP\+\_\+\+ENABLED = true\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Indicates whether Wi\+Fi modem sleep is enabled to save power. 
+

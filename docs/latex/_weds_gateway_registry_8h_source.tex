@@ -1,0 +1,222 @@
+\doxysection{Weds\+Gateway\+Registry.\+h}
+\hypertarget{_weds_gateway_registry_8h_source}{}\label{_weds_gateway_registry_8h_source}\index{code/lib/weds\_gateway\_registry/WedsGatewayRegistry.h@{code/lib/weds\_gateway\_registry/WedsGatewayRegistry.h}}
+\doxymbox{\hyperlink{_weds_gateway_registry_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_gateway_config_8h}{WedsGatewayConfig.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_protocol_8h}{WedsProtocol.h}}"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{WedsEventType}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71a69ea59f51591c3dd7b830588bb72c3ef}{WEDS\_EVENT\_NONE}}\ =\ 0,}
+\DoxyCodeLine{00013\ \ \ \ \ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71ac154a39ebc619702bbfb7a3cfc67cbd9}{WEDS\_EVENT\_ANOMALY\_ALERT}}\ =\ 1,}
+\DoxyCodeLine{00014\ \ \ \ \ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71aeea2bf5e0b9b514d4b2197d2db514c64}{WEDS\_EVENT\_RISK\_ALERT}}\ =\ 2,}
+\DoxyCodeLine{00015\ \ \ \ \ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71ad765ec34e10594a78f1247bd0158a834}{WEDS\_EVENT\_BOTH\_ALERT}}\ =\ 3}
+\DoxyCodeLine{00016\ \};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_weds_node_event}{WedsNodeEvent}}\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_node_event_acda0a508f1b812302e98b56934047af6}{used}};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_node_event_a9814925cb5f432aa1dc773b8922cc737}{event\_id}};}
+\DoxyCodeLine{00026\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_node_event_a9639f1b5c05fe083dfa82b32e1fbcbe1}{node\_id}};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{WedsEventType}}\ \doxymbox{\hyperlink{struct_weds_node_event_a0c92524fd622ad9d6987f2a34169537b}{type}};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_node_event_a0c8c8cbcc0293fe78138d3bcd65597b6}{start\_timestamp\_s}};}
+\DoxyCodeLine{00031\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_node_event_ab556e6d3fa96b2f3f52b7485314a3c38}{end\_timestamp\_s}};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_node_event_abeb129c297d30035b3212aeebbeb15dd}{still\_open}};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_node_event_a73358cc59dd3b7ce1a392099b02a3618}{peak\_anomaly\_score}};}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_node_event_a1d88a663f0040d60cbfadb63438cb27d}{peak\_risk\_score}};}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_node_event_a4cc0f74a88e0e1aed8ba6e2b5f368e9c}{max\_temperature}};}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_node_event_a7c1ad0fc127be03af82932bae5550319}{min\_humidity}};}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_node_event_a775a357bfd1455ea9bf06dda8dcfe08f}{min\_gas\_resistance}};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ uint16\_t\ \doxymbox{\hyperlink{struct_weds_node_event_ae6697228843b2173146b1000c002cc57}{sample\_count}};}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_weds_trend_point}{WedsTrendPoint}}\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_trend_point_a3a7ba1d9a70993a386ef28076290bb52}{used}};}
+\DoxyCodeLine{00050\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_trend_point_a12f55d4c0344aa2bb0f3fe80a53f896c}{timestamp\_s}};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_trend_point_af74db1eec53952d0c58461fe5305e46e}{temperature}};}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_trend_point_a82398d7ee28ea1b3721361fcbd19ccb6}{humidity}};}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_trend_point_a4cb0f2aaa5f13d311143f8b41abd15dd}{pressure}};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_trend_point_a1fc2ec6c81f7b85f4b5c8b61994f33ef}{gas\_resistance}};}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_trend_point_ac209a3bed3234fc0823d7ecaf00d089a}{battery\_level}};}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_trend_point_a4db7d84aee7aff1af764a5b663be498a}{anomaly\_score}};}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_trend_point_aaa5d3068d7927d1a892c9d789840e8f5}{risk\_score}};}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_node_record_a3765dcef14d0ec1cc6475bd964098d9c}{used}};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_node_record_a249a48dadf51e8cc56051fb5556c86dd}{node\_id}};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_node_record_ab951efb32a488c58a4f5739fb932e84f}{last\_seen\_ms}};}
+\DoxyCodeLine{00071\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_node_record_a4ca72a9f70c89a81b9d2f9b59a07786a}{last\_seen\_timestamp\_s}};}
+\DoxyCodeLine{00072\ \ \ \ \ uint16\_t\ \doxymbox{\hyperlink{struct_weds_node_record_adc3f83ba79850c5dab67eccc79239603}{last\_sequence\_id}};}
+\DoxyCodeLine{00073\ \ \ \ \ uint8\_t\ \doxymbox{\hyperlink{struct_weds_node_record_aeb72e12b99e59583d6118916763a4a7c}{last\_msg\_type}};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\ \doxymbox{\hyperlink{struct_weds_node_record_ab3b5ce139eb8fcbc3d753f24aa062414}{latest\_status}};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_node_record_a6c9d56be0333068417998616d85dceac}{location\_known}};}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{double}\ \doxymbox{\hyperlink{struct_weds_node_record_ac5f2604bbf3736e937de71e5b7ca116d}{latitude}};}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{double}\ \doxymbox{\hyperlink{struct_weds_node_record_a0dff69a4869f4fbf7ebdee786d1dbc45}{longitude}};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_node_record_ae6baef9b98db0c2d7533aad8f51a49b4}{pending\_alert\_mode}};}
+\DoxyCodeLine{00082\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{WedsAlertModeEnablePayload}}\ \doxymbox{\hyperlink{struct_weds_node_record_a50df14c1e03313f8061783fea86b0209}{pending\_alert\_command}};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_node_record_a1611ed0c9cbf369d555dcf9a382d8f2d}{streak\_open}};}
+\DoxyCodeLine{00085\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_event}{WedsNodeEvent}}\ \doxymbox{\hyperlink{struct_weds_node_record_ae29e51029647bcfe396e133f1ae6585b}{current\_streak}};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_event}{WedsNodeEvent}}\ \doxymbox{\hyperlink{struct_weds_node_record_a28b11165a570a3267c23800628072fa4}{events}}[\doxymbox{\hyperlink{_weds_gateway_config_8h_ac1c301fbaf244efa1320d48ddf71744e}{WEDS\_MAX\_EVENTS\_PER\_NODE}}];}
+\DoxyCodeLine{00088\ \ \ \ \ uint16\_t\ \doxymbox{\hyperlink{struct_weds_node_record_a12fc96ce7b79c3679608a61f043d3545}{event\_head}};}
+\DoxyCodeLine{00089\ \ \ \ \ uint16\_t\ \doxymbox{\hyperlink{struct_weds_node_record_a91e934315f8664c4aaf007719643cd1a}{event\_count}};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_trend_point}{WedsTrendPoint}}\ \doxymbox{\hyperlink{struct_weds_node_record_a8fb3389d5bb778be693c2c9c63e2170e}{trend}}[\doxymbox{\hyperlink{_weds_gateway_config_8h_a9491d336819b3df3a36943aab0df1330}{WEDS\_TREND\_POINTS\_PER\_NODE}}];}
+\DoxyCodeLine{00092\ \ \ \ \ uint16\_t\ \doxymbox{\hyperlink{struct_weds_node_record_a4ad0e19932d8f74fff3fb2034ce59c74}{trend\_head}};}
+\DoxyCodeLine{00093\ \ \ \ \ uint16\_t\ \doxymbox{\hyperlink{struct_weds_node_record_af093a14c9772765309810cda024b45de}{trend\_count}};}
+\DoxyCodeLine{00094\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_node_record_ade778c38629a461a756752534f603586}{last\_trend\_sample\_timestamp\_s}};}
+\DoxyCodeLine{00095\ \};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00101\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_weds_gateway_registry_a0f08cc4b2892908f35d37b0c3dc7606a}{WedsGatewayRegistry}}\ \{}
+\DoxyCodeLine{00102\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00106\ \ \ \ \ \doxymbox{\hyperlink{class_weds_gateway_registry_a0f08cc4b2892908f35d37b0c3dc7606a}{WedsGatewayRegistry}}();}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a42a452d8ba36f14d5461d24f850b37c1}{begin}}();}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_ad29199e35b285f107797dd145110a514}{loadPersistentConfig}}();}
+\DoxyCodeLine{00123\ \ \ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a4960331c39e666863691a630bbdc08ee}{savePersistentConfig}}();}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a0258ae0464a1c2356f2727043d122d4a}{clearPersistentConfig}}();}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a36851570595a293866cdcdfe310cb120}{updateNodeStatus}}(}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ uint32\_t\ node\_id,}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ uint16\_t\ sequence\_id,}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ uint8\_t\ msg\_type,}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status}
+\DoxyCodeLine{00155\ \ \ \ \ );}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a238e2c0dbdc3dd3a4a52d138cb1f05f8}{getNodeState}}(}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ uint32\_t\ node\_id,}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ out\_record}
+\DoxyCodeLine{00168\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_weds_gateway_registry_aa7f270ba1c0dc0885ef83b3ed0fb8398}{getAllNodes}}(}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}*\ out\_records,}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_records}
+\DoxyCodeLine{00180\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_weds_gateway_registry_ad2fcc0a1c09b115d929a3ea5e1e80a02}{getUnlocatedNodes}}(}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}*\ out\_records,}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_records}
+\DoxyCodeLine{00192\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_weds_gateway_registry_af794dbd0b28b6843318400705c999760}{getKnownNodeCount}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a8296dd21c94cb7f20d6759aa116f0c79}{setNodeLocation}}(}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ uint32\_t\ node\_id,}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ latitude,}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ longitude}
+\DoxyCodeLine{00214\ \ \ \ \ );}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a134ea9ed5857068827924e91c434e615}{isDuplicateReliablePacket}}(}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ uint32\_t\ node\_id,}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ uint16\_t\ sequence\_id,}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ uint8\_t\ msg\_type}
+\DoxyCodeLine{00229\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a2b74d4376b434f05bfa1dd6d6aea795f}{findNeighbors}}(}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ uint32\_t\ source\_node\_id,}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ uint32\_t*\ out\_neighbors,}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_neighbors}
+\DoxyCodeLine{00243\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_ae5f06aa037e59ac0a337f49f8d815241}{createAlertCommandsForNeighbors}}(}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ uint32\_t\ source\_node\_id,}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status}
+\DoxyCodeLine{00254\ \ \ \ \ );}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a22065dc78ba8b534e6281f4467a97f63}{hasPendingAlertCommand}}(}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ uint32\_t\ node\_id,}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{WedsAlertModeEnablePayload}}\&\ out\_command}
+\DoxyCodeLine{00267\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a448561aa3b17311c2c8effd560c8f599}{setPendingAlertCommand}}(}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ uint32\_t\ node\_id,}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{WedsAlertModeEnablePayload}}\&\ command}
+\DoxyCodeLine{00278\ \ \ \ \ );}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00285\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_ad86c7d3a7f845e42d46fd12995f654d6}{clearPendingAlertCommand}}(uint32\_t\ node\_id);}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a7db00f3365f6fdc46848467e1e59d9bb}{getNodeEvents}}(}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ uint32\_t\ node\_id,}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_event}{WedsNodeEvent}}*\ out\_events,}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_events}
+\DoxyCodeLine{00299\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_weds_gateway_registry_adea9d7d247bdc759b311797792496282}{getNodeTrend}}(}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ uint32\_t\ node\_id,}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_trend_point}{WedsTrendPoint}}*\ out\_points,}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ max\_points}
+\DoxyCodeLine{00313\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00314\ }
+\DoxyCodeLine{00315\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00316\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\ \doxymbox{\hyperlink{class_weds_gateway_registry_af0d96dc27b92397d48b9d5de70f1b00d}{records\_}}[\doxymbox{\hyperlink{_weds_gateway_config_8h_ad33d4e2e7788a097b6d36d84603dbf6b}{WEDS\_MAX\_NODES}}];}
+\DoxyCodeLine{00317\ }
+\DoxyCodeLine{00318\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{class_weds_gateway_registry_ae6884fc7b0a33912b09954108470d53d}{next\_event\_id\_}};}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}*\ \doxymbox{\hyperlink{class_weds_gateway_registry_a196aa6aaa24400a50267638d409b309d}{findOrCreateRecord}}(uint32\_t\ node\_id);}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}*\ \doxymbox{\hyperlink{class_weds_gateway_registry_aa939079c91f8e0a0f6b65cd9e8222b6a}{findRecord}}(uint32\_t\ node\_id)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a0b28288e06b32399f9c60b8f3ce309a1}{initRecord}}(\doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ record,\ uint32\_t\ node\_id);}
+\DoxyCodeLine{00324\ }
+\DoxyCodeLine{00325\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a257f2d681e6ad00d8a466d1cc4400702}{updateEventStreak}}(}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ record,}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status}
+\DoxyCodeLine{00328\ \ \ \ \ );}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a8a103a2f18610d712349001b6a9ec577}{openEventStreak}}(}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ record,}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{WedsEventType}}\ type,}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status}
+\DoxyCodeLine{00334\ \ \ \ \ );}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a6ad7050cdb00e0da4df96a71769b0f92}{updateOpenEventStreak}}(}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ record,}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status}
+\DoxyCodeLine{00339\ \ \ \ \ );}
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a3a178e89a5543f7134c95b4d6678c68e}{closeEventStreak}}(}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ record,}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status}
+\DoxyCodeLine{00344\ \ \ \ \ );}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_aa7133072c5300f19c69a4ac3a79fc671}{pushEvent}}(}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ record,}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_event}{WedsNodeEvent}}\&\ event}
+\DoxyCodeLine{00349\ \ \ \ \ );}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_registry_a4669424a3c1e44ea4deb60c8520f0f01}{updateTrend}}(}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ record,}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status}
+\DoxyCodeLine{00354\ \ \ \ \ );}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_registry_ac69b0a51df72c75e8df6baab11150407}{isAlertStatus}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status);}
+\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{WedsEventType}}\ \doxymbox{\hyperlink{class_weds_gateway_registry_acda313629d7d094350b5c4d96970b999}{getEventTypeFromStatus}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status);}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \doxymbox{\hyperlink{class_weds_gateway_registry_af7a38215a9b115eb3c74bafd7130d2bf}{distanceMeters}}(}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ lat1,}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ lon1,}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ lat2,}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ lon2}
+\DoxyCodeLine{00364\ \ \ \ \ );}
+\DoxyCodeLine{00365\ \};}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ }
+
+\end{DoxyCode}

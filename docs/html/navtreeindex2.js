@@ -1,5 +1,13 @@
 var NAVTREEINDEX2 =
 {
+"struct_weds_node_record.html#ae6baef9b98db0c2d7533aad8f51a49b4":[0,0,11,15],
+"struct_weds_node_record.html#aeb72e12b99e59583d6118916763a4a7c":[0,0,11,4],
+"struct_weds_node_record.html#af093a14c9772765309810cda024b45de":[0,0,11,18],
+"struct_weds_node_status_payload.html":[0,0,13],
+"struct_weds_node_status_payload.html#a020deed5ac89325a4de73bf62bf182b8":[0,0,13,0],
+"struct_weds_node_status_payload.html#a1d75239eaecbe86160ed60614d3f98c4":[0,0,13,2],
+"struct_weds_node_status_payload.html#a3de4e2f1925560c75d7f671cd498300b":[0,0,13,5],
+"struct_weds_node_status_payload.html#a6971a3e9b7810ec97fcfcf8b48a8ea5e":[0,0,13,1],
 "struct_weds_node_status_payload.html#a6b67485e97c61374f8a66f8e0635c5a2":[0,0,13,6],
 "struct_weds_node_status_payload.html#a809ce9b9e3e3e27ccea4fd982177ab2b":[0,0,13,7],
 "struct_weds_node_status_payload.html#a9a1fc3ffaace228e0eb5570a13dc3d73":[0,0,13,3],

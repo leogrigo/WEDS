@@ -1,0 +1,214 @@
+\doxysection{code/\+lib/\+weds\+\_\+protocol/\+\+Weds\+Types.h File Reference}
+\hypertarget{_weds_types_8h}{}\label{_weds_types_8h}\index{code/lib/weds\_protocol/WedsTypes.h@{code/lib/weds\_protocol/WedsTypes.h}}
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+{\ttfamily \+\#include $<$stddef.\+h$>$}\newline
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7}{Weds\+Message\+Type}} :\+ uint8\+\_\+t \{ \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a9f65b55055d08f393377424b0f9fe178}{WEDS\+\_\+\+MSG\+\_\+\+NODE\+\_\+\+STATUS}} = 0x01
+, \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7af66bff15e80c6a37707676bd9b426a4b}{WEDS\+\_\+\+MSG\+\_\+\+NODE\+\_\+\+ALERT}} = 0x02
+, \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a944ddb5e276a5a3b4920981eec778e5f}{WEDS\+\_\+\+MSG\+\_\+\+ACK}} = 0x03
+, \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a628797bbc01bd9f5a5ac0ed3cca5123d}{WEDS\+\_\+\+MSG\+\_\+\+ALERT\+\_\+\+MODE\+\_\+\+ENABLE}} = 0x10
+ \}
+\begin{DoxyCompactList}\small\item\em Represents the various supported message types in the WEDS protocol. \end{DoxyCompactList}\item 
+enum \doxymbox{\hyperlink{_weds_types_8h_a59870914c672566f6ad2243259089b51}{Weds\+Ack\+Required}} :\+ uint8\+\_\+t \{ \doxymbox{\hyperlink{_weds_types_8h_a59870914c672566f6ad2243259089b51ab71cec728247a75ca457ea6aeb346455}{WEDS\+\_\+\+ACK\+\_\+\+NOT\+\_\+\+REQUIRED}} = 0
+, \doxymbox{\hyperlink{_weds_types_8h_a59870914c672566f6ad2243259089b51a4f594505dd380d007ff672ea8dccbe3f}{WEDS\+\_\+\+ACK\+\_\+\+REQUIRED}} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Indicates whether a packet requires an acknowledgment. \end{DoxyCompactList}\item 
+enum \doxymbox{\hyperlink{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976a}{Weds\+Detection\+State}} :\+ uint8\+\_\+t \{ \doxymbox{\hyperlink{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976aa7d89de7226f5a66c3e7d862819eedf2c}{WEDS\+\_\+\+DETECTION\+\_\+\+NORMAL}} = 0
+, \doxymbox{\hyperlink{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976aaa1f9f5012194187430fa08a69f41c570}{WEDS\+\_\+\+DETECTION\+\_\+\+ALERT}} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Discrete state representing normal or alert conditions for a node. \end{DoxyCompactList}\item 
+enum \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146}{Weds\+Ack\+Status}} :\+ uint8\+\_\+t \{ \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146a3a57761239b8bc9fe2b5d6430b90d7f9}{WEDS\+\_\+\+ACK\+\_\+\+STATUS\+\_\+\+OK}} = 0
+, \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146af85a9fb5b8939ec2dbcde7808125d8fe}{WEDS\+\_\+\+ACK\+\_\+\+STATUS\+\_\+\+INVALID\+\_\+\+PACKET}} = 1
+, \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146ae8d9a1830027ce3295b4522581df126b}{WEDS\+\_\+\+ACK\+\_\+\+STATUS\+\_\+\+UNSUPPORTED\+\_\+\+MSG}} = 2
+, \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146a8a18b52750dda3699f1102adbc2dd7be}{WEDS\+\_\+\+ACK\+\_\+\+STATUS\+\_\+\+CRC\+\_\+\+ERROR}} = 3
+ \}
+\begin{DoxyCompactList}\small\item\em Status codes embedded in ACK payloads. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_types_8h_a633861d7d0407191fd54923241906559}{WEDS\+\_\+\+MAGIC}} = 0x\+A7
+\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_types_8h_a95787e1ac69cbae9733a738ee151ce3b}{WEDS\+\_\+\+GATEWAY\+\_\+\+ID}} = 0
+\item 
+static constexpr size\+\_\+t \doxymbox{\hyperlink{_weds_types_8h_a21e4f4f414d430f602be27418c86eed5}{WEDS\+\_\+\+MAX\+\_\+\+PAYLOAD\+\_\+\+SIZE}} = 64
+\item 
+static constexpr size\+\_\+t \doxymbox{\hyperlink{_weds_types_8h_a9c23785ff1d1ce4a2443e87422ccfe32}{WEDS\+\_\+\+HEADER\+\_\+\+SIZE}} = 14
+\item 
+static constexpr size\+\_\+t \doxymbox{\hyperlink{_weds_types_8h_abd849f6253a0d8a04f42b368814dcd9b}{WEDS\+\_\+\+CRC\+\_\+\+SIZE}} = 2
+\item 
+static constexpr size\+\_\+t \doxymbox{\hyperlink{_weds_types_8h_a29da742e2d17ae47a218edfc84f2e663}{WEDS\+\_\+\+MAX\+\_\+\+PACKET\+\_\+\+SIZE}}
+\end{DoxyCompactItemize}
+
+
+\label{_weds_types_8h_doc-enum-members}
+\Hypertarget{_weds_types_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_weds_types_8h_a59870914c672566f6ad2243259089b51}\index{WedsTypes.h@{WedsTypes.h}!WedsAckRequired@{WedsAckRequired}}
+\index{WedsAckRequired@{WedsAckRequired}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WedsAckRequired}{WedsAckRequired}}
+{\footnotesize\ttfamily \label{_weds_types_8h_a59870914c672566f6ad2243259089b51} 
+enum \doxymbox{\hyperlink{_weds_types_8h_a59870914c672566f6ad2243259089b51}{Weds\+Ack\+Required}} :\+ uint8\+\_\+t}
+
+
+
+Indicates whether a packet requires an acknowledgment. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_ACK\_NOT\_REQUIRED@{WEDS\_ACK\_NOT\_REQUIRED}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_ACK\_NOT\_REQUIRED@{WEDS\_ACK\_NOT\_REQUIRED}}
+}\Hypertarget{_weds_types_8h_a59870914c672566f6ad2243259089b51ab71cec728247a75ca457ea6aeb346455}\label{_weds_types_8h_a59870914c672566f6ad2243259089b51ab71cec728247a75ca457ea6aeb346455} 
+WEDS\+\_\+\+ACK\+\_\+\+NOT\+\_\+\+REQUIRED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_ACK\_REQUIRED@{WEDS\_ACK\_REQUIRED}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_ACK\_REQUIRED@{WEDS\_ACK\_REQUIRED}}
+}\Hypertarget{_weds_types_8h_a59870914c672566f6ad2243259089b51a4f594505dd380d007ff672ea8dccbe3f}\label{_weds_types_8h_a59870914c672566f6ad2243259089b51a4f594505dd380d007ff672ea8dccbe3f} 
+WEDS\+\_\+\+ACK\+\_\+\+REQUIRED&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146}\index{WedsTypes.h@{WedsTypes.h}!WedsAckStatus@{WedsAckStatus}}
+\index{WedsAckStatus@{WedsAckStatus}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WedsAckStatus}{WedsAckStatus}}
+{\footnotesize\ttfamily \label{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146} 
+enum \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146}{Weds\+Ack\+Status}} :\+ uint8\+\_\+t}
+
+
+
+Status codes embedded in ACK payloads. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_ACK\_STATUS\_OK@{WEDS\_ACK\_STATUS\_OK}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_ACK\_STATUS\_OK@{WEDS\_ACK\_STATUS\_OK}}
+}\Hypertarget{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146a3a57761239b8bc9fe2b5d6430b90d7f9}\label{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146a3a57761239b8bc9fe2b5d6430b90d7f9} 
+WEDS\+\_\+\+ACK\+\_\+\+STATUS\+\_\+\+OK&Acknowledgment successful, no errors. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_ACK\_STATUS\_INVALID\_PACKET@{WEDS\_ACK\_STATUS\_INVALID\_PACKET}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_ACK\_STATUS\_INVALID\_PACKET@{WEDS\_ACK\_STATUS\_INVALID\_PACKET}}
+}\Hypertarget{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146af85a9fb5b8939ec2dbcde7808125d8fe}\label{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146af85a9fb5b8939ec2dbcde7808125d8fe} 
+WEDS\+\_\+\+ACK\+\_\+\+STATUS\+\_\+\+INVALID\+\_\+\+PACKET&Packet is malformed or invalid. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_ACK\_STATUS\_UNSUPPORTED\_MSG@{WEDS\_ACK\_STATUS\_UNSUPPORTED\_MSG}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_ACK\_STATUS\_UNSUPPORTED\_MSG@{WEDS\_ACK\_STATUS\_UNSUPPORTED\_MSG}}
+}\Hypertarget{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146ae8d9a1830027ce3295b4522581df126b}\label{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146ae8d9a1830027ce3295b4522581df126b} 
+WEDS\+\_\+\+ACK\+\_\+\+STATUS\+\_\+\+UNSUPPORTED\+\_\+\+MSG&Message type is unsupported. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_ACK\_STATUS\_CRC\_ERROR@{WEDS\_ACK\_STATUS\_CRC\_ERROR}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_ACK\_STATUS\_CRC\_ERROR@{WEDS\_ACK\_STATUS\_CRC\_ERROR}}
+}\Hypertarget{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146a8a18b52750dda3699f1102adbc2dd7be}\label{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146a8a18b52750dda3699f1102adbc2dd7be} 
+WEDS\+\_\+\+ACK\+\_\+\+STATUS\+\_\+\+CRC\+\_\+\+ERROR&CRC validation failed. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976a}\index{WedsTypes.h@{WedsTypes.h}!WedsDetectionState@{WedsDetectionState}}
+\index{WedsDetectionState@{WedsDetectionState}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WedsDetectionState}{WedsDetectionState}}
+{\footnotesize\ttfamily \label{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976a} 
+enum \doxymbox{\hyperlink{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976a}{Weds\+Detection\+State}} :\+ uint8\+\_\+t}
+
+
+
+Discrete state representing normal or alert conditions for a node. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_DETECTION\_NORMAL@{WEDS\_DETECTION\_NORMAL}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_DETECTION\_NORMAL@{WEDS\_DETECTION\_NORMAL}}
+}\Hypertarget{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976aa7d89de7226f5a66c3e7d862819eedf2c}\label{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976aa7d89de7226f5a66c3e7d862819eedf2c} 
+WEDS\+\_\+\+DETECTION\+\_\+\+NORMAL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_DETECTION\_ALERT@{WEDS\_DETECTION\_ALERT}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_DETECTION\_ALERT@{WEDS\_DETECTION\_ALERT}}
+}\Hypertarget{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976aaa1f9f5012194187430fa08a69f41c570}\label{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976aaa1f9f5012194187430fa08a69f41c570} 
+WEDS\+\_\+\+DETECTION\+\_\+\+ALERT&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7}\index{WedsTypes.h@{WedsTypes.h}!WedsMessageType@{WedsMessageType}}
+\index{WedsMessageType@{WedsMessageType}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WedsMessageType}{WedsMessageType}}
+{\footnotesize\ttfamily \label{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7} 
+enum \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7}{Weds\+Message\+Type}} :\+ uint8\+\_\+t}
+
+
+
+Represents the various supported message types in the WEDS protocol. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_MSG\_NODE\_STATUS@{WEDS\_MSG\_NODE\_STATUS}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_MSG\_NODE\_STATUS@{WEDS\_MSG\_NODE\_STATUS}}
+}\Hypertarget{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a9f65b55055d08f393377424b0f9fe178}\label{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a9f65b55055d08f393377424b0f9fe178} 
+WEDS\+\_\+\+MSG\+\_\+\+NODE\+\_\+\+STATUS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_MSG\_NODE\_ALERT@{WEDS\_MSG\_NODE\_ALERT}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_MSG\_NODE\_ALERT@{WEDS\_MSG\_NODE\_ALERT}}
+}\Hypertarget{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7af66bff15e80c6a37707676bd9b426a4b}\label{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7af66bff15e80c6a37707676bd9b426a4b} 
+WEDS\+\_\+\+MSG\+\_\+\+NODE\+\_\+\+ALERT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_MSG\_ACK@{WEDS\_MSG\_ACK}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_MSG\_ACK@{WEDS\_MSG\_ACK}}
+}\Hypertarget{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a944ddb5e276a5a3b4920981eec778e5f}\label{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a944ddb5e276a5a3b4920981eec778e5f} 
+WEDS\+\_\+\+MSG\+\_\+\+ACK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_MSG\_ALERT\_MODE\_ENABLE@{WEDS\_MSG\_ALERT\_MODE\_ENABLE}!WedsTypes.h@{WedsTypes.h}}
+\index{WedsTypes.h@{WedsTypes.h}!WEDS\_MSG\_ALERT\_MODE\_ENABLE@{WEDS\_MSG\_ALERT\_MODE\_ENABLE}}
+}\Hypertarget{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a628797bbc01bd9f5a5ac0ed3cca5123d}\label{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a628797bbc01bd9f5a5ac0ed3cca5123d} 
+WEDS\+\_\+\+MSG\+\_\+\+ALERT\+\_\+\+MODE\+\_\+\+ENABLE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{_weds_types_8h_doc-var-members}
+\Hypertarget{_weds_types_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_weds_types_8h_abd849f6253a0d8a04f42b368814dcd9b}\index{WedsTypes.h@{WedsTypes.h}!WEDS\_CRC\_SIZE@{WEDS\_CRC\_SIZE}}
+\index{WEDS\_CRC\_SIZE@{WEDS\_CRC\_SIZE}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_CRC\_SIZE}{WEDS\_CRC\_SIZE}}
+{\footnotesize\ttfamily \label{_weds_types_8h_abd849f6253a0d8a04f42b368814dcd9b} 
+size\+\_\+t WEDS\+\_\+\+CRC\+\_\+\+SIZE = 2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+\Hypertarget{_weds_types_8h_a95787e1ac69cbae9733a738ee151ce3b}\index{WedsTypes.h@{WedsTypes.h}!WEDS\_GATEWAY\_ID@{WEDS\_GATEWAY\_ID}}
+\index{WEDS\_GATEWAY\_ID@{WEDS\_GATEWAY\_ID}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_GATEWAY\_ID}{WEDS\_GATEWAY\_ID}}
+{\footnotesize\ttfamily \label{_weds_types_8h_a95787e1ac69cbae9733a738ee151ce3b} 
+uint32\+\_\+t WEDS\+\_\+\+GATEWAY\+\_\+\+ID = 0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+\Hypertarget{_weds_types_8h_a9c23785ff1d1ce4a2443e87422ccfe32}\index{WedsTypes.h@{WedsTypes.h}!WEDS\_HEADER\_SIZE@{WEDS\_HEADER\_SIZE}}
+\index{WEDS\_HEADER\_SIZE@{WEDS\_HEADER\_SIZE}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_HEADER\_SIZE}{WEDS\_HEADER\_SIZE}}
+{\footnotesize\ttfamily \label{_weds_types_8h_a9c23785ff1d1ce4a2443e87422ccfe32} 
+size\+\_\+t WEDS\+\_\+\+HEADER\+\_\+\+SIZE = 14\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+\Hypertarget{_weds_types_8h_a633861d7d0407191fd54923241906559}\index{WedsTypes.h@{WedsTypes.h}!WEDS\_MAGIC@{WEDS\_MAGIC}}
+\index{WEDS\_MAGIC@{WEDS\_MAGIC}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_MAGIC}{WEDS\_MAGIC}}
+{\footnotesize\ttfamily \label{_weds_types_8h_a633861d7d0407191fd54923241906559} 
+uint8\+\_\+t WEDS\+\_\+\+MAGIC = 0x\+A7\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+\Hypertarget{_weds_types_8h_a29da742e2d17ae47a218edfc84f2e663}\index{WedsTypes.h@{WedsTypes.h}!WEDS\_MAX\_PACKET\_SIZE@{WEDS\_MAX\_PACKET\_SIZE}}
+\index{WEDS\_MAX\_PACKET\_SIZE@{WEDS\_MAX\_PACKET\_SIZE}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_MAX\_PACKET\_SIZE}{WEDS\_MAX\_PACKET\_SIZE}}
+{\footnotesize\ttfamily \label{_weds_types_8h_a29da742e2d17ae47a218edfc84f2e663} 
+size\+\_\+t WEDS\+\_\+\+MAX\+\_\+\+PACKET\+\_\+\+SIZE\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =}
+\DoxyCodeLine{\doxymbox{\hyperlink{_weds_types_8h_a9c23785ff1d1ce4a2443e87422ccfe32}{WEDS\_HEADER\_SIZE}}\ +\ \doxymbox{\hyperlink{_weds_types_8h_a21e4f4f414d430f602be27418c86eed5}{WEDS\_MAX\_PAYLOAD\_SIZE}}\ +\ \doxymbox{\hyperlink{_weds_types_8h_abd849f6253a0d8a04f42b368814dcd9b}{WEDS\_CRC\_SIZE}}}
+
+\end{DoxyCode}
+\Hypertarget{_weds_types_8h_a21e4f4f414d430f602be27418c86eed5}\index{WedsTypes.h@{WedsTypes.h}!WEDS\_MAX\_PAYLOAD\_SIZE@{WEDS\_MAX\_PAYLOAD\_SIZE}}
+\index{WEDS\_MAX\_PAYLOAD\_SIZE@{WEDS\_MAX\_PAYLOAD\_SIZE}!WedsTypes.h@{WedsTypes.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_MAX\_PAYLOAD\_SIZE}{WEDS\_MAX\_PAYLOAD\_SIZE}}
+{\footnotesize\ttfamily \label{_weds_types_8h_a21e4f4f414d430f602be27418c86eed5} 
+size\+\_\+t WEDS\+\_\+\+MAX\+\_\+\+PAYLOAD\+\_\+\+SIZE = 64\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+

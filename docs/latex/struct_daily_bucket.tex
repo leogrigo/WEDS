@@ -1,0 +1,75 @@
+\doxysection{Daily\+Bucket Struct Reference}
+\hypertarget{struct_daily_bucket}{}\label{struct_daily_bucket}\index{DailyBucket@{DailyBucket}}
+
+
+A memory-\/efficient structure representing a 24-\/hour aggregation of sensor data. Used within a ring buffer to calculate multi-\/day rolling averages without storing high-\/frequency arrays.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Risk\+Score.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_daily_bucket_aac8658aaa3e1c0f7a527696767e2c891}{day\+\_\+id}}
+\begin{DoxyCompactList}\small\item\em Absolute day identifier (UNIX timestamp /\+ 86400). \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_daily_bucket_a444ba2cf826fcb5664b76f2083a7e6da}{temp\+\_\+sum}}
+\begin{DoxyCompactList}\small\item\em Accumulated temperature readings for this day. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_daily_bucket_a1bd73dbff0183de98846bcb3283af23e}{rh\+\_\+sum}}
+\begin{DoxyCompactList}\small\item\em Accumulated humidity readings for this day. \end{DoxyCompactList}\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_daily_bucket_a347ca887703c0122ccd87bf77b304ec9}{sample\+\_\+count}}
+\begin{DoxyCompactList}\small\item\em Number of readings aggregated in this bucket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A memory-\/efficient structure representing a 24-\/hour aggregation of sensor data. Used within a ring buffer to calculate multi-\/day rolling averages without storing high-\/frequency arrays. 
+
+\label{struct_daily_bucket_doc-variable-members}
+\Hypertarget{struct_daily_bucket_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_daily_bucket_aac8658aaa3e1c0f7a527696767e2c891}\index{DailyBucket@{DailyBucket}!day\_id@{day\_id}}
+\index{day\_id@{day\_id}!DailyBucket@{DailyBucket}}
+\doxysubsubsection{\texorpdfstring{day\_id}{day\_id}}
+{\footnotesize\ttfamily \label{struct_daily_bucket_aac8658aaa3e1c0f7a527696767e2c891} 
+uint32\+\_\+t Daily\+Bucket::\+day\+\_\+id}
+
+
+
+Absolute day identifier (UNIX timestamp /\+ 86400). 
+
+\Hypertarget{struct_daily_bucket_a1bd73dbff0183de98846bcb3283af23e}\index{DailyBucket@{DailyBucket}!rh\_sum@{rh\_sum}}
+\index{rh\_sum@{rh\_sum}!DailyBucket@{DailyBucket}}
+\doxysubsubsection{\texorpdfstring{rh\_sum}{rh\_sum}}
+{\footnotesize\ttfamily \label{struct_daily_bucket_a1bd73dbff0183de98846bcb3283af23e} 
+float Daily\+Bucket::\+rh\+\_\+sum}
+
+
+
+Accumulated humidity readings for this day. 
+
+\Hypertarget{struct_daily_bucket_a347ca887703c0122ccd87bf77b304ec9}\index{DailyBucket@{DailyBucket}!sample\_count@{sample\_count}}
+\index{sample\_count@{sample\_count}!DailyBucket@{DailyBucket}}
+\doxysubsubsection{\texorpdfstring{sample\_count}{sample\_count}}
+{\footnotesize\ttfamily \label{struct_daily_bucket_a347ca887703c0122ccd87bf77b304ec9} 
+uint16\+\_\+t Daily\+Bucket::\+sample\+\_\+count}
+
+
+
+Number of readings aggregated in this bucket. 
+
+\Hypertarget{struct_daily_bucket_a444ba2cf826fcb5664b76f2083a7e6da}\index{DailyBucket@{DailyBucket}!temp\_sum@{temp\_sum}}
+\index{temp\_sum@{temp\_sum}!DailyBucket@{DailyBucket}}
+\doxysubsubsection{\texorpdfstring{temp\_sum}{temp\_sum}}
+{\footnotesize\ttfamily \label{struct_daily_bucket_a444ba2cf826fcb5664b76f2083a7e6da} 
+float Daily\+Bucket::\+temp\+\_\+sum}
+
+
+
+Accumulated temperature readings for this day. 
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+risk\+\_\+score/\+\doxymbox{\hyperlink{_weds_risk_score_8h}{Weds\+Risk\+Score.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,68 @@
+\doxysection{Weds\+Anomaly\+Detector.\+h}
+\hypertarget{_weds_anomaly_detector_8h_source}{}\label{_weds_anomaly_detector_8h_source}\index{code/lib/weds\_anomaly\_detector/WedsAnomalyDetector.h@{code/lib/weds\_anomaly\_detector/WedsAnomalyDetector.h}}
+\doxymbox{\hyperlink{_weds_anomaly_detector_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_sensor_sample_8h}{WedsSensorSample.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_types_8h}{WedsTypes.h}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_weds_anomaly_result}{WedsAnomalyResult}}\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_anomaly_result_ad042da6e5b2466d7ce6d4a44c25b7a54}{gas\_baseline}};\ \ \ \ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_anomaly_result_a0c5e077cf4e520103c428196f40f81a8}{gas\_stddev}};\ \ \ \ \ \ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_anomaly_result_a6318c5122ed581e073b2f92329f387ee}{gas\_score}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00016\ \ \ \ \ uint8\_t\ \doxymbox{\hyperlink{struct_weds_anomaly_result_a5feb661811d64d5ced0d75284f77952f}{detection\_state}};\ }
+\DoxyCodeLine{00017\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_anomaly_result_a219978f57e5e6ddb6d41b790e2b9aff0}{samples\_seen}};\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_anomaly_result_ae849bbdabf33e82857f0137bcf5f746d}{warming\_up}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_weds_anomaly_detector_a6e6011be42e5a146b36c7d4fe6224dc2}{WedsAnomalyDetector}}\ \{}
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \doxymbox{\hyperlink{class_weds_anomaly_detector_a6e6011be42e5a146b36c7d4fe6224dc2}{WedsAnomalyDetector}}();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00036\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_anomaly_result}{WedsAnomalyResult}}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_aeeac71c0e87485933194b6ce6240f6db}{update}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_sensor_sample}{WedsSensorSample}}\&\ sample);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_anomaly_result}{WedsAnomalyResult}}\&\ \doxymbox{\hyperlink{class_weds_anomaly_detector_ab05190fa1846e3083ae21d57acb87da1}{lastResult}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00048\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{class_weds_anomaly_detector_a5db8ba0a165a8902408e6f7b70068a4e}{samplesSeen}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_ab8dcf42262d087a0a4873587f6120527}{isWarmup}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{template}\ <u\textcolor{keywordtype}{int}8\_t\ K>}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{EmaFilter}}\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_a937e5be733133f25d8986ba23f43ad9a}{update}}(\textcolor{keywordtype}{float}\ input)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_af7a7b801a15bc30f2d83591774429b2d}{initialized\_}})\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_ae86c14901251e7b05e339921099b3f52}{state\_}}\ =\ input;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_af7a7b801a15bc30f2d83591774429b2d}{initialized\_}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ input;}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ alpha\ =\ 1.0f\ /\ (1\ <<\ K);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_ae86c14901251e7b05e339921099b3f52}{state\_}}\ +=\ alpha\ *\ (input\ -\/\ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_ae86c14901251e7b05e339921099b3f52}{state\_}});}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_ae86c14901251e7b05e339921099b3f52}{state\_}};}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_af7a7b801a15bc30f2d83591774429b2d}{initialized\_}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_ae86c14901251e7b05e339921099b3f52}{state\_}}\ =\ 0.0f;}
+\DoxyCodeLine{00084\ \ \ \ \ \};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_a83e5742ea03803c70e06798a755a76b7}{positivePart}}(\textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_a42445337072de47aa54f018db8082f26}{negativePart}}(\textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_aebd5cf245f5fe931f98a09a31ef1f56c}{directionalGasScore}}(\textcolor{keywordtype}{float}\ gas\_z);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_a9d8c9373575fd8e443df4e4c7ba6cceb}{started\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{class_weds_anomaly_detector_aefa8fb4487705eae18aa79c76c1970a7}{samples\_seen\_}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_anomaly_result}{WedsAnomalyResult}}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_afd25778f1b18cb2b4f04787283847ee5}{last\_result\_}};\ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{EmaFilter<4>}}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_afd2b8e9c7d1c8995e1b23bec9c3cced5}{gas\_filter\_}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{EmaFilter<4>}}\ \doxymbox{\hyperlink{class_weds_anomaly_detector_a7c19f6674ed86b2ac8e771bc5d3a899a}{gas\_variance\_filter\_}};\ }
+\DoxyCodeLine{00095\ \};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00101\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{_weds_anomaly_detector_8h_a148d1ada9b474882f8db643c5eb72a0a}{printAnomalyResults}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_anomaly_result}{WedsAnomalyResult}}\&\ result);}
+
+\end{DoxyCode}

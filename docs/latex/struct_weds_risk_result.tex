@@ -1,0 +1,51 @@
+\doxysection{Weds\+Risk\+Result Struct Reference}
+\hypertarget{struct_weds_risk_result}{}\label{struct_weds_risk_result}\index{WedsRiskResult@{WedsRiskResult}}
+
+
+Represents the evaluated risk output from the Tiny\+ML model.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Risk\+Score.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_risk_result_a2a6770794b24bf0ed79e4c4d900fe58c}{detection\+\_\+state}}
+\begin{DoxyCompactList}\small\item\em The discrete alert level (e.\+g., Normal, Alert) based on the score. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_weds_risk_result_aed8ae9205077563ddd8a1b33a60b2168}{score}}
+\begin{DoxyCompactList}\small\item\em The raw probability of a fire event, ranging from 0.\+0 (no risk) to 1.\+0 (extreme risk). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents the evaluated risk output from the Tiny\+ML model. 
+
+\label{struct_weds_risk_result_doc-variable-members}
+\Hypertarget{struct_weds_risk_result_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_weds_risk_result_a2a6770794b24bf0ed79e4c4d900fe58c}\index{WedsRiskResult@{WedsRiskResult}!detection\_state@{detection\_state}}
+\index{detection\_state@{detection\_state}!WedsRiskResult@{WedsRiskResult}}
+\doxysubsubsection{\texorpdfstring{detection\_state}{detection\_state}}
+{\footnotesize\ttfamily \label{struct_weds_risk_result_a2a6770794b24bf0ed79e4c4d900fe58c} 
+uint8\+\_\+t Weds\+Risk\+Result::\+detection\+\_\+state}
+
+
+
+The discrete alert level (e.\+g., Normal, Alert) based on the score. 
+
+\Hypertarget{struct_weds_risk_result_aed8ae9205077563ddd8a1b33a60b2168}\index{WedsRiskResult@{WedsRiskResult}!score@{score}}
+\index{score@{score}!WedsRiskResult@{WedsRiskResult}}
+\doxysubsubsection{\texorpdfstring{score}{score}}
+{\footnotesize\ttfamily \label{struct_weds_risk_result_aed8ae9205077563ddd8a1b33a60b2168} 
+float Weds\+Risk\+Result::\+score}
+
+
+
+The raw probability of a fire event, ranging from 0.\+0 (no risk) to 1.\+0 (extreme risk). 
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+risk\+\_\+score/\+\doxymbox{\hyperlink{_weds_risk_score_8h}{Weds\+Risk\+Score.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,75 @@
+\doxysection{Weds\+Anomaly\+Result Struct Reference}
+\hypertarget{struct_weds_anomaly_result}{}\label{struct_weds_anomaly_result}\index{WedsAnomalyResult@{WedsAnomalyResult}}
+
+
+Represents the result of an anomaly detection evaluation.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Anomaly\+Detector.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{struct_weds_anomaly_result_ad042da6e5b2466d7ce6d4a44c25b7a54}{gas\+\_\+baseline}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_anomaly_result_a0c5e077cf4e520103c428196f40f81a8}{gas\+\_\+stddev}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_anomaly_result_a6318c5122ed581e073b2f92329f387ee}{gas\+\_\+score}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_anomaly_result_a5feb661811d64d5ced0d75284f77952f}{detection\+\_\+state}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_anomaly_result_a219978f57e5e6ddb6d41b790e2b9aff0}{samples\+\_\+seen}}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_anomaly_result_ae849bbdabf33e82857f0137bcf5f746d}{warming\+\_\+up}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents the result of an anomaly detection evaluation. 
+
+\label{struct_weds_anomaly_result_doc-variable-members}
+\Hypertarget{struct_weds_anomaly_result_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_weds_anomaly_result_a5feb661811d64d5ced0d75284f77952f}\index{WedsAnomalyResult@{WedsAnomalyResult}!detection\_state@{detection\_state}}
+\index{detection\_state@{detection\_state}!WedsAnomalyResult@{WedsAnomalyResult}}
+\doxysubsubsection{\texorpdfstring{detection\_state}{detection\_state}}
+{\footnotesize\ttfamily \label{struct_weds_anomaly_result_a5feb661811d64d5ced0d75284f77952f} 
+uint8\+\_\+t Weds\+Anomaly\+Result::\+detection\+\_\+state}
+
+The discrete detection state (e.\+g., normal or alert). \Hypertarget{struct_weds_anomaly_result_ad042da6e5b2466d7ce6d4a44c25b7a54}\index{WedsAnomalyResult@{WedsAnomalyResult}!gas\_baseline@{gas\_baseline}}
+\index{gas\_baseline@{gas\_baseline}!WedsAnomalyResult@{WedsAnomalyResult}}
+\doxysubsubsection{\texorpdfstring{gas\_baseline}{gas\_baseline}}
+{\footnotesize\ttfamily \label{struct_weds_anomaly_result_ad042da6e5b2466d7ce6d4a44c25b7a54} 
+float Weds\+Anomaly\+Result::\+gas\+\_\+baseline}
+
+The moving baseline of the gas resistance. \Hypertarget{struct_weds_anomaly_result_a6318c5122ed581e073b2f92329f387ee}\index{WedsAnomalyResult@{WedsAnomalyResult}!gas\_score@{gas\_score}}
+\index{gas\_score@{gas\_score}!WedsAnomalyResult@{WedsAnomalyResult}}
+\doxysubsubsection{\texorpdfstring{gas\_score}{gas\_score}}
+{\footnotesize\ttfamily \label{struct_weds_anomaly_result_a6318c5122ed581e073b2f92329f387ee} 
+float Weds\+Anomaly\+Result::\+gas\+\_\+score}
+
+The computed anomaly score for the gas resistance. \Hypertarget{struct_weds_anomaly_result_a0c5e077cf4e520103c428196f40f81a8}\index{WedsAnomalyResult@{WedsAnomalyResult}!gas\_stddev@{gas\_stddev}}
+\index{gas\_stddev@{gas\_stddev}!WedsAnomalyResult@{WedsAnomalyResult}}
+\doxysubsubsection{\texorpdfstring{gas\_stddev}{gas\_stddev}}
+{\footnotesize\ttfamily \label{struct_weds_anomaly_result_a0c5e077cf4e520103c428196f40f81a8} 
+float Weds\+Anomaly\+Result::\+gas\+\_\+stddev}
+
+The moving standard deviation of the gas resistance. \Hypertarget{struct_weds_anomaly_result_a219978f57e5e6ddb6d41b790e2b9aff0}\index{WedsAnomalyResult@{WedsAnomalyResult}!samples\_seen@{samples\_seen}}
+\index{samples\_seen@{samples\_seen}!WedsAnomalyResult@{WedsAnomalyResult}}
+\doxysubsubsection{\texorpdfstring{samples\_seen}{samples\_seen}}
+{\footnotesize\ttfamily \label{struct_weds_anomaly_result_a219978f57e5e6ddb6d41b790e2b9aff0} 
+uint32\+\_\+t Weds\+Anomaly\+Result::\+samples\+\_\+seen}
+
+The total number of samples processed so far. \Hypertarget{struct_weds_anomaly_result_ae849bbdabf33e82857f0137bcf5f746d}\index{WedsAnomalyResult@{WedsAnomalyResult}!warming\_up@{warming\_up}}
+\index{warming\_up@{warming\_up}!WedsAnomalyResult@{WedsAnomalyResult}}
+\doxysubsubsection{\texorpdfstring{warming\_up}{warming\_up}}
+{\footnotesize\ttfamily \label{struct_weds_anomaly_result_ae849bbdabf33e82857f0137bcf5f746d} 
+bool Weds\+Anomaly\+Result::\+warming\+\_\+up}
+
+Indicates if the detector is still in the warmup phase. 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+anomaly\+\_\+detector/\+\doxymbox{\hyperlink{_weds_anomaly_detector_8h}{Weds\+Anomaly\+Detector.\+h}}\end{DoxyCompactItemize}

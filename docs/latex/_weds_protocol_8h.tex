@@ -1,0 +1,338 @@
+\doxysection{code/\+lib/\+weds\+\_\+protocol/\+\+Weds\+Protocol.h File Reference}
+\hypertarget{_weds_protocol_8h}{}\label{_weds_protocol_8h}\index{code/lib/weds\_protocol/WedsProtocol.h@{code/lib/weds\_protocol/WedsProtocol.h}}
+{\ttfamily \+\#include "{}Weds\+Packet.\+h"{}}\newline
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+{\ttfamily \+\#include $<$stddef.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{_weds_protocol_8h_aa101960b34c9f67ccb1df71a0a1f3cec}{weds\+\_\+get\+\_\+node\+\_\+id\+\_\+from\+\_\+mac}} ()
+\begin{DoxyCompactList}\small\item\em Derives a unique node ID from the hardware MAC address. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_a053daee3bf36446106742de72f20700e}{weds\+\_\+serialize\+\_\+packet}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet, uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t buffer\+\_\+size, size\+\_\+t \&out\+\_\+len)
+\begin{DoxyCompactList}\small\item\em Serializes a \doxylink{struct_weds_packet}{Weds\+Packet} into a byte buffer for transmission. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_ac11ec1395993dd5347b26f034c002668}{weds\+\_\+deserialize\+\_\+packet}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t len, \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&out\+\_\+packet)
+\begin{DoxyCompactList}\small\item\em Deserializes a byte buffer into a \doxylink{struct_weds_packet}{Weds\+Packet} structure. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_ae9136f0b32d698a2d3224cda8c4959dc}{weds\+\_\+encode\+\_\+node\+\_\+status\+\_\+payload}} (const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&payload, uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t buffer\+\_\+size, size\+\_\+t \&out\+\_\+len)
+\begin{DoxyCompactList}\small\item\em Encodes a NODE\+\_\+\+STATUS payload into a byte buffer. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_a0d1ad3ca8104c6336ef8d57a2469bf69}{weds\+\_\+decode\+\_\+node\+\_\+status\+\_\+payload}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t len, \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&out\+\_\+payload)
+\begin{DoxyCompactList}\small\item\em Decodes a byte buffer into a NODE\+\_\+\+STATUS payload structure. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_ac82266ab660a3bab56036301989e39f4}{weds\+\_\+encode\+\_\+ack\+\_\+payload}} (const \doxymbox{\hyperlink{struct_weds_ack_payload}{Weds\+Ack\+Payload}} \&payload, uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t buffer\+\_\+size, size\+\_\+t \&out\+\_\+len)
+\begin{DoxyCompactList}\small\item\em Encodes an ACK payload into a byte buffer. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_ab31a0f28394043e62ef7f0f012dfaace}{weds\+\_\+decode\+\_\+ack\+\_\+payload}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t len, \doxymbox{\hyperlink{struct_weds_ack_payload}{Weds\+Ack\+Payload}} \&out\+\_\+payload)
+\begin{DoxyCompactList}\small\item\em Decodes a byte buffer into an ACK payload structure. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_a496f1f40223d3c67a43862577efbffb8}{weds\+\_\+encode\+\_\+alert\+\_\+mode\+\_\+enable\+\_\+payload}} (const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&payload, uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t buffer\+\_\+size, size\+\_\+t \&out\+\_\+len)
+\begin{DoxyCompactList}\small\item\em Encodes an ALERT\+\_\+\+MODE\+\_\+\+ENABLE payload into a byte buffer. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_a30341474bdb43f5394752b0f93d11a15}{weds\+\_\+decode\+\_\+alert\+\_\+mode\+\_\+enable\+\_\+payload}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t len, \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&out\+\_\+payload)
+\begin{DoxyCompactList}\small\item\em Decodes a byte buffer into an ALERT\+\_\+\+MODE\+\_\+\+ENABLE payload. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_a2c1fe7220c587800e5f1e4f25bb620ca}{weds\+\_\+build\+\_\+node\+\_\+status\+\_\+packet}} (uint32\+\_\+t src\+\_\+node\+\_\+id, uint16\+\_\+t sequence\+\_\+id, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status, \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&out\+\_\+packet)
+\begin{DoxyCompactList}\small\item\em Builds a complete NODE\+\_\+\+STATUS packet. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_ac9658ad1aefdbe6e667e7cde1282a520}{weds\+\_\+build\+\_\+node\+\_\+alert\+\_\+packet}} (uint32\+\_\+t src\+\_\+node\+\_\+id, uint16\+\_\+t sequence\+\_\+id, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status, \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&out\+\_\+packet)
+\begin{DoxyCompactList}\small\item\em Builds a complete NODE\+\_\+\+ALERT packet. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_ab2ae4e5ba7fb1dd2e7c2bf3be7e94bd0}{weds\+\_\+build\+\_\+ack\+\_\+packet}} (uint32\+\_\+t src\+\_\+node\+\_\+id, uint32\+\_\+t dst\+\_\+node\+\_\+id, uint16\+\_\+t sequence\+\_\+id, uint16\+\_\+t acked\+\_\+sequence\+\_\+id, uint8\+\_\+t acked\+\_\+msg\+\_\+type, uint8\+\_\+t status\+\_\+code, \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&out\+\_\+packet)
+\begin{DoxyCompactList}\small\item\em Builds a complete ACK packet. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_protocol_8h_a73bf4c8ba831cb930ca59bb2c105646f}{weds\+\_\+build\+\_\+alert\+\_\+mode\+\_\+enable\+\_\+packet}} (uint32\+\_\+t dst\+\_\+node\+\_\+id, uint16\+\_\+t sequence\+\_\+id, const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&command, \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&out\+\_\+packet)
+\begin{DoxyCompactList}\small\item\em Builds a complete ALERT\+\_\+\+MODE\+\_\+\+ENABLE command packet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_protocol_8h_doc-func-members}
+\Hypertarget{_weds_protocol_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_weds_protocol_8h_ab2ae4e5ba7fb1dd2e7c2bf3be7e94bd0}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_build\_ack\_packet@{weds\_build\_ack\_packet}}
+\index{weds\_build\_ack\_packet@{weds\_build\_ack\_packet}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_build\_ack\_packet()}{weds\_build\_ack\_packet()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_ab2ae4e5ba7fb1dd2e7c2bf3be7e94bd0} 
+bool weds\+\_\+build\+\_\+ack\+\_\+packet (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{src\+\_\+node\+\_\+id}{, }\item[{uint32\+\_\+t}]{dst\+\_\+node\+\_\+id}{, }\item[{uint16\+\_\+t}]{sequence\+\_\+id}{, }\item[{uint16\+\_\+t}]{acked\+\_\+sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{acked\+\_\+msg\+\_\+type}{, }\item[{uint8\+\_\+t}]{status\+\_\+code}{, }\item[{\doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{out\+\_\+packet}{}\end{DoxyParamCaption})}
+
+
+
+Builds a complete ACK packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em src\+\_\+node\+\_\+id} & The ID of the node sending the ACK. \\
+\hline
+{\em dst\+\_\+node\+\_\+id} & The ID of the node intended to receive the ACK. \\
+\hline
+{\em sequence\+\_\+id} & The sequence ID for this ACK packet. \\
+\hline
+{\em acked\+\_\+sequence\+\_\+id} & The sequence ID of the packet being acknowledged. \\
+\hline
+{\em acked\+\_\+msg\+\_\+type} & The message type of the packet being acknowledged. \\
+\hline
+{\em status\+\_\+code} & The status code of the acknowledgment. \\
+\hline
+{\em out\+\_\+packet} & On success, the constructed packet. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if construction was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_a73bf4c8ba831cb930ca59bb2c105646f}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_build\_alert\_mode\_enable\_packet@{weds\_build\_alert\_mode\_enable\_packet}}
+\index{weds\_build\_alert\_mode\_enable\_packet@{weds\_build\_alert\_mode\_enable\_packet}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_build\_alert\_mode\_enable\_packet()}{weds\_build\_alert\_mode\_enable\_packet()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_a73bf4c8ba831cb930ca59bb2c105646f} 
+bool weds\+\_\+build\+\_\+alert\+\_\+mode\+\_\+enable\+\_\+packet (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{dst\+\_\+node\+\_\+id}{, }\item[{uint16\+\_\+t}]{sequence\+\_\+id}{, }\item[{const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&}]{command}{, }\item[{\doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{out\+\_\+packet}{}\end{DoxyParamCaption})}
+
+
+
+Builds a complete ALERT\+\_\+\+MODE\+\_\+\+ENABLE command packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst\+\_\+node\+\_\+id} & The destination node identifier. \\
+\hline
+{\em sequence\+\_\+id} & The sequence ID for this command packet. \\
+\hline
+{\em command} & The alert enable configuration payload. \\
+\hline
+{\em out\+\_\+packet} & On success, the constructed packet. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if construction was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_ac9658ad1aefdbe6e667e7cde1282a520}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_build\_node\_alert\_packet@{weds\_build\_node\_alert\_packet}}
+\index{weds\_build\_node\_alert\_packet@{weds\_build\_node\_alert\_packet}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_build\_node\_alert\_packet()}{weds\_build\_node\_alert\_packet()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_ac9658ad1aefdbe6e667e7cde1282a520} 
+bool weds\+\_\+build\+\_\+node\+\_\+alert\+\_\+packet (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{src\+\_\+node\+\_\+id}{, }\item[{uint16\+\_\+t}]{sequence\+\_\+id}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{, }\item[{\doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{out\+\_\+packet}{}\end{DoxyParamCaption})}
+
+
+
+Builds a complete NODE\+\_\+\+ALERT packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em src\+\_\+node\+\_\+id} & The source node identifier. \\
+\hline
+{\em sequence\+\_\+id} & The packet sequence identifier. \\
+\hline
+{\em status} & The status payload to include. \\
+\hline
+{\em out\+\_\+packet} & On success, the constructed packet. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if construction was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_a2c1fe7220c587800e5f1e4f25bb620ca}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_build\_node\_status\_packet@{weds\_build\_node\_status\_packet}}
+\index{weds\_build\_node\_status\_packet@{weds\_build\_node\_status\_packet}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_build\_node\_status\_packet()}{weds\_build\_node\_status\_packet()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_a2c1fe7220c587800e5f1e4f25bb620ca} 
+bool weds\+\_\+build\+\_\+node\+\_\+status\+\_\+packet (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{src\+\_\+node\+\_\+id}{, }\item[{uint16\+\_\+t}]{sequence\+\_\+id}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{, }\item[{\doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{out\+\_\+packet}{}\end{DoxyParamCaption})}
+
+
+
+Builds a complete NODE\+\_\+\+STATUS packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em src\+\_\+node\+\_\+id} & The source node identifier. \\
+\hline
+{\em sequence\+\_\+id} & The packet sequence identifier. \\
+\hline
+{\em status} & The status payload to include. \\
+\hline
+{\em out\+\_\+packet} & On success, the constructed packet. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if construction was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_ab31a0f28394043e62ef7f0f012dfaace}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_decode\_ack\_payload@{weds\_decode\_ack\_payload}}
+\index{weds\_decode\_ack\_payload@{weds\_decode\_ack\_payload}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_decode\_ack\_payload()}{weds\_decode\_ack\_payload()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_ab31a0f28394043e62ef7f0f012dfaace} 
+bool weds\+\_\+decode\+\_\+ack\+\_\+payload (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{len}{, }\item[{\doxymbox{\hyperlink{struct_weds_ack_payload}{Weds\+Ack\+Payload}} \&}]{out\+\_\+payload}{}\end{DoxyParamCaption})}
+
+
+
+Decodes a byte buffer into an ACK payload structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The source buffer. \\
+\hline
+{\em len} & The length of the source buffer. \\
+\hline
+{\em out\+\_\+payload} & On success, the decoded payload. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if decoding was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_a30341474bdb43f5394752b0f93d11a15}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_decode\_alert\_mode\_enable\_payload@{weds\_decode\_alert\_mode\_enable\_payload}}
+\index{weds\_decode\_alert\_mode\_enable\_payload@{weds\_decode\_alert\_mode\_enable\_payload}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_decode\_alert\_mode\_enable\_payload()}{weds\_decode\_alert\_mode\_enable\_payload()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_a30341474bdb43f5394752b0f93d11a15} 
+bool weds\+\_\+decode\+\_\+alert\+\_\+mode\+\_\+enable\+\_\+payload (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{len}{, }\item[{\doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&}]{out\+\_\+payload}{}\end{DoxyParamCaption})}
+
+
+
+Decodes a byte buffer into an ALERT\+\_\+\+MODE\+\_\+\+ENABLE payload. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The source buffer. \\
+\hline
+{\em len} & The length of the source buffer. \\
+\hline
+{\em out\+\_\+payload} & On success, the decoded payload. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if decoding was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_a0d1ad3ca8104c6336ef8d57a2469bf69}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_decode\_node\_status\_payload@{weds\_decode\_node\_status\_payload}}
+\index{weds\_decode\_node\_status\_payload@{weds\_decode\_node\_status\_payload}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_decode\_node\_status\_payload()}{weds\_decode\_node\_status\_payload()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_a0d1ad3ca8104c6336ef8d57a2469bf69} 
+bool weds\+\_\+decode\+\_\+node\+\_\+status\+\_\+payload (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{len}{, }\item[{\doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{out\+\_\+payload}{}\end{DoxyParamCaption})}
+
+
+
+Decodes a byte buffer into a NODE\+\_\+\+STATUS payload structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The source buffer. \\
+\hline
+{\em len} & The length of the source buffer. \\
+\hline
+{\em out\+\_\+payload} & On success, the decoded payload. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if decoding was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_ac11ec1395993dd5347b26f034c002668}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_deserialize\_packet@{weds\_deserialize\_packet}}
+\index{weds\_deserialize\_packet@{weds\_deserialize\_packet}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_deserialize\_packet()}{weds\_deserialize\_packet()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_ac11ec1395993dd5347b26f034c002668} 
+bool weds\+\_\+deserialize\+\_\+packet (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{len}{, }\item[{\doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{out\+\_\+packet}{}\end{DoxyParamCaption})}
+
+
+
+Deserializes a byte buffer into a \doxylink{struct_weds_packet}{Weds\+Packet} structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The source buffer containing the received bytes. \\
+\hline
+{\em len} & The length of the source buffer. \\
+\hline
+{\em out\+\_\+packet} & On success, the populated packet. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if deserialization was successful and CRC matched, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_ac82266ab660a3bab56036301989e39f4}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_encode\_ack\_payload@{weds\_encode\_ack\_payload}}
+\index{weds\_encode\_ack\_payload@{weds\_encode\_ack\_payload}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_encode\_ack\_payload()}{weds\_encode\_ack\_payload()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_ac82266ab660a3bab56036301989e39f4} 
+bool weds\+\_\+encode\+\_\+ack\+\_\+payload (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_ack_payload}{Weds\+Ack\+Payload}} \&}]{payload}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{buffer\+\_\+size}{, }\item[{size\+\_\+t \&}]{out\+\_\+len}{}\end{DoxyParamCaption})}
+
+
+
+Encodes an ACK payload into a byte buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em payload} & The ACK payload to encode. \\
+\hline
+{\em buffer} & The destination buffer. \\
+\hline
+{\em buffer\+\_\+size} & The maximum size of the destination buffer. \\
+\hline
+{\em out\+\_\+len} & On success, the number of bytes written. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if encoding was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_a496f1f40223d3c67a43862577efbffb8}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_encode\_alert\_mode\_enable\_payload@{weds\_encode\_alert\_mode\_enable\_payload}}
+\index{weds\_encode\_alert\_mode\_enable\_payload@{weds\_encode\_alert\_mode\_enable\_payload}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_encode\_alert\_mode\_enable\_payload()}{weds\_encode\_alert\_mode\_enable\_payload()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_a496f1f40223d3c67a43862577efbffb8} 
+bool weds\+\_\+encode\+\_\+alert\+\_\+mode\+\_\+enable\+\_\+payload (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&}]{payload}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{buffer\+\_\+size}{, }\item[{size\+\_\+t \&}]{out\+\_\+len}{}\end{DoxyParamCaption})}
+
+
+
+Encodes an ALERT\+\_\+\+MODE\+\_\+\+ENABLE payload into a byte buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em payload} & The alert enable command payload. \\
+\hline
+{\em buffer} & The destination buffer. \\
+\hline
+{\em buffer\+\_\+size} & The maximum size of the destination buffer. \\
+\hline
+{\em out\+\_\+len} & On success, the number of bytes written. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if encoding was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_ae9136f0b32d698a2d3224cda8c4959dc}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_encode\_node\_status\_payload@{weds\_encode\_node\_status\_payload}}
+\index{weds\_encode\_node\_status\_payload@{weds\_encode\_node\_status\_payload}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_encode\_node\_status\_payload()}{weds\_encode\_node\_status\_payload()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_ae9136f0b32d698a2d3224cda8c4959dc} 
+bool weds\+\_\+encode\+\_\+node\+\_\+status\+\_\+payload (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{payload}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{buffer\+\_\+size}{, }\item[{size\+\_\+t \&}]{out\+\_\+len}{}\end{DoxyParamCaption})}
+
+
+
+Encodes a NODE\+\_\+\+STATUS payload into a byte buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em payload} & The status payload to encode. \\
+\hline
+{\em buffer} & The destination buffer for the encoded bytes. \\
+\hline
+{\em buffer\+\_\+size} & The maximum size of the destination buffer. \\
+\hline
+{\em out\+\_\+len} & On success, the number of bytes written. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if encoding was successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_aa101960b34c9f67ccb1df71a0a1f3cec}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_get\_node\_id\_from\_mac@{weds\_get\_node\_id\_from\_mac}}
+\index{weds\_get\_node\_id\_from\_mac@{weds\_get\_node\_id\_from\_mac}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_get\_node\_id\_from\_mac()}{weds\_get\_node\_id\_from\_mac()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_aa101960b34c9f67ccb1df71a0a1f3cec} 
+uint32\+\_\+t weds\+\_\+get\+\_\+node\+\_\+id\+\_\+from\+\_\+mac (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Derives a unique node ID from the hardware MAC address. 
+
+\begin{DoxyReturn}{Returns}
+The generated 32-\/bit node ID. 
+\end{DoxyReturn}
+\Hypertarget{_weds_protocol_8h_a053daee3bf36446106742de72f20700e}\index{WedsProtocol.h@{WedsProtocol.h}!weds\_serialize\_packet@{weds\_serialize\_packet}}
+\index{weds\_serialize\_packet@{weds\_serialize\_packet}!WedsProtocol.h@{WedsProtocol.h}}
+\doxysubsubsection{\texorpdfstring{weds\_serialize\_packet()}{weds\_serialize\_packet()}}
+{\footnotesize\ttfamily \label{_weds_protocol_8h_a053daee3bf36446106742de72f20700e} 
+bool weds\+\_\+serialize\+\_\+packet (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{buffer\+\_\+size}{, }\item[{size\+\_\+t \&}]{out\+\_\+len}{}\end{DoxyParamCaption})}
+
+
+
+Serializes a \doxylink{struct_weds_packet}{Weds\+Packet} into a byte buffer for transmission. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em packet} & The packet to serialize. \\
+\hline
+{\em buffer} & The destination buffer for the serialized bytes. \\
+\hline
+{\em buffer\+\_\+size} & The maximum size of the destination buffer. \\
+\hline
+{\em out\+\_\+len} & On success, the total number of bytes written. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if serialization was successful, false otherwise. 
+\end{DoxyReturn}

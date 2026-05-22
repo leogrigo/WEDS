@@ -1,0 +1,95 @@
+\doxysection{code/\+include/\+\+Weds\+Radio\+Config.h File Reference}
+\hypertarget{_weds_radio_config_8h}{}\label{_weds_radio_config_8h}\index{code/include/WedsRadioConfig.h@{code/include/WedsRadioConfig.h}}
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr float \doxymbox{\hyperlink{_weds_radio_config_8h_a659290e63f2fef032dff8e65225685fd}{WEDS\+\_\+\+LORA\+\_\+\+FREQUENCY\+\_\+\+MHZ}} = 868.\+0f
+\begin{DoxyCompactList}\small\item\em Lo\+Ra frequency for the WEDS deployment area (EU/\+\+Italy 868 MHz ISM band). \end{DoxyCompactList}\item 
+static constexpr float \doxymbox{\hyperlink{_weds_radio_config_8h_ae88fccb66d1f2b84712f3fe9f77310e4}{WEDS\+\_\+\+LORA\+\_\+\+BANDWIDTH\+\_\+\+KHZ}} = 125.\+0f
+\begin{DoxyCompactList}\small\item\em Lo\+Ra bandwidth setting in k\+Hz. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_radio_config_8h_a7b2049b3c953f043aa3a3e077e7dcf8e}{WEDS\+\_\+\+LORA\+\_\+\+SPREADING\+\_\+\+FACTOR}} = 7
+\begin{DoxyCompactList}\small\item\em Lo\+Ra spreading factor. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_radio_config_8h_abdec3ea5b18b9f9688992d42a5d74d1b}{WEDS\+\_\+\+LORA\+\_\+\+CODING\+\_\+\+RATE}} = 5
+\begin{DoxyCompactList}\small\item\em Lo\+Ra coding rate denominator. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_radio_config_8h_a023dc8cddb420a305b6a1b15fd15df0b}{WEDS\+\_\+\+LORA\+\_\+\+SYNC\+\_\+\+WORD}} = 0x12
+\begin{DoxyCompactList}\small\item\em Lo\+Ra synchronization word. \end{DoxyCompactList}\item 
+static constexpr int8\+\_\+t \doxymbox{\hyperlink{_weds_radio_config_8h_ab12d6f6aadad3040636837ca83d6fd7d}{WEDS\+\_\+\+LORA\+\_\+\+OUTPUT\+\_\+\+POWER\+\_\+\+DBM}} = 14
+\begin{DoxyCompactList}\small\item\em Lo\+Ra transmission output power in d\+Bm. \end{DoxyCompactList}\item 
+static constexpr uint16\+\_\+t \doxymbox{\hyperlink{_weds_radio_config_8h_aa391f3758cb24ca6043217f9e18fc10b}{WEDS\+\_\+\+LORA\+\_\+\+PREAMBLE\+\_\+\+LENGTH}} = 8
+\begin{DoxyCompactList}\small\item\em Lo\+Ra preamble length. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_radio_config_8h_doc-var-members}
+\Hypertarget{_weds_radio_config_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_weds_radio_config_8h_ae88fccb66d1f2b84712f3fe9f77310e4}\index{WedsRadioConfig.h@{WedsRadioConfig.h}!WEDS\_LORA\_BANDWIDTH\_KHZ@{WEDS\_LORA\_BANDWIDTH\_KHZ}}
+\index{WEDS\_LORA\_BANDWIDTH\_KHZ@{WEDS\_LORA\_BANDWIDTH\_KHZ}!WedsRadioConfig.h@{WedsRadioConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_LORA\_BANDWIDTH\_KHZ}{WEDS\_LORA\_BANDWIDTH\_KHZ}}
+{\footnotesize\ttfamily \label{_weds_radio_config_8h_ae88fccb66d1f2b84712f3fe9f77310e4} 
+float WEDS\+\_\+\+LORA\+\_\+\+BANDWIDTH\+\_\+\+KHZ = 125.\+0f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Lo\+Ra bandwidth setting in k\+Hz. 
+
+\Hypertarget{_weds_radio_config_8h_abdec3ea5b18b9f9688992d42a5d74d1b}\index{WedsRadioConfig.h@{WedsRadioConfig.h}!WEDS\_LORA\_CODING\_RATE@{WEDS\_LORA\_CODING\_RATE}}
+\index{WEDS\_LORA\_CODING\_RATE@{WEDS\_LORA\_CODING\_RATE}!WedsRadioConfig.h@{WedsRadioConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_LORA\_CODING\_RATE}{WEDS\_LORA\_CODING\_RATE}}
+{\footnotesize\ttfamily \label{_weds_radio_config_8h_abdec3ea5b18b9f9688992d42a5d74d1b} 
+uint8\+\_\+t WEDS\+\_\+\+LORA\+\_\+\+CODING\+\_\+\+RATE = 5\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Lo\+Ra coding rate denominator. 
+
+\Hypertarget{_weds_radio_config_8h_a659290e63f2fef032dff8e65225685fd}\index{WedsRadioConfig.h@{WedsRadioConfig.h}!WEDS\_LORA\_FREQUENCY\_MHZ@{WEDS\_LORA\_FREQUENCY\_MHZ}}
+\index{WEDS\_LORA\_FREQUENCY\_MHZ@{WEDS\_LORA\_FREQUENCY\_MHZ}!WedsRadioConfig.h@{WedsRadioConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_LORA\_FREQUENCY\_MHZ}{WEDS\_LORA\_FREQUENCY\_MHZ}}
+{\footnotesize\ttfamily \label{_weds_radio_config_8h_a659290e63f2fef032dff8e65225685fd} 
+float WEDS\+\_\+\+LORA\+\_\+\+FREQUENCY\+\_\+\+MHZ = 868.\+0f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Lo\+Ra frequency for the WEDS deployment area (EU/\+\+Italy 868 MHz ISM band). 
+
+\Hypertarget{_weds_radio_config_8h_ab12d6f6aadad3040636837ca83d6fd7d}\index{WedsRadioConfig.h@{WedsRadioConfig.h}!WEDS\_LORA\_OUTPUT\_POWER\_DBM@{WEDS\_LORA\_OUTPUT\_POWER\_DBM}}
+\index{WEDS\_LORA\_OUTPUT\_POWER\_DBM@{WEDS\_LORA\_OUTPUT\_POWER\_DBM}!WedsRadioConfig.h@{WedsRadioConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_LORA\_OUTPUT\_POWER\_DBM}{WEDS\_LORA\_OUTPUT\_POWER\_DBM}}
+{\footnotesize\ttfamily \label{_weds_radio_config_8h_ab12d6f6aadad3040636837ca83d6fd7d} 
+int8\+\_\+t WEDS\+\_\+\+LORA\+\_\+\+OUTPUT\+\_\+\+POWER\+\_\+\+DBM = 14\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Lo\+Ra transmission output power in d\+Bm. 
+
+\Hypertarget{_weds_radio_config_8h_aa391f3758cb24ca6043217f9e18fc10b}\index{WedsRadioConfig.h@{WedsRadioConfig.h}!WEDS\_LORA\_PREAMBLE\_LENGTH@{WEDS\_LORA\_PREAMBLE\_LENGTH}}
+\index{WEDS\_LORA\_PREAMBLE\_LENGTH@{WEDS\_LORA\_PREAMBLE\_LENGTH}!WedsRadioConfig.h@{WedsRadioConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_LORA\_PREAMBLE\_LENGTH}{WEDS\_LORA\_PREAMBLE\_LENGTH}}
+{\footnotesize\ttfamily \label{_weds_radio_config_8h_aa391f3758cb24ca6043217f9e18fc10b} 
+uint16\+\_\+t WEDS\+\_\+\+LORA\+\_\+\+PREAMBLE\+\_\+\+LENGTH = 8\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Lo\+Ra preamble length. 
+
+\Hypertarget{_weds_radio_config_8h_a7b2049b3c953f043aa3a3e077e7dcf8e}\index{WedsRadioConfig.h@{WedsRadioConfig.h}!WEDS\_LORA\_SPREADING\_FACTOR@{WEDS\_LORA\_SPREADING\_FACTOR}}
+\index{WEDS\_LORA\_SPREADING\_FACTOR@{WEDS\_LORA\_SPREADING\_FACTOR}!WedsRadioConfig.h@{WedsRadioConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_LORA\_SPREADING\_FACTOR}{WEDS\_LORA\_SPREADING\_FACTOR}}
+{\footnotesize\ttfamily \label{_weds_radio_config_8h_a7b2049b3c953f043aa3a3e077e7dcf8e} 
+uint8\+\_\+t WEDS\+\_\+\+LORA\+\_\+\+SPREADING\+\_\+\+FACTOR = 7\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Lo\+Ra spreading factor. 
+
+\Hypertarget{_weds_radio_config_8h_a023dc8cddb420a305b6a1b15fd15df0b}\index{WedsRadioConfig.h@{WedsRadioConfig.h}!WEDS\_LORA\_SYNC\_WORD@{WEDS\_LORA\_SYNC\_WORD}}
+\index{WEDS\_LORA\_SYNC\_WORD@{WEDS\_LORA\_SYNC\_WORD}!WedsRadioConfig.h@{WedsRadioConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_LORA\_SYNC\_WORD}{WEDS\_LORA\_SYNC\_WORD}}
+{\footnotesize\ttfamily \label{_weds_radio_config_8h_a023dc8cddb420a305b6a1b15fd15df0b} 
+uint8\+\_\+t WEDS\+\_\+\+LORA\+\_\+\+SYNC\+\_\+\+WORD = 0x12\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Lo\+Ra synchronization word. 
+

@@ -1,0 +1,96 @@
+\doxysection{Weds\+Protocol.\+h}
+\hypertarget{_weds_protocol_8h_source}{}\label{_weds_protocol_8h_source}\index{code/lib/weds\_protocol/WedsProtocol.h@{code/lib/weds\_protocol/WedsProtocol.h}}
+\doxymbox{\hyperlink{_weds_protocol_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_packet_8h}{WedsPacket.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00011\ uint32\_t\ \doxymbox{\hyperlink{_weds_protocol_8h_aa101960b34c9f67ccb1df71a0a1f3cec}{weds\_get\_node\_id\_from\_mac}}();}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00021\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_a053daee3bf36446106742de72f20700e}{weds\_serialize\_packet}}(}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_packet}{WedsPacket}}\&\ packet,}
+\DoxyCodeLine{00023\ \ \ \ \ uint8\_t*\ buffer,}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ buffer\_size,}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ out\_len}
+\DoxyCodeLine{00026\ );}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_ac11ec1395993dd5347b26f034c002668}{weds\_deserialize\_packet}}(}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t*\ buffer,}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ len,}
+\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_packet}{WedsPacket}}\&\ out\_packet}
+\DoxyCodeLine{00039\ );}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_ae9136f0b32d698a2d3224cda8c4959dc}{weds\_encode\_node\_status\_payload}}(}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ payload,}
+\DoxyCodeLine{00051\ \ \ \ \ uint8\_t*\ buffer,}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ buffer\_size,}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ out\_len}
+\DoxyCodeLine{00054\ );}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00063\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_a0d1ad3ca8104c6336ef8d57a2469bf69}{weds\_decode\_node\_status\_payload}}(}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t*\ buffer,}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ len,}
+\DoxyCodeLine{00066\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ out\_payload}
+\DoxyCodeLine{00067\ );}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_ac82266ab660a3bab56036301989e39f4}{weds\_encode\_ack\_payload}}(}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_ack_payload}{WedsAckPayload}}\&\ payload,}
+\DoxyCodeLine{00079\ \ \ \ \ uint8\_t*\ buffer,}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ buffer\_size,}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ out\_len}
+\DoxyCodeLine{00082\ );}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00091\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_ab31a0f28394043e62ef7f0f012dfaace}{weds\_decode\_ack\_payload}}(}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t*\ buffer,}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ len,}
+\DoxyCodeLine{00094\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_ack_payload}{WedsAckPayload}}\&\ out\_payload}
+\DoxyCodeLine{00095\ );}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00105\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_a496f1f40223d3c67a43862577efbffb8}{weds\_encode\_alert\_mode\_enable\_payload}}(}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{WedsAlertModeEnablePayload}}\&\ payload,}
+\DoxyCodeLine{00107\ \ \ \ \ uint8\_t*\ buffer,}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ buffer\_size,}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{size\_t}\&\ out\_len}
+\DoxyCodeLine{00110\ );}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00119\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_a30341474bdb43f5394752b0f93d11a15}{weds\_decode\_alert\_mode\_enable\_payload}}(}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t*\ buffer,}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ len,}
+\DoxyCodeLine{00122\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{WedsAlertModeEnablePayload}}\&\ out\_payload}
+\DoxyCodeLine{00123\ );}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00133\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_a2c1fe7220c587800e5f1e4f25bb620ca}{weds\_build\_node\_status\_packet}}(}
+\DoxyCodeLine{00134\ \ \ \ \ uint32\_t\ src\_node\_id,}
+\DoxyCodeLine{00135\ \ \ \ \ uint16\_t\ sequence\_id,}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status,}
+\DoxyCodeLine{00137\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_packet}{WedsPacket}}\&\ out\_packet}
+\DoxyCodeLine{00138\ );}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00148\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_ac9658ad1aefdbe6e667e7cde1282a520}{weds\_build\_node\_alert\_packet}}(}
+\DoxyCodeLine{00149\ \ \ \ \ uint32\_t\ src\_node\_id,}
+\DoxyCodeLine{00150\ \ \ \ \ uint16\_t\ sequence\_id,}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_status_payload}{WedsNodeStatusPayload}}\&\ status,}
+\DoxyCodeLine{00152\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_packet}{WedsPacket}}\&\ out\_packet}
+\DoxyCodeLine{00153\ );}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00166\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_ab2ae4e5ba7fb1dd2e7c2bf3be7e94bd0}{weds\_build\_ack\_packet}}(}
+\DoxyCodeLine{00167\ \ \ \ \ uint32\_t\ src\_node\_id,}
+\DoxyCodeLine{00168\ \ \ \ \ uint32\_t\ dst\_node\_id,}
+\DoxyCodeLine{00169\ \ \ \ \ uint16\_t\ sequence\_id,}
+\DoxyCodeLine{00170\ \ \ \ \ uint16\_t\ acked\_sequence\_id,}
+\DoxyCodeLine{00171\ \ \ \ \ uint8\_t\ acked\_msg\_type,}
+\DoxyCodeLine{00172\ \ \ \ \ uint8\_t\ status\_code,}
+\DoxyCodeLine{00173\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_packet}{WedsPacket}}\&\ out\_packet}
+\DoxyCodeLine{00174\ );}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00184\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{_weds_protocol_8h_a73bf4c8ba831cb930ca59bb2c105646f}{weds\_build\_alert\_mode\_enable\_packet}}(}
+\DoxyCodeLine{00185\ \ \ \ \ uint32\_t\ dst\_node\_id,}
+\DoxyCodeLine{00186\ \ \ \ \ uint16\_t\ sequence\_id,}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{WedsAlertModeEnablePayload}}\&\ command,}
+\DoxyCodeLine{00188\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_packet}{WedsPacket}}\&\ out\_packet}
+\DoxyCodeLine{00189\ );}
+
+\end{DoxyCode}

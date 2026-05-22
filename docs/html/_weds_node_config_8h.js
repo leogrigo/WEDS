@@ -33,5 +33,10 @@ var _weds_node_config_8h =
     [ "WEDS_NODE_RX_TASK_PRIORITY", "_weds_node_config_8h.html#a2bbda49ea26f2eb8b9e51d11c0f6b4e8", null ],
     [ "WEDS_NODE_RX_TASK_STACK_BYTES", "_weds_node_config_8h.html#a92d8b583dea2cc1a33a56374dfeb9204", null ],
     [ "WEDS_NODE_SENSING_MODE", "_weds_node_config_8h.html#a7465983412784f2ea8aa217814e64d7b", null ],
-    [ "WEDS_SELECTED_SIMULATION_MODE", "_weds_node_config_8h.html#af043c19ed446d3f6dd66fc01e1654185", null ]
+    [ "WEDS_RISK_THRESHOLD_LOW", "_weds_node_config_8h.html#a858a7b1937437e60b346e3ffb8c1a9b9", null ],
+    [ "WEDS_RISK_THRESHOLD_MED", "_weds_node_config_8h.html#a084043e098237c98c50082fdbfa5c2d3", null ],
+    [ "WEDS_SELECTED_SIMULATION_MODE", "_weds_node_config_8h.html#af043c19ed446d3f6dd66fc01e1654185", null ],
+    [ "WEDS_SLEEP_SEC_RISK_HIGH", "_weds_node_config_8h.html#a016de697b61f738c90716f7ee1b489f8", null ],
+    [ "WEDS_SLEEP_SEC_RISK_LOW", "_weds_node_config_8h.html#a85598025f4aa0b6312901613e093d722", null ],
+    [ "WEDS_SLEEP_SEC_RISK_MED", "_weds_node_config_8h.html#aba774bb34d7af9ae4f3ca979f68630ce", null ]
 ];
