@@ -29,18 +29,21 @@ struct DailyBucket {
 
 /**
  * @brief Manages the execution and state of the TinyML fire risk prediction model.
- * 
+ *
  * This class maintains a 7-day rolling history of environmental data to compute
  * the required time-series features (averages and deltas) before feeding them into
- * the quantized TensorFlow Lite neural network.
+ * the quantized TensorFlow Lite neural network. The rolling history is stored in
+ * RTC-retained memory so it survives hardware deep-sleep resets.
  */
 class WedsRiskScoreCalculator {
 public:
+    static const int kHistorySize = 7;                /**< Number of days in the rolling history buffer. */
+
     /**
      * @brief Allocates tensor memory and initializes the neural network interpreter.
      * @return true if the model loaded and memory allocated successfully, false otherwise.
      */
-    bool begin(); 
+    bool begin();
 
     /**
      * @brief Processes a new sensor reading, updates the historical rolling buffers, and runs an inference pass.
@@ -62,5 +65,11 @@ private:
     float scaler_means_[kNumFeatures];                /**< Means for feature scaling. */
     float scaler_scales_[kNumFeatures];               /**< Scales for feature scaling. */
 
-    DailyBucket history_[7];                          /**< 7-day rolling history of sensor readings. */
 };
+
+/**
+ * @brief RTC-retained virtual clock (seconds). Advance this by awake time + sleep duration
+ *        before calling esp_deep_sleep() so the TinyML bucketing algorithm stays synchronised
+ *        across hardware resets.
+ */
+extern uint32_t rtc_virtual_timestamp;

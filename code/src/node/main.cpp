@@ -1,8 +1,5 @@
 #include <Arduino.h>
-#include <freertos/FreeRTOS.h>
-#include <freertos/event_groups.h>
-#include <freertos/semphr.h>
-#include <freertos/task.h>
+#include <esp_sleep.h>
 
 #include "WedsNodeComm.h"
 #include "WedsNodeState.h"
@@ -14,16 +11,10 @@
 
 namespace {
 
-constexpr uint32_t NODE_RX_WINDOW_BIT = 1UL << 0;
-
 WedsNodeComm nodeComm;
 WedsNodeState nodeState;
 WedsAnomalyDetector anomalyDetector;
 WedsRiskScoreCalculator riskScoreCalculator;
-
-EventGroupHandle_t nodeEvents = nullptr;
-SemaphoreHandle_t commMutex = nullptr;
-SemaphoreHandle_t stateMutex = nullptr;
 
 /**
  * @brief Halts the system and blinks an error code if a critical boot failure occurs.
@@ -33,31 +24,7 @@ void fatalError(const char* message) {
     Serial.println(message);
 
     for (;;) {
-        vTaskDelay(pdMS_TO_TICKS(WEDS_NODE_ERROR_TASK_DELAY_MS));
-    }
-}
-
-void lockComm() {
-    if (commMutex != nullptr) {
-        xSemaphoreTake(commMutex, portMAX_DELAY);
-    }
-}
-
-void unlockComm() {
-    if (commMutex != nullptr) {
-        xSemaphoreGive(commMutex);
-    }
-}
-
-void lockState() {
-    if (stateMutex != nullptr) {
-        xSemaphoreTake(stateMutex, portMAX_DELAY);
-    }
-}
-
-void unlockState() {
-    if (stateMutex != nullptr) {
-        xSemaphoreGive(stateMutex);
+        delay(WEDS_NODE_ERROR_TASK_DELAY_MS);
     }
 }
 
@@ -73,11 +40,6 @@ WedsSensorSample readSensors() {
 
 WedsSensorSample readSensors() {
     if (WEDS_NODE_SENSING_MODE == WEDS_NODE_ENVIRONMENT_SENSING) {
-        int64_t time_to_wait = weds_sensor_next_call_ms() - millis();
-        if(time_to_wait > 0){
-            TickType_t current_ticks = xTaskGetTickCount();
-            xTaskDelayUntil(&current_ticks,pdMS_TO_TICKS(time_to_wait));
-        }
         return weds_read_environment_sample();
     }
 
@@ -92,162 +54,26 @@ bool isAlertPayload(const WedsNodeStatusPayload& payload) {
 }
 
 bool sendPayload(const WedsNodeStatusPayload& payload) {
-    lockComm();
     const bool sent = isAlertPayload(payload)
         ? nodeComm.sendAlert(payload)
         : nodeComm.sendStatus(payload);
-    unlockComm();
 
     return sent;
 }
 
 /**
- * @brief Dedicated FreeRTOS task for receiving Gateway commands via LoRa.
+ * @brief Determines the deep sleep duration in seconds based on the fire risk score.
+ * @param risk_score The raw probability output from the TinyML model (0.0 – 1.0).
+ * @return Sleep duration in seconds as defined by the dynamic duty cycle configuration.
  */
-void NodeRxTask(void* pvParameters) {
-    (void)pvParameters;
-
-    for (;;) {
-        xEventGroupWaitBits(
-            nodeEvents,
-            NODE_RX_WINDOW_BIT,
-            pdFALSE,
-            pdFALSE,
-            portMAX_DELAY
-        );
-
-        while ((xEventGroupGetBits(nodeEvents) & NODE_RX_WINDOW_BIT) != 0) {
-            WedsAlertModeEnablePayload command{};
-
-            lockComm();
-            const bool received = nodeComm.pollAlertModeEnable(
-                command,
-                WEDS_NODE_RX_POLL_CHUNK_MS
-            );
-            unlockComm();
-
-            if (received) {
-                lockState();
-                nodeState.applyAlertModeCommand(command);
-                unlockState();
-            }
-
-            vTaskDelay(pdMS_TO_TICKS(1));
-        }
+uint32_t sleepDurationSec(float risk_score) {
+    if (risk_score >= WEDS_RISK_THRESHOLD_MED) {
+        return WEDS_SLEEP_SEC_RISK_HIGH;
     }
-}
-
-/**
- * @brief Main execution cycle. Reads sensors, runs ML inferences, and transmits data.
- */
-void NodeCycleTask(void* pvParameters) {
-    (void)pvParameters;
-
-    for (;;) {
-        Serial.println();
-
-        lockState();
-        nodeState.refreshAlertMode();
-        nodeState.setSleepEnabled(false);
-        unlockState();
-
-        const uint32_t rx_window_start_ms = millis();
-        xEventGroupSetBits(nodeEvents, NODE_RX_WINDOW_BIT);
-
-        // --- 1. SENSOR READING ---
-        // Note: Removed 'const' so we can inject the simulated timestamp
-        WedsSensorSample sample = readSensors();
-
-        // --- 2. TIMESTAMP INJECTION (CRITICAL FIX) ---
-        // Inject a simulated UNIX timestamp using the device uptime (seconds).
-        // We add 86400 (1 day) to ensure current_day never evaluates to 0 on boot,
-        // which prevents the negative modulo crash in the risk score calculator.
-        sample.timestamp = (millis() / 1000) + 86400;
-
-        if (!sample.valid) {
-            xEventGroupClearBits(nodeEvents, NODE_RX_WINDOW_BIT);
-            vTaskDelay(pdMS_TO_TICKS(1000));
-            continue;
-        }
-
-        // --- 3. ANOMALY DETECTION ---
-        const WedsAnomalyResult anomaly = anomalyDetector.update(sample);
-        printAnomalyResults(anomaly);
-
-        // --- 4. TINYML RISK PREDICTION ---
-        const WedsRiskResult risk = riskScoreCalculator.update(sample);
-        
-        // Print the calculated probability to the Serial Monitor
-        Serial.printf("[NODE] Fire Risk Score: %.2f%%\n", risk.score * 100.0f);
-
-        // --- 5. PAYLOAD CONSTRUCTION ---
-        lockState();
-        const WedsNodeStatusPayload payload = nodeState.buildPayload(sample, anomaly, risk);
-        unlockState();
-
-        // Maintain the receive window timing
-        const uint32_t elapsed_rx_ms = millis() - rx_window_start_ms;
-        if (elapsed_rx_ms < WEDS_NODE_MIN_RX_WINDOW_MS) {
-            vTaskDelay(pdMS_TO_TICKS(WEDS_NODE_MIN_RX_WINDOW_MS - elapsed_rx_ms));
-        }
-
-        xEventGroupClearBits(nodeEvents, NODE_RX_WINDOW_BIT);
-
-        // --- 6. TRANSMISSION ---
-        const bool sent = sendPayload(payload);
-        if (!sent) {
-            Serial.println("[NODE] Failed to send payload to gateway");
-        }
-
-        // --- 7. SLEEP MANAGEMENT ---
-        lockState();
-        nodeState.refreshAlertMode();
-        const bool sleep_enabled = !nodeState.alertModeActive();
-        nodeState.setSleepEnabled(sleep_enabled);
-        const uint32_t next_sample_delay_ms = nodeState.sampleIntervalMs();
-        unlockState();
-
-        if (sleep_enabled) {
-            lockComm();
-            nodeComm.sleepRadio();
-            unlockComm();
-        }
-
-        // Yield execution to the RTOS scheduler until the next reading is due
-        vTaskDelay(pdMS_TO_TICKS(next_sample_delay_ms));
+    if (risk_score >= WEDS_RISK_THRESHOLD_LOW) {
+        return WEDS_SLEEP_SEC_RISK_MED;
     }
-}
-
-void createNodeTasks() {
-    BaseType_t ok = xTaskCreatePinnedToCore(
-        NodeRxTask,
-        "NodeRxTask",
-        WEDS_NODE_RX_TASK_STACK_BYTES,
-        nullptr,
-        WEDS_NODE_RX_TASK_PRIORITY,
-        nullptr,
-        WEDS_NODE_RX_TASK_CORE
-    );
-
-    if (ok != pdPASS) {
-        fatalError("Failed to create NodeRxTask");
-    }
-
-    ok = xTaskCreatePinnedToCore(
-        NodeCycleTask,
-        "NodeCycleTask",
-        WEDS_NODE_CYCLE_TASK_STACK_BYTES,
-        nullptr,
-        WEDS_NODE_CYCLE_TASK_PRIORITY,
-        nullptr,
-        WEDS_NODE_CYCLE_TASK_CORE
-    );
-
-    if (ok != pdPASS) {
-        fatalError("Failed to create NodeCycleTask");
-    } else {
-        Serial.println("[NODE] FreeRTOS tasks created successfully");
-    }
+    return WEDS_SLEEP_SEC_RISK_LOW;
 }
 
 }  // namespace
@@ -259,53 +85,73 @@ void setup() {
     Serial.println();
     Serial.println("=== WEDS Node Firmware ===");
 
-    nodeEvents = xEventGroupCreate();
-    if (nodeEvents == nullptr) {
-        fatalError("Failed to create node event group");
-    }
-
-    commMutex = xSemaphoreCreateMutex();
-    if (commMutex == nullptr) {
-        fatalError("Failed to create communication mutex");
-    }
-
-    stateMutex = xSemaphoreCreateMutex();
-    if (stateMutex == nullptr) {
-        fatalError("Failed to create state mutex");
-    }
-
     if (WEDS_NODE_SENSING_MODE == WEDS_NODE_ENVIRONMENT_SENSING) {
         weds_sensors_begin();
     }
 
     randomSeed(micros());
 
-    lockComm();
     const bool commReady = nodeComm.begin();
-    unlockComm();
-
     if (!commReady) {
         fatalError("Node communication init failed");
     }
 
-    lockState();
     nodeState.begin(nodeComm.getNodeId());
-    unlockState();
 
-    // --- INITIALIZE TINYML MODEL ---
     Serial.println("[NODE] Initializing TinyML Model...");
     if (!riskScoreCalculator.begin()) {
         fatalError("Failed to initialize Risk Score Model");
     }
 
-    createNodeTasks();
-    Serial.println("[NODE] FreeRTOS tasks started");
+    const uint32_t wake_start_ms = millis();
+
+    WedsSensorSample sample = readSensors();
+
+    if (rtc_virtual_timestamp == 0) {
+        rtc_virtual_timestamp = 86400U;
+    }
+    sample.timestamp = rtc_virtual_timestamp;
+
+    if (!sample.valid) {
+        Serial.println("[NODE] Sensor read invalid, entering low-risk sleep");
+        rtc_virtual_timestamp += WEDS_SLEEP_SEC_RISK_LOW;
+        esp_deep_sleep((uint64_t)WEDS_SLEEP_SEC_RISK_LOW * 1000000ULL);
+        return;
+    }
+
+    const WedsAnomalyResult anomaly = anomalyDetector.update(sample);
+    printAnomalyResults(anomaly);
+
+    const WedsRiskResult risk = riskScoreCalculator.update(sample);
+    Serial.printf("[NODE] Fire Risk Score: %.2f%%\n", risk.score * 100.0f);
+
+    const WedsNodeStatusPayload payload = nodeState.buildPayload(sample, anomaly, risk);
+
+    const uint32_t rx_window_start_ms = millis();
+    while ((millis() - rx_window_start_ms) < WEDS_NODE_MIN_RX_WINDOW_MS) {
+        WedsAlertModeEnablePayload command{};
+        if (nodeComm.pollAlertModeEnable(command, WEDS_NODE_RX_POLL_CHUNK_MS)) {
+            nodeState.applyAlertModeCommand(command);
+        }
+    }
+
+    const bool sent = sendPayload(payload);
+    if (!sent) {
+        Serial.println("[NODE] Failed to send payload to gateway");
+    }
+
+    nodeComm.sleepRadio();
+
+    const uint32_t sleep_sec = sleepDurationSec(risk.score);
+    const uint32_t awake_sec = (millis() - wake_start_ms) / 1000U;
+
+    rtc_virtual_timestamp += awake_sec + sleep_sec;
+
+    Serial.printf("[NODE] Sleeping for %lu s (risk=%.2f)\n",
+                  (unsigned long)sleep_sec, risk.score);
+    Serial.flush();
+
+    esp_deep_sleep((uint64_t)sleep_sec * 1000000ULL);
 }
 
-void loop() {
-    lockComm();
-    nodeComm.loop();
-    unlockComm();
-
-    vTaskDelay(pdMS_TO_TICKS(WEDS_NODE_LOOP_IDLE_DELAY_MS));
-}
+void loop() {}

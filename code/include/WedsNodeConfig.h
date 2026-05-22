@@ -101,3 +101,38 @@ static constexpr float WEDS_NODE_BATTERY_FULL_V = 4.26f;
 /** @brief Conversion factor from voltage to battery percentage. */
 static constexpr float WEDS_NODE_BATTERY_PERCENT_PER_V =
     100.0f / (WEDS_NODE_BATTERY_FULL_V - WEDS_NODE_BATTERY_EMPTY_V);
+
+// ---------------------------------------------------------------------------
+// Dynamic Duty Cycle Config
+// ---------------------------------------------------------------------------
+
+/**
+ * @brief Fire risk score threshold below which the node is considered Low risk.
+ *        Scores in [0.0, WEDS_RISK_THRESHOLD_LOW) are treated as low risk.
+ */
+static constexpr float WEDS_RISK_THRESHOLD_LOW  = 0.35f;
+
+/**
+ * @brief Fire risk score threshold below which the node is considered Medium risk.
+ *        Scores in [WEDS_RISK_THRESHOLD_LOW, WEDS_RISK_THRESHOLD_MED) are medium risk.
+ *        Scores at or above this threshold are treated as high risk.
+ */
+static constexpr float WEDS_RISK_THRESHOLD_MED  = 0.65f;
+
+/**
+ * @brief Deep sleep duration in seconds when fire risk is Low.
+ *        Default: 30 minutes. Tune to reduce network traffic in benign conditions.
+ */
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_LOW  = 1800U;
+
+/**
+ * @brief Deep sleep duration in seconds when fire risk is Medium.
+ *        Default: 10 minutes. Increases sampling frequency as risk rises.
+ */
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_MED  = 600U;
+
+/**
+ * @brief Deep sleep duration in seconds when fire risk is High.
+ *        Default: 2 minutes. Maximum polling rate during elevated danger conditions.
+ */
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_HIGH = 120U;

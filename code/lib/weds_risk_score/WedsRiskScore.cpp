@@ -1,20 +1,18 @@
 #include "WedsRiskScore.h"
 #include <Arduino.h>
-#include "model_data_v6f.h" 
+#include "model_data_v6f.h"
 #include "tensorflow/lite/micro/micro_error_reporter.h"
+
+RTC_DATA_ATTR static DailyBucket rtc_history[WedsRiskScoreCalculator::kHistorySize];
+RTC_DATA_ATTR uint32_t           rtc_virtual_timestamp = 0;
 
 bool WedsRiskScoreCalculator::begin() {
     const float means[kNumFeatures] = {18.61777f, 63.66107f, 95955.32f, 18.68431f, 63.42773f, -0.01751f, 0.09243f};
     const float scales[kNumFeatures] = {6.07850f, 15.99210f, 4519.777f, 5.72370f, 13.88332f, 1.76610f, 9.05942f};
-    
+
     for (int i = 0; i < kNumFeatures; i++) {
         scaler_means_[i] = means[i];
         scaler_scales_[i] = scales[i];
-    }
-
-    for (int i = 0; i < 7; i++) {
-        history_[i].day_id = 0;
-        history_[i].sample_count = 0;
     }
 
     model_ = tflite::GetModel(_content_drive_MyDrive_Models_WEDS___RiskScore_tiny_fire_risk_tmodel_quant_v6f_tflite);
@@ -40,28 +38,28 @@ WedsRiskResult WedsRiskScoreCalculator::update(const WedsSensorSample& sample) {
 
     if (!interpreter_ || sample.timestamp == 0) return result;
 
-    uint32_t current_day = sample.timestamp / 86400; 
-    int bucket_idx = current_day % 7;                
+    uint32_t current_day = sample.timestamp / 86400;
+    int bucket_idx = current_day % kHistorySize;
 
-    if (history_[bucket_idx].day_id != current_day) {
-        history_[bucket_idx].day_id = current_day;
-        history_[bucket_idx].temp_sum = 0.0f;
-        history_[bucket_idx].rh_sum = 0.0f;
-        history_[bucket_idx].sample_count = 0;
+    if (rtc_history[bucket_idx].day_id != current_day) {
+        rtc_history[bucket_idx].day_id = current_day;
+        rtc_history[bucket_idx].temp_sum = 0.0f;
+        rtc_history[bucket_idx].rh_sum = 0.0f;
+        rtc_history[bucket_idx].sample_count = 0;
     }
 
-    history_[bucket_idx].temp_sum += sample.temperature;
-    history_[bucket_idx].rh_sum += sample.humidity;
-    history_[bucket_idx].sample_count++;
+    rtc_history[bucket_idx].temp_sum += sample.temperature;
+    rtc_history[bucket_idx].rh_sum += sample.humidity;
+    rtc_history[bucket_idx].sample_count++;
 
     float total_temp_avg = 0.0f;
     float total_rh_avg = 0.0f;
     int valid_days = 0;
 
-    for (int i = 0; i < 7; i++) {
-        if (history_[i].sample_count > 0 && (current_day - history_[i].day_id < 7)) {
-            total_temp_avg += (history_[i].temp_sum / history_[i].sample_count);
-            total_rh_avg += (history_[i].rh_sum / history_[i].sample_count);
+    for (int i = 0; i < kHistorySize; i++) {
+        if (rtc_history[i].sample_count > 0 && (current_day - rtc_history[i].day_id < (uint32_t)kHistorySize)) {
+            total_temp_avg += (rtc_history[i].temp_sum / rtc_history[i].sample_count);
+            total_rh_avg += (rtc_history[i].rh_sum / rtc_history[i].sample_count);
             valid_days++;
         }
     }
@@ -71,15 +69,15 @@ WedsRiskResult WedsRiskScoreCalculator::update(const WedsSensorSample& sample) {
 
     float temp_delta = 0.0f;
     float rh_delta = 0.0f;
-    
-    int yesterday_idx = (current_day + 6) % 7;
 
-    if (history_[yesterday_idx].sample_count > 0 && history_[yesterday_idx].day_id == current_day - 1) {
-        float today_temp_avg = history_[bucket_idx].temp_sum / history_[bucket_idx].sample_count;
-        float today_rh_avg = history_[bucket_idx].rh_sum / history_[bucket_idx].sample_count;
+    int yesterday_idx = (current_day + kHistorySize - 1) % kHistorySize;
 
-        float yesterday_temp_avg = history_[yesterday_idx].temp_sum / history_[yesterday_idx].sample_count;
-        float yesterday_rh_avg = history_[yesterday_idx].rh_sum / history_[yesterday_idx].sample_count;
+    if (rtc_history[yesterday_idx].sample_count > 0 && rtc_history[yesterday_idx].day_id == current_day - 1) {
+        float today_temp_avg = rtc_history[bucket_idx].temp_sum / rtc_history[bucket_idx].sample_count;
+        float today_rh_avg = rtc_history[bucket_idx].rh_sum / rtc_history[bucket_idx].sample_count;
+
+        float yesterday_temp_avg = rtc_history[yesterday_idx].temp_sum / rtc_history[yesterday_idx].sample_count;
+        float yesterday_rh_avg = rtc_history[yesterday_idx].rh_sum / rtc_history[yesterday_idx].sample_count;
 
         temp_delta = today_temp_avg - yesterday_temp_avg;
         rh_delta = today_rh_avg - yesterday_rh_avg;
