@@ -1,6 +1,7 @@
 #pragma once
 
 #include "WedsSensorSample.h"
+#include <stdint.h>
 #define WEDS_I2C_SDA 41
 #define WEDS_I2C_SCL 42
 
@@ -15,8 +16,8 @@ WedsSensorSample weds_read_environment_sample();
 
 bool weds_sensors_begin();
 bool weds_sensor_save_state();
-bool weds_sensor_load_state(unsigned char *state);
+bool weds_sensor_load_state(uint8_t *state);
 WedsSensorSample weds_read_environment_sample();
-long long weds_sensor_next_call_ms();
+int64_t weds_sensor_next_call_ms();
 
 #endif
