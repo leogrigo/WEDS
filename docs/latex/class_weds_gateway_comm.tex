@@ -1,0 +1,381 @@
+\doxysection{Weds\+Gateway\+Comm Class Reference}
+\hypertarget{class_weds_gateway_comm}{}\label{class_weds_gateway_comm}\index{WedsGatewayComm@{WedsGatewayComm}}
+
+
+Manages the Lo\+Ra radio communication for the gateway.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Gateway\+Comm.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_weds_gateway_comm_a814c8903cfb8ff6719158f2c5a1ed45c}{Weds\+Gateway\+Comm}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_weds_gateway_comm}{Weds\+Gateway\+Comm}. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_a693da98980980bf9148700100c2d16d9}{begin}} (\doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}} \texorpdfstring{$\ast$}{*}registry)
+\begin{DoxyCompactList}\small\item\em Initializes the communication module. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_comm_a670f40f2dfb878dc33ba6ad4d2860d8a}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Should be called regularly to handle incoming messages and maintain communication. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_a308b67f85d027bb65b3e76b8aa33c50f}{poll}} ()
+\begin{DoxyCompactList}\small\item\em Polls for incoming messages and processes them. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_a6b659955f1edddeeb43201848096c860}{init\+Radio}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the Lo\+Ra radio hardware. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_comm_a26c4c5bbcf43f83a8546767bc3b24c25}{handle\+Received\+Packet}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Handles a newly received packet from the radio. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_comm_a6cefba4d5e7d76b5580dfd745047d1ba}{handle\+Node\+Status\+Packet}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet)
+\begin{DoxyCompactList}\small\item\em Handles a parsed NODE\+\_\+\+STATUS packet. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_a66025c022d4b0e168ffd96d883615d39}{send\+Ack}} (uint32\+\_\+t dst\+\_\+node\+\_\+id, uint16\+\_\+t acked\+\_\+sequence\+\_\+id, uint8\+\_\+t acked\+\_\+msg\+\_\+type, uint8\+\_\+t status\+\_\+code)
+\begin{DoxyCompactList}\small\item\em Sends an acknowledgment for a received reliable packet. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_a2b4dfb053202baefcfec5491ef8f8470}{send\+Packet}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet)
+\begin{DoxyCompactList}\small\item\em Sends a packet over the radio. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_a46ab471b3ffd72904f7ffe4547b38b9d}{wait\+For\+Ack}} (uint32\+\_\+t expected\+\_\+src\+\_\+node\+\_\+id, uint16\+\_\+t expected\+\_\+acked\+\_\+sequence\+\_\+id, uint8\+\_\+t expected\+\_\+acked\+\_\+msg\+\_\+type, uint32\+\_\+t timeout\+\_\+ms)
+\begin{DoxyCompactList}\small\item\em Waits for an acknowledgment from a specific node. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_af85c126f15ba676bef614ac4caf92cb1}{is\+Expected\+Ack}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet, uint32\+\_\+t expected\+\_\+src\+\_\+node\+\_\+id, uint16\+\_\+t expected\+\_\+acked\+\_\+sequence\+\_\+id, uint8\+\_\+t expected\+\_\+acked\+\_\+msg\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Checks if a packet is the expected acknowledgment. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_a8e49e90d4140c2689a1b71add19510ff}{send\+Alert\+Mode\+Enable\+Reliable}} (uint32\+\_\+t dst\+\_\+node\+\_\+id, const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&command)
+\begin{DoxyCompactList}\small\item\em Reliably sends an ALERT\+\_\+\+MODE\+\_\+\+ENABLE command to a node. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_comm_a5b721be48c54ecf6f4f549880bbb0ef8}{deliver\+Pending\+Command\+If\+Any}} (uint32\+\_\+t node\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Delivers a pending command to a node if one exists. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_comm_a45df50ed00a2943edae0902039bcde5e}{print\+Buffer\+Hex}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Helper to print a buffer in hexadecimal format. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_comm_aa356414ebc70c34f0f0fce40de6c18aa}{print\+Node\+Status}} (const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&packet, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\begin{DoxyCompactList}\small\item\em Helper to print parsed node status information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_weds_gateway_comm_a50e5db74cc2a577b1039bfe0d35e79a6}{registry\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to the gateway registry. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_comm_af5c664809f8309cf7f22e0120ae4f632}{initialized\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Indicates if the communication module has been initialized. \end{DoxyCompactList}\item 
+uint16\+\_\+t \doxymbox{\hyperlink{class_weds_gateway_comm_a0355df2249b2f235d5ae752893582cb9}{gateway\+\_\+sequence\+\_\+id\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Sequence ID for gateway messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages the Lo\+Ra radio communication for the gateway. 
+
+\label{class_weds_gateway_comm_doc-constructors}
+\Hypertarget{class_weds_gateway_comm_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_weds_gateway_comm_a814c8903cfb8ff6719158f2c5a1ed45c}\index{WedsGatewayComm@{WedsGatewayComm}!WedsGatewayComm@{WedsGatewayComm}}
+\index{WedsGatewayComm@{WedsGatewayComm}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{WedsGatewayComm()}{WedsGatewayComm()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a814c8903cfb8ff6719158f2c5a1ed45c} 
+Weds\+Gateway\+Comm::\+\+Weds\+Gateway\+Comm (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_weds_gateway_comm}{Weds\+Gateway\+Comm}. 
+
+
+
+\label{class_weds_gateway_comm_doc-func-members}
+\Hypertarget{class_weds_gateway_comm_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_weds_gateway_comm_a693da98980980bf9148700100c2d16d9}\index{WedsGatewayComm@{WedsGatewayComm}!begin@{begin}}
+\index{begin@{begin}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a693da98980980bf9148700100c2d16d9} 
+bool Weds\+Gateway\+Comm::\+begin (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}} \texorpdfstring{$\ast$}{*}}]{registry}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the communication module. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em registry} & Pointer to the gateway registry. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If initialized successfully. 
+
+false If initialization fails. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_comm_a5b721be48c54ecf6f4f549880bbb0ef8}\index{WedsGatewayComm@{WedsGatewayComm}!deliverPendingCommandIfAny@{deliverPendingCommandIfAny}}
+\index{deliverPendingCommandIfAny@{deliverPendingCommandIfAny}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{deliverPendingCommandIfAny()}{deliverPendingCommandIfAny()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a5b721be48c54ecf6f4f549880bbb0ef8} 
+void Weds\+Gateway\+Comm::\+deliver\+Pending\+Command\+If\+Any (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Delivers a pending command to a node if one exists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & The node ID to check for pending commands. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_comm_a6cefba4d5e7d76b5580dfd745047d1ba}\index{WedsGatewayComm@{WedsGatewayComm}!handleNodeStatusPacket@{handleNodeStatusPacket}}
+\index{handleNodeStatusPacket@{handleNodeStatusPacket}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{handleNodeStatusPacket()}{handleNodeStatusPacket()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a6cefba4d5e7d76b5580dfd745047d1ba} 
+void Weds\+Gateway\+Comm::\+handle\+Node\+Status\+Packet (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles a parsed NODE\+\_\+\+STATUS packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em packet} & The parsed packet structure. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_comm_a26c4c5bbcf43f83a8546767bc3b24c25}\index{WedsGatewayComm@{WedsGatewayComm}!handleReceivedPacket@{handleReceivedPacket}}
+\index{handleReceivedPacket@{handleReceivedPacket}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{handleReceivedPacket()}{handleReceivedPacket()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a26c4c5bbcf43f83a8546767bc3b24c25} 
+void Weds\+Gateway\+Comm::\+handle\+Received\+Packet (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{len}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles a newly received packet from the radio. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to the raw packet buffer. \\
+\hline
+{\em len} & Length of the received packet. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_comm_a6b659955f1edddeeb43201848096c860}\index{WedsGatewayComm@{WedsGatewayComm}!initRadio@{initRadio}}
+\index{initRadio@{initRadio}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{initRadio()}{initRadio()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a6b659955f1edddeeb43201848096c860} 
+bool Weds\+Gateway\+Comm::\+init\+Radio (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initializes the Lo\+Ra radio hardware. 
+
+\begin{DoxyReturn}{Returns}
+true If radio initialized successfully. 
+
+false If radio initialization fails. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_comm_af85c126f15ba676bef614ac4caf92cb1}\index{WedsGatewayComm@{WedsGatewayComm}!isExpectedAck@{isExpectedAck}}
+\index{isExpectedAck@{isExpectedAck}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{isExpectedAck()}{isExpectedAck()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_af85c126f15ba676bef614ac4caf92cb1} 
+bool Weds\+Gateway\+Comm::\+is\+Expected\+Ack (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{, }\item[{uint32\+\_\+t}]{expected\+\_\+src\+\_\+node\+\_\+id}{, }\item[{uint16\+\_\+t}]{expected\+\_\+acked\+\_\+sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{expected\+\_\+acked\+\_\+msg\+\_\+type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Checks if a packet is the expected acknowledgment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em packet} & The received packet. \\
+\hline
+{\em expected\+\_\+src\+\_\+node\+\_\+id} & Expected source node ID. \\
+\hline
+{\em expected\+\_\+acked\+\_\+sequence\+\_\+id} & Expected sequence ID. \\
+\hline
+{\em expected\+\_\+acked\+\_\+msg\+\_\+type} & Expected message type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If it matches the expected acknowledgment. 
+
+false Otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_comm_a670f40f2dfb878dc33ba6ad4d2860d8a}\index{WedsGatewayComm@{WedsGatewayComm}!loop@{loop}}
+\index{loop@{loop}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a670f40f2dfb878dc33ba6ad4d2860d8a} 
+void Weds\+Gateway\+Comm::\+loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Should be called regularly to handle incoming messages and maintain communication. 
+
+\Hypertarget{class_weds_gateway_comm_a308b67f85d027bb65b3e76b8aa33c50f}\index{WedsGatewayComm@{WedsGatewayComm}!poll@{poll}}
+\index{poll@{poll}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{poll()}{poll()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a308b67f85d027bb65b3e76b8aa33c50f} 
+bool Weds\+Gateway\+Comm::\+poll (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Polls for incoming messages and processes them. 
+
+\begin{DoxyReturn}{Returns}
+true If a message was received and processed. 
+
+false If no message was available. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_comm_a45df50ed00a2943edae0902039bcde5e}\index{WedsGatewayComm@{WedsGatewayComm}!printBufferHex@{printBufferHex}}
+\index{printBufferHex@{printBufferHex}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{printBufferHex()}{printBufferHex()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a45df50ed00a2943edae0902039bcde5e} 
+void Weds\+Gateway\+Comm::\+print\+Buffer\+Hex (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{len}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Helper to print a buffer in hexadecimal format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The buffer to print. \\
+\hline
+{\em len} & The length of the buffer. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_comm_aa356414ebc70c34f0f0fce40de6c18aa}\index{WedsGatewayComm@{WedsGatewayComm}!printNodeStatus@{printNodeStatus}}
+\index{printNodeStatus@{printNodeStatus}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{printNodeStatus()}{printNodeStatus()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_aa356414ebc70c34f0f0fce40de6c18aa} 
+void Weds\+Gateway\+Comm::\+print\+Node\+Status (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Helper to print parsed node status information. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em packet} & The packet containing the status. \\
+\hline
+{\em status} & The parsed status payload. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_comm_a66025c022d4b0e168ffd96d883615d39}\index{WedsGatewayComm@{WedsGatewayComm}!sendAck@{sendAck}}
+\index{sendAck@{sendAck}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{sendAck()}{sendAck()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a66025c022d4b0e168ffd96d883615d39} 
+bool Weds\+Gateway\+Comm::\+send\+Ack (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{dst\+\_\+node\+\_\+id}{, }\item[{uint16\+\_\+t}]{acked\+\_\+sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{acked\+\_\+msg\+\_\+type}{, }\item[{uint8\+\_\+t}]{status\+\_\+code}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sends an acknowledgment for a received reliable packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst\+\_\+node\+\_\+id} & Destination node ID. \\
+\hline
+{\em acked\+\_\+sequence\+\_\+id} & Sequence ID of the packet being acknowledged. \\
+\hline
+{\em acked\+\_\+msg\+\_\+type} & Message type of the packet being acknowledged. \\
+\hline
+{\em status\+\_\+code} & Status code of the acknowledgment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If successfully sent. 
+
+false If sending failed. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_comm_a8e49e90d4140c2689a1b71add19510ff}\index{WedsGatewayComm@{WedsGatewayComm}!sendAlertModeEnableReliable@{sendAlertModeEnableReliable}}
+\index{sendAlertModeEnableReliable@{sendAlertModeEnableReliable}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{sendAlertModeEnableReliable()}{sendAlertModeEnableReliable()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a8e49e90d4140c2689a1b71add19510ff} 
+bool Weds\+Gateway\+Comm::\+send\+Alert\+Mode\+Enable\+Reliable (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{dst\+\_\+node\+\_\+id}{, }\item[{const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&}]{command}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Reliably sends an ALERT\+\_\+\+MODE\+\_\+\+ENABLE command to a node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst\+\_\+node\+\_\+id} & Destination node ID. \\
+\hline
+{\em command} & The command payload. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If successfully sent and acknowledged. 
+
+false If failed or timed out. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_comm_a2b4dfb053202baefcfec5491ef8f8470}\index{WedsGatewayComm@{WedsGatewayComm}!sendPacket@{sendPacket}}
+\index{sendPacket@{sendPacket}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{sendPacket()}{sendPacket()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a2b4dfb053202baefcfec5491ef8f8470} 
+bool Weds\+Gateway\+Comm::\+send\+Packet (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}} \&}]{packet}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sends a packet over the radio. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em packet} & The packet structure to send. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If successfully sent. 
+
+false If sending failed. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_comm_a46ab471b3ffd72904f7ffe4547b38b9d}\index{WedsGatewayComm@{WedsGatewayComm}!waitForAck@{waitForAck}}
+\index{waitForAck@{waitForAck}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{waitForAck()}{waitForAck()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a46ab471b3ffd72904f7ffe4547b38b9d} 
+bool Weds\+Gateway\+Comm::\+wait\+For\+Ack (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{expected\+\_\+src\+\_\+node\+\_\+id}{, }\item[{uint16\+\_\+t}]{expected\+\_\+acked\+\_\+sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{expected\+\_\+acked\+\_\+msg\+\_\+type}{, }\item[{uint32\+\_\+t}]{timeout\+\_\+ms}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Waits for an acknowledgment from a specific node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em expected\+\_\+src\+\_\+node\+\_\+id} & Expected source node ID. \\
+\hline
+{\em expected\+\_\+acked\+\_\+sequence\+\_\+id} & Expected sequence ID being acknowledged. \\
+\hline
+{\em expected\+\_\+acked\+\_\+msg\+\_\+type} & Expected message type being acknowledged. \\
+\hline
+{\em timeout\+\_\+ms} & Timeout in milliseconds. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If acknowledgment was received within the timeout. 
+
+false If timeout occurred. 
+\end{DoxyReturn}
+
+
+\label{class_weds_gateway_comm_doc-variable-members}
+\Hypertarget{class_weds_gateway_comm_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_weds_gateway_comm_a0355df2249b2f235d5ae752893582cb9}\index{WedsGatewayComm@{WedsGatewayComm}!gateway\_sequence\_id\_@{gateway\_sequence\_id\_}}
+\index{gateway\_sequence\_id\_@{gateway\_sequence\_id\_}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{gateway\_sequence\_id\_}{gateway\_sequence\_id\_}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a0355df2249b2f235d5ae752893582cb9} 
+uint16\+\_\+t Weds\+Gateway\+Comm::\+gateway\+\_\+sequence\+\_\+id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sequence ID for gateway messages. 
+
+\Hypertarget{class_weds_gateway_comm_af5c664809f8309cf7f22e0120ae4f632}\index{WedsGatewayComm@{WedsGatewayComm}!initialized\_@{initialized\_}}
+\index{initialized\_@{initialized\_}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{initialized\_}{initialized\_}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_af5c664809f8309cf7f22e0120ae4f632} 
+bool Weds\+Gateway\+Comm::\+initialized\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Indicates if the communication module has been initialized. 
+
+\Hypertarget{class_weds_gateway_comm_a50e5db74cc2a577b1039bfe0d35e79a6}\index{WedsGatewayComm@{WedsGatewayComm}!registry\_@{registry\_}}
+\index{registry\_@{registry\_}!WedsGatewayComm@{WedsGatewayComm}}
+\doxysubsubsection{\texorpdfstring{registry\_}{registry\_}}
+{\footnotesize\ttfamily \label{class_weds_gateway_comm_a50e5db74cc2a577b1039bfe0d35e79a6} 
+\doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}}\texorpdfstring{$\ast$}{*} Weds\+Gateway\+Comm::\+registry\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Pointer to the gateway registry. 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+gateway\+\_\+comm/\+\doxymbox{\hyperlink{_weds_gateway_comm_8h}{Weds\+Gateway\+Comm.\+h}}\item 
+code/\+lib/\+weds\+\_\+gateway\+\_\+comm/\+\doxymbox{\hyperlink{_weds_gateway_comm_8cpp}{Weds\+Gateway\+Comm.\+cpp}}\end{DoxyCompactItemize}

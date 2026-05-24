@@ -1,0 +1,388 @@
+\doxysection{Weds\+Gateway\+Api Class Reference}
+\hypertarget{class_weds_gateway_api}{}\label{class_weds_gateway_api}\index{WedsGatewayApi@{WedsGatewayApi}}
+
+
+Manages the HTTP API server for the gateway.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Gateway\+Api.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_weds_gateway_api_a5ccb0b10392dcf885397e7a8ae42ec49}{Weds\+Gateway\+Api}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_weds_gateway_api}{Weds\+Gateway\+Api}. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_api_a07ae0aa42a9e87d2515d5707783e0f7a}{begin}} (const char \texorpdfstring{$\ast$}{*}ssid, const char \texorpdfstring{$\ast$}{*}password, \doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}} \texorpdfstring{$\ast$}{*}registry, uint16\+\_\+t port=80)
+\begin{DoxyCompactList}\small\item\em Initializes the Wi\+Fi connection and starts the HTTP API server. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a8fbbd1107a1778b3cf615b90d53c3dec}{handle\+Client}} ()
+\begin{DoxyCompactList}\small\item\em Handles incoming client requests. Must be called in the main loop. \end{DoxyCompactList}\item 
+IPAddress \doxymbox{\hyperlink{class_weds_gateway_api_a9e633acf6e6f631e17f89a29d908afe4}{local\+IP}} () const
+\begin{DoxyCompactList}\small\item\em Gets the local IP address of the gateway on the Wi\+Fi network. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_af7f52e22ae7fbb47537abf3da0fd95fc}{setup\+Routes}} ()
+\begin{DoxyCompactList}\small\item\em Sets up the routing for the HTTP server endpoints. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_ae97a2c6b6d2a6c216a259795204c57ad}{sync\+Clock}} ()
+\begin{DoxyCompactList}\small\item\em Synchronizes the system clock using NTP. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a2ba5e7a7155d6c7b8718079e8337991f}{handle\+Root\+Info}} ()
+\begin{DoxyCompactList}\small\item\em Handles the root API info endpoint. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a6cc1371d13ad68bb0fef8b23718e93a9}{handle\+Get\+State\+All}} ()
+\begin{DoxyCompactList}\small\item\em Handles the endpoint for getting all node states. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a26f6192878b5a15f01ba25aa64db1d06}{handle\+Get\+Node\+State}} ()
+\begin{DoxyCompactList}\small\item\em Handles the endpoint for getting a specific node state. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a6d2ed454880223164ff8c156be9e1916}{handle\+Get\+Unlocated\+Nodes}} ()
+\begin{DoxyCompactList}\small\item\em Handles the endpoint for getting unlocated nodes. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_af16af7c18afdc38183ad4d0fd2c7e77c}{handle\+Get\+Node\+Events}} ()
+\begin{DoxyCompactList}\small\item\em Handles the endpoint for getting node events. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_aea000f6c5c6b2e3da15c3fb6e41eacdb}{handle\+Get\+Node\+Trend}} ()
+\begin{DoxyCompactList}\small\item\em Handles the endpoint for getting node trend data. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a9ac8ed455bf0b8541568dcf9d67a4497}{handle\+Set\+Location}} ()
+\begin{DoxyCompactList}\small\item\em Handles the endpoint for setting a node\textquotesingle{}s location. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a194bc6e6f114f885fa3a9ddecf54c979}{handle\+Clear\+Config}} ()
+\begin{DoxyCompactList}\small\item\em Handles the endpoint for clearing the persistent config. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a9d014cf7d44dc73634f3bb2baced98e1}{send\+Json}} (int status\+\_\+code, const String \&json)
+\begin{DoxyCompactList}\small\item\em Sends a JSON response to the client. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_ad4f926eb57bfd299ebe41be3d45e5809}{send\+Error}} (int status\+\_\+code, const char \texorpdfstring{$\ast$}{*}error\+\_\+code, const char \texorpdfstring{$\ast$}{*}message)
+\begin{DoxyCompactList}\small\item\em Sends a JSON error response to the client. \end{DoxyCompactList}\item 
+String \doxymbox{\hyperlink{class_weds_gateway_api_a22c6a946aa071a060de0ec18acf3ec20}{detection\+State\+To\+String}} (uint8\+\_\+t state) const
+\begin{DoxyCompactList}\small\item\em Converts a detection state value to a string. \end{DoxyCompactList}\item 
+String \doxymbox{\hyperlink{class_weds_gateway_api_a42ba56cd0e453d72f360df892b005241}{event\+Type\+To\+String}} (\doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}} type) const
+\begin{DoxyCompactList}\small\item\em Converts an event type to a string. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_api_aa41008ed09b50d1cbee33e33ef70dc17}{parse\+Node\+Id\+Arg}} (uint32\+\_\+t \&out\+\_\+node\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Parses the \textquotesingle{}node\+\_\+id\textquotesingle{} argument from the request parameters. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_api_a0525c672c8246c1dc809380d77bef839}{append\+Node\+Record}} (Json\+Object obj, const \doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&record)
+\begin{DoxyCompactList}\small\item\em Appends a node record object to a JSON object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_weds_gateway_api_ab42e16e6bf6ea385defdb9878558c1f1}{registry\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Pointer to the node registry. \end{DoxyCompactList}\item 
+Web\+Server \doxymbox{\hyperlink{class_weds_gateway_api_afbf7a3c8b49694a46e459f3149fed8af}{server\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Internal web server instance. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_api_a865cf3d29c277413fd2829f73d9245fa}{initialized\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Indicates if the API has been initialized. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages the HTTP API server for the gateway. 
+
+\label{class_weds_gateway_api_doc-constructors}
+\Hypertarget{class_weds_gateway_api_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_weds_gateway_api_a5ccb0b10392dcf885397e7a8ae42ec49}\index{WedsGatewayApi@{WedsGatewayApi}!WedsGatewayApi@{WedsGatewayApi}}
+\index{WedsGatewayApi@{WedsGatewayApi}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{WedsGatewayApi()}{WedsGatewayApi()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a5ccb0b10392dcf885397e7a8ae42ec49} 
+Weds\+Gateway\+Api::\+\+Weds\+Gateway\+Api (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_weds_gateway_api}{Weds\+Gateway\+Api}. 
+
+
+
+\label{class_weds_gateway_api_doc-func-members}
+\Hypertarget{class_weds_gateway_api_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_weds_gateway_api_a0525c672c8246c1dc809380d77bef839}\index{WedsGatewayApi@{WedsGatewayApi}!appendNodeRecord@{appendNodeRecord}}
+\index{appendNodeRecord@{appendNodeRecord}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{appendNodeRecord()}{appendNodeRecord()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a0525c672c8246c1dc809380d77bef839} 
+void Weds\+Gateway\+Api::\+append\+Node\+Record (\begin{DoxyParamCaption}\item[{Json\+Object}]{obj}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{record}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Appends a node record object to a JSON object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & JSON object to populate. \\
+\hline
+{\em record} & The node record to append data from. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_api_a07ae0aa42a9e87d2515d5707783e0f7a}\index{WedsGatewayApi@{WedsGatewayApi}!begin@{begin}}
+\index{begin@{begin}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a07ae0aa42a9e87d2515d5707783e0f7a} 
+bool Weds\+Gateway\+Api::\+begin (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{ssid}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{password}{, }\item[{\doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}} \texorpdfstring{$\ast$}{*}}]{registry}{, }\item[{uint16\+\_\+t}]{port}{ = {\ttfamily 80}}\end{DoxyParamCaption})}
+
+
+
+Initializes the Wi\+Fi connection and starts the HTTP API server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ssid} & Wi\+Fi SSID to connect to. \\
+\hline
+{\em password} & Wi\+Fi password. \\
+\hline
+{\em registry} & Pointer to the gateway registry. \\
+\hline
+{\em port} & Port for the HTTP server. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If initialized successfully. 
+
+false If initialization fails. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_api_a22c6a946aa071a060de0ec18acf3ec20}\index{WedsGatewayApi@{WedsGatewayApi}!detectionStateToString@{detectionStateToString}}
+\index{detectionStateToString@{detectionStateToString}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{detectionStateToString()}{detectionStateToString()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a22c6a946aa071a060de0ec18acf3ec20} 
+String Weds\+Gateway\+Api::\+detection\+State\+To\+String (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{state}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Converts a detection state value to a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & Detection state byte. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String String representation of the state. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_api_a42ba56cd0e453d72f360df892b005241}\index{WedsGatewayApi@{WedsGatewayApi}!eventTypeToString@{eventTypeToString}}
+\index{eventTypeToString@{eventTypeToString}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{eventTypeToString()}{eventTypeToString()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a42ba56cd0e453d72f360df892b005241} 
+String Weds\+Gateway\+Api::\+event\+Type\+To\+String (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}}}]{type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Converts an event type to a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & Event type enumeration. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String String representation of the event type. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_api_a194bc6e6f114f885fa3a9ddecf54c979}\index{WedsGatewayApi@{WedsGatewayApi}!handleClearConfig@{handleClearConfig}}
+\index{handleClearConfig@{handleClearConfig}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleClearConfig()}{handleClearConfig()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a194bc6e6f114f885fa3a9ddecf54c979} 
+void Weds\+Gateway\+Api::\+handle\+Clear\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the endpoint for clearing the persistent config. 
+
+\Hypertarget{class_weds_gateway_api_a8fbbd1107a1778b3cf615b90d53c3dec}\index{WedsGatewayApi@{WedsGatewayApi}!handleClient@{handleClient}}
+\index{handleClient@{handleClient}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleClient()}{handleClient()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a8fbbd1107a1778b3cf615b90d53c3dec} 
+void Weds\+Gateway\+Api::\+handle\+Client (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Handles incoming client requests. Must be called in the main loop. 
+
+\Hypertarget{class_weds_gateway_api_af16af7c18afdc38183ad4d0fd2c7e77c}\index{WedsGatewayApi@{WedsGatewayApi}!handleGetNodeEvents@{handleGetNodeEvents}}
+\index{handleGetNodeEvents@{handleGetNodeEvents}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleGetNodeEvents()}{handleGetNodeEvents()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_af16af7c18afdc38183ad4d0fd2c7e77c} 
+void Weds\+Gateway\+Api::\+handle\+Get\+Node\+Events (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the endpoint for getting node events. 
+
+\Hypertarget{class_weds_gateway_api_a26f6192878b5a15f01ba25aa64db1d06}\index{WedsGatewayApi@{WedsGatewayApi}!handleGetNodeState@{handleGetNodeState}}
+\index{handleGetNodeState@{handleGetNodeState}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleGetNodeState()}{handleGetNodeState()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a26f6192878b5a15f01ba25aa64db1d06} 
+void Weds\+Gateway\+Api::\+handle\+Get\+Node\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the endpoint for getting a specific node state. 
+
+\Hypertarget{class_weds_gateway_api_aea000f6c5c6b2e3da15c3fb6e41eacdb}\index{WedsGatewayApi@{WedsGatewayApi}!handleGetNodeTrend@{handleGetNodeTrend}}
+\index{handleGetNodeTrend@{handleGetNodeTrend}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleGetNodeTrend()}{handleGetNodeTrend()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_aea000f6c5c6b2e3da15c3fb6e41eacdb} 
+void Weds\+Gateway\+Api::\+handle\+Get\+Node\+Trend (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the endpoint for getting node trend data. 
+
+\Hypertarget{class_weds_gateway_api_a6cc1371d13ad68bb0fef8b23718e93a9}\index{WedsGatewayApi@{WedsGatewayApi}!handleGetStateAll@{handleGetStateAll}}
+\index{handleGetStateAll@{handleGetStateAll}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleGetStateAll()}{handleGetStateAll()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a6cc1371d13ad68bb0fef8b23718e93a9} 
+void Weds\+Gateway\+Api::\+handle\+Get\+State\+All (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the endpoint for getting all node states. 
+
+\Hypertarget{class_weds_gateway_api_a6d2ed454880223164ff8c156be9e1916}\index{WedsGatewayApi@{WedsGatewayApi}!handleGetUnlocatedNodes@{handleGetUnlocatedNodes}}
+\index{handleGetUnlocatedNodes@{handleGetUnlocatedNodes}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleGetUnlocatedNodes()}{handleGetUnlocatedNodes()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a6d2ed454880223164ff8c156be9e1916} 
+void Weds\+Gateway\+Api::\+handle\+Get\+Unlocated\+Nodes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the endpoint for getting unlocated nodes. 
+
+\Hypertarget{class_weds_gateway_api_a2ba5e7a7155d6c7b8718079e8337991f}\index{WedsGatewayApi@{WedsGatewayApi}!handleRootInfo@{handleRootInfo}}
+\index{handleRootInfo@{handleRootInfo}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleRootInfo()}{handleRootInfo()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a2ba5e7a7155d6c7b8718079e8337991f} 
+void Weds\+Gateway\+Api::\+handle\+Root\+Info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the root API info endpoint. 
+
+\Hypertarget{class_weds_gateway_api_a9ac8ed455bf0b8541568dcf9d67a4497}\index{WedsGatewayApi@{WedsGatewayApi}!handleSetLocation@{handleSetLocation}}
+\index{handleSetLocation@{handleSetLocation}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{handleSetLocation()}{handleSetLocation()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a9ac8ed455bf0b8541568dcf9d67a4497} 
+void Weds\+Gateway\+Api::\+handle\+Set\+Location (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles the endpoint for setting a node\textquotesingle{}s location. 
+
+\Hypertarget{class_weds_gateway_api_a9e633acf6e6f631e17f89a29d908afe4}\index{WedsGatewayApi@{WedsGatewayApi}!localIP@{localIP}}
+\index{localIP@{localIP}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{localIP()}{localIP()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a9e633acf6e6f631e17f89a29d908afe4} 
+IPAddress Weds\+Gateway\+Api::\+local\+IP (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the local IP address of the gateway on the Wi\+Fi network. 
+
+\begin{DoxyReturn}{Returns}
+IPAddress The local IP address. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_api_aa41008ed09b50d1cbee33e33ef70dc17}\index{WedsGatewayApi@{WedsGatewayApi}!parseNodeIdArg@{parseNodeIdArg}}
+\index{parseNodeIdArg@{parseNodeIdArg}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{parseNodeIdArg()}{parseNodeIdArg()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_aa41008ed09b50d1cbee33e33ef70dc17} 
+bool Weds\+Gateway\+Api::\+parse\+Node\+Id\+Arg (\begin{DoxyParamCaption}\item[{uint32\+\_\+t \&}]{out\+\_\+node\+\_\+id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Parses the \textquotesingle{}node\+\_\+id\textquotesingle{} argument from the request parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+\_\+node\+\_\+id} & Reference to store the parsed node ID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If parsing was successful. 
+
+false If the argument is missing or invalid. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_api_ad4f926eb57bfd299ebe41be3d45e5809}\index{WedsGatewayApi@{WedsGatewayApi}!sendError@{sendError}}
+\index{sendError@{sendError}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{sendError()}{sendError()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_ad4f926eb57bfd299ebe41be3d45e5809} 
+void Weds\+Gateway\+Api::\+send\+Error (\begin{DoxyParamCaption}\item[{int}]{status\+\_\+code}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{error\+\_\+code}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sends a JSON error response to the client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status\+\_\+code} & HTTP status code. \\
+\hline
+{\em error\+\_\+code} & Short string identifier for the error. \\
+\hline
+{\em message} & Human-\/readable error message. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_api_a9d014cf7d44dc73634f3bb2baced98e1}\index{WedsGatewayApi@{WedsGatewayApi}!sendJson@{sendJson}}
+\index{sendJson@{sendJson}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{sendJson()}{sendJson()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a9d014cf7d44dc73634f3bb2baced98e1} 
+void Weds\+Gateway\+Api::\+send\+Json (\begin{DoxyParamCaption}\item[{int}]{status\+\_\+code}{, }\item[{const String \&}]{json}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sends a JSON response to the client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status\+\_\+code} & HTTP status code. \\
+\hline
+{\em json} & JSON string to send. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_api_af7f52e22ae7fbb47537abf3da0fd95fc}\index{WedsGatewayApi@{WedsGatewayApi}!setupRoutes@{setupRoutes}}
+\index{setupRoutes@{setupRoutes}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{setupRoutes()}{setupRoutes()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_af7f52e22ae7fbb47537abf3da0fd95fc} 
+void Weds\+Gateway\+Api::\+setup\+Routes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sets up the routing for the HTTP server endpoints. 
+
+\Hypertarget{class_weds_gateway_api_ae97a2c6b6d2a6c216a259795204c57ad}\index{WedsGatewayApi@{WedsGatewayApi}!syncClock@{syncClock}}
+\index{syncClock@{syncClock}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{syncClock()}{syncClock()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_ae97a2c6b6d2a6c216a259795204c57ad} 
+void Weds\+Gateway\+Api::\+sync\+Clock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Synchronizes the system clock using NTP. 
+
+
+
+\label{class_weds_gateway_api_doc-variable-members}
+\Hypertarget{class_weds_gateway_api_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_weds_gateway_api_a865cf3d29c277413fd2829f73d9245fa}\index{WedsGatewayApi@{WedsGatewayApi}!initialized\_@{initialized\_}}
+\index{initialized\_@{initialized\_}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{initialized\_}{initialized\_}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_a865cf3d29c277413fd2829f73d9245fa} 
+bool Weds\+Gateway\+Api::\+initialized\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Indicates if the API has been initialized. 
+
+\Hypertarget{class_weds_gateway_api_ab42e16e6bf6ea385defdb9878558c1f1}\index{WedsGatewayApi@{WedsGatewayApi}!registry\_@{registry\_}}
+\index{registry\_@{registry\_}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{registry\_}{registry\_}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_ab42e16e6bf6ea385defdb9878558c1f1} 
+\doxymbox{\hyperlink{class_weds_gateway_registry}{Weds\+Gateway\+Registry}}\texorpdfstring{$\ast$}{*} Weds\+Gateway\+Api::\+registry\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Pointer to the node registry. 
+
+\Hypertarget{class_weds_gateway_api_afbf7a3c8b49694a46e459f3149fed8af}\index{WedsGatewayApi@{WedsGatewayApi}!server\_@{server\_}}
+\index{server\_@{server\_}!WedsGatewayApi@{WedsGatewayApi}}
+\doxysubsubsection{\texorpdfstring{server\_}{server\_}}
+{\footnotesize\ttfamily \label{class_weds_gateway_api_afbf7a3c8b49694a46e459f3149fed8af} 
+Web\+Server Weds\+Gateway\+Api::\+server\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Internal web server instance. 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+gateway\+\_\+api/\+\doxymbox{\hyperlink{_weds_gateway_api_8h}{Weds\+Gateway\+Api.\+h}}\item 
+code/\+lib/\+weds\+\_\+gateway\+\_\+api/\+\doxymbox{\hyperlink{_weds_gateway_api_8cpp}{Weds\+Gateway\+Api.\+cpp}}\end{DoxyCompactItemize}

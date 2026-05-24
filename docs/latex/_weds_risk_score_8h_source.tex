@@ -1,0 +1,52 @@
+\doxysection{Weds\+Risk\+Score.\+h}
+\hypertarget{_weds_risk_score_8h_source}{}\label{_weds_risk_score_8h_source}\index{code/lib/weds\_risk\_score/WedsRiskScore.h@{code/lib/weds\_risk\_score/WedsRiskScore.h}}
+\doxymbox{\hyperlink{_weds_risk_score_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_sensor_sample_8h}{WedsSensorSample.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_types_8h}{WedsTypes.h}}"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}tensorflow/lite/micro/all\_ops\_resolver.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}tensorflow/lite/micro/micro\_interpreter.h"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}tensorflow/lite/schema/schema\_generated.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_weds_risk_result}{WedsRiskResult}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ uint8\_t\ \doxymbox{\hyperlink{struct_weds_risk_result_a2a6770794b24bf0ed79e4c4d900fe58c}{detection\_state}};\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_risk_result_aed8ae9205077563ddd8a1b33a60b2168}{score}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00017\ \};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_daily_bucket}{DailyBucket}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_daily_bucket_aac8658aaa3e1c0f7a527696767e2c891}{day\_id}};\ \ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_daily_bucket_a444ba2cf826fcb5664b76f2083a7e6da}{temp\_sum}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_daily_bucket_a1bd73dbff0183de98846bcb3283af23e}{rh\_sum}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ uint16\_t\ \doxymbox{\hyperlink{struct_daily_bucket_a347ca887703c0122ccd87bf77b304ec9}{sample\_count}};}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_weds_risk_score_calculator}{WedsRiskScoreCalculator}}\ \{}
+\DoxyCodeLine{00039\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_a59d0e5fc0e664dd45569c88d1b96624b}{kHistorySize}}\ =\ 7;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_acb0296a97993ee66e1502c21dfd271c2}{begin}}();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00053\ \ \ \ \ \doxymbox{\hyperlink{struct_weds_risk_result}{WedsRiskResult}}\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_a795b807e484a1a496191afe556e885f8}{update}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_sensor_sample}{WedsSensorSample}}\&\ sample);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{const}\ tflite::Model*\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_a1a13b3552b86d8246a7a99ed05bbe090}{model\_}}\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ tflite::MicroInterpreter*\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_aab68c637afba965bd724c5aeb63af8ae}{interpreter\_}}\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00058\ \ \ \ \ TfLiteTensor*\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_aa9e49bb9a658d6e2d3ebf33f7b315b0b}{input\_}}\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ TfLiteTensor*\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_a2350fddc6915f04c5ab61e23f3da700b}{output\_}}\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_aea07e11f0dcbfe52d14344fbec74fbd5}{kTensorArenaSize}}\ =\ 15\ *\ 1024;\ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ uint8\_t\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_a586ecd70ddc4f6310c6fe2b9ddeb3db2}{tensor\_arena\_}}[\doxymbox{\hyperlink{class_weds_risk_score_calculator_aea07e11f0dcbfe52d14344fbec74fbd5}{kTensorArenaSize}}];\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}{kNumFeatures}}\ =\ 7;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_aae52639772c608d2fbf0dd31d2ea1dc3}{scaler\_means\_}}[\doxymbox{\hyperlink{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}{kNumFeatures}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_weds_risk_score_calculator_add3e127bd1bf65d3de1599ca58e263c8}{scaler\_scales\_}}[\doxymbox{\hyperlink{class_weds_risk_score_calculator_a009b169a0890b74524afe9777c87ab30}{kNumFeatures}}];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{extern}\ uint32\_t\ \doxymbox{\hyperlink{_weds_risk_score_8cpp_ad1ccdab270589fe5bacef16413848def}{rtc\_virtual\_timestamp}};}
+
+\end{DoxyCode}

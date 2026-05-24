@@ -1,0 +1,34 @@
+\doxysection{code/\+lib/\+weds\+\_\+risk\+\_\+score/\+\+Weds\+Risk\+Score.cpp File Reference}
+\hypertarget{_weds_risk_score_8cpp}{}\label{_weds_risk_score_8cpp}\index{code/lib/weds\_risk\_score/WedsRiskScore.cpp@{code/lib/weds\_risk\_score/WedsRiskScore.cpp}}
+{\ttfamily \+\#include "{}Weds\+Risk\+Score.\+h"{}}\newline
+{\ttfamily \+\#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \+\#include "{}model\+\_\+data\+\_\+v6f.\+h"{}}\newline
+{\ttfamily \+\#include "{}tensorflow/\+lite/\+micro/\+micro\+\_\+error\+\_\+reporter.\+h"{}}\newline
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static RTC\+\_\+\+DATA\+\_\+\+ATTR \doxymbox{\hyperlink{struct_daily_bucket}{Daily\+Bucket}} \doxymbox{\hyperlink{_weds_risk_score_8cpp_a6170f9c1a70ffee721929cff519fbaff}{rtc\+\_\+history}} \+[\doxymbox{\hyperlink{class_weds_risk_score_calculator_a59d0e5fc0e664dd45569c88d1b96624b}{Weds\+Risk\+Score\+Calculator::\+k\+History\+Size}}]\+
+\item 
+RTC\+\_\+\+DATA\+\_\+\+ATTR uint32\+\_\+t \doxymbox{\hyperlink{_weds_risk_score_8cpp_ad1ccdab270589fe5bacef16413848def}{rtc\+\_\+virtual\+\_\+timestamp}} = 0
+\begin{DoxyCompactList}\small\item\em RTC-\/retained virtual clock (seconds). Advance this by awake time + sleep duration before calling esp\+\_\+deep\+\_\+sleep() so the Tiny\+ML bucketing algorithm stays synchronised across hardware resets. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_risk_score_8cpp_doc-var-members}
+\Hypertarget{_weds_risk_score_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_weds_risk_score_8cpp_a6170f9c1a70ffee721929cff519fbaff}\index{WedsRiskScore.cpp@{WedsRiskScore.cpp}!rtc\_history@{rtc\_history}}
+\index{rtc\_history@{rtc\_history}!WedsRiskScore.cpp@{WedsRiskScore.cpp}}
+\doxysubsubsection{\texorpdfstring{rtc\_history}{rtc\_history}}
+{\footnotesize\ttfamily \label{_weds_risk_score_8cpp_a6170f9c1a70ffee721929cff519fbaff} 
+RTC\+\_\+\+DATA\+\_\+\+ATTR \doxymbox{\hyperlink{struct_daily_bucket}{Daily\+Bucket}} rtc\+\_\+history\+[\doxymbox{\hyperlink{class_weds_risk_score_calculator_a59d0e5fc0e664dd45569c88d1b96624b}{Weds\+Risk\+Score\+Calculator::\+k\+History\+Size}}]\+\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{_weds_risk_score_8cpp_ad1ccdab270589fe5bacef16413848def}\index{WedsRiskScore.cpp@{WedsRiskScore.cpp}!rtc\_virtual\_timestamp@{rtc\_virtual\_timestamp}}
+\index{rtc\_virtual\_timestamp@{rtc\_virtual\_timestamp}!WedsRiskScore.cpp@{WedsRiskScore.cpp}}
+\doxysubsubsection{\texorpdfstring{rtc\_virtual\_timestamp}{rtc\_virtual\_timestamp}}
+{\footnotesize\ttfamily \label{_weds_risk_score_8cpp_ad1ccdab270589fe5bacef16413848def} 
+RTC\+\_\+\+DATA\+\_\+\+ATTR uint32\+\_\+t rtc\+\_\+virtual\+\_\+timestamp = 0}
+
+
+
+RTC-\/retained virtual clock (seconds). Advance this by awake time + sleep duration before calling esp\+\_\+deep\+\_\+sleep() so the Tiny\+ML bucketing algorithm stays synchronised across hardware resets. 
+

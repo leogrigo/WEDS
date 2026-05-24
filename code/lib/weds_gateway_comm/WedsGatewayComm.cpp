@@ -5,6 +5,12 @@
 
 namespace {
 
+/**
+ * @brief Returns the string representation of a message type.
+ * 
+ * @param msg_type The message type byte.
+ * @return const char* String representing the message type.
+ */
 const char* messageTypeName(uint8_t msg_type) {
     switch (msg_type) {
         case WEDS_MSG_NODE_STATUS:
@@ -20,6 +26,12 @@ const char* messageTypeName(uint8_t msg_type) {
     }
 }
 
+/**
+ * @brief Returns the string representation of a detection state.
+ * 
+ * @param state The detection state byte.
+ * @return const char* String representing the state.
+ */
 const char* detectionStateName(uint8_t state) {
     return state == WEDS_DETECTION_ALERT ? "ALERT" : "NORMAL";
 }
@@ -113,8 +125,6 @@ void WedsGatewayComm::handleReceivedPacket(uint8_t* buffer, size_t len) {
     Serial.print("[GATEWAY_COMM] Packet received len=");
     Serial.println(len);
 
-    // Serial.print("[GATEWAY_COMM] HEX: ");
-    // printBufferHex(buffer, len);
 
     WedsPacket packet;
 
@@ -308,8 +318,6 @@ bool WedsGatewayComm::sendPacket(const WedsPacket& packet) {
     Serial.print(" len=");
     Serial.println(encoded_len);
 
-    // Serial.print("[GATEWAY_COMM] TX HEX: ");
-    // printBufferHex(buffer, encoded_len);
 
     int state = radio.transmit(buffer, encoded_len);
 

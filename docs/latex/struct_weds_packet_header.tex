@@ -1,0 +1,85 @@
+\doxysection{Weds\+Packet\+Header Struct Reference}
+\hypertarget{struct_weds_packet_header}{}\label{struct_weds_packet_header}\index{WedsPacketHeader@{WedsPacketHeader}}
+
+
+Represents the header of a WEDS packet.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Packet.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_packet_header_ace5f317e09cf16286a5307024dbfe5c8}{magic}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_packet_header_ab25be2bec6deff511f7d4844db43182f}{msg\+\_\+type}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_packet_header_acc449ee69149141ee9dddfa89523ddc2}{ack\+\_\+required}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_packet_header_abb327a5e895b387c58e6ed98ab3c064e}{src\+\_\+node\+\_\+id}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_packet_header_a9cb6193aed1bbd8399e9f87b0ddb048f}{dst\+\_\+node\+\_\+id}}
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_weds_packet_header_a7d0ba4f79452aec20c9fdbce2b1e9b34}{sequence\+\_\+id}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_packet_header_afa6f9687aa8d298532123573e244b9e6}{payload\+\_\+len}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents the header of a WEDS packet. 
+
+Total header size is 14 bytes. CRC16 is appended after the payload. 
+
+\label{struct_weds_packet_header_doc-variable-members}
+\Hypertarget{struct_weds_packet_header_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_weds_packet_header_acc449ee69149141ee9dddfa89523ddc2}\index{WedsPacketHeader@{WedsPacketHeader}!ack\_required@{ack\_required}}
+\index{ack\_required@{ack\_required}!WedsPacketHeader@{WedsPacketHeader}}
+\doxysubsubsection{\texorpdfstring{ack\_required}{ack\_required}}
+{\footnotesize\ttfamily \label{struct_weds_packet_header_acc449ee69149141ee9dddfa89523ddc2} 
+uint8\+\_\+t Weds\+Packet\+Header::\+ack\+\_\+required}
+
+Indicates if an ACK is required (1) or not (0). \Hypertarget{struct_weds_packet_header_a9cb6193aed1bbd8399e9f87b0ddb048f}\index{WedsPacketHeader@{WedsPacketHeader}!dst\_node\_id@{dst\_node\_id}}
+\index{dst\_node\_id@{dst\_node\_id}!WedsPacketHeader@{WedsPacketHeader}}
+\doxysubsubsection{\texorpdfstring{dst\_node\_id}{dst\_node\_id}}
+{\footnotesize\ttfamily \label{struct_weds_packet_header_a9cb6193aed1bbd8399e9f87b0ddb048f} 
+uint32\+\_\+t Weds\+Packet\+Header::\+dst\+\_\+node\+\_\+id}
+
+Destination node identifier. \Hypertarget{struct_weds_packet_header_ace5f317e09cf16286a5307024dbfe5c8}\index{WedsPacketHeader@{WedsPacketHeader}!magic@{magic}}
+\index{magic@{magic}!WedsPacketHeader@{WedsPacketHeader}}
+\doxysubsubsection{\texorpdfstring{magic}{magic}}
+{\footnotesize\ttfamily \label{struct_weds_packet_header_ace5f317e09cf16286a5307024dbfe5c8} 
+uint8\+\_\+t Weds\+Packet\+Header::\+magic}
+
+Magic byte, expected to be WEDS\+\_\+\+MAGIC. \Hypertarget{struct_weds_packet_header_ab25be2bec6deff511f7d4844db43182f}\index{WedsPacketHeader@{WedsPacketHeader}!msg\_type@{msg\_type}}
+\index{msg\_type@{msg\_type}!WedsPacketHeader@{WedsPacketHeader}}
+\doxysubsubsection{\texorpdfstring{msg\_type}{msg\_type}}
+{\footnotesize\ttfamily \label{struct_weds_packet_header_ab25be2bec6deff511f7d4844db43182f} 
+uint8\+\_\+t Weds\+Packet\+Header::\+msg\+\_\+type}
+
+Type of message being sent. \Hypertarget{struct_weds_packet_header_afa6f9687aa8d298532123573e244b9e6}\index{WedsPacketHeader@{WedsPacketHeader}!payload\_len@{payload\_len}}
+\index{payload\_len@{payload\_len}!WedsPacketHeader@{WedsPacketHeader}}
+\doxysubsubsection{\texorpdfstring{payload\_len}{payload\_len}}
+{\footnotesize\ttfamily \label{struct_weds_packet_header_afa6f9687aa8d298532123573e244b9e6} 
+uint8\+\_\+t Weds\+Packet\+Header::\+payload\+\_\+len}
+
+Length of the payload in bytes. \Hypertarget{struct_weds_packet_header_a7d0ba4f79452aec20c9fdbce2b1e9b34}\index{WedsPacketHeader@{WedsPacketHeader}!sequence\_id@{sequence\_id}}
+\index{sequence\_id@{sequence\_id}!WedsPacketHeader@{WedsPacketHeader}}
+\doxysubsubsection{\texorpdfstring{sequence\_id}{sequence\_id}}
+{\footnotesize\ttfamily \label{struct_weds_packet_header_a7d0ba4f79452aec20c9fdbce2b1e9b34} 
+uint16\+\_\+t Weds\+Packet\+Header::\+sequence\+\_\+id}
+
+Packet sequence identifier. \Hypertarget{struct_weds_packet_header_abb327a5e895b387c58e6ed98ab3c064e}\index{WedsPacketHeader@{WedsPacketHeader}!src\_node\_id@{src\_node\_id}}
+\index{src\_node\_id@{src\_node\_id}!WedsPacketHeader@{WedsPacketHeader}}
+\doxysubsubsection{\texorpdfstring{src\_node\_id}{src\_node\_id}}
+{\footnotesize\ttfamily \label{struct_weds_packet_header_abb327a5e895b387c58e6ed98ab3c064e} 
+uint32\+\_\+t Weds\+Packet\+Header::\+src\+\_\+node\+\_\+id}
+
+Source node identifier. 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+protocol/\+\doxymbox{\hyperlink{_weds_packet_8h}{Weds\+Packet.\+h}}\end{DoxyCompactItemize}

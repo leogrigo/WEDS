@@ -5,6 +5,12 @@ namespace {
 constexpr float PI_F = 3.14159265f;
 constexpr uint8_t WEDS_SIMULATION_WARMUP_SAMPLES = 20;
 
+/**
+ * @brief Generates a random number from a normal distribution.
+ * @param mean The mean of the distribution.
+ * @param stddev The standard deviation of the distribution.
+ * @return float A random number.
+ */
 float sampleNormal(float mean, float stddev) {
     const float u1 = random(1, 10001) / 10001.0f;
     const float u2 = random(0, 10000) / 10000.0f;
@@ -13,6 +19,10 @@ float sampleNormal(float mean, float stddev) {
     return mean + radius * cosf(angle) * stddev;
 }
 
+/**
+ * @brief Updates the simulation tick counters and phase.
+ * @param state The simulation state to update.
+ */
 void updateSimulationState(WedsSimulationState& state) {
     state.tick++;
 
@@ -25,13 +35,18 @@ void updateSimulationState(WedsSimulationState& state) {
     }
 }
 
+/**
+ * @brief Generates a simulated sensor sample applying the selected simulation mode logic.
+ * @param state The current simulation state.
+ * @return WedsSensorSample A generated sensor sample.
+ */
 WedsSensorSample generateSimulatedSample(WedsSimulationState& state) {
     const float tick = static_cast<float>(state.tick);
     const float mode_tick = static_cast<float>(state.mode_tick);
 
     float temperature = 30.0f + sinf(0.10f * tick) + sampleNormal(0.0f, 0.35f);
     float humidity = 76.0f - 3.0f * sinf(0.10f * tick) + sampleNormal(0.0f, 1.0f);
-    float pressure = 0.60f + sampleNormal(0.0f, 0.02f);
+    float pressure = 95000.0f + sampleNormal(0.0f, 500.0f);
     float gas_resistance =
         18000.0f - 80.0f * sinf(0.06f * tick) + sampleNormal(0.0f, 120.0f);
 
@@ -83,9 +98,13 @@ WedsSensorSample generateSimulatedSample(WedsSimulationState& state) {
     return sample;
 }
 
+/**
+ * @brief Prints a simulated sensor sample to the serial console.
+ * @param sample The sample to print.
+ */
 void printSample(const WedsSensorSample& sample) {
     Serial.printf(
-        "[SENSOR_SIM] temp=%.2f C hum=%.2f %% pressure=%.2f kPa gas=%.0f\n",
+        "[SENSOR_SIM] temp=%.2f C hum=%.2f %% pressure=%.2f Pa gas=%.0f\n",
         sample.temperature,
         sample.humidity,
         sample.pressure,
@@ -93,6 +112,9 @@ void printSample(const WedsSensorSample& sample) {
     );
 }
 
+/**
+ * @brief Prints the current simulation phase based on the selected mode.
+ */
 void printSimulationPhase() {
     Serial.print("[SENSOR_SIM] phase=");
 

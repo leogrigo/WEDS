@@ -1,0 +1,79 @@
+\doxysection{Weds\+Anomaly\+Detector::\+Ema\+Filter\texorpdfstring{$<$}{<} K \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_weds_anomaly_detector_1_1_ema_filter}{}\label{class_weds_anomaly_detector_1_1_ema_filter}\index{WedsAnomalyDetector::EmaFilter$<$ K $>$@{WedsAnomalyDetector::EmaFilter$<$ K $>$}}
+
+
+Exponential Moving Average (EMA) filter.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_a937e5be733133f25d8986ba23f43ad9a}{update}} (float input)
+\begin{DoxyCompactList}\small\item\em Updates the filter with a new input value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_af7a7b801a15bc30f2d83591774429b2d}{initialized\+\_\+}} = false
+\item 
+float \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter_ae86c14901251e7b05e339921099b3f52}{state\+\_\+}} = 0.\+0f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$uint8\+\_\+t K$>$\newline
+class Weds\+Anomaly\+Detector::\+\+Ema\+Filter$<$ K $>$}
+Exponential Moving Average (EMA) filter. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em K} & The smoothing factor parameter (alpha = 1 /\+ 2\texorpdfstring{$^\wedge$}{\string^}K). \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{class_weds_anomaly_detector_1_1_ema_filter_doc-func-members}
+\Hypertarget{class_weds_anomaly_detector_1_1_ema_filter_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_weds_anomaly_detector_1_1_ema_filter_a937e5be733133f25d8986ba23f43ad9a}\index{WedsAnomalyDetector::EmaFilter$<$ K $>$@{WedsAnomalyDetector::EmaFilter$<$ K $>$}!update@{update}}
+\index{update@{update}!WedsAnomalyDetector::EmaFilter$<$ K $>$@{WedsAnomalyDetector::EmaFilter$<$ K $>$}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_1_1_ema_filter_a937e5be733133f25d8986ba23f43ad9a} 
+template$<$uint8\+\_\+t K$>$ \\
+float \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{Weds\+Anomaly\+Detector::\+\+Ema\+Filter}}$<$ K $>$::\+update (\begin{DoxyParamCaption}\item[{float}]{input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Updates the filter with a new input value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & The new input value to process. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The updated filtered value. 
+\end{DoxyReturn}
+
+
+\label{class_weds_anomaly_detector_1_1_ema_filter_doc-variable-members}
+\Hypertarget{class_weds_anomaly_detector_1_1_ema_filter_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_weds_anomaly_detector_1_1_ema_filter_af7a7b801a15bc30f2d83591774429b2d}\index{WedsAnomalyDetector::EmaFilter$<$ K $>$@{WedsAnomalyDetector::EmaFilter$<$ K $>$}!initialized\_@{initialized\_}}
+\index{initialized\_@{initialized\_}!WedsAnomalyDetector::EmaFilter$<$ K $>$@{WedsAnomalyDetector::EmaFilter$<$ K $>$}}
+\doxysubsubsection{\texorpdfstring{initialized\_}{initialized\_}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_1_1_ema_filter_af7a7b801a15bc30f2d83591774429b2d} 
+template$<$uint8\+\_\+t K$>$ \\
+bool \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{Weds\+Anomaly\+Detector::\+\+Ema\+Filter}}$<$ K $>$::\+initialized\+\_\+ = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_anomaly_detector_1_1_ema_filter_ae86c14901251e7b05e339921099b3f52}\index{WedsAnomalyDetector::EmaFilter$<$ K $>$@{WedsAnomalyDetector::EmaFilter$<$ K $>$}!state\_@{state\_}}
+\index{state\_@{state\_}!WedsAnomalyDetector::EmaFilter$<$ K $>$@{WedsAnomalyDetector::EmaFilter$<$ K $>$}}
+\doxysubsubsection{\texorpdfstring{state\_}{state\_}}
+{\footnotesize\ttfamily \label{class_weds_anomaly_detector_1_1_ema_filter_ae86c14901251e7b05e339921099b3f52} 
+template$<$uint8\+\_\+t K$>$ \\
+float \doxymbox{\hyperlink{class_weds_anomaly_detector_1_1_ema_filter}{Weds\+Anomaly\+Detector::\+\+Ema\+Filter}}$<$ K $>$::\+state\+\_\+ = 0.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+anomaly\+\_\+detector/\+\doxymbox{\hyperlink{_weds_anomaly_detector_8h}{Weds\+Anomaly\+Detector.\+h}}\end{DoxyCompactItemize}

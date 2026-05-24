@@ -1,0 +1,70 @@
+\doxysection{Weds\+Gateway\+Api.\+h}
+\hypertarget{_weds_gateway_api_8h_source}{}\label{_weds_gateway_api_8h_source}\index{code/lib/weds\_gateway\_api/WedsGatewayApi.h@{code/lib/weds\_gateway\_api/WedsGatewayApi.h}}
+\doxymbox{\hyperlink{_weds_gateway_api_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <ArduinoJson.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <IPAddress.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <WebServer.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <WiFi.h>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_gateway_registry_8h}{WedsGatewayRegistry.h}}"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_weds_gateway_api_a5ccb0b10392dcf885397e7a8ae42ec49}{WedsGatewayApi}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{class_weds_gateway_api_a5ccb0b10392dcf885397e7a8ae42ec49}{WedsGatewayApi}}();}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_api_a07ae0aa42a9e87d2515d5707783e0f7a}{begin}}(}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ ssid,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ password,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_weds_gateway_registry}{WedsGatewayRegistry}}*\ registry,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ uint16\_t\ port\ =\ 80}
+\DoxyCodeLine{00037\ \ \ \ \ );}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a8fbbd1107a1778b3cf615b90d53c3dec}{handleClient}}();}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00049\ \ \ \ \ IPAddress\ \doxymbox{\hyperlink{class_weds_gateway_api_a9e633acf6e6f631e17f89a29d908afe4}{localIP}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00053\ \ \ \ \ \doxymbox{\hyperlink{class_weds_gateway_registry}{WedsGatewayRegistry}}*\ \doxymbox{\hyperlink{class_weds_gateway_api_ab42e16e6bf6ea385defdb9878558c1f1}{registry\_}};}
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ WebServer\ \doxymbox{\hyperlink{class_weds_gateway_api_afbf7a3c8b49694a46e459f3149fed8af}{server\_}};}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_api_a865cf3d29c277413fd2829f73d9245fa}{initialized\_}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_af7f52e22ae7fbb47537abf3da0fd95fc}{setupRoutes}}();}
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_ae97a2c6b6d2a6c216a259795204c57ad}{syncClock}}();}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a2ba5e7a7155d6c7b8718079e8337991f}{handleRootInfo}}();}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a6cc1371d13ad68bb0fef8b23718e93a9}{handleGetStateAll}}();}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a26f6192878b5a15f01ba25aa64db1d06}{handleGetNodeState}}();}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a6d2ed454880223164ff8c156be9e1916}{handleGetUnlocatedNodes}}();}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_af16af7c18afdc38183ad4d0fd2c7e77c}{handleGetNodeEvents}}();}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_aea000f6c5c6b2e3da15c3fb6e41eacdb}{handleGetNodeTrend}}();}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a9ac8ed455bf0b8541568dcf9d67a4497}{handleSetLocation}}();}
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a194bc6e6f114f885fa3a9ddecf54c979}{handleClearConfig}}();}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a9d014cf7d44dc73634f3bb2baced98e1}{sendJson}}(\textcolor{keywordtype}{int}\ status\_code,\ \textcolor{keyword}{const}\ String\&\ json);}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_ad4f926eb57bfd299ebe41be3d45e5809}{sendError}}(\textcolor{keywordtype}{int}\ status\_code,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ error\_code,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ message);}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00114\ \ \ \ \ String\ \doxymbox{\hyperlink{class_weds_gateway_api_a22c6a946aa071a060de0ec18acf3ec20}{detectionStateToString}}(uint8\_t\ state)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ String\ \doxymbox{\hyperlink{class_weds_gateway_api_a42ba56cd0e453d72f360df892b005241}{eventTypeToString}}(\doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{WedsEventType}}\ type)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_weds_gateway_api_aa41008ed09b50d1cbee33e33ef70dc17}{parseNodeIdArg}}(uint32\_t\&\ out\_node\_id);}
+\DoxyCodeLine{00132\ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_weds_gateway_api_a0525c672c8246c1dc809380d77bef839}{appendNodeRecord}}(JsonObject\ obj,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_weds_node_record}{WedsNodeRecord}}\&\ record);}
+\DoxyCodeLine{00140\ \};}
+
+\end{DoxyCode}

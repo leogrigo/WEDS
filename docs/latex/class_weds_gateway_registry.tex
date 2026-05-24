@@ -1,0 +1,553 @@
+\doxysection{Weds\+Gateway\+Registry Class Reference}
+\hypertarget{class_weds_gateway_registry}{}\label{class_weds_gateway_registry}\index{WedsGatewayRegistry@{WedsGatewayRegistry}}
+
+
+Maintains the state, location, events, and trends of all known nodes.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Gateway\+Registry.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_weds_gateway_registry_a0f08cc4b2892908f35d37b0c3dc7606a}{Weds\+Gateway\+Registry}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the registry. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_a42a452d8ba36f14d5461d24f850b37c1}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the registry. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_ad29199e35b285f107797dd145110a514}{load\+Persistent\+Config}} ()
+\begin{DoxyCompactList}\small\item\em Loads persistent configuration from storage. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_a4960331c39e666863691a630bbdc08ee}{save\+Persistent\+Config}} ()
+\begin{DoxyCompactList}\small\item\em Saves persistent configuration to storage. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_a0258ae0464a1c2356f2727043d122d4a}{clear\+Persistent\+Config}} ()
+\begin{DoxyCompactList}\small\item\em Clears the persistent configuration. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_a36851570595a293866cdcdfe310cb120}{update\+Node\+Status}} (uint32\+\_\+t node\+\_\+id, uint16\+\_\+t sequence\+\_\+id, uint8\+\_\+t msg\+\_\+type, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\begin{DoxyCompactList}\small\item\em Updates a node\textquotesingle{}s status and manages its events/\+trends. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_a238e2c0dbdc3dd3a4a52d138cb1f05f8}{get\+Node\+State}} (uint32\+\_\+t node\+\_\+id, \doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&out\+\_\+record) const
+\begin{DoxyCompactList}\small\item\em Retrieves the current state of a specific node. \end{DoxyCompactList}\item 
+size\+\_\+t \doxymbox{\hyperlink{class_weds_gateway_registry_aa7f270ba1c0dc0885ef83b3ed0fb8398}{get\+All\+Nodes}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \texorpdfstring{$\ast$}{*}out\+\_\+records, size\+\_\+t max\+\_\+records) const
+\begin{DoxyCompactList}\small\item\em Retrieves records of all known nodes. \end{DoxyCompactList}\item 
+size\+\_\+t \doxymbox{\hyperlink{class_weds_gateway_registry_ad2fcc0a1c09b115d929a3ea5e1e80a02}{get\+Unlocated\+Nodes}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \texorpdfstring{$\ast$}{*}out\+\_\+records, size\+\_\+t max\+\_\+records) const
+\begin{DoxyCompactList}\small\item\em Retrieves records of nodes that don\textquotesingle{}t have a known location. \end{DoxyCompactList}\item 
+size\+\_\+t \doxymbox{\hyperlink{class_weds_gateway_registry_af794dbd0b28b6843318400705c999760}{get\+Known\+Node\+Count}} () const
+\begin{DoxyCompactList}\small\item\em Gets the count of known nodes. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_a8296dd21c94cb7f20d6759aa116f0c79}{set\+Node\+Location}} (uint32\+\_\+t node\+\_\+id, double latitude, double longitude)
+\begin{DoxyCompactList}\small\item\em Sets the location for a node in RAM. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_a134ea9ed5857068827924e91c434e615}{is\+Duplicate\+Reliable\+Packet}} (uint32\+\_\+t node\+\_\+id, uint16\+\_\+t sequence\+\_\+id, uint8\+\_\+t msg\+\_\+type) const
+\begin{DoxyCompactList}\small\item\em Checks if a received reliable packet is a duplicate. \end{DoxyCompactList}\item 
+size\+\_\+t \doxymbox{\hyperlink{class_weds_gateway_registry_a2b74d4376b434f05bfa1dd6d6aea795f}{find\+Neighbors}} (uint32\+\_\+t source\+\_\+node\+\_\+id, uint32\+\_\+t \texorpdfstring{$\ast$}{*}out\+\_\+neighbors, size\+\_\+t max\+\_\+neighbors) const
+\begin{DoxyCompactList}\small\item\em Finds neighboring nodes within a certain radius. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_ae5f06aa037e59ac0a337f49f8d815241}{create\+Alert\+Commands\+For\+Neighbors}} (uint32\+\_\+t source\+\_\+node\+\_\+id, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\begin{DoxyCompactList}\small\item\em Creates pending alert commands for neighbors of a source node. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_weds_gateway_registry_a22065dc78ba8b534e6281f4467a97f63}{has\+Pending\+Alert\+Command}} (uint32\+\_\+t node\+\_\+id, \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&out\+\_\+command) const
+\begin{DoxyCompactList}\small\item\em Checks if there is a pending alert command for a node. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_a448561aa3b17311c2c8effd560c8f599}{set\+Pending\+Alert\+Command}} (uint32\+\_\+t node\+\_\+id, const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&command)
+\begin{DoxyCompactList}\small\item\em Sets a pending alert command for a node. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_ad86c7d3a7f845e42d46fd12995f654d6}{clear\+Pending\+Alert\+Command}} (uint32\+\_\+t node\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Clears any pending alert command for a given node. \end{DoxyCompactList}\item 
+size\+\_\+t \doxymbox{\hyperlink{class_weds_gateway_registry_a7db00f3365f6fdc46848467e1e59d9bb}{get\+Node\+Events}} (uint32\+\_\+t node\+\_\+id, \doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} \texorpdfstring{$\ast$}{*}out\+\_\+events, size\+\_\+t max\+\_\+events) const
+\begin{DoxyCompactList}\small\item\em Retrieves events for a specific node. \end{DoxyCompactList}\item 
+size\+\_\+t \doxymbox{\hyperlink{class_weds_gateway_registry_adea9d7d247bdc759b311797792496282}{get\+Node\+Trend}} (uint32\+\_\+t node\+\_\+id, \doxymbox{\hyperlink{struct_weds_trend_point}{Weds\+Trend\+Point}} \texorpdfstring{$\ast$}{*}out\+\_\+points, size\+\_\+t max\+\_\+points) const
+\begin{DoxyCompactList}\small\item\em Retrieves trend points for a specific node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_weds_gateway_registry_a196aa6aaa24400a50267638d409b309d}{find\+Or\+Create\+Record}} (uint32\+\_\+t node\+\_\+id)
+\item 
+const \doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_weds_gateway_registry_aa939079c91f8e0a0f6b65cd9e8222b6a}{find\+Record}} (uint32\+\_\+t node\+\_\+id) const
+\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_a0b28288e06b32399f9c60b8f3ce309a1}{init\+Record}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&record, uint32\+\_\+t node\+\_\+id)
+\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_a257f2d681e6ad00d8a466d1cc4400702}{update\+Event\+Streak}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&record, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_a8a103a2f18610d712349001b6a9ec577}{open\+Event\+Streak}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&record, \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}} type, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_a6ad7050cdb00e0da4df96a71769b0f92}{update\+Open\+Event\+Streak}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&record, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_a3a178e89a5543f7134c95b4d6678c68e}{close\+Event\+Streak}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&record, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_aa7133072c5300f19c69a4ac3a79fc671}{push\+Event}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&record, const \doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} \&event)
+\item 
+void \doxymbox{\hyperlink{class_weds_gateway_registry_a4669424a3c1e44ea4deb60c8520f0f01}{update\+Trend}} (\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&record, const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{class_weds_gateway_registry_ac69b0a51df72c75e8df6baab11150407}{is\+Alert\+Status}} (const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\item 
+static \doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}} \doxymbox{\hyperlink{class_weds_gateway_registry_acda313629d7d094350b5c4d96970b999}{get\+Event\+Type\+From\+Status}} (const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&status)
+\item 
+static double \doxymbox{\hyperlink{class_weds_gateway_registry_af7a38215a9b115eb3c74bafd7130d2bf}{distance\+Meters}} (double lat1, double lon1, double lat2, double lon2)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \doxymbox{\hyperlink{class_weds_gateway_registry_af0d96dc27b92397d48b9d5de70f1b00d}{records\+\_\+}} \+[\doxymbox{\hyperlink{_weds_gateway_config_8h_ad33d4e2e7788a097b6d36d84603dbf6b}{WEDS\+\_\+\+MAX\+\_\+\+NODES}}]\+
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{class_weds_gateway_registry_ae6884fc7b0a33912b09954108470d53d}{next\+\_\+event\+\_\+id\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Maintains the state, location, events, and trends of all known nodes. 
+
+\label{class_weds_gateway_registry_doc-constructors}
+\Hypertarget{class_weds_gateway_registry_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_weds_gateway_registry_a0f08cc4b2892908f35d37b0c3dc7606a}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\index{WedsGatewayRegistry@{WedsGatewayRegistry}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{WedsGatewayRegistry()}{WedsGatewayRegistry()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a0f08cc4b2892908f35d37b0c3dc7606a} 
+Weds\+Gateway\+Registry::\+\+Weds\+Gateway\+Registry (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the registry. 
+
+
+
+\label{class_weds_gateway_registry_doc-func-members}
+\Hypertarget{class_weds_gateway_registry_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_weds_gateway_registry_a42a452d8ba36f14d5461d24f850b37c1}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!begin@{begin}}
+\index{begin@{begin}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a42a452d8ba36f14d5461d24f850b37c1} 
+bool Weds\+Gateway\+Registry::\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the registry. 
+
+\begin{DoxyReturn}{Returns}
+true If successful. 
+
+false If initialization fails. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_ad86c7d3a7f845e42d46fd12995f654d6}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!clearPendingAlertCommand@{clearPendingAlertCommand}}
+\index{clearPendingAlertCommand@{clearPendingAlertCommand}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{clearPendingAlertCommand()}{clearPendingAlertCommand()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_ad86c7d3a7f845e42d46fd12995f654d6} 
+void Weds\+Gateway\+Registry::\+clear\+Pending\+Alert\+Command (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Clears any pending alert command for a given node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & Node ID. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_registry_a0258ae0464a1c2356f2727043d122d4a}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!clearPersistentConfig@{clearPersistentConfig}}
+\index{clearPersistentConfig@{clearPersistentConfig}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{clearPersistentConfig()}{clearPersistentConfig()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a0258ae0464a1c2356f2727043d122d4a} 
+bool Weds\+Gateway\+Registry::\+clear\+Persistent\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Clears the persistent configuration. 
+
+\begin{DoxyReturn}{Returns}
+true If successful. 
+
+false If clearing fails. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a3a178e89a5543f7134c95b4d6678c68e}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!closeEventStreak@{closeEventStreak}}
+\index{closeEventStreak@{closeEventStreak}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{closeEventStreak()}{closeEventStreak()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a3a178e89a5543f7134c95b4d6678c68e} 
+void Weds\+Gateway\+Registry::\+close\+Event\+Streak (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{record}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_ae5f06aa037e59ac0a337f49f8d815241}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!createAlertCommandsForNeighbors@{createAlertCommandsForNeighbors}}
+\index{createAlertCommandsForNeighbors@{createAlertCommandsForNeighbors}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{createAlertCommandsForNeighbors()}{createAlertCommandsForNeighbors()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_ae5f06aa037e59ac0a337f49f8d815241} 
+void Weds\+Gateway\+Registry::\+create\+Alert\+Commands\+For\+Neighbors (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{source\+\_\+node\+\_\+id}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})}
+
+
+
+Creates pending alert commands for neighbors of a source node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source\+\_\+node\+\_\+id} & The source node\textquotesingle{}s ID. \\
+\hline
+{\em status} & Status payload indicating an alert. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_registry_af7a38215a9b115eb3c74bafd7130d2bf}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!distanceMeters@{distanceMeters}}
+\index{distanceMeters@{distanceMeters}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{distanceMeters()}{distanceMeters()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_af7a38215a9b115eb3c74bafd7130d2bf} 
+double Weds\+Gateway\+Registry::\+distance\+Meters (\begin{DoxyParamCaption}\item[{double}]{lat1}{, }\item[{double}]{lon1}{, }\item[{double}]{lat2}{, }\item[{double}]{lon2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_a2b74d4376b434f05bfa1dd6d6aea795f}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!findNeighbors@{findNeighbors}}
+\index{findNeighbors@{findNeighbors}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{findNeighbors()}{findNeighbors()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a2b74d4376b434f05bfa1dd6d6aea795f} 
+size\+\_\+t Weds\+Gateway\+Registry::\+find\+Neighbors (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{source\+\_\+node\+\_\+id}{, }\item[{uint32\+\_\+t \texorpdfstring{$\ast$}{*}}]{out\+\_\+neighbors}{, }\item[{size\+\_\+t}]{max\+\_\+neighbors}{}\end{DoxyParamCaption}) const}
+
+
+
+Finds neighboring nodes within a certain radius. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source\+\_\+node\+\_\+id} & The ID of the center node. \\
+\hline
+{\em out\+\_\+neighbors} & Array to store the IDs of neighbor nodes. \\
+\hline
+{\em max\+\_\+neighbors} & Maximum capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+size\+\_\+t Number of neighbors found. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a196aa6aaa24400a50267638d409b309d}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!findOrCreateRecord@{findOrCreateRecord}}
+\index{findOrCreateRecord@{findOrCreateRecord}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{findOrCreateRecord()}{findOrCreateRecord()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a196aa6aaa24400a50267638d409b309d} 
+\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \texorpdfstring{$\ast$}{*} Weds\+Gateway\+Registry::\+find\+Or\+Create\+Record (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_aa939079c91f8e0a0f6b65cd9e8222b6a}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!findRecord@{findRecord}}
+\index{findRecord@{findRecord}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{findRecord()}{findRecord()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_aa939079c91f8e0a0f6b65cd9e8222b6a} 
+const \doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \texorpdfstring{$\ast$}{*} Weds\+Gateway\+Registry::\+find\+Record (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_aa7f270ba1c0dc0885ef83b3ed0fb8398}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!getAllNodes@{getAllNodes}}
+\index{getAllNodes@{getAllNodes}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{getAllNodes()}{getAllNodes()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_aa7f270ba1c0dc0885ef83b3ed0fb8398} 
+size\+\_\+t Weds\+Gateway\+Registry::\+get\+All\+Nodes (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \texorpdfstring{$\ast$}{*}}]{out\+\_\+records}{, }\item[{size\+\_\+t}]{max\+\_\+records}{}\end{DoxyParamCaption}) const}
+
+
+
+Retrieves records of all known nodes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+\_\+records} & Array to store the records. \\
+\hline
+{\em max\+\_\+records} & Maximum capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+size\+\_\+t The number of records retrieved. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_acda313629d7d094350b5c4d96970b999}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!getEventTypeFromStatus@{getEventTypeFromStatus}}
+\index{getEventTypeFromStatus@{getEventTypeFromStatus}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{getEventTypeFromStatus()}{getEventTypeFromStatus()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_acda313629d7d094350b5c4d96970b999} 
+\doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}} Weds\+Gateway\+Registry::\+get\+Event\+Type\+From\+Status (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_af794dbd0b28b6843318400705c999760}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!getKnownNodeCount@{getKnownNodeCount}}
+\index{getKnownNodeCount@{getKnownNodeCount}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{getKnownNodeCount()}{getKnownNodeCount()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_af794dbd0b28b6843318400705c999760} 
+size\+\_\+t Weds\+Gateway\+Registry::\+get\+Known\+Node\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the count of known nodes. 
+
+\begin{DoxyReturn}{Returns}
+size\+\_\+t Node count. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a7db00f3365f6fdc46848467e1e59d9bb}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!getNodeEvents@{getNodeEvents}}
+\index{getNodeEvents@{getNodeEvents}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{getNodeEvents()}{getNodeEvents()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a7db00f3365f6fdc46848467e1e59d9bb} 
+size\+\_\+t Weds\+Gateway\+Registry::\+get\+Node\+Events (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{, }\item[{\doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} \texorpdfstring{$\ast$}{*}}]{out\+\_\+events}{, }\item[{size\+\_\+t}]{max\+\_\+events}{}\end{DoxyParamCaption}) const}
+
+
+
+Retrieves events for a specific node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & Node ID. \\
+\hline
+{\em out\+\_\+events} & Array to store the events. \\
+\hline
+{\em max\+\_\+events} & Maximum capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+size\+\_\+t Number of events retrieved. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a238e2c0dbdc3dd3a4a52d138cb1f05f8}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!getNodeState@{getNodeState}}
+\index{getNodeState@{getNodeState}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{getNodeState()}{getNodeState()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a238e2c0dbdc3dd3a4a52d138cb1f05f8} 
+bool Weds\+Gateway\+Registry::\+get\+Node\+State (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{, }\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{out\+\_\+record}{}\end{DoxyParamCaption}) const}
+
+
+
+Retrieves the current state of a specific node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & Node ID to fetch. \\
+\hline
+{\em out\+\_\+record} & Reference to store the retrieved record. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If the node exists. 
+
+false If the node was not found. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_adea9d7d247bdc759b311797792496282}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!getNodeTrend@{getNodeTrend}}
+\index{getNodeTrend@{getNodeTrend}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{getNodeTrend()}{getNodeTrend()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_adea9d7d247bdc759b311797792496282} 
+size\+\_\+t Weds\+Gateway\+Registry::\+get\+Node\+Trend (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{, }\item[{\doxymbox{\hyperlink{struct_weds_trend_point}{Weds\+Trend\+Point}} \texorpdfstring{$\ast$}{*}}]{out\+\_\+points}{, }\item[{size\+\_\+t}]{max\+\_\+points}{}\end{DoxyParamCaption}) const}
+
+
+
+Retrieves trend points for a specific node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & Node ID. \\
+\hline
+{\em out\+\_\+points} & Array to store trend points. \\
+\hline
+{\em max\+\_\+points} & Maximum capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+size\+\_\+t Number of points retrieved. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_ad2fcc0a1c09b115d929a3ea5e1e80a02}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!getUnlocatedNodes@{getUnlocatedNodes}}
+\index{getUnlocatedNodes@{getUnlocatedNodes}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{getUnlocatedNodes()}{getUnlocatedNodes()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_ad2fcc0a1c09b115d929a3ea5e1e80a02} 
+size\+\_\+t Weds\+Gateway\+Registry::\+get\+Unlocated\+Nodes (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \texorpdfstring{$\ast$}{*}}]{out\+\_\+records}{, }\item[{size\+\_\+t}]{max\+\_\+records}{}\end{DoxyParamCaption}) const}
+
+
+
+Retrieves records of nodes that don\textquotesingle{}t have a known location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+\_\+records} & Array to store the records. \\
+\hline
+{\em max\+\_\+records} & Maximum capacity of the array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+size\+\_\+t The number of unlocated nodes retrieved. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a22065dc78ba8b534e6281f4467a97f63}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!hasPendingAlertCommand@{hasPendingAlertCommand}}
+\index{hasPendingAlertCommand@{hasPendingAlertCommand}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{hasPendingAlertCommand()}{hasPendingAlertCommand()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a22065dc78ba8b534e6281f4467a97f63} 
+bool Weds\+Gateway\+Registry::\+has\+Pending\+Alert\+Command (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{, }\item[{\doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&}]{out\+\_\+command}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks if there is a pending alert command for a node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & The node ID to check. \\
+\hline
+{\em out\+\_\+command} & Reference to store the pending command. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If a command is pending. 
+
+false Otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a0b28288e06b32399f9c60b8f3ce309a1}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!initRecord@{initRecord}}
+\index{initRecord@{initRecord}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{initRecord()}{initRecord()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a0b28288e06b32399f9c60b8f3ce309a1} 
+void Weds\+Gateway\+Registry::\+init\+Record (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{record}{, }\item[{uint32\+\_\+t}]{node\+\_\+id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_ac69b0a51df72c75e8df6baab11150407}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!isAlertStatus@{isAlertStatus}}
+\index{isAlertStatus@{isAlertStatus}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{isAlertStatus()}{isAlertStatus()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_ac69b0a51df72c75e8df6baab11150407} 
+bool Weds\+Gateway\+Registry::\+is\+Alert\+Status (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_a134ea9ed5857068827924e91c434e615}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!isDuplicateReliablePacket@{isDuplicateReliablePacket}}
+\index{isDuplicateReliablePacket@{isDuplicateReliablePacket}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{isDuplicateReliablePacket()}{isDuplicateReliablePacket()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a134ea9ed5857068827924e91c434e615} 
+bool Weds\+Gateway\+Registry::\+is\+Duplicate\+Reliable\+Packet (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{, }\item[{uint16\+\_\+t}]{sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{msg\+\_\+type}{}\end{DoxyParamCaption}) const}
+
+
+
+Checks if a received reliable packet is a duplicate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & Source node ID. \\
+\hline
+{\em sequence\+\_\+id} & Sequence ID. \\
+\hline
+{\em msg\+\_\+type} & Message type. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If it is a duplicate. 
+
+false Otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_ad29199e35b285f107797dd145110a514}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!loadPersistentConfig@{loadPersistentConfig}}
+\index{loadPersistentConfig@{loadPersistentConfig}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{loadPersistentConfig()}{loadPersistentConfig()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_ad29199e35b285f107797dd145110a514} 
+bool Weds\+Gateway\+Registry::\+load\+Persistent\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Loads persistent configuration from storage. 
+
+\begin{DoxyReturn}{Returns}
+true If successful. 
+
+false If loading fails. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a8a103a2f18610d712349001b6a9ec577}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!openEventStreak@{openEventStreak}}
+\index{openEventStreak@{openEventStreak}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{openEventStreak()}{openEventStreak()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a8a103a2f18610d712349001b6a9ec577} 
+void Weds\+Gateway\+Registry::\+open\+Event\+Streak (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{record}{, }\item[{\doxymbox{\hyperlink{_weds_gateway_registry_8h_a1e1c991662ce8ff97f0899da82b93c71}{Weds\+Event\+Type}}}]{type}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_aa7133072c5300f19c69a4ac3a79fc671}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!pushEvent@{pushEvent}}
+\index{pushEvent@{pushEvent}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{pushEvent()}{pushEvent()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_aa7133072c5300f19c69a4ac3a79fc671} 
+void Weds\+Gateway\+Registry::\+push\+Event (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{record}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} \&}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_a4960331c39e666863691a630bbdc08ee}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!savePersistentConfig@{savePersistentConfig}}
+\index{savePersistentConfig@{savePersistentConfig}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{savePersistentConfig()}{savePersistentConfig()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a4960331c39e666863691a630bbdc08ee} 
+bool Weds\+Gateway\+Registry::\+save\+Persistent\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Saves persistent configuration to storage. 
+
+\begin{DoxyReturn}{Returns}
+true If successful. 
+
+false If saving fails. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a8296dd21c94cb7f20d6759aa116f0c79}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!setNodeLocation@{setNodeLocation}}
+\index{setNodeLocation@{setNodeLocation}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{setNodeLocation()}{setNodeLocation()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a8296dd21c94cb7f20d6759aa116f0c79} 
+bool Weds\+Gateway\+Registry::\+set\+Node\+Location (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{, }\item[{double}]{latitude}{, }\item[{double}]{longitude}{}\end{DoxyParamCaption})}
+
+
+
+Sets the location for a node in RAM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & Node ID. \\
+\hline
+{\em latitude} & Latitude to set. \\
+\hline
+{\em longitude} & Longitude to set. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If location was successfully set. 
+
+false If setting location failed. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a448561aa3b17311c2c8effd560c8f599}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!setPendingAlertCommand@{setPendingAlertCommand}}
+\index{setPendingAlertCommand@{setPendingAlertCommand}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{setPendingAlertCommand()}{setPendingAlertCommand()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a448561aa3b17311c2c8effd560c8f599} 
+void Weds\+Gateway\+Registry::\+set\+Pending\+Alert\+Command (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{, }\item[{const \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \&}]{command}{}\end{DoxyParamCaption})}
+
+
+
+Sets a pending alert command for a node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & Node ID. \\
+\hline
+{\em command} & The command to set. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_weds_gateway_registry_a257f2d681e6ad00d8a466d1cc4400702}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!updateEventStreak@{updateEventStreak}}
+\index{updateEventStreak@{updateEventStreak}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{updateEventStreak()}{updateEventStreak()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a257f2d681e6ad00d8a466d1cc4400702} 
+void Weds\+Gateway\+Registry::\+update\+Event\+Streak (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{record}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_a36851570595a293866cdcdfe310cb120}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!updateNodeStatus@{updateNodeStatus}}
+\index{updateNodeStatus@{updateNodeStatus}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{updateNodeStatus()}{updateNodeStatus()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a36851570595a293866cdcdfe310cb120} 
+bool Weds\+Gateway\+Registry::\+update\+Node\+Status (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{node\+\_\+id}{, }\item[{uint16\+\_\+t}]{sequence\+\_\+id}{, }\item[{uint8\+\_\+t}]{msg\+\_\+type}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})}
+
+
+
+Updates a node\textquotesingle{}s status and manages its events/\+trends. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+id} & The ID of the node. \\
+\hline
+{\em sequence\+\_\+id} & Sequence ID of the incoming packet. \\
+\hline
+{\em msg\+\_\+type} & Type of the incoming message. \\
+\hline
+{\em status} & The payload status. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true If updated successfully. 
+
+false If update fails. 
+\end{DoxyReturn}
+\Hypertarget{class_weds_gateway_registry_a6ad7050cdb00e0da4df96a71769b0f92}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!updateOpenEventStreak@{updateOpenEventStreak}}
+\index{updateOpenEventStreak@{updateOpenEventStreak}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{updateOpenEventStreak()}{updateOpenEventStreak()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a6ad7050cdb00e0da4df96a71769b0f92} 
+void Weds\+Gateway\+Registry::\+update\+Open\+Event\+Streak (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{record}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_a4669424a3c1e44ea4deb60c8520f0f01}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!updateTrend@{updateTrend}}
+\index{updateTrend@{updateTrend}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{updateTrend()}{updateTrend()}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_a4669424a3c1e44ea4deb60c8520f0f01} 
+void Weds\+Gateway\+Registry::\+update\+Trend (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} \&}]{record}{, }\item[{const \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \&}]{status}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\label{class_weds_gateway_registry_doc-variable-members}
+\Hypertarget{class_weds_gateway_registry_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{class_weds_gateway_registry_ae6884fc7b0a33912b09954108470d53d}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!next\_event\_id\_@{next\_event\_id\_}}
+\index{next\_event\_id\_@{next\_event\_id\_}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{next\_event\_id\_}{next\_event\_id\_}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_ae6884fc7b0a33912b09954108470d53d} 
+uint32\+\_\+t Weds\+Gateway\+Registry::\+next\+\_\+event\+\_\+id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_weds_gateway_registry_af0d96dc27b92397d48b9d5de70f1b00d}\index{WedsGatewayRegistry@{WedsGatewayRegistry}!records\_@{records\_}}
+\index{records\_@{records\_}!WedsGatewayRegistry@{WedsGatewayRegistry}}
+\doxysubsubsection{\texorpdfstring{records\_}{records\_}}
+{\footnotesize\ttfamily \label{class_weds_gateway_registry_af0d96dc27b92397d48b9d5de70f1b00d} 
+\doxymbox{\hyperlink{struct_weds_node_record}{Weds\+Node\+Record}} Weds\+Gateway\+Registry::\+records\+\_\+\+[\doxymbox{\hyperlink{_weds_gateway_config_8h_ad33d4e2e7788a097b6d36d84603dbf6b}{WEDS\+\_\+\+MAX\+\_\+\+NODES}}]\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+gateway\+\_\+registry/\+\doxymbox{\hyperlink{_weds_gateway_registry_8h}{Weds\+Gateway\+Registry.\+h}}\item 
+code/\+lib/\+weds\+\_\+gateway\+\_\+registry/\+\doxymbox{\hyperlink{_weds_gateway_registry_8cpp}{Weds\+Gateway\+Registry.\+cpp}}\end{DoxyCompactItemize}

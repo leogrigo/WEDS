@@ -1,0 +1,27 @@
+\doxysection{Weds\+Node\+Simulation.\+h}
+\hypertarget{_weds_node_simulation_8h_source}{}\label{_weds_node_simulation_8h_source}\index{code/lib/weds\_node\_simulation/WedsNodeSimulation.h@{code/lib/weds\_node\_simulation/WedsNodeSimulation.h}}
+\doxymbox{\hyperlink{_weds_node_simulation_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_sensor_sample_8h}{WedsSensorSample.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_weds_node_config_8h}{WedsNodeConfig.h}}"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_weds_simulation_state}{WedsSimulationState}}\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_simulation_state_ae421efe19d865f7a0c501776b65b3abd}{tick}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00014\ \ \ \ \ uint32\_t\ \doxymbox{\hyperlink{struct_weds_simulation_state_ac1458327f746fde2398aeaf495e514a8}{mode\_tick}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_simulation_state_aad4b5b59f28e8a9b1d5c358918f22a0b}{in\_warmup}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_weds_simulation_state_a52124234352954ecf3a008fc0c5ab3c0}{fault\_initialized}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_simulation_state_aa6c5097134a13ec4a16bd686f79155d1}{fault\_temperature}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_simulation_state_a2259456d17589909cae3225debc57f04}{fault\_humidity}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_simulation_state_adb6fc505f869559698bda86b44003b4b}{fault\_pressure}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_weds_simulation_state_aebfb987f242b72498063602e591ef231}{fault\_gas\_resistance}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{extern}\ \doxymbox{\hyperlink{struct_weds_simulation_state}{WedsSimulationState}}\ \doxymbox{\hyperlink{_weds_node_simulation_8cpp_a633416008e59c2e0d1683cb80dcefaf0}{weds\_simulation\_state}};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \doxymbox{\hyperlink{struct_weds_sensor_sample}{WedsSensorSample}}\ \doxymbox{\hyperlink{_weds_node_simulation_8h_a62de14ee70736a582a8e420ac81da776}{weds\_read\_simulated\_sample}}();}
+
+\end{DoxyCode}

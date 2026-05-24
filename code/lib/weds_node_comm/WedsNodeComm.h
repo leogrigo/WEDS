@@ -3,26 +3,74 @@
 #include <Arduino.h>
 #include "WedsProtocol.h"
 
+/**
+ * @class WedsNodeComm
+ * @brief Handles LoRa communication for the sensor node, including status, alerts, and command polling.
+ */
 class WedsNodeComm {
 public:
+    /**
+     * @brief Constructs a new WedsNodeComm object.
+     */
     WedsNodeComm();
 
-    bool begin();   // Initializes the communication module
-    void loop();    // Should be called regularly to handle incoming messages and maintain communication
+    /**
+     * @brief Initializes the communication module and the LoRa radio.
+     * @return true if initialization was successful, false otherwise.
+     */
+    bool begin();
 
-    bool sendStatus(const WedsNodeStatusPayload& status);   // Sends a status update to the gateway
-    bool sendAlert(const WedsNodeStatusPayload& status);    // Sends an alert to the gateway, with retry and ACK handling
+    /**
+     * @brief Handles incoming messages and maintains communication state. Must be called regularly.
+     */
+    void loop();
 
+    /**
+     * @brief Sends a status update payload to the gateway.
+     * @param status The status payload to send.
+     * @return true if the transmission was initiated successfully.
+     */
+    bool sendStatus(const WedsNodeStatusPayload& status);
+
+    /**
+     * @brief Sends an alert to the gateway, ensuring delivery through retries and ACK handling.
+     * @param status The alert status payload.
+     * @return true if the alert was successfully sent and acknowledged.
+     */
+    bool sendAlert(const WedsNodeStatusPayload& status);
+
+    /**
+     * @brief Polls for an incoming Alert Mode Enable command from the gateway.
+     * @param out_command The structure to populate with the command payload.
+     * @param timeout_ms The maximum time to wait for a command, in milliseconds.
+     * @return true if a command was received and decoded successfully.
+     */
     bool pollAlertModeEnable(
         WedsAlertModeEnablePayload& out_command,
         uint32_t timeout_ms
-    );  // Polls for an incoming Alert Mode Enable command from the gateway, with a specified timeout
+    );
 
-    void sleepRadio();  // Puts the LoRa radio in low-power sleep mode between node cycles
-    void wakeRadio();   // Wakes the LoRa radio before transmit or receive operations
+    /**
+     * @brief Puts the LoRa radio into a low-power sleep state.
+     */
+    void sleepRadio();
 
-    uint32_t getNodeId() const; // Returns the unique node ID of this device
-    uint16_t getCurrentSequenceId() const;  // Returns the current sequence ID that will be used for the next outgoing message (before incrementing)
+    /**
+     * @brief Wakes the LoRa radio from sleep mode.
+     */
+    void wakeRadio();
+
+    /**
+     * @brief Gets the unique identifier for this node.
+     * @return uint32_t The node ID.
+     */
+    uint32_t getNodeId() const;
+
+    /**
+     * @brief Gets the current sequence ID for outgoing messages.
+     * @return uint16_t The sequence ID.
+     */
+    uint16_t getCurrentSequenceId() const;
 
 private:
     uint32_t node_id_;

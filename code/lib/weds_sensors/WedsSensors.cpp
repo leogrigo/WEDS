@@ -12,6 +12,10 @@ namespace {
 Adafruit_AHTX0 aht;
 Adafruit_BMP280 bmp;
 
+/**
+ * @brief Prints a sample from the legacy sensors to the serial console.
+ * @param sample The sensor sample to print.
+ */
 void printSample(const WedsSensorSample& sample) {
     Serial.printf(
         "[SENSOR] temp=%.2f C hum=%.2f %% pressure=%.2f Pa gas_raw=%.0f gas=%.1f %%\n",
@@ -54,6 +58,13 @@ WedsSensorSample weds_read_environment_sample() {
     sample.humidity = humidity.relative_humidity;
     sample.pressure = pressure;
     sample.gas_resistance = static_cast<float>(analogRead(WEDS_MQ2_PIN));
+    
+    if (isnan(sample.temperature) || isnan(sample.humidity) || isnan(sample.pressure)) {
+        sample.valid = false;
+        Serial.println("[SENSOR] Error: read NaN from environmental sensors");
+    } else {
+        sample.valid = true;
+    }
 
     printSample(sample);
     return sample;
@@ -74,6 +85,10 @@ uint8_t bsecState[BSEC_MAX_STATE_BLOB_SIZE] = {0};
 int64_t rtc_simulated_millis = 0;
 uint64_t read_count = 0;
 
+/**
+ * @brief Validates the status of the BME68X sensor and BSEC library.
+ * @return true if the sensor is functioning correctly, false otherwise.
+ */
 bool checkBmeSensorStatus(void) {
   if (bmeSensor.bsecStatus != BSEC_OK || bmeSensor.bme68xStatus != BME68X_OK) {
     Serial.println("ERRORE SENSORE - Controllo cablaggio e I2C!");
@@ -111,13 +126,13 @@ bool weds_sensors_begin(){
 
 bool weds_sensor_save_state(){
     bmeSensor.getState(bsecState);
-    //TODO: Add FS saving of bsecState
+    
     return checkBmeSensorStatus();
 }
 
 bool weds_sensor_load_state(uint8_t *state){
     if(state == nullptr || state == NULL){
-        //TODO: Add FS loading of bsecState
+        
         bmeSensor.setState(bsecState);
     }
     else{
@@ -134,13 +149,14 @@ WedsSensorSample weds_read_environment_sample(){
         sample.humidity = bmeSensor.humidity;
         sample.pressure = bmeSensor.pressure;
         sample.gas_resistance = bmeSensor.gasResistance;
+        sample.valid = true;
     }
     return sample;
 }
 
 int64_t weds_sensor_next_call_ms(){
     if(!checkBmeSensorStatus()) return -1;
-    return bmeSensor.nextCall;
+    return bmeSensor.nextCall / int64_t(1000000);
 }
 
 

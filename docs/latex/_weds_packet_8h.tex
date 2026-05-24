@@ -1,0 +1,17 @@
+\doxysection{code/\+lib/\+weds\+\_\+protocol/\+\+Weds\+Packet.h File Reference}
+\hypertarget{_weds_packet_8h}{}\label{_weds_packet_8h}\index{code/lib/weds\_protocol/WedsPacket.h@{code/lib/weds\_protocol/WedsPacket.h}}
+{\ttfamily \+\#include "{}Weds\+Types.\+h"{}}\newline
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_weds_packet_header}{Weds\+Packet\+Header}}
+\begin{DoxyCompactList}\small\item\em Represents the header of a WEDS packet. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_weds_packet}{Weds\+Packet}}
+\begin{DoxyCompactList}\small\item\em A generic WEDS packet including header and max-\/sized payload. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}}
+\begin{DoxyCompactList}\small\item\em Payload for NODE\+\_\+\+STATUS and NODE\+\_\+\+ALERT messages. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_weds_ack_payload}{Weds\+Ack\+Payload}}
+\begin{DoxyCompactList}\small\item\em Payload for acknowledgment messages. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}}
+\begin{DoxyCompactList}\small\item\em Payload for command enabling an alert mode on a node. \end{DoxyCompactList}\end{DoxyCompactItemize}

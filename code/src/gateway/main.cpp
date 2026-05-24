@@ -19,6 +19,10 @@ WedsGatewayApi gatewayApi;
 
 SemaphoreHandle_t registryMutex = nullptr;
 
+/**
+ * @brief Halts the system and blinks an error code if a critical failure occurs.
+ * @param message The error message to print.
+ */
 void fatalError(const char* message) {
     Serial.print("[FATAL] ");
     Serial.println(message);
@@ -28,25 +32,34 @@ void fatalError(const char* message) {
     }
 }
 
+/**
+ * @brief Acquires the mutex lock for the registry.
+ */
 void lockRegistry() {
     if (registryMutex != nullptr) {
         xSemaphoreTake(registryMutex, portMAX_DELAY);
     }
 }
 
+/**
+ * @brief Releases the mutex lock for the registry.
+ */
 void unlockRegistry() {
     if (registryMutex != nullptr) {
         xSemaphoreGive(registryMutex);
     }
 }
 
+/**
+ * @brief FreeRTOS task handling radio communication for the gateway.
+ * @param pvParameters Task parameters (unused).
+ */
 void GatewayRadioTask(void* pvParameters) {
     (void)pvParameters;
 
     for (;;) {
-        gatewayComm.loop();
-
         lockRegistry();
+        gatewayComm.loop();
         gatewayComm.poll();
         unlockRegistry();
 
@@ -54,6 +67,10 @@ void GatewayRadioTask(void* pvParameters) {
     }
 }
 
+/**
+ * @brief FreeRTOS task handling the REST API web server.
+ * @param pvParameters Task parameters (unused).
+ */
 void GatewayApiTask(void* pvParameters) {
     (void)pvParameters;
 
@@ -66,6 +83,9 @@ void GatewayApiTask(void* pvParameters) {
     }
 }
 
+/**
+ * @brief Creates and starts the FreeRTOS tasks for the gateway.
+ */
 void createGatewayTasks() {
     BaseType_t ok = xTaskCreatePinnedToCore(
         GatewayRadioTask,
@@ -98,6 +118,9 @@ void createGatewayTasks() {
 
 }  // namespace
 
+/**
+ * @brief Main setup function for the gateway firmware.
+ */
 void setup() {
     Serial.begin(115200);
     delay(2000);
@@ -146,6 +169,9 @@ void setup() {
     Serial.println("[GATEWAY] FreeRTOS tasks started");
 }
 
+/**
+ * @brief Main loop function for the gateway firmware.
+ */
 void loop() {
     vTaskDelay(pdMS_TO_TICKS(WEDS_GATEWAY_LOOP_IDLE_DELAY_MS));
 }

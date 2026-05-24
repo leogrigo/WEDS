@@ -1,0 +1,26 @@
+var class_weds_gateway_api =
+[
+    [ "WedsGatewayApi", "class_weds_gateway_api.html#a5ccb0b10392dcf885397e7a8ae42ec49", null ],
+    [ "appendNodeRecord", "class_weds_gateway_api.html#a0525c672c8246c1dc809380d77bef839", null ],
+    [ "begin", "class_weds_gateway_api.html#a07ae0aa42a9e87d2515d5707783e0f7a", null ],
+    [ "detectionStateToString", "class_weds_gateway_api.html#a22c6a946aa071a060de0ec18acf3ec20", null ],
+    [ "eventTypeToString", "class_weds_gateway_api.html#a42ba56cd0e453d72f360df892b005241", null ],
+    [ "handleClearConfig", "class_weds_gateway_api.html#a194bc6e6f114f885fa3a9ddecf54c979", null ],
+    [ "handleClient", "class_weds_gateway_api.html#a8fbbd1107a1778b3cf615b90d53c3dec", null ],
+    [ "handleGetNodeEvents", "class_weds_gateway_api.html#af16af7c18afdc38183ad4d0fd2c7e77c", null ],
+    [ "handleGetNodeState", "class_weds_gateway_api.html#a26f6192878b5a15f01ba25aa64db1d06", null ],
+    [ "handleGetNodeTrend", "class_weds_gateway_api.html#aea000f6c5c6b2e3da15c3fb6e41eacdb", null ],
+    [ "handleGetStateAll", "class_weds_gateway_api.html#a6cc1371d13ad68bb0fef8b23718e93a9", null ],
+    [ "handleGetUnlocatedNodes", "class_weds_gateway_api.html#a6d2ed454880223164ff8c156be9e1916", null ],
+    [ "handleRootInfo", "class_weds_gateway_api.html#a2ba5e7a7155d6c7b8718079e8337991f", null ],
+    [ "handleSetLocation", "class_weds_gateway_api.html#a9ac8ed455bf0b8541568dcf9d67a4497", null ],
+    [ "localIP", "class_weds_gateway_api.html#a9e633acf6e6f631e17f89a29d908afe4", null ],
+    [ "parseNodeIdArg", "class_weds_gateway_api.html#aa41008ed09b50d1cbee33e33ef70dc17", null ],
+    [ "sendError", "class_weds_gateway_api.html#ad4f926eb57bfd299ebe41be3d45e5809", null ],
+    [ "sendJson", "class_weds_gateway_api.html#a9d014cf7d44dc73634f3bb2baced98e1", null ],
+    [ "setupRoutes", "class_weds_gateway_api.html#af7f52e22ae7fbb47537abf3da0fd95fc", null ],
+    [ "syncClock", "class_weds_gateway_api.html#ae97a2c6b6d2a6c216a259795204c57ad", null ],
+    [ "initialized_", "class_weds_gateway_api.html#a865cf3d29c277413fd2829f73d9245fa", null ],
+    [ "registry_", "class_weds_gateway_api.html#ab42e16e6bf6ea385defdb9878558c1f1", null ],
+    [ "server_", "class_weds_gateway_api.html#afbf7a3c8b49694a46e459f3149fed8af", null ]
+];

@@ -7,8 +7,13 @@
 #include "WedsGatewayConfig.h"
 #include "WedsGatewayWeb.h"
 
+/** @brief Buffer for API operations retrieving node records */
 static WedsNodeRecord api_record_buffer[WEDS_MAX_NODES];
+
+/** @brief Buffer for API operations retrieving node events */
 static WedsNodeEvent api_event_buffer[WEDS_MAX_EVENTS_PER_NODE];
+
+/** @brief Buffer for API operations retrieving node trend data */
 static WedsTrendPoint api_trend_buffer[WEDS_TREND_POINTS_PER_NODE];
 
 WedsGatewayApi::WedsGatewayApi()

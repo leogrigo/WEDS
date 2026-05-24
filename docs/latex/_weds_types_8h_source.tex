@@ -1,0 +1,44 @@
+\doxysection{Weds\+Types.\+h}
+\hypertarget{_weds_types_8h_source}{}\label{_weds_types_8h_source}\index{code/lib/weds\_protocol/WedsTypes.h@{code/lib/weds\_protocol/WedsTypes.h}}
+\doxymbox{\hyperlink{_weds_types_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint8\_t\ \doxymbox{\hyperlink{_weds_types_8h_a633861d7d0407191fd54923241906559}{WEDS\_MAGIC}}\ =\ 0xA7;}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint32\_t\ \doxymbox{\hyperlink{_weds_types_8h_a95787e1ac69cbae9733a738ee151ce3b}{WEDS\_GATEWAY\_ID}}\ =\ 0;}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{_weds_types_8h_a21e4f4f414d430f602be27418c86eed5}{WEDS\_MAX\_PAYLOAD\_SIZE}}\ =\ 64;}
+\DoxyCodeLine{00011\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{_weds_types_8h_a9c23785ff1d1ce4a2443e87422ccfe32}{WEDS\_HEADER\_SIZE}}\ =\ 14;}
+\DoxyCodeLine{00012\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{_weds_types_8h_abd849f6253a0d8a04f42b368814dcd9b}{WEDS\_CRC\_SIZE}}\ =\ 2;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{_weds_types_8h_a29da742e2d17ae47a218edfc84f2e663}{WEDS\_MAX\_PACKET\_SIZE}}\ =}
+\DoxyCodeLine{00014\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_a9c23785ff1d1ce4a2443e87422ccfe32}{WEDS\_HEADER\_SIZE}}\ +\ \doxymbox{\hyperlink{_weds_types_8h_a21e4f4f414d430f602be27418c86eed5}{WEDS\_MAX\_PAYLOAD\_SIZE}}\ +\ \doxymbox{\hyperlink{_weds_types_8h_abd849f6253a0d8a04f42b368814dcd9b}{WEDS\_CRC\_SIZE}};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7}{WedsMessageType}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a9f65b55055d08f393377424b0f9fe178}{WEDS\_MSG\_NODE\_STATUS}}\ \ \ \ \ \ \ =\ 0x01,}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7af66bff15e80c6a37707676bd9b426a4b}{WEDS\_MSG\_NODE\_ALERT}}\ \ \ \ \ \ \ \ =\ 0x02,}
+\DoxyCodeLine{00022\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a944ddb5e276a5a3b4920981eec778e5f}{WEDS\_MSG\_ACK}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x03,}
+\DoxyCodeLine{00023\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_ab42245c1a5642dfd5640ddc7e83433a7a628797bbc01bd9f5a5ac0ed3cca5123d}{WEDS\_MSG\_ALERT\_MODE\_ENABLE}}\ =\ 0x10}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{_weds_types_8h_a59870914c672566f6ad2243259089b51}{WedsAckRequired}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_a59870914c672566f6ad2243259089b51ab71cec728247a75ca457ea6aeb346455}{WEDS\_ACK\_NOT\_REQUIRED}}\ =\ 0,}
+\DoxyCodeLine{00031\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_a59870914c672566f6ad2243259089b51a4f594505dd380d007ff672ea8dccbe3f}{WEDS\_ACK\_REQUIRED}}\ \ \ \ \ =\ 1}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976a}{WedsDetectionState}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976aa7d89de7226f5a66c3e7d862819eedf2c}{WEDS\_DETECTION\_NORMAL}}\ =\ 0,}
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_a6de9177ec0a4657ac5f908d8016b976aaa1f9f5012194187430fa08a69f41c570}{WEDS\_DETECTION\_ALERT}}\ \ =\ 1}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{enum}\ \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146}{WedsAckStatus}}\ :\ uint8\_t\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146a3a57761239b8bc9fe2b5d6430b90d7f9}{WEDS\_ACK\_STATUS\_OK}}\ =\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146af85a9fb5b8939ec2dbcde7808125d8fe}{WEDS\_ACK\_STATUS\_INVALID\_PACKET}}\ =\ 1,\ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146ae8d9a1830027ce3295b4522581df126b}{WEDS\_ACK\_STATUS\_UNSUPPORTED\_MSG}}\ =\ 2,\ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146a8a18b52750dda3699f1102adbc2dd7be}{WEDS\_ACK\_STATUS\_CRC\_ERROR}}\ =\ 3\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \};}
+
+\end{DoxyCode}

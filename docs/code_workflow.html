@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEDS Firmware Workflow Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #131c31;
+            --bg-tertiary: #1b2640;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --accent-glow-hover: rgba(59, 130, 246, 0.3);
+            
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-tertiary: #6b7280;
+            
+            --cyan: #06b6d4;
+            --emerald: #10b981;
+            --orange: #f97316;
+            --rose: #f43f5e;
+            --indigo: #6366f1;
+            
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(59, 130, 246, 0.4);
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 1.5rem;
+            background: var(--cyan);
+            border-radius: 4px;
+        }
+
+        /* Layout Grid */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 900px) {
+            .layout-grid {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, var(--accent-glow), transparent 60%);
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .card:hover::before {
+            background: radial-gradient(circle at top right, var(--accent-glow-hover), transparent 65%);
+        }
+
+        /* Interactive Steps */
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1.25rem;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: var(--transition);
+        }
+
+        .step-item:hover {
+            background-color: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--indigo) 100%);
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: #ffffff;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        .badge-cyan { background-color: rgba(6, 182, 212, 0.1); color: var(--cyan); border: 1px solid rgba(6, 182, 212, 0.2); }
+        .badge-emerald { background-color: rgba(16, 182, 212, 0.1); color: var(--emerald); border: 1px solid rgba(16, 182, 212, 0.2); }
+        .badge-orange { background-color: rgba(249, 115, 22, 0.1); color: var(--orange); border: 1px solid rgba(249, 115, 22, 0.2); }
+        .badge-indigo { background-color: rgba(99, 102, 241, 0.1); color: var(--indigo); border: 1px solid rgba(99, 102, 241, 0.2); }
+
+        /* Flowchart / Mermaid styling */
+        .mermaid-container {
+            background-color: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .mermaid {
+            background: transparent !important;
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+
+        /* Config / Parameters section */
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .param-table th, .param-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .param-table th {
+            color: var(--text-primary);
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .param-table td {
+            color: var(--text-secondary);
+        }
+
+        .param-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        .code-term {
+            font-family: monospace;
+            background-color: rgba(255, 255, 255, 0.06);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            color: #e5e7eb;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WEDS Firmware Flow & Loop Architecture</h1>
+            <p class="subtitle">An architectural breakdown of the Wildfire Early Detection System's node execution path, featuring Hardware Deep Sleep and Dynamic Duty Cycling.</p>
+        </header>
+
+        <main class="layout-grid">
+            <!-- Left Column: Flowchart and detail -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <div class="card">
+                    <h2>Firmware Loop Execution Flow</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        The ESP32 firmware utilizes a <strong>linear "Wake &rarr; Process &rarr; Sleep" one-shot pipeline</strong> optimized for true hardware deep sleep. Upon every boot or sleep wakeup, the entire cycle executes sequentially, and the MCU drops directly into a power-off state to maximize battery conservation.
+                    </p>
+                    <div class="mermaid-container">
+                        <pre class="mermaid">
+flowchart TD
+    %% Styling Configuration
+    classDef init stroke:#06b6d4,stroke-width:2px,fill:#131c31;
+    classDef process stroke:#6366f1,stroke-width:2px,fill:#131c31;
+    classDef choice stroke:#f97316,stroke-width:2px,fill:#131c31;
+    classDef sleep stroke:#f43f5e,stroke-width:2px,fill:#131c31;
+
+    A([ESP32 Power On / Wakeup]) --> B[Boot Delay & Serial Setup]:::init
+    B --> C[Init Peripherals & LoRa Radio]:::init
+    C --> D[Initialize TFLite Risk Model]:::init
+    D --> E[Read Environmental Sensors]:::process
+    
+    E --> F{Is Sample Valid?}:::choice
+    
+    F -- No (NaN / Fault) --> G["Log: Sensor fault detected — retry in 5 s"]:::choice
+    G --> J[Radio Standby & Deep Sleep 5 s]:::sleep
+    
+    F -- Yes --> K[Retrieve RTC Retained Virtual Timestamp]:::process
+    K --> L[Update Anomaly Detector - EMA Filter]:::process
+    L --> M[Update TinyML Risk Model - RTC Ring Buffer]:::process
+    M --> N[Construct Status Payload]:::process
+    
+    N --> O[Open LoRa RX Poll Window for 250ms]:::process
+    O --> P[Dispatch Status Payload / Alert via LoRa]:::process
+    P --> Q[Calculate Risk-based Sleep Duration]:::choice
+    
+    Q --> R[Advance virtual timestamp by awake_time + sleep_sec]:::process
+    R --> S[Sleep LoRa Radio]:::sleep
+    S --> T[Invoke esp_deep_sleep for sleep_sec]:::sleep
+    T --> J
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>RTC-Backed Persistence and Time Synchronization</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+                        Since deep sleep turns off all SRAM domains, standard volatile variables are lost on every cycle. To maintain a <strong>7-day rolling average</strong> for TinyML time-series features (deltas and rolling averages) without external RTC chips or complex internet connections, the firmware leverages <strong>ESP32 RTC slow memory</strong>:
+                    </p>
+                    <ul style="list-style-type: none; display: flex; flex-direction: column; gap: 1rem; color: var(--text-secondary); font-size: 0.92rem;">
+                        <li style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                            <span style="color: var(--cyan); font-weight: bold;">✔</span>
+                            <span><strong>RTC Memory Reservation:</strong> Variables tagged with <span class="code-term">RTC_DATA_ATTR</span> are mapped to the 8KB RTC memory segment that remains powered on during deep sleep. This includes the <span class="code-term">DailyBucket</span> ring buffer structure.</span>
+                        </li>
+                        <li style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                            <span style="color: var(--cyan); font-weight: bold;">✔</span>
+                            <span><strong>Virtual Clock Synchronization:</strong> A virtual timestamp (<span class="code-term">rtc_virtual_timestamp</span>) is retained in RTC memory. Before deep sleep, the processor computes the precise elapsed active time, adds the calculated sleep duration, and advances this virtual clock. This ensures the bucketing and time-series logic remains coherent across resets.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column: Interactive details and configurations -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <div class="card">
+                    <h2>Step-by-Step Architecture</h2>
+                    <div class="steps-container" style="margin-top: 1.5rem;">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Wakeup & Initialization</h3>
+                                <p>ESP32 boots. Serial outputs and I2C buses (Wire/Wire1) are initialized. Peripherals are booted, and LoRa radios configure with parameters.</p>
+                                <span class="badge badge-cyan">Boot / Setup</span>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Sensor Read & NaN Check</h3>
+                                <p>Sensing reads environmental conditions (BME688 or BMP280/AHT20). A safety guard intercepts NaN outputs. Invalid readings immediately abort loop and put the device to sleep.</p>
+                                <span class="badge badge-emerald">Data Collection</span>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>EMA & TinyML Inference</h3>
+                                <p>Averages and deltas are calculated. The 7-feature normalized vector is compiled into TFLite interpreter inputs. TinyML computes the fire risk score.</p>
+                                <span class="badge badge-orange">Edge Machine Learning</span>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Network & RX Window</h3>
+                                <p>The LoRa receiver is kept polling for 250ms to intercept any incoming alert commands or configuration parameters from the gateway. Status is dispatched.</p>
+                                <span class="badge badge-indigo">Communication</span>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>Deep Sleep Pipeline</h3>
+                                <p>Radio is shut down into standby. Dynamic duty cycle sets the sleep target. Virtual time is advanced. The MCU enters deep sleep, waking via internal timer.</p>
+                                <span class="badge badge-cyan">Power Optimization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Dynamic Duty Cycle parameters</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                        The sleep interval scales dynamically based on the risk score calculated by the TinyML model.
+                    </p>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Risk Band</th>
+                                <th>Threshold</th>
+                                <th>Sleep Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: var(--emerald); font-weight: 600;">Low Risk</td>
+                                <td>&lt; 35%</td>
+                                <td>1800s (30m)</td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--orange); font-weight: 600;">Medium Risk</td>
+                                <td>35% – 65%</td>
+                                <td>600s (10m)</td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--rose); font-weight: 600;">High Risk</td>
+                                <td>&ge; 65%</td>
+                                <td>120s (2m)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card" style="border-color: rgba(249, 115, 22, 0.3);">
+                    <h2 style="color: var(--orange);">Fail-Safe Sensor Fault Path</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                        If <span class="code-term">readSensors()</span> returns an invalid sample or any of
+                        <span class="code-term">temperature</span> / <span class="code-term">humidity</span>
+                        evaluate to <span class="code-term">NaN</span>, the node follows a <strong>fail-safe retry path</strong>
+                        that avoids both the TinyML inference pipeline and the duty-cycle sleep scheduler:
+                    </p>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.9rem; color: var(--text-secondary);">
+                        <li style="display: flex; gap: 0.5rem;">
+                            <span style="color: var(--orange); font-weight: bold;">1.</span>
+                            <span>Log <span class="code-term">[NODE_WARN] Sensor fault detected</span> to Serial and flush.</span>
+                        </li>
+                        <li style="display: flex; gap: 0.5rem;">
+                            <span style="color: var(--orange); font-weight: bold;">2.</span>
+                            <span>Enter <strong>5-second deep sleep</strong> without advancing <span class="code-term">rtc_virtual_timestamp</span>.</span>
+                        </li>
+                        <li style="display: flex; gap: 0.5rem;">
+                            <span style="color: var(--orange); font-weight: bold;">3.</span>
+                            <span>MCU reboots and retries the full sensor read cycle — gateway blackout window is &le;&thinsp;5 s instead of 30 min.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mermaid.js Module Injection -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            themeVariables: {
+                background: 'transparent',
+                primaryColor: '#1e293b',
+                primaryTextColor: '#f3f4f6',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+</body>
+</html>

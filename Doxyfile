@@ -1,0 +1,15 @@
+PROJECT_NAME           = "WEDS Firmware"
+PROJECT_SYNOPSIS       = "Wildfire Early Detection System"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = code/include code/lib code/src
+RECURSIVE              = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+OPTIMIZE_OUTPUT_FOR_C  = YES
+QUIET                  = YES
+WARNINGS               = YES
+GENERATE_TREEVIEW      = YES
+EXCLUDE_PATTERNS       = */model_data_v6f.h

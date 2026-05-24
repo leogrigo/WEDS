@@ -1,0 +1,453 @@
+\doxysection{code/\+include/\+\+Weds\+Node\+Config.h File Reference}
+\hypertarget{_weds_node_config_8h}{}\label{_weds_node_config_8h}\index{code/include/WedsNodeConfig.h@{code/include/WedsNodeConfig.h}}
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+{\ttfamily \+\#include "{}Weds\+Radio\+Config.\+h"{}}\newline
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dad}{Weds\+Node\+Sensing\+Mode}} :\+ uint8\+\_\+t \{ \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dadafedaec3f56eeb751e2c6d1b596c93038}{WEDS\+\_\+\+NODE\+\_\+\+ENVIRONMENT\+\_\+\+SENSING}} = 1
+, \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dada52a140aece678c2082816236e24822ad}{WEDS\+\_\+\+NODE\+\_\+\+SIMULATION}} = 0
+ \}
+\begin{DoxyCompactList}\small\item\em Defines the operational mode for node sensing. \end{DoxyCompactList}\item 
+enum \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934ef}{Weds\+Simulation\+Mode}} :\+ uint8\+\_\+t \{ \newline
+\doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efab31dd8dbf967da7083e4e3f824456e8d}{WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+NORMAL}}
+, \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efad7d89e931493e86c0857dbf8d5c766d5}{WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+DRY\+\_\+\+PERIOD}}
+, \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efa99154e2e7a99268506352ba9fbfcf5ea}{WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+GAS\+\_\+\+DROP}}
+, \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efaa6bef5eff8bca92b46814ff3cf87422d}{WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+FIRE\+\_\+\+EVENT}}
+, \newline
+\doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efa9419ba3e6bceff50421e699af06eee14}{WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+SENSOR\+\_\+\+FAULT}}
+ \}
+\begin{DoxyCompactList}\small\item\em Defines various simulation scenarios for node testing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dad}{Weds\+Node\+Sensing\+Mode}} \doxymbox{\hyperlink{_weds_node_config_8h_a7465983412784f2ea8aa217814e64d7b}{WEDS\+\_\+\+NODE\+\_\+\+SENSING\+\_\+\+MODE}}
+\begin{DoxyCompactList}\small\item\em Selected sensing mode for the node. \end{DoxyCompactList}\item 
+static constexpr \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934ef}{Weds\+Simulation\+Mode}} \doxymbox{\hyperlink{_weds_node_config_8h_af043c19ed446d3f6dd66fc01e1654185}{WEDS\+\_\+\+SELECTED\+\_\+\+SIMULATION\+\_\+\+MODE}}
+\begin{DoxyCompactList}\small\item\em Selected simulation scenario for the node. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a9a906fb57f3c68798f79a532c5012823}{WEDS\+\_\+\+NODE\+\_\+\+DEFAULT\+\_\+\+SAMPLE\+\_\+\+INTERVAL\+\_\+\+MS}} = 2000
+\begin{DoxyCompactList}\small\item\em Default interval between sensor samples in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_af641074031921ea61faef57cd81c5c86}{WEDS\+\_\+\+NODE\+\_\+\+ACK\+\_\+\+TIMEOUT\+\_\+\+MS}} = 1500
+\begin{DoxyCompactList}\small\item\em Timeout for node-\/to-\/gateway acknowledgment in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_abf6e49061e92c51a99d330cea148873f}{WEDS\+\_\+\+NODE\+\_\+\+ALERT\+\_\+\+MAX\+\_\+\+RETRIES}} = 3
+\begin{DoxyCompactList}\small\item\em Maximum number of retry attempts for alert delivery. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_aea7045793f120e9d647b3ec083abee94}{WEDS\+\_\+\+NODE\+\_\+\+RETRY\+\_\+\+BACKOFF\+\_\+\+MS}} = 300
+\begin{DoxyCompactList}\small\item\em Delay before retrying an alert transmission in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_ab2736af63e59d37fae6d661a8e896361}{WEDS\+\_\+\+NODE\+\_\+\+BOOT\+\_\+\+DELAY\+\_\+\+MS}} = 500
+\begin{DoxyCompactList}\small\item\em Delay after node boot before starting operations in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a65bc8a42f326db61b76e12fe5a319802}{WEDS\+\_\+\+NODE\+\_\+\+ERROR\+\_\+\+TASK\+\_\+\+DELAY\+\_\+\+MS}} = 1000
+\begin{DoxyCompactList}\small\item\em Delay inside the node error handling task in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a91905d8157827ac6480ea75d7f271aa0}{WEDS\+\_\+\+NODE\+\_\+\+LOOP\+\_\+\+IDLE\+\_\+\+DELAY\+\_\+\+MS}} = 1000
+\begin{DoxyCompactList}\small\item\em Delay during idle loops in the main task in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_afe9f3f2a54db6262eab7f938c41f05b8}{WEDS\+\_\+\+NODE\+\_\+\+MIN\+\_\+\+RX\+\_\+\+WINDOW\+\_\+\+MS}} = 250
+\begin{DoxyCompactList}\small\item\em Minimum duration for the receive window in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a196cc87d266c206dc6207286b1bce772}{WEDS\+\_\+\+NODE\+\_\+\+RX\+\_\+\+POLL\+\_\+\+CHUNK\+\_\+\+MS}} = 50
+\begin{DoxyCompactList}\small\item\em Polling chunk duration during receive operations in milliseconds. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_ad79b64315dd9a671decbcb6fa2c5d799}{WEDS\+\_\+\+NODE\+\_\+\+CYCLE\+\_\+\+TASK\+\_\+\+STACK\+\_\+\+BYTES}} = 8192
+\begin{DoxyCompactList}\small\item\em Stack size allocated for the node cycle task in bytes. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a92d8b583dea2cc1a33a56374dfeb9204}{WEDS\+\_\+\+NODE\+\_\+\+RX\+\_\+\+TASK\+\_\+\+STACK\+\_\+\+BYTES}} = 8192
+\begin{DoxyCompactList}\small\item\em Stack size allocated for the receive task in bytes. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a5899c0261672a73c62aa1f859e8f8263}{WEDS\+\_\+\+NODE\+\_\+\+CYCLE\+\_\+\+TASK\+\_\+\+PRIORITY}} = 2
+\begin{DoxyCompactList}\small\item\em Priority level for the node cycle task. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a2bbda49ea26f2eb8b9e51d11c0f6b4e8}{WEDS\+\_\+\+NODE\+\_\+\+RX\+\_\+\+TASK\+\_\+\+PRIORITY}} = 3
+\begin{DoxyCompactList}\small\item\em Priority level for the receive task. \end{DoxyCompactList}\item 
+static constexpr int8\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a7a6142c4bb843fd3234cdf768be70e48}{WEDS\+\_\+\+NODE\+\_\+\+CYCLE\+\_\+\+TASK\+\_\+\+CORE}} = 1
+\begin{DoxyCompactList}\small\item\em Core assignment for the node cycle task. \end{DoxyCompactList}\item 
+static constexpr int8\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_af9178679010d5b2268eab6a75a24ddbe}{WEDS\+\_\+\+NODE\+\_\+\+RX\+\_\+\+TASK\+\_\+\+CORE}} = 0
+\begin{DoxyCompactList}\small\item\em Core assignment for the receive task. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a0ba1eac125c6415a88ee534ea2e40f1b}{WEDS\+\_\+\+NODE\+\_\+\+HELTEC\+\_\+\+VBAT\+\_\+\+CTRL\+\_\+\+PIN}} = 37
+\begin{DoxyCompactList}\small\item\em Pin number used for Heltec battery control. \end{DoxyCompactList}\item 
+static constexpr uint8\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_af3dbcaafc7981e48d5ed59425f692bd2}{WEDS\+\_\+\+NODE\+\_\+\+HELTEC\+\_\+\+VBAT\+\_\+\+ADC\+\_\+\+PIN}} = 1
+\begin{DoxyCompactList}\small\item\em Pin number used for Heltec battery voltage ADC reading. \end{DoxyCompactList}\item 
+static constexpr float \doxymbox{\hyperlink{_weds_node_config_8h_a106e91fe3b10086050b810e528a0ec1e}{WEDS\+\_\+\+NODE\+\_\+\+HELTEC\+\_\+\+ADC\+\_\+\+TO\+\_\+\+VBAT}} = 1.\+0f /\+ 238.\+7f
+\begin{DoxyCompactList}\small\item\em Conversion factor from ADC reading to battery voltage. \end{DoxyCompactList}\item 
+static constexpr float \doxymbox{\hyperlink{_weds_node_config_8h_a9c00e839f54776c3cdb03315336e2abb}{WEDS\+\_\+\+NODE\+\_\+\+BATTERY\+\_\+\+EMPTY\+\_\+V}} = 3.\+04f
+\begin{DoxyCompactList}\small\item\em Voltage representing an empty battery. \end{DoxyCompactList}\item 
+static constexpr float \doxymbox{\hyperlink{_weds_node_config_8h_abf5135280bdc037b9ea67cf4b5bdccf2}{WEDS\+\_\+\+NODE\+\_\+\+BATTERY\+\_\+\+FULL\+\_\+V}} = 4.\+26f
+\begin{DoxyCompactList}\small\item\em Voltage representing a fully charged battery. \end{DoxyCompactList}\item 
+static constexpr float \doxymbox{\hyperlink{_weds_node_config_8h_acc2429a10ee888c28a709bca6d22dd93}{WEDS\+\_\+\+NODE\+\_\+\+BATTERY\+\_\+\+PERCENT\+\_\+\+PER\+\_\+V}}
+\begin{DoxyCompactList}\small\item\em Conversion factor from voltage to battery percentage. \end{DoxyCompactList}\item 
+static constexpr float \doxymbox{\hyperlink{_weds_node_config_8h_a858a7b1937437e60b346e3ffb8c1a9b9}{WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+LOW}} = 0.\+35f
+\begin{DoxyCompactList}\small\item\em Fire risk score threshold below which the node is considered Low risk. Scores in \+[0.\+0, WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+LOW) are treated as low risk. \end{DoxyCompactList}\item 
+static constexpr float \doxymbox{\hyperlink{_weds_node_config_8h_a084043e098237c98c50082fdbfa5c2d3}{WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+MED}} = 0.\+65f
+\begin{DoxyCompactList}\small\item\em Fire risk score threshold below which the node is considered Medium risk. Scores in \+[WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+LOW, WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+MED) are medium risk. Scores at or above this threshold are treated as high risk. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a85598025f4aa0b6312901613e093d722}{WEDS\+\_\+\+SLEEP\+\_\+\+SEC\+\_\+\+RISK\+\_\+\+LOW}} = 1800U
+\begin{DoxyCompactList}\small\item\em Deep sleep duration in seconds when fire risk is Low. Default:\+ 30 minutes. Tune to reduce network traffic in benign conditions. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_aba774bb34d7af9ae4f3ca979f68630ce}{WEDS\+\_\+\+SLEEP\+\_\+\+SEC\+\_\+\+RISK\+\_\+\+MED}} = 600U
+\begin{DoxyCompactList}\small\item\em Deep sleep duration in seconds when fire risk is Medium. Default:\+ 10 minutes. Increases sampling frequency as risk rises. \end{DoxyCompactList}\item 
+static constexpr uint32\+\_\+t \doxymbox{\hyperlink{_weds_node_config_8h_a016de697b61f738c90716f7ee1b489f8}{WEDS\+\_\+\+SLEEP\+\_\+\+SEC\+\_\+\+RISK\+\_\+\+HIGH}} = 120U
+\begin{DoxyCompactList}\small\item\em Deep sleep duration in seconds when fire risk is High. Default:\+ 2 minutes. Maximum polling rate during elevated danger conditions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_node_config_8h_doc-enum-members}
+\Hypertarget{_weds_node_config_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dad}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WedsNodeSensingMode@{WedsNodeSensingMode}}
+\index{WedsNodeSensingMode@{WedsNodeSensingMode}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WedsNodeSensingMode}{WedsNodeSensingMode}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dad} 
+enum \doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dad}{Weds\+Node\+Sensing\+Mode}} :\+ uint8\+\_\+t}
+
+
+
+Defines the operational mode for node sensing. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_NODE\_ENVIRONMENT\_SENSING@{WEDS\_NODE\_ENVIRONMENT\_SENSING}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_ENVIRONMENT\_SENSING@{WEDS\_NODE\_ENVIRONMENT\_SENSING}}
+}\Hypertarget{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dadafedaec3f56eeb751e2c6d1b596c93038}\label{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dadafedaec3f56eeb751e2c6d1b596c93038} 
+WEDS\+\_\+\+NODE\+\_\+\+ENVIRONMENT\+\_\+\+SENSING&Node operates using actual environment sensors. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_NODE\_SIMULATION@{WEDS\_NODE\_SIMULATION}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_SIMULATION@{WEDS\_NODE\_SIMULATION}}
+}\Hypertarget{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dada52a140aece678c2082816236e24822ad}\label{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dada52a140aece678c2082816236e24822ad} 
+WEDS\+\_\+\+NODE\+\_\+\+SIMULATION&Node operates in simulation mode. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{_weds_node_config_8h_af1931b61ac712380f335deda117934ef}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WedsSimulationMode@{WedsSimulationMode}}
+\index{WedsSimulationMode@{WedsSimulationMode}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WedsSimulationMode}{WedsSimulationMode}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_af1931b61ac712380f335deda117934ef} 
+enum \doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934ef}{Weds\+Simulation\+Mode}} :\+ uint8\+\_\+t}
+
+
+
+Defines various simulation scenarios for node testing. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_SIM\_MODE\_NORMAL@{WEDS\_SIM\_MODE\_NORMAL}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SIM\_MODE\_NORMAL@{WEDS\_SIM\_MODE\_NORMAL}}
+}\Hypertarget{_weds_node_config_8h_af1931b61ac712380f335deda117934efab31dd8dbf967da7083e4e3f824456e8d}\label{_weds_node_config_8h_af1931b61ac712380f335deda117934efab31dd8dbf967da7083e4e3f824456e8d} 
+WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+NORMAL&Normal environmental conditions simulation. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_SIM\_MODE\_DRY\_PERIOD@{WEDS\_SIM\_MODE\_DRY\_PERIOD}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SIM\_MODE\_DRY\_PERIOD@{WEDS\_SIM\_MODE\_DRY\_PERIOD}}
+}\Hypertarget{_weds_node_config_8h_af1931b61ac712380f335deda117934efad7d89e931493e86c0857dbf8d5c766d5}\label{_weds_node_config_8h_af1931b61ac712380f335deda117934efad7d89e931493e86c0857dbf8d5c766d5} 
+WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+DRY\+\_\+\+PERIOD&Simulated prolonged dry period. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_SIM\_MODE\_GAS\_DROP@{WEDS\_SIM\_MODE\_GAS\_DROP}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SIM\_MODE\_GAS\_DROP@{WEDS\_SIM\_MODE\_GAS\_DROP}}
+}\Hypertarget{_weds_node_config_8h_af1931b61ac712380f335deda117934efa99154e2e7a99268506352ba9fbfcf5ea}\label{_weds_node_config_8h_af1931b61ac712380f335deda117934efa99154e2e7a99268506352ba9fbfcf5ea} 
+WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+GAS\+\_\+\+DROP&Simulated sudden drop in gas concentration. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_SIM\_MODE\_FIRE\_EVENT@{WEDS\_SIM\_MODE\_FIRE\_EVENT}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SIM\_MODE\_FIRE\_EVENT@{WEDS\_SIM\_MODE\_FIRE\_EVENT}}
+}\Hypertarget{_weds_node_config_8h_af1931b61ac712380f335deda117934efaa6bef5eff8bca92b46814ff3cf87422d}\label{_weds_node_config_8h_af1931b61ac712380f335deda117934efaa6bef5eff8bca92b46814ff3cf87422d} 
+WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+FIRE\+\_\+\+EVENT&Simulated fire event. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WEDS\_SIM\_MODE\_SENSOR\_FAULT@{WEDS\_SIM\_MODE\_SENSOR\_FAULT}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SIM\_MODE\_SENSOR\_FAULT@{WEDS\_SIM\_MODE\_SENSOR\_FAULT}}
+}\Hypertarget{_weds_node_config_8h_af1931b61ac712380f335deda117934efa9419ba3e6bceff50421e699af06eee14}\label{_weds_node_config_8h_af1931b61ac712380f335deda117934efa9419ba3e6bceff50421e699af06eee14} 
+WEDS\+\_\+\+SIM\+\_\+\+MODE\+\_\+\+SENSOR\+\_\+\+FAULT&Simulated sensor failure or fault. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{_weds_node_config_8h_doc-var-members}
+\Hypertarget{_weds_node_config_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{_weds_node_config_8h_af641074031921ea61faef57cd81c5c86}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_ACK\_TIMEOUT\_MS@{WEDS\_NODE\_ACK\_TIMEOUT\_MS}}
+\index{WEDS\_NODE\_ACK\_TIMEOUT\_MS@{WEDS\_NODE\_ACK\_TIMEOUT\_MS}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_ACK\_TIMEOUT\_MS}{WEDS\_NODE\_ACK\_TIMEOUT\_MS}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_af641074031921ea61faef57cd81c5c86} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+ACK\+\_\+\+TIMEOUT\+\_\+\+MS = 1500\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Timeout for node-\/to-\/gateway acknowledgment in milliseconds. 
+
+\Hypertarget{_weds_node_config_8h_abf6e49061e92c51a99d330cea148873f}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_ALERT\_MAX\_RETRIES@{WEDS\_NODE\_ALERT\_MAX\_RETRIES}}
+\index{WEDS\_NODE\_ALERT\_MAX\_RETRIES@{WEDS\_NODE\_ALERT\_MAX\_RETRIES}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_ALERT\_MAX\_RETRIES}{WEDS\_NODE\_ALERT\_MAX\_RETRIES}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_abf6e49061e92c51a99d330cea148873f} 
+uint8\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+ALERT\+\_\+\+MAX\+\_\+\+RETRIES = 3\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Maximum number of retry attempts for alert delivery. 
+
+\Hypertarget{_weds_node_config_8h_a9c00e839f54776c3cdb03315336e2abb}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_BATTERY\_EMPTY\_V@{WEDS\_NODE\_BATTERY\_EMPTY\_V}}
+\index{WEDS\_NODE\_BATTERY\_EMPTY\_V@{WEDS\_NODE\_BATTERY\_EMPTY\_V}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_BATTERY\_EMPTY\_V}{WEDS\_NODE\_BATTERY\_EMPTY\_V}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a9c00e839f54776c3cdb03315336e2abb} 
+float WEDS\+\_\+\+NODE\+\_\+\+BATTERY\+\_\+\+EMPTY\+\_\+V = 3.\+04f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Voltage representing an empty battery. 
+
+\Hypertarget{_weds_node_config_8h_abf5135280bdc037b9ea67cf4b5bdccf2}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_BATTERY\_FULL\_V@{WEDS\_NODE\_BATTERY\_FULL\_V}}
+\index{WEDS\_NODE\_BATTERY\_FULL\_V@{WEDS\_NODE\_BATTERY\_FULL\_V}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_BATTERY\_FULL\_V}{WEDS\_NODE\_BATTERY\_FULL\_V}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_abf5135280bdc037b9ea67cf4b5bdccf2} 
+float WEDS\+\_\+\+NODE\+\_\+\+BATTERY\+\_\+\+FULL\+\_\+V = 4.\+26f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Voltage representing a fully charged battery. 
+
+\Hypertarget{_weds_node_config_8h_acc2429a10ee888c28a709bca6d22dd93}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_BATTERY\_PERCENT\_PER\_V@{WEDS\_NODE\_BATTERY\_PERCENT\_PER\_V}}
+\index{WEDS\_NODE\_BATTERY\_PERCENT\_PER\_V@{WEDS\_NODE\_BATTERY\_PERCENT\_PER\_V}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_BATTERY\_PERCENT\_PER\_V}{WEDS\_NODE\_BATTERY\_PERCENT\_PER\_V}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_acc2429a10ee888c28a709bca6d22dd93} 
+float WEDS\+\_\+\+NODE\+\_\+\+BATTERY\+\_\+\+PERCENT\+\_\+\+PER\+\_\+V\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =}
+\DoxyCodeLine{100.0f\ /\ (\doxymbox{\hyperlink{_weds_node_config_8h_abf5135280bdc037b9ea67cf4b5bdccf2}{WEDS\_NODE\_BATTERY\_FULL\_V}}\ -\/\ \doxymbox{\hyperlink{_weds_node_config_8h_a9c00e839f54776c3cdb03315336e2abb}{WEDS\_NODE\_BATTERY\_EMPTY\_V}})}
+
+\end{DoxyCode}
+
+
+Conversion factor from voltage to battery percentage. 
+
+\Hypertarget{_weds_node_config_8h_ab2736af63e59d37fae6d661a8e896361}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_BOOT\_DELAY\_MS@{WEDS\_NODE\_BOOT\_DELAY\_MS}}
+\index{WEDS\_NODE\_BOOT\_DELAY\_MS@{WEDS\_NODE\_BOOT\_DELAY\_MS}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_BOOT\_DELAY\_MS}{WEDS\_NODE\_BOOT\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_ab2736af63e59d37fae6d661a8e896361} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+BOOT\+\_\+\+DELAY\+\_\+\+MS = 500\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay after node boot before starting operations in milliseconds. 
+
+\Hypertarget{_weds_node_config_8h_a7a6142c4bb843fd3234cdf768be70e48}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_CYCLE\_TASK\_CORE@{WEDS\_NODE\_CYCLE\_TASK\_CORE}}
+\index{WEDS\_NODE\_CYCLE\_TASK\_CORE@{WEDS\_NODE\_CYCLE\_TASK\_CORE}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_CYCLE\_TASK\_CORE}{WEDS\_NODE\_CYCLE\_TASK\_CORE}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a7a6142c4bb843fd3234cdf768be70e48} 
+int8\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+CYCLE\+\_\+\+TASK\+\_\+\+CORE = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Core assignment for the node cycle task. 
+
+\Hypertarget{_weds_node_config_8h_a5899c0261672a73c62aa1f859e8f8263}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_CYCLE\_TASK\_PRIORITY@{WEDS\_NODE\_CYCLE\_TASK\_PRIORITY}}
+\index{WEDS\_NODE\_CYCLE\_TASK\_PRIORITY@{WEDS\_NODE\_CYCLE\_TASK\_PRIORITY}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_CYCLE\_TASK\_PRIORITY}{WEDS\_NODE\_CYCLE\_TASK\_PRIORITY}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a5899c0261672a73c62aa1f859e8f8263} 
+uint8\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+CYCLE\+\_\+\+TASK\+\_\+\+PRIORITY = 2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Priority level for the node cycle task. 
+
+\Hypertarget{_weds_node_config_8h_ad79b64315dd9a671decbcb6fa2c5d799}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_CYCLE\_TASK\_STACK\_BYTES@{WEDS\_NODE\_CYCLE\_TASK\_STACK\_BYTES}}
+\index{WEDS\_NODE\_CYCLE\_TASK\_STACK\_BYTES@{WEDS\_NODE\_CYCLE\_TASK\_STACK\_BYTES}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_CYCLE\_TASK\_STACK\_BYTES}{WEDS\_NODE\_CYCLE\_TASK\_STACK\_BYTES}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_ad79b64315dd9a671decbcb6fa2c5d799} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+CYCLE\+\_\+\+TASK\+\_\+\+STACK\+\_\+\+BYTES = 8192\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Stack size allocated for the node cycle task in bytes. 
+
+\Hypertarget{_weds_node_config_8h_a9a906fb57f3c68798f79a532c5012823}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_DEFAULT\_SAMPLE\_INTERVAL\_MS@{WEDS\_NODE\_DEFAULT\_SAMPLE\_INTERVAL\_MS}}
+\index{WEDS\_NODE\_DEFAULT\_SAMPLE\_INTERVAL\_MS@{WEDS\_NODE\_DEFAULT\_SAMPLE\_INTERVAL\_MS}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_DEFAULT\_SAMPLE\_INTERVAL\_MS}{WEDS\_NODE\_DEFAULT\_SAMPLE\_INTERVAL\_MS}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a9a906fb57f3c68798f79a532c5012823} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+DEFAULT\+\_\+\+SAMPLE\+\_\+\+INTERVAL\+\_\+\+MS = 2000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Default interval between sensor samples in milliseconds. 
+
+\Hypertarget{_weds_node_config_8h_a65bc8a42f326db61b76e12fe5a319802}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_ERROR\_TASK\_DELAY\_MS@{WEDS\_NODE\_ERROR\_TASK\_DELAY\_MS}}
+\index{WEDS\_NODE\_ERROR\_TASK\_DELAY\_MS@{WEDS\_NODE\_ERROR\_TASK\_DELAY\_MS}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_ERROR\_TASK\_DELAY\_MS}{WEDS\_NODE\_ERROR\_TASK\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a65bc8a42f326db61b76e12fe5a319802} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+ERROR\+\_\+\+TASK\+\_\+\+DELAY\+\_\+\+MS = 1000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay inside the node error handling task in milliseconds. 
+
+\Hypertarget{_weds_node_config_8h_a106e91fe3b10086050b810e528a0ec1e}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_HELTEC\_ADC\_TO\_VBAT@{WEDS\_NODE\_HELTEC\_ADC\_TO\_VBAT}}
+\index{WEDS\_NODE\_HELTEC\_ADC\_TO\_VBAT@{WEDS\_NODE\_HELTEC\_ADC\_TO\_VBAT}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_HELTEC\_ADC\_TO\_VBAT}{WEDS\_NODE\_HELTEC\_ADC\_TO\_VBAT}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a106e91fe3b10086050b810e528a0ec1e} 
+float WEDS\+\_\+\+NODE\+\_\+\+HELTEC\+\_\+\+ADC\+\_\+\+TO\+\_\+\+VBAT = 1.\+0f /\+ 238.\+7f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Conversion factor from ADC reading to battery voltage. 
+
+\Hypertarget{_weds_node_config_8h_af3dbcaafc7981e48d5ed59425f692bd2}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_HELTEC\_VBAT\_ADC\_PIN@{WEDS\_NODE\_HELTEC\_VBAT\_ADC\_PIN}}
+\index{WEDS\_NODE\_HELTEC\_VBAT\_ADC\_PIN@{WEDS\_NODE\_HELTEC\_VBAT\_ADC\_PIN}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_HELTEC\_VBAT\_ADC\_PIN}{WEDS\_NODE\_HELTEC\_VBAT\_ADC\_PIN}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_af3dbcaafc7981e48d5ed59425f692bd2} 
+uint8\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+HELTEC\+\_\+\+VBAT\+\_\+\+ADC\+\_\+\+PIN = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Pin number used for Heltec battery voltage ADC reading. 
+
+\Hypertarget{_weds_node_config_8h_a0ba1eac125c6415a88ee534ea2e40f1b}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_HELTEC\_VBAT\_CTRL\_PIN@{WEDS\_NODE\_HELTEC\_VBAT\_CTRL\_PIN}}
+\index{WEDS\_NODE\_HELTEC\_VBAT\_CTRL\_PIN@{WEDS\_NODE\_HELTEC\_VBAT\_CTRL\_PIN}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_HELTEC\_VBAT\_CTRL\_PIN}{WEDS\_NODE\_HELTEC\_VBAT\_CTRL\_PIN}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a0ba1eac125c6415a88ee534ea2e40f1b} 
+uint8\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+HELTEC\+\_\+\+VBAT\+\_\+\+CTRL\+\_\+\+PIN = 37\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Pin number used for Heltec battery control. 
+
+\Hypertarget{_weds_node_config_8h_a91905d8157827ac6480ea75d7f271aa0}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_LOOP\_IDLE\_DELAY\_MS@{WEDS\_NODE\_LOOP\_IDLE\_DELAY\_MS}}
+\index{WEDS\_NODE\_LOOP\_IDLE\_DELAY\_MS@{WEDS\_NODE\_LOOP\_IDLE\_DELAY\_MS}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_LOOP\_IDLE\_DELAY\_MS}{WEDS\_NODE\_LOOP\_IDLE\_DELAY\_MS}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a91905d8157827ac6480ea75d7f271aa0} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+LOOP\+\_\+\+IDLE\+\_\+\+DELAY\+\_\+\+MS = 1000\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay during idle loops in the main task in milliseconds. 
+
+\Hypertarget{_weds_node_config_8h_afe9f3f2a54db6262eab7f938c41f05b8}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_MIN\_RX\_WINDOW\_MS@{WEDS\_NODE\_MIN\_RX\_WINDOW\_MS}}
+\index{WEDS\_NODE\_MIN\_RX\_WINDOW\_MS@{WEDS\_NODE\_MIN\_RX\_WINDOW\_MS}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_MIN\_RX\_WINDOW\_MS}{WEDS\_NODE\_MIN\_RX\_WINDOW\_MS}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_afe9f3f2a54db6262eab7f938c41f05b8} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+MIN\+\_\+\+RX\+\_\+\+WINDOW\+\_\+\+MS = 250\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Minimum duration for the receive window in milliseconds. 
+
+\Hypertarget{_weds_node_config_8h_aea7045793f120e9d647b3ec083abee94}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_RETRY\_BACKOFF\_MS@{WEDS\_NODE\_RETRY\_BACKOFF\_MS}}
+\index{WEDS\_NODE\_RETRY\_BACKOFF\_MS@{WEDS\_NODE\_RETRY\_BACKOFF\_MS}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_RETRY\_BACKOFF\_MS}{WEDS\_NODE\_RETRY\_BACKOFF\_MS}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_aea7045793f120e9d647b3ec083abee94} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+RETRY\+\_\+\+BACKOFF\+\_\+\+MS = 300\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Delay before retrying an alert transmission in milliseconds. 
+
+\Hypertarget{_weds_node_config_8h_a196cc87d266c206dc6207286b1bce772}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_RX\_POLL\_CHUNK\_MS@{WEDS\_NODE\_RX\_POLL\_CHUNK\_MS}}
+\index{WEDS\_NODE\_RX\_POLL\_CHUNK\_MS@{WEDS\_NODE\_RX\_POLL\_CHUNK\_MS}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_RX\_POLL\_CHUNK\_MS}{WEDS\_NODE\_RX\_POLL\_CHUNK\_MS}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a196cc87d266c206dc6207286b1bce772} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+RX\+\_\+\+POLL\+\_\+\+CHUNK\+\_\+\+MS = 50\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Polling chunk duration during receive operations in milliseconds. 
+
+\Hypertarget{_weds_node_config_8h_af9178679010d5b2268eab6a75a24ddbe}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_RX\_TASK\_CORE@{WEDS\_NODE\_RX\_TASK\_CORE}}
+\index{WEDS\_NODE\_RX\_TASK\_CORE@{WEDS\_NODE\_RX\_TASK\_CORE}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_RX\_TASK\_CORE}{WEDS\_NODE\_RX\_TASK\_CORE}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_af9178679010d5b2268eab6a75a24ddbe} 
+int8\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+RX\+\_\+\+TASK\+\_\+\+CORE = 0\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Core assignment for the receive task. 
+
+\Hypertarget{_weds_node_config_8h_a2bbda49ea26f2eb8b9e51d11c0f6b4e8}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_RX\_TASK\_PRIORITY@{WEDS\_NODE\_RX\_TASK\_PRIORITY}}
+\index{WEDS\_NODE\_RX\_TASK\_PRIORITY@{WEDS\_NODE\_RX\_TASK\_PRIORITY}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_RX\_TASK\_PRIORITY}{WEDS\_NODE\_RX\_TASK\_PRIORITY}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a2bbda49ea26f2eb8b9e51d11c0f6b4e8} 
+uint8\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+RX\+\_\+\+TASK\+\_\+\+PRIORITY = 3\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Priority level for the receive task. 
+
+\Hypertarget{_weds_node_config_8h_a92d8b583dea2cc1a33a56374dfeb9204}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_RX\_TASK\_STACK\_BYTES@{WEDS\_NODE\_RX\_TASK\_STACK\_BYTES}}
+\index{WEDS\_NODE\_RX\_TASK\_STACK\_BYTES@{WEDS\_NODE\_RX\_TASK\_STACK\_BYTES}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_RX\_TASK\_STACK\_BYTES}{WEDS\_NODE\_RX\_TASK\_STACK\_BYTES}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a92d8b583dea2cc1a33a56374dfeb9204} 
+uint32\+\_\+t WEDS\+\_\+\+NODE\+\_\+\+RX\+\_\+\+TASK\+\_\+\+STACK\+\_\+\+BYTES = 8192\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Stack size allocated for the receive task in bytes. 
+
+\Hypertarget{_weds_node_config_8h_a7465983412784f2ea8aa217814e64d7b}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_NODE\_SENSING\_MODE@{WEDS\_NODE\_SENSING\_MODE}}
+\index{WEDS\_NODE\_SENSING\_MODE@{WEDS\_NODE\_SENSING\_MODE}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_NODE\_SENSING\_MODE}{WEDS\_NODE\_SENSING\_MODE}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a7465983412784f2ea8aa217814e64d7b} 
+\doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dad}{Weds\+Node\+Sensing\+Mode}} WEDS\+\_\+\+NODE\+\_\+\+SENSING\+\_\+\+MODE\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =}
+\DoxyCodeLine{\doxymbox{\hyperlink{_weds_node_config_8h_a60cc55dd1be7a17f7446654eeb850dadafedaec3f56eeb751e2c6d1b596c93038}{WEDS\_NODE\_ENVIRONMENT\_SENSING}}}
+
+\end{DoxyCode}
+
+
+Selected sensing mode for the node. 
+
+\Hypertarget{_weds_node_config_8h_a858a7b1937437e60b346e3ffb8c1a9b9}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_RISK\_THRESHOLD\_LOW@{WEDS\_RISK\_THRESHOLD\_LOW}}
+\index{WEDS\_RISK\_THRESHOLD\_LOW@{WEDS\_RISK\_THRESHOLD\_LOW}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_RISK\_THRESHOLD\_LOW}{WEDS\_RISK\_THRESHOLD\_LOW}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a858a7b1937437e60b346e3ffb8c1a9b9} 
+float WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+LOW = 0.\+35f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Fire risk score threshold below which the node is considered Low risk. Scores in \+[0.\+0, WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+LOW) are treated as low risk. 
+
+\Hypertarget{_weds_node_config_8h_a084043e098237c98c50082fdbfa5c2d3}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_RISK\_THRESHOLD\_MED@{WEDS\_RISK\_THRESHOLD\_MED}}
+\index{WEDS\_RISK\_THRESHOLD\_MED@{WEDS\_RISK\_THRESHOLD\_MED}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_RISK\_THRESHOLD\_MED}{WEDS\_RISK\_THRESHOLD\_MED}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a084043e098237c98c50082fdbfa5c2d3} 
+float WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+MED = 0.\+65f\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Fire risk score threshold below which the node is considered Medium risk. Scores in \+[WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+LOW, WEDS\+\_\+\+RISK\+\_\+\+THRESHOLD\+\_\+\+MED) are medium risk. Scores at or above this threshold are treated as high risk. 
+
+\Hypertarget{_weds_node_config_8h_af043c19ed446d3f6dd66fc01e1654185}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SELECTED\_SIMULATION\_MODE@{WEDS\_SELECTED\_SIMULATION\_MODE}}
+\index{WEDS\_SELECTED\_SIMULATION\_MODE@{WEDS\_SELECTED\_SIMULATION\_MODE}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SELECTED\_SIMULATION\_MODE}{WEDS\_SELECTED\_SIMULATION\_MODE}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_af043c19ed446d3f6dd66fc01e1654185} 
+\doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934ef}{Weds\+Simulation\+Mode}} WEDS\+\_\+\+SELECTED\+\_\+\+SIMULATION\+\_\+\+MODE\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =}
+\DoxyCodeLine{\doxymbox{\hyperlink{_weds_node_config_8h_af1931b61ac712380f335deda117934efaa6bef5eff8bca92b46814ff3cf87422d}{WEDS\_SIM\_MODE\_FIRE\_EVENT}}}
+
+\end{DoxyCode}
+
+
+Selected simulation scenario for the node. 
+
+\Hypertarget{_weds_node_config_8h_a016de697b61f738c90716f7ee1b489f8}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SLEEP\_SEC\_RISK\_HIGH@{WEDS\_SLEEP\_SEC\_RISK\_HIGH}}
+\index{WEDS\_SLEEP\_SEC\_RISK\_HIGH@{WEDS\_SLEEP\_SEC\_RISK\_HIGH}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SLEEP\_SEC\_RISK\_HIGH}{WEDS\_SLEEP\_SEC\_RISK\_HIGH}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a016de697b61f738c90716f7ee1b489f8} 
+uint32\+\_\+t WEDS\+\_\+\+SLEEP\+\_\+\+SEC\+\_\+\+RISK\+\_\+\+HIGH = 120U\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Deep sleep duration in seconds when fire risk is High. Default:\+ 2 minutes. Maximum polling rate during elevated danger conditions. 
+
+\Hypertarget{_weds_node_config_8h_a85598025f4aa0b6312901613e093d722}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SLEEP\_SEC\_RISK\_LOW@{WEDS\_SLEEP\_SEC\_RISK\_LOW}}
+\index{WEDS\_SLEEP\_SEC\_RISK\_LOW@{WEDS\_SLEEP\_SEC\_RISK\_LOW}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SLEEP\_SEC\_RISK\_LOW}{WEDS\_SLEEP\_SEC\_RISK\_LOW}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_a85598025f4aa0b6312901613e093d722} 
+uint32\+\_\+t WEDS\+\_\+\+SLEEP\+\_\+\+SEC\+\_\+\+RISK\+\_\+\+LOW = 1800U\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Deep sleep duration in seconds when fire risk is Low. Default:\+ 30 minutes. Tune to reduce network traffic in benign conditions. 
+
+\Hypertarget{_weds_node_config_8h_aba774bb34d7af9ae4f3ca979f68630ce}\index{WedsNodeConfig.h@{WedsNodeConfig.h}!WEDS\_SLEEP\_SEC\_RISK\_MED@{WEDS\_SLEEP\_SEC\_RISK\_MED}}
+\index{WEDS\_SLEEP\_SEC\_RISK\_MED@{WEDS\_SLEEP\_SEC\_RISK\_MED}!WedsNodeConfig.h@{WedsNodeConfig.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_SLEEP\_SEC\_RISK\_MED}{WEDS\_SLEEP\_SEC\_RISK\_MED}}
+{\footnotesize\ttfamily \label{_weds_node_config_8h_aba774bb34d7af9ae4f3ca979f68630ce} 
+uint32\+\_\+t WEDS\+\_\+\+SLEEP\+\_\+\+SEC\+\_\+\+RISK\+\_\+\+MED = 600U\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Deep sleep duration in seconds when fire risk is Medium. Default:\+ 10 minutes. Increases sampling frequency as risk rises. 
+

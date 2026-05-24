@@ -1,0 +1,195 @@
+\doxysection{Weds\+Node\+Record Struct Reference}
+\hypertarget{struct_weds_node_record}{}\label{struct_weds_node_record}\index{WedsNodeRecord@{WedsNodeRecord}}
+
+
+Holds all relevant information about a node, including state, config, and trends.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Gateway\+Registry.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_node_record_a3765dcef14d0ec1cc6475bd964098d9c}{used}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_a249a48dadf51e8cc56051fb5556c86dd}{node\+\_\+id}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_ab951efb32a488c58a4f5739fb932e84f}{last\+\_\+seen\+\_\+ms}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_a4ca72a9f70c89a81b9d2f9b59a07786a}{last\+\_\+seen\+\_\+timestamp\+\_\+s}}
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_adc3f83ba79850c5dab67eccc79239603}{last\+\_\+sequence\+\_\+id}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_aeb72e12b99e59583d6118916763a4a7c}{last\+\_\+msg\+\_\+type}}
+\item 
+\doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} \doxymbox{\hyperlink{struct_weds_node_record_ab3b5ce139eb8fcbc3d753f24aa062414}{latest\+\_\+status}}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_node_record_a6c9d56be0333068417998616d85dceac}{location\+\_\+known}}
+\item 
+double \doxymbox{\hyperlink{struct_weds_node_record_ac5f2604bbf3736e937de71e5b7ca116d}{latitude}}
+\item 
+double \doxymbox{\hyperlink{struct_weds_node_record_a0dff69a4869f4fbf7ebdee786d1dbc45}{longitude}}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_node_record_ae6baef9b98db0c2d7533aad8f51a49b4}{pending\+\_\+alert\+\_\+mode}}
+\item 
+\doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} \doxymbox{\hyperlink{struct_weds_node_record_a50df14c1e03313f8061783fea86b0209}{pending\+\_\+alert\+\_\+command}}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_node_record_a1611ed0c9cbf369d555dcf9a382d8f2d}{streak\+\_\+open}}
+\item 
+\doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} \doxymbox{\hyperlink{struct_weds_node_record_ae29e51029647bcfe396e133f1ae6585b}{current\+\_\+streak}}
+\item 
+\doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} \doxymbox{\hyperlink{struct_weds_node_record_a28b11165a570a3267c23800628072fa4}{events}} \+[\doxymbox{\hyperlink{_weds_gateway_config_8h_ac1c301fbaf244efa1320d48ddf71744e}{WEDS\+\_\+\+MAX\+\_\+\+EVENTS\+\_\+\+PER\+\_\+\+NODE}}]\+
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_a12fc96ce7b79c3679608a61f043d3545}{event\+\_\+head}}
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_a91e934315f8664c4aaf007719643cd1a}{event\+\_\+count}}
+\item 
+\doxymbox{\hyperlink{struct_weds_trend_point}{Weds\+Trend\+Point}} \doxymbox{\hyperlink{struct_weds_node_record_a8fb3389d5bb778be693c2c9c63e2170e}{trend}} \+[\doxymbox{\hyperlink{_weds_gateway_config_8h_a9491d336819b3df3a36943aab0df1330}{WEDS\+\_\+\+TREND\+\_\+\+POINTS\+\_\+\+PER\+\_\+\+NODE}}]\+
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_a4ad0e19932d8f74fff3fb2034ce59c74}{trend\+\_\+head}}
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_af093a14c9772765309810cda024b45de}{trend\+\_\+count}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_node_record_ade778c38629a461a756752534f603586}{last\+\_\+trend\+\_\+sample\+\_\+timestamp\+\_\+s}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Holds all relevant information about a node, including state, config, and trends. 
+
+\label{struct_weds_node_record_doc-variable-members}
+\Hypertarget{struct_weds_node_record_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_weds_node_record_ae29e51029647bcfe396e133f1ae6585b}\index{WedsNodeRecord@{WedsNodeRecord}!current\_streak@{current\_streak}}
+\index{current\_streak@{current\_streak}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{current\_streak}{current\_streak}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_ae29e51029647bcfe396e133f1ae6585b} 
+\doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} Weds\+Node\+Record::\+current\+\_\+streak}
+
+\Hypertarget{struct_weds_node_record_a91e934315f8664c4aaf007719643cd1a}\index{WedsNodeRecord@{WedsNodeRecord}!event\_count@{event\_count}}
+\index{event\_count@{event\_count}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{event\_count}{event\_count}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a91e934315f8664c4aaf007719643cd1a} 
+uint16\+\_\+t Weds\+Node\+Record::\+event\+\_\+count}
+
+\Hypertarget{struct_weds_node_record_a12fc96ce7b79c3679608a61f043d3545}\index{WedsNodeRecord@{WedsNodeRecord}!event\_head@{event\_head}}
+\index{event\_head@{event\_head}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{event\_head}{event\_head}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a12fc96ce7b79c3679608a61f043d3545} 
+uint16\+\_\+t Weds\+Node\+Record::\+event\+\_\+head}
+
+\Hypertarget{struct_weds_node_record_a28b11165a570a3267c23800628072fa4}\index{WedsNodeRecord@{WedsNodeRecord}!events@{events}}
+\index{events@{events}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{events}{events}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a28b11165a570a3267c23800628072fa4} 
+\doxymbox{\hyperlink{struct_weds_node_event}{Weds\+Node\+Event}} Weds\+Node\+Record::\+events\+[\doxymbox{\hyperlink{_weds_gateway_config_8h_ac1c301fbaf244efa1320d48ddf71744e}{WEDS\+\_\+\+MAX\+\_\+\+EVENTS\+\_\+\+PER\+\_\+\+NODE}}]\+}
+
+\Hypertarget{struct_weds_node_record_aeb72e12b99e59583d6118916763a4a7c}\index{WedsNodeRecord@{WedsNodeRecord}!last\_msg\_type@{last\_msg\_type}}
+\index{last\_msg\_type@{last\_msg\_type}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{last\_msg\_type}{last\_msg\_type}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_aeb72e12b99e59583d6118916763a4a7c} 
+uint8\+\_\+t Weds\+Node\+Record::\+last\+\_\+msg\+\_\+type}
+
+\Hypertarget{struct_weds_node_record_ab951efb32a488c58a4f5739fb932e84f}\index{WedsNodeRecord@{WedsNodeRecord}!last\_seen\_ms@{last\_seen\_ms}}
+\index{last\_seen\_ms@{last\_seen\_ms}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{last\_seen\_ms}{last\_seen\_ms}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_ab951efb32a488c58a4f5739fb932e84f} 
+uint32\+\_\+t Weds\+Node\+Record::\+last\+\_\+seen\+\_\+ms}
+
+\Hypertarget{struct_weds_node_record_a4ca72a9f70c89a81b9d2f9b59a07786a}\index{WedsNodeRecord@{WedsNodeRecord}!last\_seen\_timestamp\_s@{last\_seen\_timestamp\_s}}
+\index{last\_seen\_timestamp\_s@{last\_seen\_timestamp\_s}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{last\_seen\_timestamp\_s}{last\_seen\_timestamp\_s}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a4ca72a9f70c89a81b9d2f9b59a07786a} 
+uint32\+\_\+t Weds\+Node\+Record::\+last\+\_\+seen\+\_\+timestamp\+\_\+s}
+
+\Hypertarget{struct_weds_node_record_adc3f83ba79850c5dab67eccc79239603}\index{WedsNodeRecord@{WedsNodeRecord}!last\_sequence\_id@{last\_sequence\_id}}
+\index{last\_sequence\_id@{last\_sequence\_id}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{last\_sequence\_id}{last\_sequence\_id}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_adc3f83ba79850c5dab67eccc79239603} 
+uint16\+\_\+t Weds\+Node\+Record::\+last\+\_\+sequence\+\_\+id}
+
+\Hypertarget{struct_weds_node_record_ade778c38629a461a756752534f603586}\index{WedsNodeRecord@{WedsNodeRecord}!last\_trend\_sample\_timestamp\_s@{last\_trend\_sample\_timestamp\_s}}
+\index{last\_trend\_sample\_timestamp\_s@{last\_trend\_sample\_timestamp\_s}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{last\_trend\_sample\_timestamp\_s}{last\_trend\_sample\_timestamp\_s}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_ade778c38629a461a756752534f603586} 
+uint32\+\_\+t Weds\+Node\+Record::\+last\+\_\+trend\+\_\+sample\+\_\+timestamp\+\_\+s}
+
+\Hypertarget{struct_weds_node_record_ab3b5ce139eb8fcbc3d753f24aa062414}\index{WedsNodeRecord@{WedsNodeRecord}!latest\_status@{latest\_status}}
+\index{latest\_status@{latest\_status}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{latest\_status}{latest\_status}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_ab3b5ce139eb8fcbc3d753f24aa062414} 
+\doxymbox{\hyperlink{struct_weds_node_status_payload}{Weds\+Node\+Status\+Payload}} Weds\+Node\+Record::\+latest\+\_\+status}
+
+\Hypertarget{struct_weds_node_record_ac5f2604bbf3736e937de71e5b7ca116d}\index{WedsNodeRecord@{WedsNodeRecord}!latitude@{latitude}}
+\index{latitude@{latitude}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{latitude}{latitude}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_ac5f2604bbf3736e937de71e5b7ca116d} 
+double Weds\+Node\+Record::\+latitude}
+
+\Hypertarget{struct_weds_node_record_a6c9d56be0333068417998616d85dceac}\index{WedsNodeRecord@{WedsNodeRecord}!location\_known@{location\_known}}
+\index{location\_known@{location\_known}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{location\_known}{location\_known}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a6c9d56be0333068417998616d85dceac} 
+bool Weds\+Node\+Record::\+location\+\_\+known}
+
+\Hypertarget{struct_weds_node_record_a0dff69a4869f4fbf7ebdee786d1dbc45}\index{WedsNodeRecord@{WedsNodeRecord}!longitude@{longitude}}
+\index{longitude@{longitude}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{longitude}{longitude}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a0dff69a4869f4fbf7ebdee786d1dbc45} 
+double Weds\+Node\+Record::\+longitude}
+
+\Hypertarget{struct_weds_node_record_a249a48dadf51e8cc56051fb5556c86dd}\index{WedsNodeRecord@{WedsNodeRecord}!node\_id@{node\_id}}
+\index{node\_id@{node\_id}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{node\_id}{node\_id}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a249a48dadf51e8cc56051fb5556c86dd} 
+uint32\+\_\+t Weds\+Node\+Record::\+node\+\_\+id}
+
+\Hypertarget{struct_weds_node_record_a50df14c1e03313f8061783fea86b0209}\index{WedsNodeRecord@{WedsNodeRecord}!pending\_alert\_command@{pending\_alert\_command}}
+\index{pending\_alert\_command@{pending\_alert\_command}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{pending\_alert\_command}{pending\_alert\_command}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a50df14c1e03313f8061783fea86b0209} 
+\doxymbox{\hyperlink{struct_weds_alert_mode_enable_payload}{Weds\+Alert\+Mode\+Enable\+Payload}} Weds\+Node\+Record::\+pending\+\_\+alert\+\_\+command}
+
+\Hypertarget{struct_weds_node_record_ae6baef9b98db0c2d7533aad8f51a49b4}\index{WedsNodeRecord@{WedsNodeRecord}!pending\_alert\_mode@{pending\_alert\_mode}}
+\index{pending\_alert\_mode@{pending\_alert\_mode}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{pending\_alert\_mode}{pending\_alert\_mode}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_ae6baef9b98db0c2d7533aad8f51a49b4} 
+bool Weds\+Node\+Record::\+pending\+\_\+alert\+\_\+mode}
+
+\Hypertarget{struct_weds_node_record_a1611ed0c9cbf369d555dcf9a382d8f2d}\index{WedsNodeRecord@{WedsNodeRecord}!streak\_open@{streak\_open}}
+\index{streak\_open@{streak\_open}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{streak\_open}{streak\_open}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a1611ed0c9cbf369d555dcf9a382d8f2d} 
+bool Weds\+Node\+Record::\+streak\+\_\+open}
+
+\Hypertarget{struct_weds_node_record_a8fb3389d5bb778be693c2c9c63e2170e}\index{WedsNodeRecord@{WedsNodeRecord}!trend@{trend}}
+\index{trend@{trend}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{trend}{trend}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a8fb3389d5bb778be693c2c9c63e2170e} 
+\doxymbox{\hyperlink{struct_weds_trend_point}{Weds\+Trend\+Point}} Weds\+Node\+Record::\+trend\+[\doxymbox{\hyperlink{_weds_gateway_config_8h_a9491d336819b3df3a36943aab0df1330}{WEDS\+\_\+\+TREND\+\_\+\+POINTS\+\_\+\+PER\+\_\+\+NODE}}]\+}
+
+\Hypertarget{struct_weds_node_record_af093a14c9772765309810cda024b45de}\index{WedsNodeRecord@{WedsNodeRecord}!trend\_count@{trend\_count}}
+\index{trend\_count@{trend\_count}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{trend\_count}{trend\_count}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_af093a14c9772765309810cda024b45de} 
+uint16\+\_\+t Weds\+Node\+Record::\+trend\+\_\+count}
+
+\Hypertarget{struct_weds_node_record_a4ad0e19932d8f74fff3fb2034ce59c74}\index{WedsNodeRecord@{WedsNodeRecord}!trend\_head@{trend\_head}}
+\index{trend\_head@{trend\_head}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{trend\_head}{trend\_head}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a4ad0e19932d8f74fff3fb2034ce59c74} 
+uint16\+\_\+t Weds\+Node\+Record::\+trend\+\_\+head}
+
+\Hypertarget{struct_weds_node_record_a3765dcef14d0ec1cc6475bd964098d9c}\index{WedsNodeRecord@{WedsNodeRecord}!used@{used}}
+\index{used@{used}!WedsNodeRecord@{WedsNodeRecord}}
+\doxysubsubsection{\texorpdfstring{used}{used}}
+{\footnotesize\ttfamily \label{struct_weds_node_record_a3765dcef14d0ec1cc6475bd964098d9c} 
+bool Weds\+Node\+Record::\+used}
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+gateway\+\_\+registry/\+\doxymbox{\hyperlink{_weds_gateway_registry_8h}{Weds\+Gateway\+Registry.\+h}}\end{DoxyCompactItemize}

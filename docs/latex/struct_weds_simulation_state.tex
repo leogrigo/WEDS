@@ -1,0 +1,91 @@
+\doxysection{Weds\+Simulation\+State Struct Reference}
+\hypertarget{struct_weds_simulation_state}{}\label{struct_weds_simulation_state}\index{WedsSimulationState@{WedsSimulationState}}
+
+
+Maintains the internal state for the sensor simulation.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Node\+Simulation.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_simulation_state_ae421efe19d865f7a0c501776b65b3abd}{tick}}
+\item 
+uint32\+\_\+t \doxymbox{\hyperlink{struct_weds_simulation_state_ac1458327f746fde2398aeaf495e514a8}{mode\+\_\+tick}}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_simulation_state_aad4b5b59f28e8a9b1d5c358918f22a0b}{in\+\_\+warmup}}
+\item 
+bool \doxymbox{\hyperlink{struct_weds_simulation_state_a52124234352954ecf3a008fc0c5ab3c0}{fault\+\_\+initialized}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_simulation_state_aa6c5097134a13ec4a16bd686f79155d1}{fault\+\_\+temperature}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_simulation_state_a2259456d17589909cae3225debc57f04}{fault\+\_\+humidity}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_simulation_state_adb6fc505f869559698bda86b44003b4b}{fault\+\_\+pressure}}
+\item 
+float \doxymbox{\hyperlink{struct_weds_simulation_state_aebfb987f242b72498063602e591ef231}{fault\+\_\+gas\+\_\+resistance}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Maintains the internal state for the sensor simulation. 
+
+\label{struct_weds_simulation_state_doc-variable-members}
+\Hypertarget{struct_weds_simulation_state_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_weds_simulation_state_aebfb987f242b72498063602e591ef231}\index{WedsSimulationState@{WedsSimulationState}!fault\_gas\_resistance@{fault\_gas\_resistance}}
+\index{fault\_gas\_resistance@{fault\_gas\_resistance}!WedsSimulationState@{WedsSimulationState}}
+\doxysubsubsection{\texorpdfstring{fault\_gas\_resistance}{fault\_gas\_resistance}}
+{\footnotesize\ttfamily \label{struct_weds_simulation_state_aebfb987f242b72498063602e591ef231} 
+float Weds\+Simulation\+State::\+fault\+\_\+gas\+\_\+resistance}
+
+Gas resistance value during a fault. \Hypertarget{struct_weds_simulation_state_a2259456d17589909cae3225debc57f04}\index{WedsSimulationState@{WedsSimulationState}!fault\_humidity@{fault\_humidity}}
+\index{fault\_humidity@{fault\_humidity}!WedsSimulationState@{WedsSimulationState}}
+\doxysubsubsection{\texorpdfstring{fault\_humidity}{fault\_humidity}}
+{\footnotesize\ttfamily \label{struct_weds_simulation_state_a2259456d17589909cae3225debc57f04} 
+float Weds\+Simulation\+State::\+fault\+\_\+humidity}
+
+Humidity value during a fault. \Hypertarget{struct_weds_simulation_state_a52124234352954ecf3a008fc0c5ab3c0}\index{WedsSimulationState@{WedsSimulationState}!fault\_initialized@{fault\_initialized}}
+\index{fault\_initialized@{fault\_initialized}!WedsSimulationState@{WedsSimulationState}}
+\doxysubsubsection{\texorpdfstring{fault\_initialized}{fault\_initialized}}
+{\footnotesize\ttfamily \label{struct_weds_simulation_state_a52124234352954ecf3a008fc0c5ab3c0} 
+bool Weds\+Simulation\+State::\+fault\+\_\+initialized}
+
+True if a sensor fault has been initialized. \Hypertarget{struct_weds_simulation_state_adb6fc505f869559698bda86b44003b4b}\index{WedsSimulationState@{WedsSimulationState}!fault\_pressure@{fault\_pressure}}
+\index{fault\_pressure@{fault\_pressure}!WedsSimulationState@{WedsSimulationState}}
+\doxysubsubsection{\texorpdfstring{fault\_pressure}{fault\_pressure}}
+{\footnotesize\ttfamily \label{struct_weds_simulation_state_adb6fc505f869559698bda86b44003b4b} 
+float Weds\+Simulation\+State::\+fault\+\_\+pressure}
+
+Pressure value during a fault. \Hypertarget{struct_weds_simulation_state_aa6c5097134a13ec4a16bd686f79155d1}\index{WedsSimulationState@{WedsSimulationState}!fault\_temperature@{fault\_temperature}}
+\index{fault\_temperature@{fault\_temperature}!WedsSimulationState@{WedsSimulationState}}
+\doxysubsubsection{\texorpdfstring{fault\_temperature}{fault\_temperature}}
+{\footnotesize\ttfamily \label{struct_weds_simulation_state_aa6c5097134a13ec4a16bd686f79155d1} 
+float Weds\+Simulation\+State::\+fault\+\_\+temperature}
+
+Temperature value during a fault. \Hypertarget{struct_weds_simulation_state_aad4b5b59f28e8a9b1d5c358918f22a0b}\index{WedsSimulationState@{WedsSimulationState}!in\_warmup@{in\_warmup}}
+\index{in\_warmup@{in\_warmup}!WedsSimulationState@{WedsSimulationState}}
+\doxysubsubsection{\texorpdfstring{in\_warmup}{in\_warmup}}
+{\footnotesize\ttfamily \label{struct_weds_simulation_state_aad4b5b59f28e8a9b1d5c358918f22a0b} 
+bool Weds\+Simulation\+State::\+in\+\_\+warmup}
+
+True if the simulation is in the warmup phase. \Hypertarget{struct_weds_simulation_state_ac1458327f746fde2398aeaf495e514a8}\index{WedsSimulationState@{WedsSimulationState}!mode\_tick@{mode\_tick}}
+\index{mode\_tick@{mode\_tick}!WedsSimulationState@{WedsSimulationState}}
+\doxysubsubsection{\texorpdfstring{mode\_tick}{mode\_tick}}
+{\footnotesize\ttfamily \label{struct_weds_simulation_state_ac1458327f746fde2398aeaf495e514a8} 
+uint32\+\_\+t Weds\+Simulation\+State::\+mode\+\_\+tick}
+
+Number of ticks since leaving warmup phase. \Hypertarget{struct_weds_simulation_state_ae421efe19d865f7a0c501776b65b3abd}\index{WedsSimulationState@{WedsSimulationState}!tick@{tick}}
+\index{tick@{tick}!WedsSimulationState@{WedsSimulationState}}
+\doxysubsubsection{\texorpdfstring{tick}{tick}}
+{\footnotesize\ttfamily \label{struct_weds_simulation_state_ae421efe19d865f7a0c501776b65b3abd} 
+uint32\+\_\+t Weds\+Simulation\+State::\+tick}
+
+Total number of simulation ticks. 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+node\+\_\+simulation/\+\doxymbox{\hyperlink{_weds_node_simulation_8h}{Weds\+Node\+Simulation.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,51 @@
+\doxysection{Weds\+Ack\+Payload Struct Reference}
+\hypertarget{struct_weds_ack_payload}{}\label{struct_weds_ack_payload}\index{WedsAckPayload@{WedsAckPayload}}
+
+
+Payload for acknowledgment messages.  
+
+
+
+
+{\ttfamily \+\#include $<$Weds\+Packet.\+h$>$}
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \doxymbox{\hyperlink{struct_weds_ack_payload_ab68970d7912634c8b6d5616d6d5e05e1}{acked\+\_\+sequence\+\_\+id}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_ack_payload_af42f7670ceb174982609203afa030a97}{acked\+\_\+msg\+\_\+type}}
+\item 
+uint8\+\_\+t \doxymbox{\hyperlink{struct_weds_ack_payload_a786dfdf55737889b2567818747422942}{status\+\_\+code}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Payload for acknowledgment messages. 
+
+\label{struct_weds_ack_payload_doc-variable-members}
+\Hypertarget{struct_weds_ack_payload_doc-variable-members}
+\doxysubsection{Field Documentation}
+\Hypertarget{struct_weds_ack_payload_af42f7670ceb174982609203afa030a97}\index{WedsAckPayload@{WedsAckPayload}!acked\_msg\_type@{acked\_msg\_type}}
+\index{acked\_msg\_type@{acked\_msg\_type}!WedsAckPayload@{WedsAckPayload}}
+\doxysubsubsection{\texorpdfstring{acked\_msg\_type}{acked\_msg\_type}}
+{\footnotesize\ttfamily \label{struct_weds_ack_payload_af42f7670ceb174982609203afa030a97} 
+uint8\+\_\+t Weds\+Ack\+Payload::\+acked\+\_\+msg\+\_\+type}
+
+The message type of the packet being acknowledged. \Hypertarget{struct_weds_ack_payload_ab68970d7912634c8b6d5616d6d5e05e1}\index{WedsAckPayload@{WedsAckPayload}!acked\_sequence\_id@{acked\_sequence\_id}}
+\index{acked\_sequence\_id@{acked\_sequence\_id}!WedsAckPayload@{WedsAckPayload}}
+\doxysubsubsection{\texorpdfstring{acked\_sequence\_id}{acked\_sequence\_id}}
+{\footnotesize\ttfamily \label{struct_weds_ack_payload_ab68970d7912634c8b6d5616d6d5e05e1} 
+uint16\+\_\+t Weds\+Ack\+Payload::\+acked\+\_\+sequence\+\_\+id}
+
+The sequence ID of the packet being acknowledged. \Hypertarget{struct_weds_ack_payload_a786dfdf55737889b2567818747422942}\index{WedsAckPayload@{WedsAckPayload}!status\_code@{status\_code}}
+\index{status\_code@{status\_code}!WedsAckPayload@{WedsAckPayload}}
+\doxysubsubsection{\texorpdfstring{status\_code}{status\_code}}
+{\footnotesize\ttfamily \label{struct_weds_ack_payload_a786dfdf55737889b2567818747422942} 
+uint8\+\_\+t Weds\+Ack\+Payload::\+status\+\_\+code}
+
+Status code of the acknowledgment (see \doxylink{_weds_types_8h_abbea2fea60a92fd70bca83e932e4b146}{Weds\+Ack\+Status}). 
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+code/\+lib/\+weds\+\_\+protocol/\+\doxymbox{\hyperlink{_weds_packet_8h}{Weds\+Packet.\+h}}\end{DoxyCompactItemize}

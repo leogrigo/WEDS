@@ -6,6 +6,12 @@
 #include <string.h>
 #include <time.h>
 
+/**
+ * @brief Returns the current gateway time if NTP is synced, otherwise falls back to a provided timestamp.
+ * 
+ * @param fallback_timestamp_s Fallback timestamp in seconds.
+ * @return uint32_t The resolved timestamp in seconds.
+ */
 static uint32_t gatewayTimestampOrFallback(uint32_t fallback_timestamp_s) {
     const time_t now = time(nullptr);
 

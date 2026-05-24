@@ -1,0 +1,115 @@
+\doxysection{code/\+lib/\+weds\+\_\+sensors/\+\+Weds\+Sensors.h File Reference}
+\hypertarget{_weds_sensors_8h}{}\label{_weds_sensors_8h}\index{code/lib/weds\_sensors/WedsSensors.h@{code/lib/weds\_sensors/WedsSensors.h}}
+{\ttfamily \+\#include "{}Weds\+Sensor\+Sample.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_weds_sensors_8h_a18b8a022cc96e15ef2a69f6f9c261f72}{WEDS\+\_\+\+I2\+C\+\_\+\+SDA}}~41
+\item 
+\+\#define \doxymbox{\hyperlink{_weds_sensors_8h_a58a83657d60863dc376535fbff85d4e2}{WEDS\+\_\+\+I2\+C\+\_\+\+SCL}}~42
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{_weds_sensors_8h_aefeeabf78e4a505bd699014d1f593bff}{weds\+\_\+sensors\+\_\+begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the BME68X environmental sensor. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_sensors_8h_ab8b9eaecafd3b8d3b9f55689c4dc9177}{weds\+\_\+sensor\+\_\+save\+\_\+state}} ()
+\begin{DoxyCompactList}\small\item\em Saves the current BSEC state. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{_weds_sensors_8h_a4458767bf182278e4b2f51f731955bf6}{weds\+\_\+sensor\+\_\+load\+\_\+state}} (unsigned char \texorpdfstring{$\ast$}{*}state)
+\begin{DoxyCompactList}\small\item\em Loads the BSEC state from the provided buffer. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} \doxymbox{\hyperlink{_weds_sensors_8h_ab540bc22abc8f7abe724643770451c5e}{weds\+\_\+read\+\_\+environment\+\_\+sample}} ()
+\begin{DoxyCompactList}\small\item\em Reads a new sample from the BME68X sensor. \end{DoxyCompactList}\item 
+long long \doxymbox{\hyperlink{_weds_sensors_8h_a4ef77ebd0d896d1c6f316c6bb01a773b}{weds\+\_\+sensor\+\_\+next\+\_\+call\+\_\+ms}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the time until the next sensor reading is due. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{_weds_sensors_8h_doc-define-members}
+\Hypertarget{_weds_sensors_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_weds_sensors_8h_a58a83657d60863dc376535fbff85d4e2}\index{WedsSensors.h@{WedsSensors.h}!WEDS\_I2C\_SCL@{WEDS\_I2C\_SCL}}
+\index{WEDS\_I2C\_SCL@{WEDS\_I2C\_SCL}!WedsSensors.h@{WedsSensors.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_I2C\_SCL}{WEDS\_I2C\_SCL}}
+{\footnotesize\ttfamily \label{_weds_sensors_8h_a58a83657d60863dc376535fbff85d4e2} 
+\+\#define WEDS\+\_\+\+I2\+C\+\_\+\+SCL~42}
+
+\Hypertarget{_weds_sensors_8h_a18b8a022cc96e15ef2a69f6f9c261f72}\index{WedsSensors.h@{WedsSensors.h}!WEDS\_I2C\_SDA@{WEDS\_I2C\_SDA}}
+\index{WEDS\_I2C\_SDA@{WEDS\_I2C\_SDA}!WedsSensors.h@{WedsSensors.h}}
+\doxysubsubsection{\texorpdfstring{WEDS\_I2C\_SDA}{WEDS\_I2C\_SDA}}
+{\footnotesize\ttfamily \label{_weds_sensors_8h_a18b8a022cc96e15ef2a69f6f9c261f72} 
+\+\#define WEDS\+\_\+\+I2\+C\+\_\+\+SDA~41}
+
+
+
+\label{_weds_sensors_8h_doc-func-members}
+\Hypertarget{_weds_sensors_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{_weds_sensors_8h_ab540bc22abc8f7abe724643770451c5e}\index{WedsSensors.h@{WedsSensors.h}!weds\_read\_environment\_sample@{weds\_read\_environment\_sample}}
+\index{weds\_read\_environment\_sample@{weds\_read\_environment\_sample}!WedsSensors.h@{WedsSensors.h}}
+\doxysubsubsection{\texorpdfstring{weds\_read\_environment\_sample()}{weds\_read\_environment\_sample()}}
+{\footnotesize\ttfamily \label{_weds_sensors_8h_ab540bc22abc8f7abe724643770451c5e} 
+\doxymbox{\hyperlink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample}} weds\+\_\+read\+\_\+environment\+\_\+sample (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Reads a new sample from the BME68X sensor. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_weds_sensor_sample}{Weds\+Sensor\+Sample} The collected sensor reading. 
+\end{DoxyReturn}
+\Hypertarget{_weds_sensors_8h_a4458767bf182278e4b2f51f731955bf6}\index{WedsSensors.h@{WedsSensors.h}!weds\_sensor\_load\_state@{weds\_sensor\_load\_state}}
+\index{weds\_sensor\_load\_state@{weds\_sensor\_load\_state}!WedsSensors.h@{WedsSensors.h}}
+\doxysubsubsection{\texorpdfstring{weds\_sensor\_load\_state()}{weds\_sensor\_load\_state()}}
+{\footnotesize\ttfamily \label{_weds_sensors_8h_a4458767bf182278e4b2f51f731955bf6} 
+bool weds\+\_\+sensor\+\_\+load\+\_\+state (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Loads the BSEC state from the provided buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & Pointer to the state buffer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_sensors_8h_a4ef77ebd0d896d1c6f316c6bb01a773b}\index{WedsSensors.h@{WedsSensors.h}!weds\_sensor\_next\_call\_ms@{weds\_sensor\_next\_call\_ms}}
+\index{weds\_sensor\_next\_call\_ms@{weds\_sensor\_next\_call\_ms}!WedsSensors.h@{WedsSensors.h}}
+\doxysubsubsection{\texorpdfstring{weds\_sensor\_next\_call\_ms()}{weds\_sensor\_next\_call\_ms()}}
+{\footnotesize\ttfamily \label{_weds_sensors_8h_a4ef77ebd0d896d1c6f316c6bb01a773b} 
+long long weds\+\_\+sensor\+\_\+next\+\_\+call\+\_\+ms (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the time until the next sensor reading is due. 
+
+\begin{DoxyReturn}{Returns}
+long long Next call time in milliseconds. 
+\end{DoxyReturn}
+\Hypertarget{_weds_sensors_8h_ab8b9eaecafd3b8d3b9f55689c4dc9177}\index{WedsSensors.h@{WedsSensors.h}!weds\_sensor\_save\_state@{weds\_sensor\_save\_state}}
+\index{weds\_sensor\_save\_state@{weds\_sensor\_save\_state}!WedsSensors.h@{WedsSensors.h}}
+\doxysubsubsection{\texorpdfstring{weds\_sensor\_save\_state()}{weds\_sensor\_save\_state()}}
+{\footnotesize\ttfamily \label{_weds_sensors_8h_ab8b9eaecafd3b8d3b9f55689c4dc9177} 
+bool weds\+\_\+sensor\+\_\+save\+\_\+state (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Saves the current BSEC state. 
+
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{_weds_sensors_8h_aefeeabf78e4a505bd699014d1f593bff}\index{WedsSensors.h@{WedsSensors.h}!weds\_sensors\_begin@{weds\_sensors\_begin}}
+\index{weds\_sensors\_begin@{weds\_sensors\_begin}!WedsSensors.h@{WedsSensors.h}}
+\doxysubsubsection{\texorpdfstring{weds\_sensors\_begin()}{weds\_sensors\_begin()}}
+{\footnotesize\ttfamily \label{_weds_sensors_8h_aefeeabf78e4a505bd699014d1f593bff} 
+bool weds\+\_\+sensors\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the BME68X environmental sensor. 
+
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise. 
+\end{DoxyReturn}
