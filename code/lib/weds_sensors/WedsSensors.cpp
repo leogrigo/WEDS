@@ -72,37 +72,22 @@ WedsSensorSample weds_read_environment_sample() {
 
 #else
 
-#include <bsec.h>
 #include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BME680.h>
 
-#define I2C_ADDRESS BME68X_I2C_ADDR_HIGH
-#define BSEC_SENSOR_RATE BSEC_SAMPLE_RATE_LP
+// BME68X_I2C_ADDR_HIGH corrisponde solitamente a 0x77
+#define I2C_ADDRESS 0x77 
 
-Bsec bmeSensor;
-
-
-uint8_t bsecState[BSEC_MAX_STATE_BLOB_SIZE] = {0};
-int64_t rtc_simulated_millis = 0;
-uint64_t read_count = 0;
+// Istanziamo il BME680 agganciandolo al bus I2C specificato da WEDS_I2C_SCL/SDA
+Adafruit_BME680 bmeSensor(&Wire1); 
 
 /**
- * @brief Validates the status of the BME68X sensor and BSEC library.
- * @return true if the sensor is functioning correctly, false otherwise.
+ * @brief Funzione fittizia per retrocompatibilità. Senza BSEC non ci sono stati d'errore complessi.
  */
 bool checkBmeSensorStatus(void) {
-  if (bmeSensor.bsecStatus != BSEC_OK || bmeSensor.bme68xStatus != BME68X_OK) {
-    Serial.println("ERRORE SENSORE - Controllo cablaggio e I2C!");
-    Serial.println("Codice bme68xStatus: " + String(bmeSensor.bme68xStatus));
-    Serial.println("Codice bsecStatus: " + String(bmeSensor.bsecStatus));
-    Serial.flush();
-    return false;
-  }
   return true;
 }
-
-const uint8_t bsec_config[] = {
-    #include <config/generic_33v_3s_28d/bsec_iaq.txt>
-};
 
 bool weds_sensors_begin(){
     if(!Wire1.begin(WEDS_I2C_SDA, WEDS_I2C_SCL)){
@@ -110,57 +95,58 @@ bool weds_sensors_begin(){
         return false;
     }
 
-    bmeSensor.begin(I2C_ADDRESS, Wire1);
+    // Inizializza il sensore
+    if (!bmeSensor.begin(I2C_ADDRESS)) {
+        Serial.println("ERRORE SENSORE - Impossibile trovare BME680 su I2C!");
+        Serial.flush();
+        return false;
+    }
 
-    bsec_virtual_sensor_t sensorList[4] = {
-        BSEC_OUTPUT_RAW_PRESSURE,
-        BSEC_OUTPUT_RAW_GAS,
-        BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_TEMPERATURE,
-        BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY,
-    };
+    // Configurazione dei parametri hardware per la lettura di Adafruit
+    bmeSensor.setTemperatureOversampling(BME680_OS_8X);
+    bmeSensor.setHumidityOversampling(BME680_OS_2X);
+    bmeSensor.setPressureOversampling(BME680_OS_4X);
+    bmeSensor.setIIRFilterSize(BME680_FILTER_SIZE_3);
+    
+    // Imposta la piastra termica a 320°C per 150 millisecondi (profilo a basso consumo)
+    bmeSensor.setGasHeater(320, 150);
 
-    bmeSensor.setConfig(bsec_config);
-
-    bmeSensor.updateSubscription(sensorList, 4, BSEC_SENSOR_RATE);
-
-    return checkBmeSensorStatus();
-
+    return true;
 }
 
 bool weds_sensor_save_state(){
-    bmeSensor.getState(bsecState);
-    
-    return checkBmeSensorStatus();
+    // La libreria Adafruit lavora in Forced Mode stateless:
+    // Nessuno stato interno (come l'IAQ di BSEC) da salvare in Flash/RTC.
+    return true;
 }
 
 bool weds_sensor_load_state(uint8_t *state){
-    if(state == nullptr || state == NULL){
-        
-        bmeSensor.setState(bsecState);
-    }
-    else{
-        memcpy(bsecState, state, BSEC_MAX_STATE_BLOB_SIZE);
-        bmeSensor.setState(bsecState);
-    }
-    return checkBmeSensorStatus();
+    // Nessuno stato da caricare al risveglio.
+    return true;
 }
 
 WedsSensorSample weds_read_environment_sample(){
     WedsSensorSample sample{};
-    if(bmeSensor.run()) {
+    
+    // bmeSensor.performReading() "sveglia" il sensore, scalda il gas, preleva i dati e lo spegne
+    if(bmeSensor.performReading()) {
         sample.temperature = bmeSensor.temperature;
         sample.humidity = bmeSensor.humidity;
         sample.pressure = bmeSensor.pressure;
-        sample.gas_resistance = bmeSensor.gasResistance;
+        sample.gas_resistance = bmeSensor.gas_resistance;
         sample.valid = true;
+    } else {
+        sample.valid = false;
+        Serial.println("[SENSOR] Error: Lettura dal BME680 fallita!");
     }
+    
     return sample;
 }
 
 int64_t weds_sensor_next_call_ms(){
-    if(!checkBmeSensorStatus()) return -1;
-    return bmeSensor.nextCall / int64_t(1000000);
+    // Con Adafruit decidi tu quando chiamare il sensore (es. ogni 10 minuti in deep sleep).
+    // Restituiamo 0 in modo da informare il sistema che non ci sono vincoli di attesa.
+    return 0;
 }
-
 
 #endif
