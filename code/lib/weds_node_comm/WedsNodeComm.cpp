@@ -1,6 +1,40 @@
 #include "WedsNodeComm.h"
+#include <esp_sleep.h>
 #include <heltec_unofficial.h>
 #include "WedsNodeConfig.h"
+
+namespace {
+
+constexpr uint32_t WEDS_NODE_COMM_RTC_MAGIC = 0x574E434DUL;  // "WNCM"
+constexpr uint16_t WEDS_NODE_COMM_RTC_VERSION = 1;
+
+struct WedsRtcNodeCommState {
+    uint32_t magic;
+    uint16_t version;
+    uint16_t sequence_id;
+    bool has_last_gateway_command;
+    uint16_t last_gateway_command_sequence_id;
+    uint8_t last_gateway_command_msg_type;
+};
+
+RTC_DATA_ATTR WedsRtcNodeCommState rtc_node_comm_state;
+
+bool rtcNodeCommStateValid() {
+    return rtc_node_comm_state.magic == WEDS_NODE_COMM_RTC_MAGIC &&
+        rtc_node_comm_state.version == WEDS_NODE_COMM_RTC_VERSION &&
+        rtc_node_comm_state.sequence_id != 0;
+}
+
+void clearRtcNodeCommState() {
+    rtc_node_comm_state.magic = WEDS_NODE_COMM_RTC_MAGIC;
+    rtc_node_comm_state.version = WEDS_NODE_COMM_RTC_VERSION;
+    rtc_node_comm_state.sequence_id = 1;
+    rtc_node_comm_state.has_last_gateway_command = false;
+    rtc_node_comm_state.last_gateway_command_sequence_id = 0;
+    rtc_node_comm_state.last_gateway_command_msg_type = 0;
+}
+
+}  // namespace
 
 /**
  * @brief Returns a string representation of the given message type.
@@ -37,6 +71,21 @@ bool WedsNodeComm::begin() {
     heltec_setup();
 
     node_id_ = weds_get_node_id_from_mac();
+
+    const bool woke_from_deep_sleep =
+        esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_UNDEFINED;
+
+    if (!woke_from_deep_sleep || !rtcNodeCommStateValid()) {
+        clearRtcNodeCommState();
+    }
+
+    sequence_id_ = rtc_node_comm_state.sequence_id;
+    has_last_gateway_command_ =
+        rtc_node_comm_state.has_last_gateway_command;
+    last_gateway_command_sequence_id_ =
+        rtc_node_comm_state.last_gateway_command_sequence_id;
+    last_gateway_command_msg_type_ =
+        rtc_node_comm_state.last_gateway_command_msg_type;
 
     Serial.print("[NODE_COMM] node_id=");
     Serial.println(node_id_);
@@ -109,9 +158,12 @@ bool WedsNodeComm::sendStatus(const WedsNodeStatusPayload& status) {
 
     WedsPacket packet;
 
+    const uint16_t status_sequence_id = sequence_id_++;
+    persistRtcState();
+
     bool ok = weds_build_node_status_packet(
         node_id_,
-        sequence_id_++,
+        status_sequence_id,
         status,
         packet
     );
@@ -131,6 +183,7 @@ bool WedsNodeComm::sendAlert(const WedsNodeStatusPayload& status) {
     }
 
     const uint16_t alert_sequence_id = sequence_id_++;
+    persistRtcState();
 
     WedsPacket packet;
 
@@ -355,6 +408,7 @@ void WedsNodeComm::markGatewayCommandProcessed(const WedsPacket& packet) {
     has_last_gateway_command_ = true;
     last_gateway_command_sequence_id_ = packet.header.sequence_id;
     last_gateway_command_msg_type_ = packet.header.msg_type;
+    persistRtcState();
 
     Serial.println("[NODE_COMM] Gateway command marked as processed");
 
@@ -371,6 +425,18 @@ uint32_t WedsNodeComm::getNodeId() const {
 
 uint16_t WedsNodeComm::getCurrentSequenceId() const {
     return sequence_id_;
+}
+
+void WedsNodeComm::persistRtcState() const {
+    rtc_node_comm_state.magic = WEDS_NODE_COMM_RTC_MAGIC;
+    rtc_node_comm_state.version = WEDS_NODE_COMM_RTC_VERSION;
+    rtc_node_comm_state.sequence_id = sequence_id_ == 0 ? 1 : sequence_id_;
+    rtc_node_comm_state.has_last_gateway_command =
+        has_last_gateway_command_;
+    rtc_node_comm_state.last_gateway_command_sequence_id =
+        last_gateway_command_sequence_id_;
+    rtc_node_comm_state.last_gateway_command_msg_type =
+        last_gateway_command_msg_type_;
 }
 
 void WedsNodeComm::printBufferHex(const uint8_t* buffer, size_t len) {
@@ -539,6 +605,7 @@ bool WedsNodeComm::sendAck(
     WedsPacket ack_packet;
 
     const uint16_t ack_sequence_id = sequence_id_++;
+    persistRtcState();
 
     bool ok = weds_build_ack_packet(
         node_id_,

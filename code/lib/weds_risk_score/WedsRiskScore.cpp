@@ -1,12 +1,19 @@
 #include "WedsRiskScore.h"
 #include <Arduino.h>
+#include <esp_sleep.h>
+#include "WedsNodeConfig.h"
 #include "model_data_v6f.h"
 #include "tensorflow/lite/micro/micro_error_reporter.h"
 
 RTC_DATA_ATTR static DailyBucket rtc_history[WedsRiskScoreCalculator::kHistorySize];
-RTC_DATA_ATTR uint32_t           rtc_virtual_timestamp = 0;
 
 bool WedsRiskScoreCalculator::begin() {
+    if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_UNDEFINED) {
+        for (int i = 0; i < kHistorySize; ++i) {
+            rtc_history[i] = {};
+        }
+    }
+
     const float means[kNumFeatures] = {18.61777f, 63.66107f, 95955.32f, 18.68431f, 63.42773f, -0.01751f, 0.09243f};
     const float scales[kNumFeatures] = {6.07850f, 15.99210f, 4519.777f, 5.72370f, 13.88332f, 1.76610f, 9.05942f};
 
@@ -36,9 +43,17 @@ WedsRiskResult WedsRiskScoreCalculator::update(const WedsSensorSample& sample) {
     result.score = 0.0f;
     result.detection_state = WEDS_DETECTION_NORMAL;
 
-    if (!interpreter_ || sample.timestamp == 0) return result;
+    if (WEDS_NODE_SKIP_RISK_INFERENCE) {
+        result.score = WEDS_NODE_DEFAULT_RISK_SCORE;
+        result.detection_state =
+            result.score > 0.75f ? WEDS_DETECTION_ALERT : WEDS_DETECTION_NORMAL;
+        return result;
+    }
 
-    uint32_t current_day = sample.timestamp / 86400;
+    if (!interpreter_) return result;
+
+    const uint32_t model_timestamp = sample.timestamp == 0 ? 86400U : sample.timestamp;
+    uint32_t current_day = model_timestamp / 86400;
     int bucket_idx = current_day % kHistorySize;
 
     if (rtc_history[bucket_idx].day_id != current_day) {
@@ -99,7 +114,9 @@ WedsRiskResult WedsRiskScoreCalculator::update(const WedsSensorSample& sample) {
         input_->data.int8[i] = quantized_val;
     }
 
-    if (interpreter_->Invoke() != kTfLiteOk) return result;
+    const TfLiteStatus invoke_status = interpreter_->Invoke();
+
+    if (invoke_status != kTfLiteOk) return result;
 
     result.score = (output_->data.int8[0] - output_->params.zero_point) * output_->params.scale;
 
