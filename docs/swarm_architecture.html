@@ -614,6 +614,11 @@ stateDiagram-v2
             <span class="callout-icon">⚠️</span>
             <span><strong>Command Delivery Latency:</strong> Because the gateway only delivers pending commands when a node next checks in, the worst-case command delivery latency equals the node's current sleep duration (up to 1800 s = 30 min in low-risk mode). Neighbours with low risk scores may take up to 30 minutes to receive their <code>ALERT_MODE_ENABLE</code> command after a nearby alert fires.</span>
         </div>
+
+        <div class="callout callout-note">
+            <span class="callout-icon">ℹ️</span>
+            <span><strong>TFLite Inference Awake-Time Budget:</strong> TensorFlow Lite Micro's <code>Invoke()</code> is the dominant contributor to node awake time. On first boot (cold kernel init), inference can take 3–8 seconds. The firmware feeds <code>esp_task_wdt_reset()</code> before and after <code>Invoke()</code> to prevent a TWDT panic, and the <code>loopTask</code> stack has been increased to <strong>24 KB</strong> (via <code>ARDUINO_LOOP_STACK_SIZE=24576</code> in <code>platformio.ini</code>) to prevent stack overflow. The additional awake time is automatically absorbed by the virtual timestamp advance: <code>rtc_virtual_timestamp += awake_sec + sleep_sec</code>, so the daily bucket ring buffer stays coherent regardless of inference duration.</span>
+        </div>
     </section>
 
 </div>

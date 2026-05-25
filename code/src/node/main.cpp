@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <esp_sleep.h>
+#include <esp_task_wdt.h>
 
 #include "WedsNodeComm.h"
 #include "WedsNodeState.h"
@@ -8,6 +9,10 @@
 #include "WedsRiskScore.h"
 #include "WedsSensors.h"
 #include "WedsNodeConfig.h"
+
+size_t getArduinoLoopTaskStackSize(void) {
+    return WEDS_NODE_CYCLE_TASK_STACK_BYTES;
+}
 
 namespace {
 
@@ -79,6 +84,7 @@ uint32_t sleepDurationSec(float risk_score) {
 }  // namespace
 
 void setup() {
+    esp_task_wdt_init(30, false);
     Serial.begin(115200);
     delay(WEDS_NODE_BOOT_DELAY_MS);
 
@@ -104,24 +110,30 @@ void setup() {
     }
 
     const uint32_t wake_start_ms = millis();
+    
+    WedsSensorSample sample;
+    while (true) {
+        sample = readSensors();
 
-    WedsSensorSample sample = readSensors();
+        if (rtc_virtual_timestamp == 0) {
+            rtc_virtual_timestamp = 86400U;
+        }
+        sample.timestamp = rtc_virtual_timestamp;
 
-    if (rtc_virtual_timestamp == 0) {
-        rtc_virtual_timestamp = 86400U;
-    }
-    sample.timestamp = rtc_virtual_timestamp;
-
-    if (!sample.valid || isnan(sample.temperature) || isnan(sample.humidity)) {
-        Serial.println("[NODE_WARN] Sensor fault detected (NaN or invalid read) — retrying in 5s");
-        Serial.flush();
-        esp_deep_sleep(5000000ULL);
-        return;
+        
+        if (!sample.valid || isnan(sample.temperature) || isnan(sample.humidity)) {
+            Serial.println("[NODE_WARN] Sensor fault detected (NaN or invalid read) — retrying in 5s");
+            Serial.flush();
+            esp_deep_sleep(5000000ULL);
+        } else {
+            break;
+        }
     }
 
     const WedsAnomalyResult anomaly = anomalyDetector.update(sample);
     printAnomalyResults(anomaly);
 
+    esp_task_wdt_reset();
     const WedsRiskResult risk = riskScoreCalculator.update(sample);
     Serial.printf("[NODE] Fire Risk Score: %.2f%%\n", risk.score * 100.0f);
 

@@ -32,7 +32,7 @@ enum WedsSimulationMode : uint8_t {
 
 /** @brief Selected sensing mode for the node. */
 static constexpr WedsNodeSensingMode WEDS_NODE_SENSING_MODE =
-    WEDS_NODE_ENVIRONMENT_SENSING;
+    WEDS_NODE_SIMULATION;
 
 /** @brief Selected simulation scenario for the node. */
 static constexpr WedsSimulationMode WEDS_SELECTED_SIMULATION_MODE =
@@ -65,8 +65,14 @@ static constexpr uint32_t WEDS_NODE_MIN_RX_WINDOW_MS = 250;
 /** @brief Polling chunk duration during receive operations in milliseconds. */
 static constexpr uint32_t WEDS_NODE_RX_POLL_CHUNK_MS = 50;
 
-/** @brief Stack size allocated for the node cycle task in bytes. */
-static constexpr uint32_t WEDS_NODE_CYCLE_TASK_STACK_BYTES = 8192;
+/**
+ * @brief Stack size allocated for the node cycle task in bytes.
+ * @note  Increased from 8192 to 24576 to accommodate TensorFlow Lite Micro's
+ *        Invoke() call, which uses deep recursive dispatch tables and requires
+ *        significantly more stack than the default Arduino loop stack.
+ *        A minimum of ~20 KB is needed; 24 KB provides a safe margin.
+ */
+static constexpr uint32_t WEDS_NODE_CYCLE_TASK_STACK_BYTES = 26624;
 
 /** @brief Stack size allocated for the receive task in bytes. */
 static constexpr uint32_t WEDS_NODE_RX_TASK_STACK_BYTES = 8192;

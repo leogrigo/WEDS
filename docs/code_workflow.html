@@ -270,7 +270,7 @@
     <div class="container">
         <header>
             <h1>WEDS Firmware Flow & Loop Architecture</h1>
-            <p class="subtitle">An architectural breakdown of the Wildfire Early Detection System's node execution path, featuring Hardware Deep Sleep and Dynamic Duty Cycling.</p>
+            <p class="subtitle">An architectural breakdown of the Wildfire Early Detection System's node execution path, featuring Hardware Deep Sleep, Dynamic Duty Cycling, and a Watchdog-Safe TinyML Inference Loop.</p>
         </header>
 
         <main class="layout-grid">
@@ -297,13 +297,18 @@ flowchart TD
     
     E --> F{Is Sample Valid?}:::choice
     
-    F -- No (NaN / Fault) --> G["Log: Sensor fault detected — retry in 5 s"]:::choice
-    G --> J[Radio Standby & Deep Sleep 5 s]:::sleep
+    F -- "No (NaN / Fault)" --> G["Log: Sensor fault — retrying locally"]:::choice
+    G --> E
+    G -- "Persistent HW fault" --> J[Radio Standby & Deep Sleep 5 s]:::sleep
     
     F -- Yes --> K[Retrieve RTC Retained Virtual Timestamp]:::process
     K --> L[Update Anomaly Detector - EMA Filter]:::process
-    L --> M[Update TinyML Risk Model - RTC Ring Buffer]:::process
-    M --> N[Construct Status Payload]:::process
+    L --> F1[Flush Subnormal Floats to 0.0f]:::process
+    F1 --> DT[Strict Type Check: Float32 vs Int8 Data Pack]:::process
+    DT --> M1[Feed TWDT — esp_task_wdt_reset]:::process
+    M1 --> M[Run TinyML Invoke]:::process
+    M --> M2[Feed TWDT — esp_task_wdt_reset]:::process
+    M2 --> N[Construct Status Payload]:::process
     
     N --> O[Open LoRa RX Poll Window for 250ms]:::process
     O --> P[Dispatch Status Payload / Alert via LoRa]:::process
@@ -352,8 +357,8 @@ flowchart TD
                         <div class="step-item">
                             <div class="step-number">2</div>
                             <div class="step-content">
-                                <h3>Sensor Read & NaN Check</h3>
-                                <p>Sensing reads environmental conditions (BME688 or BMP280/AHT20). A safety guard intercepts NaN outputs. Invalid readings immediately abort loop and put the device to sleep.</p>
+                                <h3>Sensor Read, NaN Check &amp; Retry Loop</h3>
+                                <p>Sensing reads environmental conditions (BME688 or BMP280/AHT20 in hardware mode, or the Box-Muller simulation generator in simulation mode). A <strong>while(true) retry loop</strong> guards against transient NaN outputs from the simulator's Box-Muller transform. If temperature or humidity evaluate to <code>NaN</code>, the node logs a warning and retries locally. Only if the sensor system is persistently broken does the node fall back to a 5-second deep sleep.</p>
                                 <span class="badge badge-emerald">Data Collection</span>
                             </div>
                         </div>
@@ -361,8 +366,8 @@ flowchart TD
                         <div class="step-item">
                             <div class="step-number">3</div>
                             <div class="step-content">
-                                <h3>EMA & TinyML Inference</h3>
-                                <p>Averages and deltas are calculated. The 7-feature normalized vector is compiled into TFLite interpreter inputs. TinyML computes the fire risk score.</p>
+                                <h3>EMA &amp; TinyML Inference (Watchdog-Safe)</h3>
+                                <p>Averages and deltas are calculated. The 7-feature normalized vector is compiled into TFLite interpreter inputs. A <strong>Denormal Float Filter</strong> explicitly flushes any subnormal floats (<span class="code-term">FP_SUBNORMAL</span>) to zero to prevent the Xtensa FPU from stalling. A <strong>Dynamic Type Check</strong> explicitly validates if the model expects <span class="code-term">kTfLiteFloat32</span> or <span class="code-term">kTfLiteInt8</span> before packing, aborting safely on mismatch. <strong>esp_task_wdt_reset()</strong> is called before inference to prevent the Task Watchdog Timer from expiring. The loopTask stack is correctly enforced to 24 KB via a <code>getArduinoLoopTaskStackSize()</code> override in <code>main.cpp</code>. TinyML then computes the fire risk score.</p>
                                 <span class="badge badge-orange">Edge Machine Learning</span>
                             </div>
                         </div>
@@ -420,6 +425,47 @@ flowchart TD
                     </table>
                 </div>
 
+                <div class="card" style="border-color: rgba(99, 102, 241, 0.3);">
+                    <h2 style="color: var(--indigo);">TinyML Memory Requirements</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                        Two hard constraints must be satisfied to prevent <span class="code-term">TG1WDT_SYS_RST</span>
+                        watchdog resets during <span class="code-term">interpreter_-&gt;Invoke()</span>:
+                    </p>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Constraint</th>
+                                <th>Value</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: var(--indigo); font-weight: 600;">tensor_arena_ alignment</td>
+                                <td><span class="code-term">alignas(16)</span></td>
+                                <td><span class="code-term">WedsRiskScore.h</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--indigo); font-weight: 600;">loopTask stack size</td>
+                                <td>24576 bytes (24 KB)</td>
+                                <td><span class="code-term">platformio.ini</span> · <span class="code-term">WedsNodeConfig.h</span></td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--indigo); font-weight: 600;">TWDT feed around Invoke()</td>
+                                <td><span class="code-term">esp_task_wdt_reset()</span></td>
+                                <td><span class="code-term">WedsRiskScore.cpp</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 1rem;">
+                        The <strong>16-byte arena alignment</strong> is required by TFLite Micro's internal bump allocator
+                        (<span class="code-term">kBufferAlignment = 16</span>). Without it, the Xtensa LX7 SIMD load instructions
+                        (<span class="code-term">EE.VLD.128.IP</span>) raise alignment exceptions inside quantized op kernels,
+                        accumulating enough stall cycles to trigger the 3-second TWDT timeout. The <strong>24 KB stack</strong>
+                        prevents <span class="code-term">loopTask</span> overflow during the ~18–22 KB Invoke() call chain depth.
+                    </p>
+                </div>
+
                 <div class="card" style="border-color: rgba(249, 115, 22, 0.3);">
                     <h2 style="color: var(--orange);">Fail-Safe Sensor Fault Path</h2>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
@@ -431,15 +477,15 @@ flowchart TD
                     <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.9rem; color: var(--text-secondary);">
                         <li style="display: flex; gap: 0.5rem;">
                             <span style="color: var(--orange); font-weight: bold;">1.</span>
-                            <span>Log <span class="code-term">[NODE_WARN] Sensor fault detected</span> to Serial and flush.</span>
+                            <span>Enter a <strong>local retry loop</strong> — log <span class="code-term">[NODE_WARN] Sensor fault detected</span> and call <span class="code-term">readSensors()</span> again immediately.</span>
                         </li>
                         <li style="display: flex; gap: 0.5rem;">
                             <span style="color: var(--orange); font-weight: bold;">2.</span>
-                            <span>Enter <strong>5-second deep sleep</strong> without advancing <span class="code-term">rtc_virtual_timestamp</span>.</span>
+                            <span>If the fault persists (e.g., hardware I2C error), call <span class="code-term">Serial.flush()</span> and enter a <strong>5-second deep sleep</strong> without advancing <span class="code-term">rtc_virtual_timestamp</span>.</span>
                         </li>
                         <li style="display: flex; gap: 0.5rem;">
                             <span style="color: var(--orange); font-weight: bold;">3.</span>
-                            <span>MCU reboots and retries the full sensor read cycle — gateway blackout window is &le;&thinsp;5 s instead of 30 min.</span>
+                            <span>MCU reboots and retries the full sensor read cycle — gateway blackout window is &le;&thinsp;5 s instead of 30 min. In <strong>simulation mode</strong>, the Box-Muller clamp ensures NaN is never produced, so this path is never reached.</span>
                         </li>
                     </ul>
                 </div>

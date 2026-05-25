@@ -12,10 +12,16 @@ constexpr uint8_t WEDS_SIMULATION_WARMUP_SAMPLES = 20;
  * @return float A random number.
  */
 float sampleNormal(float mean, float stddev) {
-    const float u1 = random(1, 10001) / 10001.0f;
-    const float u2 = random(0, 10000) / 10000.0f;
+    // Clamp u1 to the strict open interval (0.0001, 0.9999) before passing it
+    // to logf(). The Box-Muller transform requires u1 > 0; if u1 reaches 0.0
+    // (possible due to integer truncation in the division or FPU rounding),
+    // logf(0) returns -Inf and sqrtf(-Inf) produces NaN, which then propagates
+    // through the entire sensor sample and triggers the NaN retry loop.
+    const float u1_raw = random(1, 10001) / 10001.0f;
+    const float u2     = random(0, 10000) / 10000.0f;
+    const float u1     = constrain(u1_raw, 0.0001f, 0.9999f);
     const float radius = sqrtf(-2.0f * logf(u1));
-    const float angle = 2.0f * PI_F * u2;
+    const float angle  = 2.0f * PI_F * u2;
     return mean + radius * cosf(angle) * stddev;
 }
 
@@ -91,9 +97,10 @@ WedsSensorSample generateSimulatedSample(WedsSimulationState& state) {
     }
 
     WedsSensorSample sample{};
-    sample.temperature = temperature;
-    sample.humidity = humidity;
-    sample.pressure = pressure;
+    sample.valid        = true;
+    sample.temperature  = temperature;
+    sample.humidity     = humidity;
+    sample.pressure     = pressure;
     sample.gas_resistance = gas_resistance;
     return sample;
 }

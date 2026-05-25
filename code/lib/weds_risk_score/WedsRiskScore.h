@@ -58,8 +58,11 @@ private:
     TfLiteTensor* input_ = nullptr;                   /**< Pointer to the model's input tensor. */
     TfLiteTensor* output_ = nullptr;                  /**< Pointer to the model's output tensor. */
 
-    static const int kTensorArenaSize = 15 * 1024;    /**< Memory arena size for TFLite allocations. */
-    uint8_t tensor_arena_[kTensorArenaSize];          /**< Buffer for the tensor arena. */
+    static const int kTensorArenaSize = 64 * 1024;    /**< Memory arena size for TFLite allocations. */
+    alignas(16) uint8_t tensor_arena_[kTensorArenaSize]; /**< Array for the tensor arena.
+                                                            *   TFLite Micro's allocator requires 16-byte alignment;
+                                                            *   misaligned access on Xtensa LX7 causes repeated
+                                                            *   stall cycles inside Invoke() that starve the TWDT. */
 
     static const int kNumFeatures = 7;                /**< Number of input features to the model. */
     float scaler_means_[kNumFeatures];                /**< Means for feature scaling. */
