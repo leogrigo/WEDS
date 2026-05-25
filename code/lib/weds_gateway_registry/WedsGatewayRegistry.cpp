@@ -369,7 +369,8 @@ void WedsGatewayRegistry::createAlertCommandsForNeighbors(
     uint32_t source_node_id,
     const WedsNodeStatusPayload& status
 ) {
-    if (!isAlertStatus(status)) {
+    if (status.anomaly_state != WEDS_DETECTION_ALERT) {
+        Serial.println("[GATEWAY_REGISTRY] No neighbor command: anomaly not in alert");
         return;
     }
 
