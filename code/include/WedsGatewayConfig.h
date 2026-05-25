@@ -47,9 +47,6 @@ static constexpr const char* WEDS_GATEWAY_CONFIG_PATH = "/weds_config.json";
 /** @brief Minimum valid timestamp (epoch in seconds) to ensure correct NTP sync. */
 static constexpr uint32_t WEDS_MIN_VALID_EPOCH_S = 1704067200UL;
 
-/** @brief Port used for the gateway HTTP API. */
-static constexpr uint16_t WEDS_HTTP_PORT = 80;
-
 /** @brief Timeout for WiFi connection attempts in milliseconds. */
 static constexpr uint32_t WEDS_WIFI_CONNECT_TIMEOUT_MS = 20000;
 
@@ -71,8 +68,20 @@ static constexpr const char* WEDS_NTP_SERVER_1 = "pool.ntp.org";
 /** @brief Secondary NTP server address. */
 static constexpr const char* WEDS_NTP_SERVER_2 = "time.google.com";
 
-/** @brief Delay within the API task loop in milliseconds. */
-static constexpr uint32_t WEDS_GATEWAY_API_TASK_DELAY_MS = 10;
+/** @brief Delay within the MQTT task loop in milliseconds. */
+static constexpr uint32_t WEDS_GATEWAY_MQTT_TASK_DELAY_MS = 200;
+
+/** @brief Delay between MQTT reconnect attempts in milliseconds. */
+static constexpr uint32_t WEDS_GATEWAY_MQTT_RECONNECT_INTERVAL_MS = 5000;
+
+/** @brief Maximum MQTT packet size for gateway payloads. */
+static constexpr uint16_t WEDS_GATEWAY_MQTT_PACKET_SIZE = 1536;
+
+/** @brief MQTT socket timeout in seconds, kept short to avoid watchdog stalls. */
+static constexpr uint16_t WEDS_GATEWAY_MQTT_SOCKET_TIMEOUT_SEC = 2;
+
+/** @brief Gateway status heartbeat interval over MQTT. */
+static constexpr uint32_t WEDS_GATEWAY_MQTT_STATUS_INTERVAL_MS = 10000;
 
 /** @brief Delay within the radio task loop in milliseconds. */
 static constexpr uint32_t WEDS_GATEWAY_RADIO_TASK_DELAY_MS = 5;
@@ -86,17 +95,20 @@ static constexpr uint32_t WEDS_GATEWAY_LOOP_IDLE_DELAY_MS = 1000;
 /** @brief Stack size allocated for gateway tasks in bytes. */
 static constexpr uint32_t WEDS_GATEWAY_TASK_STACK_BYTES = 8192;
 
+/** @brief Stack size allocated for the gateway MQTT task in bytes. */
+static constexpr uint32_t WEDS_GATEWAY_MQTT_TASK_STACK_BYTES = 12288;
+
 /** @brief Priority level for the gateway radio task. */
 static constexpr uint8_t WEDS_GATEWAY_RADIO_TASK_PRIORITY = 3;
 
-/** @brief Priority level for the gateway API task. */
-static constexpr uint8_t WEDS_GATEWAY_API_TASK_PRIORITY = 2;
+/** @brief Priority level for the gateway MQTT task. */
+static constexpr uint8_t WEDS_GATEWAY_MQTT_TASK_PRIORITY = 1;
 
 /** @brief Core assignment for the gateway radio task. */
 static constexpr int8_t WEDS_GATEWAY_RADIO_TASK_CORE = 1;
 
-/** @brief Core assignment for the gateway API task. */
-static constexpr int8_t WEDS_GATEWAY_API_TASK_CORE = 0;
+/** @brief Core assignment for the gateway MQTT task. */
+static constexpr int8_t WEDS_GATEWAY_MQTT_TASK_CORE = 1;
 
 /** @brief Update period for self-test simulated data in milliseconds. */
 static constexpr uint32_t WEDS_SELF_TEST_UPDATE_PERIOD_MS = 2000;

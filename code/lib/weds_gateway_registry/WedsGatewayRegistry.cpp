@@ -22,8 +22,7 @@ static uint32_t gatewayTimestampOrFallback(uint32_t fallback_timestamp_s) {
     return fallback_timestamp_s;
 }
 
-WedsGatewayRegistry::WedsGatewayRegistry()
-    : next_event_id_(1) {
+WedsGatewayRegistry::WedsGatewayRegistry() {
     for (size_t i = 0; i < WEDS_MAX_NODES; ++i) {
         initRecord(records_[i], 0);
     }
@@ -33,8 +32,6 @@ bool WedsGatewayRegistry::begin() {
     for (size_t i = 0; i < WEDS_MAX_NODES; ++i) {
         initRecord(records_[i], 0);
     }
-
-    next_event_id_ = 1;
 
     Serial.println("[REGISTRY] Mounting LittleFS...");
 
@@ -197,9 +194,7 @@ bool WedsGatewayRegistry::updateNodeStatus(
     record->last_sequence_id = sequence_id;
     record->last_msg_type = msg_type;
     record->latest_status = stored_status;
-
-    updateEventStreak(*record, stored_status);
-    updateTrend(*record, stored_status);
+    record->streak_open = isAlertStatus(stored_status);
 
     Serial.print("[GATEWAY_REGISTRY] Updated node=");
     Serial.print(node_id);
@@ -453,33 +448,10 @@ size_t WedsGatewayRegistry::getNodeEvents(
     WedsNodeEvent* out_events,
     size_t max_events
 ) const {
-    if (out_events == nullptr || max_events == 0) {
-        return 0;
-    }
-
-    const WedsNodeRecord* record = findRecord(node_id);
-
-    if (record == nullptr) {
-        return 0;
-    }
-
-    size_t count = 0;
-
-    if (record->streak_open && count < max_events) {
-        out_events[count++] = record->current_streak;
-    }
-
-    for (size_t i = 0; i < record->event_count && count < max_events; ++i) {
-        const size_t newest_index =
-            (record->event_head + WEDS_MAX_EVENTS_PER_NODE - 1 - i) %
-            WEDS_MAX_EVENTS_PER_NODE;
-
-        if (record->events[newest_index].used) {
-            out_events[count++] = record->events[newest_index];
-        }
-    }
-
-    return count;
+    (void)node_id;
+    (void)out_events;
+    (void)max_events;
+    return 0;
 }
 
 size_t WedsGatewayRegistry::getNodeTrend(
@@ -487,31 +459,10 @@ size_t WedsGatewayRegistry::getNodeTrend(
     WedsTrendPoint* out_points,
     size_t max_points
 ) const {
-    if (out_points == nullptr || max_points == 0) {
-        return 0;
-    }
-
-    const WedsNodeRecord* record = findRecord(node_id);
-
-    if (record == nullptr) {
-        return 0;
-    }
-
-    const size_t available = record->trend_count;
-    const size_t count = (available < max_points) ? available : max_points;
-    const size_t skipped = available - count;
-
-    for (size_t i = 0; i < count; ++i) {
-        const size_t age_index = skipped + i;
-        const size_t index =
-            (record->trend_head + WEDS_TREND_POINTS_PER_NODE - available +
-             age_index) %
-            WEDS_TREND_POINTS_PER_NODE;
-
-        out_points[i] = record->trend[index];
-    }
-
-    return count;
+    (void)node_id;
+    (void)out_points;
+    (void)max_points;
+    return 0;
 }
 
 WedsNodeRecord* WedsGatewayRegistry::findOrCreateRecord(uint32_t node_id) {
@@ -552,132 +503,6 @@ void WedsGatewayRegistry::initRecord(
     record.node_id = node_id;
 }
 
-void WedsGatewayRegistry::updateEventStreak(
-    WedsNodeRecord& record,
-    const WedsNodeStatusPayload& status
-) {
-    const bool alert = isAlertStatus(status);
-
-    if (!record.streak_open && alert) {
-        openEventStreak(record, getEventTypeFromStatus(status), status);
-        return;
-    }
-
-    if (record.streak_open && alert) {
-        updateOpenEventStreak(record, status);
-        return;
-    }
-
-    if (record.streak_open && !alert) {
-        closeEventStreak(record, status);
-    }
-}
-
-void WedsGatewayRegistry::openEventStreak(
-    WedsNodeRecord& record,
-    WedsEventType type,
-    const WedsNodeStatusPayload& status
-) {
-    memset(&record.current_streak, 0, sizeof(WedsNodeEvent));
-
-    record.streak_open = true;
-    record.current_streak.used = true;
-    record.current_streak.event_id = next_event_id_++;
-    record.current_streak.node_id = record.node_id;
-    record.current_streak.type = type;
-    record.current_streak.start_timestamp_s = status.timestamp_s;
-    record.current_streak.end_timestamp_s = status.timestamp_s;
-    record.current_streak.still_open = true;
-    record.current_streak.peak_anomaly_score = status.anomaly_score;
-    record.current_streak.peak_risk_score = status.risk_score;
-    record.current_streak.max_temperature = status.temperature;
-    record.current_streak.min_humidity = status.humidity;
-    record.current_streak.min_gas_resistance = status.gas_resistance;
-    record.current_streak.sample_count = 1;
-}
-
-void WedsGatewayRegistry::updateOpenEventStreak(
-    WedsNodeRecord& record,
-    const WedsNodeStatusPayload& status
-) {
-    WedsNodeEvent& event = record.current_streak;
-    const WedsEventType new_type = getEventTypeFromStatus(status);
-
-    if (event.type != new_type) {
-        event.type = WEDS_EVENT_BOTH_ALERT;
-    }
-
-    event.end_timestamp_s = status.timestamp_s;
-    event.peak_anomaly_score = max(event.peak_anomaly_score, status.anomaly_score);
-    event.peak_risk_score = max(event.peak_risk_score, status.risk_score);
-    event.max_temperature = max(event.max_temperature, status.temperature);
-    event.min_humidity = min(event.min_humidity, status.humidity);
-    event.min_gas_resistance = min(
-        event.min_gas_resistance,
-        status.gas_resistance
-    );
-    event.sample_count++;
-}
-
-void WedsGatewayRegistry::closeEventStreak(
-    WedsNodeRecord& record,
-    const WedsNodeStatusPayload& status
-) {
-    record.current_streak.end_timestamp_s = status.timestamp_s;
-    record.current_streak.still_open = false;
-
-    pushEvent(record, record.current_streak);
-
-    record.streak_open = false;
-    memset(&record.current_streak, 0, sizeof(WedsNodeEvent));
-}
-
-void WedsGatewayRegistry::pushEvent(
-    WedsNodeRecord& record,
-    const WedsNodeEvent& event
-) {
-    record.events[record.event_head] = event;
-    record.event_head =
-        (record.event_head + 1) % WEDS_MAX_EVENTS_PER_NODE;
-
-    if (record.event_count < WEDS_MAX_EVENTS_PER_NODE) {
-        record.event_count++;
-    }
-}
-
-void WedsGatewayRegistry::updateTrend(
-    WedsNodeRecord& record,
-    const WedsNodeStatusPayload& status
-) {
-    if (record.trend_count > 0) {
-        const uint32_t elapsed_s =
-            status.timestamp_s - record.last_trend_sample_timestamp_s;
-
-        if (elapsed_s < WEDS_TREND_SAMPLE_INTERVAL_SEC) {
-            return;
-        }
-    }
-
-    WedsTrendPoint& point = record.trend[record.trend_head];
-    point.used = true;
-    point.timestamp_s = status.timestamp_s;
-    point.temperature = status.temperature;
-    point.humidity = status.humidity;
-    point.pressure = status.pressure;
-    point.gas_resistance = status.gas_resistance;
-    point.battery_level = status.battery_level;
-    point.anomaly_score = status.anomaly_score;
-    point.risk_score = status.risk_score;
-
-    record.last_trend_sample_timestamp_s = status.timestamp_s;
-    record.trend_head =
-        (record.trend_head + 1) % WEDS_TREND_POINTS_PER_NODE;
-
-    if (record.trend_count < WEDS_TREND_POINTS_PER_NODE) {
-        record.trend_count++;
-    }
-}
-
 bool WedsGatewayRegistry::isAlertStatus(
     const WedsNodeStatusPayload& status
 ) {
@@ -685,27 +510,6 @@ bool WedsGatewayRegistry::isAlertStatus(
         status.anomaly_state == WEDS_DETECTION_ALERT ||
         status.risk_state == WEDS_DETECTION_ALERT
     );
-}
-
-WedsEventType WedsGatewayRegistry::getEventTypeFromStatus(
-    const WedsNodeStatusPayload& status
-) {
-    const bool anomaly_alert = status.anomaly_state == WEDS_DETECTION_ALERT;
-    const bool risk_alert = status.risk_state == WEDS_DETECTION_ALERT;
-
-    if (anomaly_alert && risk_alert) {
-        return WEDS_EVENT_BOTH_ALERT;
-    }
-
-    if (anomaly_alert) {
-        return WEDS_EVENT_ANOMALY_ALERT;
-    }
-
-    if (risk_alert) {
-        return WEDS_EVENT_RISK_ALERT;
-    }
-
-    return WEDS_EVENT_NONE;
 }
 
 double WedsGatewayRegistry::distanceMeters(

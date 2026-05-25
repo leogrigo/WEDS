@@ -1,0 +1,13 @@
+# OS metadata
+.DS_Store
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Dashboard local environment and runtime data
+dashboard/.venv/
+dashboard/*.sqlite3
+dashboard/*.sqlite3-*
+dashboard/.env
+dashboard/.flaskenv

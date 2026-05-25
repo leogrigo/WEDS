@@ -2,10 +2,12 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/semphr.h>
+#include <WiFi.h>
+#include <time.h>
 
-#include "WedsGatewayApi.h"
 #include "WedsGatewayConfig.h"
 #include "WedsGatewayComm.h"
+#include "WedsGatewayMqtt.h"
 #include "WedsGatewayRegistry.h"
 #include "secrets.h"
 
@@ -15,7 +17,7 @@ namespace {
 
 WedsGatewayRegistry registry;
 WedsGatewayComm gatewayComm;
-WedsGatewayApi gatewayApi;
+WedsGatewayMqtt gatewayMqtt;
 
 SemaphoreHandle_t registryMutex = nullptr;
 
@@ -50,6 +52,67 @@ void unlockRegistry() {
     }
 }
 
+bool connectWifi() {
+    if (WiFi.status() == WL_CONNECTED) {
+        return true;
+    }
+
+    Serial.print("[GATEWAY_WIFI] Connecting SSID=");
+    Serial.println(secret_wifi);
+
+    WiFi.mode(WIFI_STA);
+    WiFi.setSleep(WEDS_WIFI_MODEM_SLEEP_ENABLED);
+    WiFi.begin(secret_wifi, secret_password);
+
+    const uint32_t start_ms = millis();
+    uint32_t last_print_ms = 0;
+
+    while (WiFi.status() != WL_CONNECTED &&
+           millis() - start_ms < WEDS_WIFI_CONNECT_TIMEOUT_MS) {
+        const uint32_t now_ms = millis();
+        if (now_ms - last_print_ms >= WEDS_WIFI_CONNECT_PRINT_INTERVAL_MS) {
+            Serial.print(".");
+            last_print_ms = now_ms;
+        }
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
+
+    Serial.println();
+
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("[GATEWAY_WIFI] Connection failed");
+        return false;
+    }
+
+    Serial.print("[GATEWAY_WIFI] Connected IP=");
+    Serial.println(WiFi.localIP());
+    return true;
+}
+
+void syncClock() {
+    if (WiFi.status() != WL_CONNECTED) {
+        return;
+    }
+
+    Serial.println("[GATEWAY_WIFI] Syncing clock with NTP...");
+    configTime(0, 0, WEDS_NTP_SERVER_1, WEDS_NTP_SERVER_2);
+
+    const uint32_t start_ms = millis();
+    time_t now = time(nullptr);
+    while (now < WEDS_MIN_VALID_EPOCH_S &&
+           millis() - start_ms < WEDS_NTP_SYNC_TIMEOUT_MS) {
+        vTaskDelay(pdMS_TO_TICKS(WEDS_NTP_SYNC_POLL_MS));
+        now = time(nullptr);
+    }
+
+    if (now >= WEDS_MIN_VALID_EPOCH_S) {
+        Serial.print("[GATEWAY_WIFI] NTP synced epoch_s=");
+        Serial.println(static_cast<unsigned long>(now));
+    } else {
+        Serial.println("[GATEWAY_WIFI] NTP sync timeout");
+    }
+}
+
 /**
  * @brief FreeRTOS task handling radio communication for the gateway.
  * @param pvParameters Task parameters (unused).
@@ -68,18 +131,18 @@ void GatewayRadioTask(void* pvParameters) {
 }
 
 /**
- * @brief FreeRTOS task handling the REST API web server.
+ * @brief FreeRTOS task handling WEDS MQTT integration.
  * @param pvParameters Task parameters (unused).
  */
-void GatewayApiTask(void* pvParameters) {
+void GatewayMqttTask(void* pvParameters) {
     (void)pvParameters;
 
     for (;;) {
         lockRegistry();
-        gatewayApi.handleClient();
+        gatewayMqtt.loop();
         unlockRegistry();
 
-        vTaskDelay(pdMS_TO_TICKS(WEDS_GATEWAY_API_TASK_DELAY_MS));
+        vTaskDelay(pdMS_TO_TICKS(WEDS_GATEWAY_MQTT_TASK_DELAY_MS));
     }
 }
 
@@ -102,17 +165,17 @@ void createGatewayTasks() {
     }
 
     ok = xTaskCreatePinnedToCore(
-        GatewayApiTask,
-        "GatewayApiTask",
-        WEDS_GATEWAY_TASK_STACK_BYTES,
+        GatewayMqttTask,
+        "GatewayMqttTask",
+        WEDS_GATEWAY_MQTT_TASK_STACK_BYTES,
         nullptr,
-        WEDS_GATEWAY_API_TASK_PRIORITY,
+        WEDS_GATEWAY_MQTT_TASK_PRIORITY,
         nullptr,
-        WEDS_GATEWAY_API_TASK_CORE
+        WEDS_GATEWAY_MQTT_TASK_CORE
     );
 
     if (ok != pdPASS) {
-        fatalError("Failed to create GatewayApiTask");
+        fatalError("Failed to create GatewayMqttTask");
     }
 }
 
@@ -149,12 +212,10 @@ void setup() {
         Serial.println("[WARN] Gateway persistent config load failed");
     }
 
-    lockRegistry();
-    const bool apiReady = gatewayApi.begin(secret_wifi, secret_password, &registry);
-    unlockRegistry();
-
-    if (!apiReady) {
-        fatalError("Gateway REST API init failed");
+    if (!connectWifi()) {
+        Serial.println("[WARN] WiFi connection failed; MQTT will retry when WiFi is available");
+    } else {
+        syncClock();
     }
 
     lockRegistry();
@@ -163,6 +224,19 @@ void setup() {
 
     if (!commReady) {
         fatalError("Gateway communication init failed");
+    }
+
+    lockRegistry();
+    const bool mqttReady = gatewayMqtt.begin(
+        secret_mqtt_host,
+        secret_mqtt_port,
+        &registry,
+        &gatewayComm
+    );
+    unlockRegistry();
+
+    if (!mqttReady) {
+        Serial.println("[WARN] Gateway MQTT init failed; continuing without MQTT");
     }
 
     createGatewayTasks();
