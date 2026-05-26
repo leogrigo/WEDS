@@ -112,6 +112,8 @@ void sampleTask(void* parameter) {
     context->sample.timestamp = nodeState.get_current_time();
     xSemaphoreGive(context->state_mutex);
 
+    weds_print_sample(context->sample);
+
     if (!context->sample.valid ||
         isnan(context->sample.temperature) ||
         isnan(context->sample.humidity)) {
