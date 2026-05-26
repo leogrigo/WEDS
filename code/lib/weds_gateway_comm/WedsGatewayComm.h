@@ -37,6 +37,19 @@ public:
      */
     bool poll();
 
+    /**
+     * @brief Reliably sends an ALERT_MODE_ENABLE command to a node.
+     * 
+     * @param dst_node_id Destination node ID.
+     * @param command The command payload.
+     * @return true If successfully sent and acknowledged.
+     * @return false If failed or timed out.
+     */
+    bool sendAlertModeEnableReliable(
+        uint32_t dst_node_id,
+        const WedsAlertModeEnablePayload& command
+    );
+
 private:
     /** @brief Pointer to the gateway registry */
     WedsGatewayRegistry* registry_;
@@ -128,19 +141,6 @@ private:
         uint32_t expected_src_node_id,
         uint16_t expected_acked_sequence_id,
         uint8_t expected_acked_msg_type
-    );
-
-    /**
-     * @brief Reliably sends an ALERT_MODE_ENABLE command to a node.
-     * 
-     * @param dst_node_id Destination node ID.
-     * @param command The command payload.
-     * @return true If successfully sent and acknowledged.
-     * @return false If failed or timed out.
-     */
-    bool sendAlertModeEnableReliable(
-        uint32_t dst_node_id,
-        const WedsAlertModeEnablePayload& command
     );
 
     /**

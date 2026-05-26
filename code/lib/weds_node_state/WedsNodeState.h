@@ -38,16 +38,34 @@ public:
     ) const;
 
     /**
-     * @brief Enables or disables the node's ability to sleep.
-     * @param enabled True to enable sleep, false otherwise.
+     * @brief Updates alert mode using the latest anomaly result.
+     * @param anomaly The latest anomaly detection result.
      */
-    void setSleepEnabled(bool enabled);
+    void update_alert_mode(const WedsAnomalyResult& anomaly);
 
     /**
-     * @brief Checks whether sleep mode is enabled.
-     * @return true if sleep is enabled, false otherwise.
+     * @brief Gets elapsed time since the last non-deep-sleep reset.
+     * @return uint32_t Elapsed time in seconds.
      */
-    bool sleepEnabled() const;
+    uint32_t get_current_time() const;
+
+    /**
+     * @brief Chooses the next deep sleep duration from alert/risk state.
+     * @param risk The latest fire risk result.
+     */
+    void setSleepDuration(const WedsRiskResult& risk);
+
+    /**
+     * @brief Gets the selected next deep sleep duration.
+     * @return uint32_t Duration in seconds.
+     */
+    uint32_t sleepDurationSec() const;
+
+    /**
+     * @brief Updates RTC-retained time before entering deep sleep.
+     * @param sleep_sec The sleep duration that will be passed to esp_deep_sleep().
+     */
+    void prepareForDeepSleep(uint32_t sleep_sec);
 
     /**
      * @brief Applies an alert mode command received from the network.
@@ -55,22 +73,12 @@ public:
      */
     void applyAlertModeCommand(const WedsAlertModeEnablePayload& command);
 
-    /**
-     * @brief Updates the alert mode state, disabling it if the duration has expired.
-     */
-    void refreshAlertMode();
 
     /**
      * @brief Checks if alert mode is currently active.
      * @return true if active, false otherwise.
      */
     bool alertModeActive() const;
-
-    /**
-     * @brief Gets the current sampling interval in milliseconds.
-     * @return uint32_t The sampling interval.
-     */
-    uint32_t sampleIntervalMs() const;
 
     /**
      * @brief Gets the unique node identifier.
@@ -80,16 +88,18 @@ public:
 
 private:
     uint32_t node_id_;
-    bool sleep_enabled_;
-    bool alert_mode_active_;
-    uint32_t alert_mode_until_ms_;
-    uint32_t normal_sample_interval_ms_;
-    uint32_t active_sample_interval_ms_;
-    uint32_t alert_source_node_id_;
+    uint32_t wake_start_ms_;
 
     /**
      * @brief Reads the battery level of the node.
      * @return float The battery level percentage (0.0 to 100.0).
      */
     float readBatteryLevel() const;
+
+    void activateAlertMode(
+        uint32_t source_node_id,
+        uint32_t duration_sec,
+        uint32_t sampling_interval_sec
+    );
+    void refreshAlertModeExpiry();
 };

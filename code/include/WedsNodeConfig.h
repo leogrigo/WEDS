@@ -8,26 +8,26 @@
  * @brief Defines the operational mode for node sensing.
  */
 enum WedsNodeSensingMode : uint8_t {
-    /** @brief Node operates using actual environment sensors. */
-    WEDS_NODE_ENVIRONMENT_SENSING = 1,
-    /** @brief Node operates in simulation mode. */
-    WEDS_NODE_SIMULATION = 0
+  /** @brief Node operates using actual environment sensors. */
+  WEDS_NODE_ENVIRONMENT_SENSING = 1,
+  /** @brief Node operates in simulation mode. */
+  WEDS_NODE_SIMULATION = 0
 };
 
 /**
  * @brief Defines various simulation scenarios for node testing.
  */
 enum WedsSimulationMode : uint8_t {
-    /** @brief Normal environmental conditions simulation. */
-    WEDS_SIM_MODE_NORMAL,
-    /** @brief Simulated prolonged dry period. */
-    WEDS_SIM_MODE_DRY_PERIOD,
-    /** @brief Simulated sudden drop in gas concentration. */
-    WEDS_SIM_MODE_GAS_DROP,
-    /** @brief Simulated fire event. */
-    WEDS_SIM_MODE_FIRE_EVENT,
-    /** @brief Simulated sensor failure or fault. */
-    WEDS_SIM_MODE_SENSOR_FAULT
+  /** @brief Normal environmental conditions simulation. */
+  WEDS_SIM_MODE_NORMAL,
+  /** @brief Simulated prolonged dry period. */
+  WEDS_SIM_MODE_DRY_PERIOD,
+  /** @brief Simulated sudden drop in gas concentration. */
+  WEDS_SIM_MODE_GAS_DROP,
+  /** @brief Simulated fire event. */
+  WEDS_SIM_MODE_FIRE_EVENT,
+  /** @brief Simulated sensor failure or fault. */
+  WEDS_SIM_MODE_SENSOR_FAULT
 };
 
 /** @brief Selected sensing mode for the node. */
@@ -40,6 +40,20 @@ static constexpr WedsSimulationMode WEDS_SELECTED_SIMULATION_MODE =
 
 /** @brief Default interval between sensor samples in milliseconds. */
 static constexpr uint32_t WEDS_NODE_DEFAULT_SAMPLE_INTERVAL_MS = 2000;
+
+/** @brief Temporary switch to bypass TinyML risk inference while model/runtime
+ * compatibility is fixed. */
+static constexpr bool WEDS_NODE_SKIP_RISK_INFERENCE = true;
+
+/** @brief Default risk score used when TinyML risk inference is bypassed. */
+static constexpr float WEDS_NODE_DEFAULT_RISK_SCORE = 0.1f;
+
+/** @brief Duration of local alert mode in seconds after this node detects an
+ * anomaly. */
+static constexpr uint16_t WEDS_NODE_ALERT_MODE_DURATION_SEC = 300;
+
+/** @brief Sampling interval used while this node is in alert mode. */
+static constexpr uint16_t WEDS_NODE_ALERT_MODE_SAMPLING_INTERVAL_SEC = 3;
 
 /** @brief Timeout for node-to-gateway acknowledgment in milliseconds. */
 static constexpr uint32_t WEDS_NODE_ACK_TIMEOUT_MS = 1500;
@@ -83,11 +97,29 @@ static constexpr uint8_t WEDS_NODE_CYCLE_TASK_PRIORITY = 2;
 /** @brief Priority level for the receive task. */
 static constexpr uint8_t WEDS_NODE_RX_TASK_PRIORITY = 3;
 
-/** @brief Core assignment for the node cycle task. */
-static constexpr int8_t WEDS_NODE_CYCLE_TASK_CORE = 1;
+/** @brief Core assignment for sensor sampling and calculations. */
+static constexpr int8_t WEDS_NODE_CYCLE_TASK_CORE = 0;
 
-/** @brief Core assignment for the receive task. */
-static constexpr int8_t WEDS_NODE_RX_TASK_CORE = 0;
+/** @brief Core assignment for the receive/transmit task. */
+static constexpr int8_t WEDS_NODE_RX_TASK_CORE = 1;
+
+/** @brief Stack size allocated for the node sensor sampling task in bytes. */
+static constexpr uint32_t WEDS_NODE_SAMPLE_TASK_STACK_BYTES = 4096;
+
+/** @brief Stack size allocated for the anomaly calculation task in bytes. */
+static constexpr uint32_t WEDS_NODE_ANOMALY_TASK_STACK_BYTES = 4096;
+
+/** @brief Stack size allocated for the risk calculation task in bytes. */
+static constexpr uint32_t WEDS_NODE_RISK_TASK_STACK_BYTES = 12288;
+
+/** @brief Priority level for the node sensor sampling task. */
+static constexpr uint8_t WEDS_NODE_SAMPLE_TASK_PRIORITY = 3;
+
+/** @brief Priority level for the anomaly calculation task. */
+static constexpr uint8_t WEDS_NODE_ANOMALY_TASK_PRIORITY = 2;
+
+/** @brief Priority level for the risk calculation task. */
+static constexpr uint8_t WEDS_NODE_RISK_TASK_PRIORITY = 1;
 
 /** @brief Pin number used for Heltec battery control. */
 static constexpr uint8_t WEDS_NODE_HELTEC_VBAT_CTRL_PIN = 37;
@@ -116,29 +148,31 @@ static constexpr float WEDS_NODE_BATTERY_PERCENT_PER_V =
  * @brief Fire risk score threshold below which the node is considered Low risk.
  *        Scores in [0.0, WEDS_RISK_THRESHOLD_LOW) are treated as low risk.
  */
-static constexpr float WEDS_RISK_THRESHOLD_LOW  = 0.35f;
+static constexpr float WEDS_RISK_THRESHOLD_LOW = 0.35f;
 
 /**
- * @brief Fire risk score threshold below which the node is considered Medium risk.
- *        Scores in [WEDS_RISK_THRESHOLD_LOW, WEDS_RISK_THRESHOLD_MED) are medium risk.
- *        Scores at or above this threshold are treated as high risk.
+ * @brief Fire risk score threshold below which the node is considered Medium
+ * risk. Scores in [WEDS_RISK_THRESHOLD_LOW, WEDS_RISK_THRESHOLD_MED) are medium
+ * risk. Scores at or above this threshold are treated as high risk.
  */
-static constexpr float WEDS_RISK_THRESHOLD_MED  = 0.65f;
+static constexpr float WEDS_RISK_THRESHOLD_MED = 0.65f;
 
 /**
  * @brief Deep sleep duration in seconds when fire risk is Low.
- *        Default: 30 minutes. Tune to reduce network traffic in benign conditions.
+ *        Default: 5 minutes. Tune to reduce network traffic in benign
+ * conditions.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_LOW  = 1800U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_LOW = 300U;
 
 /**
  * @brief Deep sleep duration in seconds when fire risk is Medium.
- *        Default: 10 minutes. Increases sampling frequency as risk rises.
+ *        Default: 2 minutes. Increases sampling frequency as risk rises.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_MED  = 600U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_MED = 120U;
 
 /**
  * @brief Deep sleep duration in seconds when fire risk is High.
- *        Default: 2 minutes. Maximum polling rate during elevated danger conditions.
+ *        Default: 30 seconds. Maximum polling rate during elevated danger
+ * conditions.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_HIGH = 120U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_HIGH = 30U;

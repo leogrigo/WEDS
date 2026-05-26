@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WEDS Gateway Admin</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="admin-page">
+  <header class="admin-header">
+    <div class="admin-brand">
+      <div class="admin-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M19.4 13.5c.1-.5.1-1 .1-1.5s0-1-.1-1.5l2-1.5-2-3.5-2.4 1a7.8 7.8 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.8 7.8 0 0 0 7 6.5l-2.4-1-2 3.5 2 1.5A8.6 8.6 0 0 0 4.5 12c0 .5 0 1 .1 1.5l-2 1.5 2 3.5 2.4-1a7.8 7.8 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.8 7.8 0 0 0 2.6-1.5l2.4 1 2-3.5-2-1.5zM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5z"/></svg>
+      </div>
+      <div>
+        <h1>WEDS Gateway Admin</h1>
+        <p class="sub">Node location, persistent configuration and command responses</p>
+      </div>
+    </div>
+    <a class="back" href="/">Back to dashboard</a>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-panel">
+      <h2>Unlocated Nodes</h2>
+      <p class="section-note">Nodes seen by the gateway that still need coordinates.</p>
+      <table>
+        <thead><tr><th>Node ID</th><th>Last Seen</th><th>Action</th></tr></thead>
+        <tbody id="unlocatedRows"></tbody>
+      </table>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Set Location</h2>
+      <form id="locationForm">
+        <label for="nodeId">node_id</label>
+        <input id="nodeId" name="node_id" inputmode="numeric" required>
+        <label for="latitude">latitude</label>
+        <input id="latitude" name="latitude" inputmode="decimal" required>
+        <label for="longitude">longitude</label>
+        <input id="longitude" name="longitude" inputmode="decimal" required>
+        <button id="useBrowserLocation" type="button">Use Browser Location</button>
+        <button type="submit">Save Location</button>
+      </form>
+      <div id="formMsg" class="msg"></div>
+
+      <div class="export-box">
+        <h2>Export Data</h2>
+        <p class="section-note">Download the current dashboard registry snapshot, including node state, events and trend points.</p>
+        <button id="exportState" type="button">Export Current State</button>
+        <button id="clearDatabase" class="danger" type="button">Clear Database</button>
+        <div id="exportMsg" class="msg"></div>
+      </div>
+
+      <div class="config-box">
+        <h2>Persistent Config</h2>
+        <p class="section-note">Sends an MQTT command to clear saved node locations on the gateway.</p>
+        <button id="clearConfig" class="danger">Clear Persistent Config</button>
+        <div id="clearMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <section class="admin-panel command-log-panel">
+      <div class="admin-section-head">
+        <div>
+          <h2>Command Responses</h2>
+          <p class="section-note">Recent MQTT command results reported by the gateway.</p>
+        </div>
+        <button id="refreshCommands" type="button">Refresh</button>
+      </div>
+      <table class="command-table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Method</th>
+            <th>Node</th>
+            <th>Message</th>
+            <th>Created</th>
+            <th>Responded</th>
+          </tr>
+        </thead>
+        <tbody id="commandRows"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="/static/admin.js?v=20260526-command-log-clean"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WEDS Gateway Dashboard</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M13.1 2.4c.7 3.5-.5 5.5-2.2 7.3-1.3 1.4-2.7 2.9-2.7 5.2 0 2.4 1.8 4.4 4.3 4.4 2.8 0 4.9-2.1 4.9-5.1 0-1.8-.7-3.6-2-5.2-.2 1.4-.8 2.4-1.7 3.2.2-2.3-.4-5.3-2.9-8.1-.5-.6-1.1-1.1-1.7-1.7zM12 22C7.8 22 5 19.1 5 15.1c0-3.5 2-5.7 3.5-7.3 1.4-1.5 2.2-2.5 1.5-4.9-.1-.4.1-.8.5-1 .3-.2.8-.2 1.1.1 5.7 4.8 8.4 8.6 8.4 12.3C20 18.8 16.6 22 12 22z"/></svg>
+      </div>
+      <div>
+        <h1>WEDS Gateway Dashboard</h1>
+        <p class="subtitle">Wildfire Early Detection System</p>
+      </div>
+    </div>
+    <div class="head-meta">
+      <div class="meta">Total Nodes <b id="headTotal">0</b></div>
+      <div class="meta">Alert Nodes <b id="headAlert">0</b></div>
+      <div class="meta">Last Refresh <b id="headRefresh">--:--:--</b></div>
+      <div class="meta gateway-meta" id="gatewayMeta">Gateway <b id="headGateway">Unknown</b></div>
+      <a class="admin-btn" href="/admin">Admin</a>
+    </div>
+  </header>
+
+  <main>
+    <div id="apiError" class="error"></div>
+
+    <section class="panel map-panel">
+      <div class="panel-head">
+        <h2 class="panel-title">Live Node Map</h2>
+        <div class="map-actions">
+          <span id="mapHint" class="hint">Loading nodes...</span>
+          <button id="fitMapBtn" class="fit-map" onclick="fitMapToNodes()">Fit zoom</button>
+        </div>
+      </div>
+      <div id="map"></div>
+      <div id="mapFallback" class="map-fallback">Map unavailable: Leaflet failed to load</div>
+    </section>
+
+    <section class="panel nodes-panel">
+      <div class="node-summary">
+        <h2 class="panel-title">Nodes</h2>
+        <div id="nodeSummary" class="summary-line">Showing <b>0</b> nodes</div>
+      </div>
+      <div id="emptyState" class="empty">No nodes received yet.</div>
+      <div id="nodeGrid" class="node-grid"></div>
+    </section>
+  </main>
+
+  <div id="drawerBackdrop" class="drawer-backdrop" onclick="closeDrawer()"></div>
+  <aside id="drawer" class="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <div>
+        <div class="drawer-title-row">
+          <h2 id="drawerTitle">Node</h2>
+          <div id="drawerStatus"></div>
+        </div>
+        <p id="drawerCoords" class="coords"></p>
+        <div id="drawerMeta" class="drawer-meta"></div>
+      </div>
+      <button class="close" onclick="closeDrawer()" aria-label="Close">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <section>
+        <div class="section-title-row">
+          <h3>Latest Telemetry</h3>
+          <span id="telemetrySeen" class="section-note-pill">Last seen -</span>
+        </div>
+        <div id="metricGrid" class="metric-grid"></div>
+      </section>
+      <section>
+        <div class="section-title-row">
+          <h3 id="trendTitle">Telemetry Trend</h3>
+          <select id="sampleSelect" class="sample-select" onchange="setSampleLimit(this.value)">
+            <option value="10">Last 10 samples</option>
+            <option value="20">Last 20 samples</option>
+            <option value="40">Last 40 samples</option>
+            <option value="all" selected>All samples</option>
+          </select>
+        </div>
+        <div id="chartWrap" class="chart-wrap"><canvas id="trendChart" height="180"></canvas></div>
+      </section>
+      <section>
+        <div class="section-title-row">
+          <h3>Recent Events</h3>
+          <span id="eventCountPill" class="section-note-pill">0 events</span>
+        </div>
+        <div id="eventFilters" class="event-tools"></div>
+        <div class="events-box"><ul id="events" class="events"><li>No recent events</li></ul></div>
+      </section>
+    </div>
+  </aside>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="/static/app.js?v=20260526-gateway-plain-pill"></script>
+</body>
+</html>

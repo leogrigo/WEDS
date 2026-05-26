@@ -60,7 +60,7 @@ struct WedsTrendPoint {
 
 /**
  * @struct WedsNodeRecord
- * @brief Holds all relevant information about a node, including state, config, and trends.
+ * @brief Holds live node state, config, and pending commands.
  */
 struct WedsNodeRecord {
     bool used;
@@ -82,21 +82,13 @@ struct WedsNodeRecord {
     WedsAlertModeEnablePayload pending_alert_command;
 
     bool streak_open;
-    WedsNodeEvent current_streak;
-
-    WedsNodeEvent events[WEDS_MAX_EVENTS_PER_NODE];
-    uint16_t event_head;
     uint16_t event_count;
-
-    WedsTrendPoint trend[WEDS_TREND_POINTS_PER_NODE];
-    uint16_t trend_head;
     uint16_t trend_count;
-    uint32_t last_trend_sample_timestamp_s;
 };
 
 /**
  * @class WedsGatewayRegistry
- * @brief Maintains the state, location, events, and trends of all known nodes.
+ * @brief Maintains the live state and location of all known nodes.
  */
 class WedsGatewayRegistry {
 public:
@@ -138,7 +130,7 @@ public:
     bool clearPersistentConfig();
 
     /**
-     * @brief Updates a node's status and manages its events/trends.
+     * @brief Updates a node's live status.
      * 
      * @param node_id The ID of the node.
      * @param sequence_id Sequence ID of the incoming packet.
@@ -315,46 +307,12 @@ public:
 private:
     WedsNodeRecord records_[WEDS_MAX_NODES];
 
-    uint32_t next_event_id_;
-
     WedsNodeRecord* findOrCreateRecord(uint32_t node_id);
     const WedsNodeRecord* findRecord(uint32_t node_id) const;
 
     void initRecord(WedsNodeRecord& record, uint32_t node_id);
 
-    void updateEventStreak(
-        WedsNodeRecord& record,
-        const WedsNodeStatusPayload& status
-    );
-
-    void openEventStreak(
-        WedsNodeRecord& record,
-        WedsEventType type,
-        const WedsNodeStatusPayload& status
-    );
-
-    void updateOpenEventStreak(
-        WedsNodeRecord& record,
-        const WedsNodeStatusPayload& status
-    );
-
-    void closeEventStreak(
-        WedsNodeRecord& record,
-        const WedsNodeStatusPayload& status
-    );
-
-    void pushEvent(
-        WedsNodeRecord& record,
-        const WedsNodeEvent& event
-    );
-
-    void updateTrend(
-        WedsNodeRecord& record,
-        const WedsNodeStatusPayload& status
-    );
-
     static bool isAlertStatus(const WedsNodeStatusPayload& status);
-    static WedsEventType getEventTypeFromStatus(const WedsNodeStatusPayload& status);
 
     static double distanceMeters(
         double lat1,

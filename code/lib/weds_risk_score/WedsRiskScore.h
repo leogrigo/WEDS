@@ -70,9 +70,3 @@ private:
 
 };
 
-/**
- * @brief RTC-retained virtual clock (seconds). Advance this by awake time + sleep duration
- *        before calling esp_deep_sleep() so the TinyML bucketing algorithm stays synchronised
- *        across hardware resets.
- */
-extern uint32_t rtc_virtual_timestamp;

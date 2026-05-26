@@ -54,3 +54,9 @@ WedsSensorSample weds_read_environment_sample();
 int64_t weds_sensor_next_call_ms();
 
 #endif
+
+/**
+ * @brief Prints the sensor sample to the serial console.
+ * @param sample The sensor sample to print.
+ */
+void weds_print_sample(const WedsSensorSample& sample);

@@ -105,6 +105,7 @@ private:
 
     bool isDuplicateGatewayCommand(const WedsPacket& packet) const;
     void markGatewayCommandProcessed(const WedsPacket& packet);
+    void persistRtcState() const;
 
     void printBufferHex(const uint8_t* buffer, size_t len);
 };

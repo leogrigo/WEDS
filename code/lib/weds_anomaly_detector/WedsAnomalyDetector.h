@@ -18,6 +18,11 @@ struct WedsAnomalyResult {
     bool warming_up;       /**< Indicates if the detector is still in the warmup phase. */
 };
 
+struct WedsAnomalyEmaState {
+    bool initialized;
+    float value;
+};
+
 /**
  * @brief Anomaly detector that evaluates sensor samples to detect abnormal gas levels.
  */
@@ -27,6 +32,11 @@ public:
      * @brief Constructs a new WedsAnomalyDetector instance.
      */
     WedsAnomalyDetector();
+
+    /**
+     * @brief Initializes or restores RTC-retained anomaly detector state.
+     */
+    void begin();
 
     /**
      * @brief Updates the detector with a new sensor sample.
@@ -76,6 +86,15 @@ private:
             constexpr float alpha = 1.0f / (1 << K);
             state_ += alpha * (input - state_);
             return state_;
+        }
+
+        WedsAnomalyEmaState state() const {
+            return {initialized_, state_};
+        }
+
+        void restore(const WedsAnomalyEmaState& state) {
+            initialized_ = state.initialized;
+            state_ = state.value;
         }
 
     private:
