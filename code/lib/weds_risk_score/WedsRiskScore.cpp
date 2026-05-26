@@ -1,10 +1,12 @@
 #include "WedsRiskScore.h"
 #include <Arduino.h>
 #include <esp_task_wdt.h>
+#include "soc/timer_group_reg.h"
 #include "model_data_v6f.h"
 #include "tensorflow/lite/micro/micro_error_reporter.h"
 #include "esp_heap_caps.h"
 #include <cmath>
+#include <fenv.h>
 
 RTC_DATA_ATTR static DailyBucket rtc_history[WedsRiskScoreCalculator::kHistorySize];
 RTC_DATA_ATTR uint32_t           rtc_virtual_timestamp = 0;
@@ -23,7 +25,7 @@ bool WedsRiskScoreCalculator::begin() {
     }
     Serial.printf("[DEBUG] Tensor arena address: %p, is aligned: %d\n", tensor_arena_, ((uintptr_t)tensor_arena_ % 16) == 0);
 
-    model_ = tflite::GetModel(_content_drive_MyDrive_Models_WEDS___RiskScore_tiny_fire_risk_tmodel_quant_v6f_tflite);
+    model_ = tflite::GetModel(g_model_data);
     if (model_->version() != TFLITE_SCHEMA_VERSION) return false;
 
     static tflite::MicroErrorReporter micro_error_reporter;
@@ -123,8 +125,12 @@ WedsRiskResult WedsRiskScoreCalculator::update(const WedsSensorSample& sample) {
         if (input_->type == kTfLiteFloat32) {
             input_->data.f[i] = scaled_val;
         } else if (input_->type == kTfLiteInt8) {
-            int8_t quantized_val = (int8_t)((scaled_val / input_->params.scale) + input_->params.zero_point);
-            input_->data.int8[i] = quantized_val;
+            int32_t quantized_val = (int32_t)round(scaled_val / input_->params.scale) + input_->params.zero_point;
+            
+            if (quantized_val < -128) quantized_val = -128;
+            if (quantized_val > 127) quantized_val = 127;
+            
+            input_->data.int8[i] = (int8_t)quantized_val;
         } else {
             Serial.printf("[NODE_FATAL] Unsupported input tensor type: %d\n", input_->type);
             return result;
@@ -132,16 +138,13 @@ WedsRiskResult WedsRiskScoreCalculator::update(const WedsSensorSample& sample) {
     }
 
     Serial.println("[DEBUG] Feeding WDT before Invoke...");
-    disableLoopWDT();
-
+    
     Serial.println("[DEBUG] Starting TFLite Invoke...");
     uint32_t invoke_start = millis();
     TfLiteStatus invoke_status = interpreter_->Invoke();
     uint32_t invoke_end = millis();
     
     Serial.printf("[DEBUG] Invoke completed in %lu ms. Status: %d\n", invoke_end - invoke_start, invoke_status);
-
-    enableLoopWDT();
     
     if (invoke_status != kTfLiteOk) return result;
 
