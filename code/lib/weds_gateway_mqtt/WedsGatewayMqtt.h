@@ -89,10 +89,7 @@ private:
         const char* method,
         uint32_t node_id,
         bool success,
-        const char* message,
-        bool accepted = false,
-        bool delivered = false,
-        bool pending = false
+        const char* message
     );
 
     NodePublishState* stateForNode(uint32_t node_id);

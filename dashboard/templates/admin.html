@@ -14,7 +14,7 @@
       </div>
       <div>
         <h1>WEDS Gateway Admin</h1>
-        <p class="sub">Node location and persistent configuration</p>
+        <p class="sub">Node location, persistent configuration and command responses</p>
       </div>
     </div>
     <a class="back" href="/">Back to dashboard</a>
@@ -59,8 +59,31 @@
         <div id="clearMsg" class="msg"></div>
       </div>
     </section>
+
+    <section class="admin-panel command-log-panel">
+      <div class="admin-section-head">
+        <div>
+          <h2>Command Responses</h2>
+          <p class="section-note">Recent MQTT command results reported by the gateway.</p>
+        </div>
+        <button id="refreshCommands" type="button">Refresh</button>
+      </div>
+      <table class="command-table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Method</th>
+            <th>Node</th>
+            <th>Message</th>
+            <th>Created</th>
+            <th>Responded</th>
+          </tr>
+        </thead>
+        <tbody id="commandRows"></tbody>
+      </table>
+    </section>
   </main>
 
-  <script src="/static/admin.js"></script>
+  <script src="/static/admin.js?v=20260526-command-log-clean"></script>
 </body>
 </html>
