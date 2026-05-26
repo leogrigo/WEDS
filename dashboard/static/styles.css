@@ -109,6 +109,8 @@ main{padding:18px;display:grid;gap:16px}
 .admin-main{padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .admin-panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 8px 24px rgba(39,59,9,.08)}
 .admin-panel h2{font-size:18px;color:var(--forest);margin-bottom:14px}
+.admin-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.admin-section-head h2{margin-bottom:4px}
 .admin-panel table{width:100%;border-collapse:separate;border-spacing:0 8px}
 .admin-panel th,.admin-panel td{padding:10px;text-align:left}
 .admin-panel th{color:var(--muted);font-size:12px;text-transform:uppercase}
@@ -127,6 +129,13 @@ main{padding:18px;display:grid;gap:16px}
 .err{color:#8e1b29}
 .section-note{color:var(--muted);margin:-6px 0 12px}
 .config-box,.export-box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:26px}
+.command-log-panel{grid-column:1 / -1;overflow-x:auto}
+.command-table{min-width:900px}
+.command-table td small{display:block;color:var(--muted);font-size:11px;margin-top:3px;word-break:break-word}
+.status-pill{display:inline-flex;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;text-transform:uppercase}
+.status-pill.ok{background:#dcebd2;color:#174f31}
+.status-pill.warn{background:#fff1c9;color:#704700}
+.status-pill.err{background:#ffdce0;color:#8e1b29}
 @media(max-width:900px){.drawer{width:100vw;min-width:0}.metric-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:800px){.admin-main{grid-template-columns:1fr;padding:12px}.admin-header{display:block}.back{display:inline-block;margin-top:12px}}
 @media(max-width:760px){.app-header{align-items:flex-start;display:block}.head-meta{justify-content:flex-start;margin-top:12px}.meta{padding:7px 9px}#map,.map-fallback{height:430px}main{padding:12px}.card-metrics{grid-template-columns:1fr 1fr}}

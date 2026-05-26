@@ -91,9 +91,6 @@ class DashboardStore:
                     params_json TEXT,
                     success INTEGER,
                     message TEXT,
-                    accepted INTEGER,
-                    delivered INTEGER,
-                    pending INTEGER,
                     created_at REAL,
                     responded_at REAL
                 );
@@ -111,6 +108,59 @@ class DashboardStore:
                 );
                 """
             )
+            self._drop_legacy_command_response_flags()
+
+    def _drop_legacy_command_response_flags(self) -> None:
+        columns = {
+            row["name"]
+            for row in self._conn.execute("PRAGMA table_info(command_log)").fetchall()
+        }
+        legacy_columns = ("accepted", "delivered", "pending")
+        if not any(column in columns for column in legacy_columns):
+            return
+
+        rows = self._conn.execute(
+            """
+            SELECT id, method, node_id, params_json, success, message, created_at, responded_at
+            FROM command_log
+            """
+        ).fetchall()
+        self._conn.executescript(
+            """
+            ALTER TABLE command_log RENAME TO command_log_old;
+            CREATE TABLE command_log (
+                id TEXT PRIMARY KEY,
+                method TEXT NOT NULL,
+                node_id INTEGER,
+                params_json TEXT,
+                success INTEGER,
+                message TEXT,
+                created_at REAL,
+                responded_at REAL
+            );
+            DROP TABLE command_log_old;
+            """
+        )
+        self._conn.executemany(
+            """
+            INSERT INTO command_log (
+                id, method, node_id, params_json, success, message, created_at, responded_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            [
+                (
+                    row["id"],
+                    row["method"],
+                    row["node_id"],
+                    row["params_json"],
+                    row["success"],
+                    row["message"],
+                    row["created_at"],
+                    row["responded_at"],
+                )
+                for row in rows
+            ],
+        )
 
     def upsert_node_state(self, state: dict[str, Any]) -> None:
         node_id = int(state["node_id"])
@@ -326,16 +376,12 @@ class DashboardStore:
             self._conn.execute(
                 """
                 UPDATE command_log
-                SET success = ?, message = ?, accepted = ?, delivered = ?,
-                    pending = ?, responded_at = ?
+                SET success = ?, message = ?, responded_at = ?
                 WHERE id = ?
                 """,
                 (
                     int(bool(response.get("success"))),
                     response.get("message"),
-                    int(bool(response.get("accepted"))),
-                    int(bool(response.get("delivered"))),
-                    int(bool(response.get("pending"))),
                     time.time(),
                     response.get("id"),
                 ),
@@ -434,8 +480,7 @@ class DashboardStore:
         now = time.time()
         for row in rows:
             item = dict(row)
-            for key in ("success", "accepted", "delivered", "pending"):
-                item[key] = None if item[key] is None else bool(item[key])
+            item["success"] = None if item["success"] is None else bool(item["success"])
             try:
                 item["params"] = json.loads(item.pop("params_json") or "{}")
             except json.JSONDecodeError:
@@ -445,12 +490,6 @@ class DashboardStore:
                 item["status"] = "timeout" if now - item["created_at"] > 15 else "queued"
             elif item["success"] is False:
                 item["status"] = "failed"
-            elif item["delivered"]:
-                item["status"] = "delivered"
-            elif item["pending"]:
-                item["status"] = "pending"
-            elif item["accepted"]:
-                item["status"] = "accepted"
             else:
                 item["status"] = "success"
 

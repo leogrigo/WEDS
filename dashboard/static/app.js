@@ -1,5 +1,6 @@
 const DEFAULT_CENTER = [41.9028, 12.4964];
 const STATE_REFRESH_MS = 15000;
+const GATEWAY_REFRESH_MS = 5000;
 const DETAIL_REFRESH_MS = 10000;
 
 let nodes = [];
@@ -14,6 +15,7 @@ let currentTrendPoints = [];
 let currentEvents = [];
 let eventFilter = 'ALL';
 let sampleLimit = 'all';
+let gatewayStatus = null;
 
 const METRICS = [
   { key: 'temperature', label: 'Temperature', unit: ' C', digits: 1, color: '#a86e00' },
@@ -42,6 +44,18 @@ function setError(msg) {
   el.style.display = msg ? 'block' : 'none';
 }
 
+async function fetchGatewayStatus() {
+  try {
+    const r = await fetch('/api/gateway/status', { cache: 'no-store' });
+    if (!r.ok) throw new Error('gateway status fetch failed');
+    gatewayStatus = await r.json();
+    renderGatewayStatus();
+  } catch (e) {
+    gatewayStatus = { error: e.message };
+    renderGatewayStatus();
+  }
+}
+
 function initMap() {
   if (!window.L) {
     document.getElementById('map').style.display = 'none';
@@ -57,7 +71,7 @@ function initMap() {
 
 async function fetchState() {
   try {
-    const r = await fetch('/api/state/all');
+    const r = await fetch('/api/state/all', { cache: 'no-store' });
     if (!r.ok) throw new Error('state fetch failed');
     nodes = await r.json();
     setError('');
@@ -79,10 +93,40 @@ function renderHeader() {
   document.getElementById('headTotal').textContent = total;
   document.getElementById('headAlert').textContent = alerts;
   document.getElementById('headRefresh').textContent = new Date().toLocaleTimeString();
+  renderGatewayStatus();
   const unlocated = nodes.filter(n => !n.location_known).length;
   const avg = total ? nodes.reduce((s, n) => s + Number(n.risk_score || 0), 0) / total : 0;
   document.getElementById('nodeSummary').innerHTML =
     `Showing <b>${total}</b> nodes &nbsp; Unlocated: <b>${unlocated}</b> &nbsp; Average risk: <b>${avg.toFixed(2)}</b>`;
+}
+
+function renderGatewayStatus() {
+  const box = document.getElementById('gatewayMeta');
+  const label = document.getElementById('headGateway');
+  if (!box || !label) return;
+
+  if (!gatewayStatus) {
+    label.textContent = 'Loading';
+    box.title = 'Loading gateway status...';
+    return;
+  }
+
+  if (gatewayStatus.error) {
+    label.textContent = 'Offline';
+    box.title = gatewayStatus.error;
+    return;
+  }
+
+  const mqtt = gatewayStatus.mqtt || {};
+  const gateway = gatewayStatus.gateway || mqtt.gateway;
+  const gatewayOnline = gateway ? Boolean(gateway.online) : false;
+
+  if (gatewayOnline) {
+    label.textContent = 'Online';
+  } else {
+    label.textContent = 'Offline';
+  }
+  box.title = '';
 }
 
 function markerIcon(alert) {
@@ -307,5 +351,8 @@ function updateChart(points) {
 }
 
 initMap();
+renderGatewayStatus();
+fetchGatewayStatus();
 fetchState();
+setInterval(fetchGatewayStatus, GATEWAY_REFRESH_MS);
 setInterval(fetchState, STATE_REFRESH_MS);

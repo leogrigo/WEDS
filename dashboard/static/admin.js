@@ -10,6 +10,16 @@ function timeLabel(s) {
   return n > 1704067200 ? new Date(n * 1000).toLocaleString() : `${n}s`;
 }
 
+function shortId(id) {
+  return String(id || '').slice(0, 8);
+}
+
+function statusClass(status) {
+  if (status === 'success') return 'ok';
+  if (status === 'queued') return 'warn';
+  return 'err';
+}
+
 async function refreshUnlocated() {
   try {
     const r = await fetch('/api/nodes/unlocated');
@@ -34,6 +44,40 @@ async function refreshUnlocated() {
   }
 }
 
+async function refreshCommands() {
+  try {
+    const r = await fetch('/api/commands?limit=50');
+    if (!r.ok) throw new Error('failed to load command responses');
+    const commands = await r.json();
+    const rows = document.getElementById('commandRows');
+    rows.innerHTML = '';
+
+    if (!commands.length) {
+      rows.innerHTML = '<tr><td colspan="6">No commands recorded yet</td></tr>';
+      return;
+    }
+
+    commands.forEach(command => {
+      const tr = document.createElement('tr');
+      const params = command.params && Object.keys(command.params).length
+        ? JSON.stringify(command.params)
+        : 'no params';
+
+      tr.innerHTML =
+        `<td><span class="status-pill ${statusClass(command.status)}">${command.status}</span></td>` +
+        `<td><b>${command.method || '-'}</b><small>${shortId(command.id)}</small></td>` +
+        `<td>${command.node_id || '-'}</td>` +
+        `<td><b>${command.message || '-'}</b><small>${params}</small></td>` +
+        `<td>${timeLabel(command.created_at)}</td>` +
+        `<td>${timeLabel(command.responded_at)}</td>`;
+      rows.appendChild(tr);
+    });
+  } catch (e) {
+    const rows = document.getElementById('commandRows');
+    rows.innerHTML = `<tr><td colspan="6">Load error: ${e.message}</td></tr>`;
+  }
+}
+
 document.getElementById('locationForm').addEventListener('submit', async e => {
   e.preventDefault();
   const body = {
@@ -51,6 +95,7 @@ document.getElementById('locationForm').addEventListener('submit', async e => {
     if (!r.ok) throw new Error(data.detail || data.message || 'save failed');
     setMsg('formMsg', `Location command queued for node ${data.node_id}`, true);
     refreshUnlocated();
+    refreshCommands();
   } catch (e) {
     setMsg('formMsg', e.message, false);
   }
@@ -87,6 +132,7 @@ document.getElementById('clearConfig').onclick = async () => {
     if (!r.ok) throw new Error(data.detail || data.message || 'clear failed');
     setMsg('clearMsg', `Clear config command queued: ${data.command_id}`, true);
     refreshUnlocated();
+    refreshCommands();
   } catch (e) {
     setMsg('clearMsg', e.message, false);
   }
@@ -128,9 +174,14 @@ document.getElementById('clearDatabase').onclick = async () => {
     if (!r.ok) throw new Error(data.detail || data.message || 'database clear failed');
     setMsg('exportMsg', 'Dashboard database cleared', true);
     refreshUnlocated();
+    refreshCommands();
   } catch (e) {
     setMsg('exportMsg', e.message, false);
   }
 };
 
+document.getElementById('refreshCommands').onclick = refreshCommands;
+
 refreshUnlocated();
+refreshCommands();
+setInterval(refreshCommands, 10000);

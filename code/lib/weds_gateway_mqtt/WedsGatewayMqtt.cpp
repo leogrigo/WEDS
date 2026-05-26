@@ -373,10 +373,7 @@ void WedsGatewayMqtt::handleEnableAlertModeCommand(
         "enableAlertMode",
         node_id,
         true,
-        delivered ? "delivered" : "pending",
-        true,
-        delivered,
-        pending
+        delivered ? "delivered" : "pending"
     );
 }
 
@@ -440,10 +437,7 @@ void WedsGatewayMqtt::publishCommandResponse(
     const char* method,
     uint32_t node_id,
     bool success,
-    const char* message,
-    bool accepted,
-    bool delivered,
-    bool pending
+    const char* message
 ) {
     JsonDocument doc;
     doc["id"] = command_id;
@@ -452,10 +446,6 @@ void WedsGatewayMqtt::publishCommandResponse(
     doc["success"] = success;
     doc["message"] = message;
     doc["responded_at_s"] = time(nullptr);
-
-    doc["accepted"] = accepted;
-    doc["delivered"] = delivered;
-    doc["pending"] = pending;
 
     String payload;
     serializeJson(doc, payload);
