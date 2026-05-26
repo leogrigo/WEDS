@@ -32,7 +32,7 @@ enum WedsSimulationMode : uint8_t {
 
 /** @brief Selected sensing mode for the node. */
 static constexpr WedsNodeSensingMode WEDS_NODE_SENSING_MODE =
-    WEDS_NODE_SIMULATION;
+    WEDS_NODE_ENVIRONMENT_SENSING;
 
 /** @brief Selected simulation scenario for the node. */
 static constexpr WedsSimulationMode WEDS_SELECTED_SIMULATION_MODE =
@@ -43,7 +43,7 @@ static constexpr uint32_t WEDS_NODE_DEFAULT_SAMPLE_INTERVAL_MS = 2000;
 
 /** @brief Temporary switch to bypass TinyML risk inference while model/runtime
  * compatibility is fixed. */
-static constexpr bool WEDS_NODE_SKIP_RISK_INFERENCE = true;
+static constexpr bool WEDS_NODE_SKIP_RISK_INFERENCE = false;
 
 /** @brief Default risk score used when TinyML risk inference is bypassed. */
 static constexpr float WEDS_NODE_DEFAULT_RISK_SCORE = 0.1f;

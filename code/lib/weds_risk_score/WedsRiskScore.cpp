@@ -1,4 +1,5 @@
 #include "WedsRiskScore.h"
+#include "WedsNodeConfig.h"
 #include "esp_heap_caps.h"
 #include "model_data_v6f.h"
 #include "soc/timer_group_reg.h"
@@ -7,7 +8,6 @@
 #include <cmath>
 #include <esp_task_wdt.h>
 #include <fenv.h>
-
 
 RTC_DATA_ATTR static DailyBucket
     rtc_history[WedsRiskScoreCalculator::kHistorySize];
