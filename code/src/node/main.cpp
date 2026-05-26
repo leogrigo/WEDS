@@ -328,5 +328,5 @@ void setup() {
 }
 
 void loop() {
-    delay(WEDS_NODE_LOOP_IDLE_DELAY_MS);
+    vTaskDelete(nullptr);
 }
