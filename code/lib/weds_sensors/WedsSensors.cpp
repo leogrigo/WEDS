@@ -150,3 +150,15 @@ int64_t weds_sensor_next_call_ms(){
 }
 
 #endif
+
+void weds_print_sample(const WedsSensorSample& sample) {
+    Serial.printf(
+        "[SENSOR] timestamp=%lu temp=%.2f C hum=%.2f %% pressure=%.2f Pa gas=%.2f valid=%s\n",
+        (unsigned long)sample.timestamp,
+        sample.temperature,
+        sample.humidity,
+        sample.pressure,
+        sample.gas_resistance,
+        sample.valid ? "yes" : "no"
+    );
+}
