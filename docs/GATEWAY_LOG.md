@@ -184,7 +184,8 @@ Flusso RX principale:
 4. per `NODE_STATUS` / `NODE_ALERT`, il payload viene decodificato;
 5. i duplicati affidabili non vengono riprocessati, ma ricevono di nuovo ACK;
 6. i pacchetti nuovi aggiornano il registry;
-7. gli alert generano comandi pendenti per i dispositivi vicini localizzati.
+7. gli alert di anomaly generano comandi pendenti per i dispositivi vicini
+   localizzati; gli alert solo risk non propagano `ALERT_MODE_ENABLE`.
 
 ## Registry gateway
 
@@ -235,15 +236,16 @@ il comando MQTT `setLocation` viene gestito dal gateway e chiama anche
 
 ### Neighbor detection
 
-Quando un dispositivo remoto entra in alert, il registry cerca dispositivi
-vicini entro:
+Quando un dispositivo remoto entra in anomaly alert, il registry cerca
+dispositivi vicini entro:
 
 ```cpp
 WEDS_NEIGHBOR_RADIUS_M
 ```
 
 La distanza e' calcolata con Haversine. Se un vicino viene trovato, il gateway
-salva per quel dispositivo un comando `ALERT_MODE_ENABLE` pendente.
+salva per quel dispositivo un comando `ALERT_MODE_ENABLE` pendente. Gli alert
+solo risk non attivano i vicini.
 
 ## Credenziali embedded
 
