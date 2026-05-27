@@ -194,7 +194,6 @@ bool WedsGatewayRegistry::updateNodeStatus(
     record->last_sequence_id = sequence_id;
     record->last_msg_type = msg_type;
     record->latest_status = stored_status;
-    record->streak_open = isAlertStatus(stored_status);
 
     Serial.print("[GATEWAY_REGISTRY] Updated node=");
     Serial.print(node_id);
@@ -443,28 +442,6 @@ void WedsGatewayRegistry::clearPendingAlertCommand(uint32_t node_id) {
     );
 }
 
-size_t WedsGatewayRegistry::getNodeEvents(
-    uint32_t node_id,
-    WedsNodeEvent* out_events,
-    size_t max_events
-) const {
-    (void)node_id;
-    (void)out_events;
-    (void)max_events;
-    return 0;
-}
-
-size_t WedsGatewayRegistry::getNodeTrend(
-    uint32_t node_id,
-    WedsTrendPoint* out_points,
-    size_t max_points
-) const {
-    (void)node_id;
-    (void)out_points;
-    (void)max_points;
-    return 0;
-}
-
 WedsNodeRecord* WedsGatewayRegistry::findOrCreateRecord(uint32_t node_id) {
     for (size_t i = 0; i < WEDS_MAX_NODES; ++i) {
         if (records_[i].used && records_[i].node_id == node_id) {
@@ -501,15 +478,6 @@ void WedsGatewayRegistry::initRecord(
     memset(&record, 0, sizeof(WedsNodeRecord));
     record.used = (node_id != 0);
     record.node_id = node_id;
-}
-
-bool WedsGatewayRegistry::isAlertStatus(
-    const WedsNodeStatusPayload& status
-) {
-    return (
-        status.anomaly_state == WEDS_DETECTION_ALERT ||
-        status.risk_state == WEDS_DETECTION_ALERT
-    );
 }
 
 double WedsGatewayRegistry::distanceMeters(
