@@ -17,21 +17,6 @@ static constexpr uint32_t WEDS_GATEWAY_COMMAND_BACKOFF_MS = 300;
 /** @brief Maximum number of nodes supported by the gateway. */
 static constexpr size_t WEDS_MAX_NODES = 16;
 
-/** @brief Maximum number of queued events per node. */
-static constexpr size_t WEDS_MAX_EVENTS_PER_NODE = 32;
-
-/** @brief Number of trend points stored per node. */
-static constexpr size_t WEDS_TREND_POINTS_PER_NODE = 60;
-
-#ifdef WEDS_TREND_SAMPLE_INTERVAL_SEC_OVERRIDE
-/** @brief Overridden trend sampling interval in seconds. */
-static constexpr uint32_t WEDS_TREND_SAMPLE_INTERVAL_SEC =
-    WEDS_TREND_SAMPLE_INTERVAL_SEC_OVERRIDE;
-#else
-/** @brief Default trend sampling interval in seconds. */
-static constexpr uint32_t WEDS_TREND_SAMPLE_INTERVAL_SEC = 60;
-#endif
-
 /** @brief Radius in meters to consider nodes as neighbors. */
 static constexpr double WEDS_NEIGHBOR_RADIUS_M = 50.0;
 

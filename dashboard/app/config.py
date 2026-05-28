@@ -12,4 +12,4 @@ MQTT_CLIENT_ID = os.getenv("WEDS_MQTT_CLIENT_ID", "weds-dashboard")
 DB_PATH = Path(os.getenv("WEDS_DB_PATH", str(BASE_DIR / "weds_dashboard.sqlite3")))
 
 ALERT_STATE = 1
-TREND_DEFAULT_LIMIT = 60
+TREND_DEFAULT_LIMIT = 120

@@ -230,8 +230,7 @@ void setup() {
     const bool mqttReady = gatewayMqtt.begin(
         secret_mqtt_host,
         secret_mqtt_port,
-        &registry,
-        &gatewayComm
+        &registry
     );
     unlockRegistry();
 

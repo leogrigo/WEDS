@@ -31,7 +31,6 @@ WedsGatewayMqtt::WedsGatewayMqtt()
       host_(nullptr),
       port_(1883),
       registry_(nullptr),
-      gateway_comm_(nullptr),
       initialized_(false),
       last_reconnect_attempt_ms_(0),
       last_status_publish_ms_(0) {
@@ -43,8 +42,7 @@ WedsGatewayMqtt::WedsGatewayMqtt()
 bool WedsGatewayMqtt::begin(
     const char* host,
     uint16_t port,
-    WedsGatewayRegistry* registry,
-    WedsGatewayComm* gateway_comm
+    WedsGatewayRegistry* registry
 ) {
     if (host == nullptr || registry == nullptr) {
         Serial.println("[GATEWAY_MQTT] begin failed: invalid configuration");
@@ -55,7 +53,6 @@ bool WedsGatewayMqtt::begin(
     host_ = host;
     port_ = port;
     registry_ = registry;
-    gateway_comm_ = gateway_comm;
     active_instance = this;
 
     mqtt_.setServer(host_, port_);
@@ -268,7 +265,6 @@ bool WedsGatewayMqtt::publishNodeTelemetry(const WedsNodeRecord& record) {
     doc["latitude"] = record.latitude;
     doc["longitude"] = record.longitude;
     doc["pending_alert_mode"] = record.pending_alert_mode;
-    doc["streak_open"] = record.streak_open;
 
     String payload;
     serializeJson(doc, payload);
@@ -313,16 +309,6 @@ void WedsGatewayMqtt::handleCommand(const uint8_t* payload, unsigned int length)
         return;
     }
 
-    if (strcmp(method, "enableAlertMode") == 0) {
-        if (node_id == 0) {
-            publishCommandResponse(command_id, method, node_id, false, "invalid_node_id");
-            return;
-        }
-
-        handleEnableAlertModeCommand(command_id, node_id, params);
-        return;
-    }
-
     if (strcmp(method, "setLocation") == 0) {
         if (node_id == 0) {
             publishCommandResponse(command_id, method, node_id, false, "invalid_node_id");
@@ -339,42 +325,6 @@ void WedsGatewayMqtt::handleCommand(const uint8_t* payload, unsigned int length)
     }
 
     publishCommandResponse(command_id, method, node_id, false, "unsupported_method");
-}
-
-void WedsGatewayMqtt::handleEnableAlertModeCommand(
-    const char* command_id,
-    uint32_t node_id,
-    JsonVariantConst params
-) {
-    const uint16_t duration_sec =
-        params["duration_sec"] | WEDS_ALERT_MODE_DURATION_SEC;
-    const uint16_t sampling_interval_sec =
-        params["sampling_interval_sec"] | WEDS_ALERT_MODE_SAMPLING_INTERVAL_SEC;
-
-    WedsAlertModeEnablePayload command;
-    command.alert_source_node_id = WEDS_GATEWAY_ID;
-    command.duration_sec = duration_sec;
-    command.sampling_interval_sec = sampling_interval_sec;
-
-    const bool delivered = gateway_comm_ != nullptr &&
-        gateway_comm_->sendAlertModeEnableReliable(node_id, command);
-
-    bool pending = false;
-
-    if (delivered) {
-        registry_->clearPendingAlertCommand(node_id);
-    } else {
-        registry_->setPendingAlertCommand(node_id, command);
-        pending = true;
-    }
-
-    publishCommandResponse(
-        command_id,
-        "enableAlertMode",
-        node_id,
-        true,
-        delivered ? "delivered" : "pending"
-    );
 }
 
 void WedsGatewayMqtt::handleSetLocationCommand(

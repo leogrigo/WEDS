@@ -5,7 +5,6 @@
 #include <PubSubClient.h>
 #include <WiFiClient.h>
 
-#include "WedsGatewayComm.h"
 #include "WedsGatewayRegistry.h"
 
 /**
@@ -22,14 +21,12 @@ public:
      * @param host MQTT broker host.
      * @param port MQTT broker port.
      * @param registry Gateway registry pointer.
-     * @param gateway_comm Gateway LoRa communication pointer.
      * @return true If configuration was accepted.
      */
     bool begin(
         const char* host,
         uint16_t port,
-        WedsGatewayRegistry* registry,
-        WedsGatewayComm* gateway_comm
+        WedsGatewayRegistry* registry
     );
 
     /**
@@ -56,7 +53,6 @@ private:
     const char* host_;
     uint16_t port_;
     WedsGatewayRegistry* registry_;
-    WedsGatewayComm* gateway_comm_;
     bool initialized_;
     uint32_t last_reconnect_attempt_ms_;
     uint32_t last_status_publish_ms_;
@@ -73,11 +69,6 @@ private:
     bool publishNodeTelemetry(const WedsNodeRecord& record);
 
     void handleCommand(const uint8_t* payload, unsigned int length);
-    void handleEnableAlertModeCommand(
-        const char* command_id,
-        uint32_t node_id,
-        JsonVariantConst params
-    );
     void handleSetLocationCommand(
         const char* command_id,
         uint32_t node_id,

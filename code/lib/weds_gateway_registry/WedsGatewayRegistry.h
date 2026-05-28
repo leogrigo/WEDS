@@ -5,60 +5,6 @@
 #include "WedsProtocol.h"
 
 /**
- * @enum WedsEventType
- * @brief Represents the type of an alert event.
- */
-enum WedsEventType : uint8_t {
-    WEDS_EVENT_NONE = 0,
-    WEDS_EVENT_ANOMALY_ALERT = 1,
-    WEDS_EVENT_RISK_ALERT = 2,
-    WEDS_EVENT_BOTH_ALERT = 3
-};
-
-/**
- * @struct WedsNodeEvent
- * @brief Represents a specific event triggered by a node.
- */
-struct WedsNodeEvent {
-    bool used;
-
-    uint32_t event_id;
-    uint32_t node_id;
-
-    WedsEventType type;
-
-    uint32_t start_timestamp_s;
-    uint32_t end_timestamp_s;
-
-    bool still_open;
-
-    float peak_anomaly_score;
-    float peak_risk_score;
-    float max_temperature;
-    float min_humidity;
-    float min_gas_resistance;
-
-    uint16_t sample_count;
-};
-
-/**
- * @struct WedsTrendPoint
- * @brief A single data point representing a node's telemetry at a specific time.
- */
-struct WedsTrendPoint {
-    bool used;
-    uint32_t timestamp_s;
-
-    float temperature;
-    float humidity;
-    float pressure;
-    float gas_resistance;
-    float battery_level;
-    float anomaly_score;
-    float risk_score;
-};
-
-/**
  * @struct WedsNodeRecord
  * @brief Holds live node state, config, and pending commands.
  */
@@ -80,10 +26,6 @@ struct WedsNodeRecord {
 
     bool pending_alert_mode;
     WedsAlertModeEnablePayload pending_alert_command;
-
-    bool streak_open;
-    uint16_t event_count;
-    uint16_t trend_count;
 };
 
 /**
@@ -276,34 +218,6 @@ public:
      */
     void clearPendingAlertCommand(uint32_t node_id);
 
-    /**
-     * @brief Retrieves events for a specific node.
-     * 
-     * @param node_id Node ID.
-     * @param out_events Array to store the events.
-     * @param max_events Maximum capacity of the array.
-     * @return size_t Number of events retrieved.
-     */
-    size_t getNodeEvents(
-        uint32_t node_id,
-        WedsNodeEvent* out_events,
-        size_t max_events
-    ) const;
-
-    /**
-     * @brief Retrieves trend points for a specific node.
-     * 
-     * @param node_id Node ID.
-     * @param out_points Array to store trend points.
-     * @param max_points Maximum capacity of the array.
-     * @return size_t Number of points retrieved.
-     */
-    size_t getNodeTrend(
-        uint32_t node_id,
-        WedsTrendPoint* out_points,
-        size_t max_points
-    ) const;
-
 private:
     WedsNodeRecord records_[WEDS_MAX_NODES];
 
@@ -311,8 +225,6 @@ private:
     const WedsNodeRecord* findRecord(uint32_t node_id) const;
 
     void initRecord(WedsNodeRecord& record, uint32_t node_id);
-
-    static bool isAlertStatus(const WedsNodeStatusPayload& status);
 
     static double distanceMeters(
         double lat1,
