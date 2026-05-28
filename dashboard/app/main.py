@@ -8,9 +8,9 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from .config import BASE_DIR, DB_PATH, TREND_DEFAULT_LIMIT
-from .db import DashboardStore
-from .mqtt_bus import MqttBus
+from config import BASE_DIR, DB_PATH, TREND_DEFAULT_LIMIT
+from db import DashboardStore
+from mqtt_bus import MqttBus
 
 
 store = DashboardStore(DB_PATH)

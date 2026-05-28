@@ -198,23 +198,26 @@ void commTask(void *parameter) {
       break;
     }
 
-    WedsAlertModeEnablePayload command{};
-    if (nodeComm.pollAlertModeEnable(command, WEDS_NODE_RX_POLL_CHUNK_MS)) {
-      xSemaphoreTake(context->state_mutex, portMAX_DELAY);
-      nodeState.applyAlertModeCommand(command);
-      xSemaphoreGive(context->state_mutex);
-    }
   }
+
 
   WedsNodeStatusPayload payload{};
   xSemaphoreTake(context->state_mutex, portMAX_DELAY);
   payload =
-      nodeState.buildPayload(context->sample, context->anomaly, context->risk);
+  nodeState.buildPayload(context->sample, context->anomaly, context->risk);
   xSemaphoreGive(context->state_mutex);
 
   const bool sent = sendPayload(payload);
   if (!sent) {
     Serial.println("[NODE] Failed to send payload to gateway");
+  }
+
+  WedsAlertModeEnablePayload command{};
+
+  if (nodeComm.pollAlertModeEnable(command, WEDS_NODE_MIN_RX_WINDOW_MS)) {
+    xSemaphoreTake(context->state_mutex, portMAX_DELAY);
+    nodeState.applyAlertModeCommand(command);
+    xSemaphoreGive(context->state_mutex);
   }
 
   xSemaphoreTake(context->state_mutex, portMAX_DELAY);

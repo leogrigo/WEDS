@@ -74,7 +74,7 @@ static constexpr uint32_t WEDS_NODE_ERROR_TASK_DELAY_MS = 1000;
 static constexpr uint32_t WEDS_NODE_LOOP_IDLE_DELAY_MS = 1000;
 
 /** @brief Minimum duration for the receive window in milliseconds. */
-static constexpr uint32_t WEDS_NODE_MIN_RX_WINDOW_MS = 250;
+static constexpr uint32_t WEDS_NODE_MIN_RX_WINDOW_MS = 3000;
 
 /** @brief Polling chunk duration during receive operations in milliseconds. */
 static constexpr uint32_t WEDS_NODE_RX_POLL_CHUNK_MS = 50;
@@ -162,17 +162,17 @@ static constexpr float WEDS_RISK_THRESHOLD_MED = 0.65f;
  *        Default: 5 minutes. Tune to reduce network traffic in benign
  * conditions.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_LOW = 300U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_LOW = 30U;
 
 /**
  * @brief Deep sleep duration in seconds when fire risk is Medium.
  *        Default: 2 minutes. Increases sampling frequency as risk rises.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_MED = 120U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_MED = 12U;
 
 /**
  * @brief Deep sleep duration in seconds when fire risk is High.
  *        Default: 30 seconds. Maximum polling rate during elevated danger
  * conditions.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_HIGH = 30U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_HIGH = 3U;

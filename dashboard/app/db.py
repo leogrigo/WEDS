@@ -7,7 +7,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from .config import ALERT_STATE
+from config import ALERT_STATE
 
 
 class DashboardStore:

@@ -7,8 +7,8 @@ from typing import Any
 
 import paho.mqtt.client as mqtt
 
-from .config import MQTT_CLIENT_ID, MQTT_HOST, MQTT_PORT
-from .db import DashboardStore
+from config import MQTT_CLIENT_ID, MQTT_HOST, MQTT_PORT
+from db import DashboardStore
 
 
 STATE_TOPIC = "weds/#"
