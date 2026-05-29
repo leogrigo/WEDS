@@ -17,3 +17,9 @@ Wildfire Early Detection System (WEDS) - IoT Project
 [Slides](https://docs.google.com/presentation/d/1jug665ABOTD8YTVAgnFz3sPBIuTKqwlT6ptAYzIBEVk/edit?usp=sharing)
 
 [Video](https://youtu.be/LkWPQRfvjZg)
+
+# Third delivery - Project Final Presentation
+
+[Slides](https://canva.link/66modxtqgq1m6zy)
+
+[Video](https://youtu.be/Z7xAF4H_jkw)
