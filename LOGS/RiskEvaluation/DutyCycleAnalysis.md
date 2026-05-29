@@ -12,14 +12,6 @@ As we have seen from the [risk computation analysis](/LOGS/RiskEvaluation/RiskSc
 | $\text{risk\_score} < 0.35$ | $0.35 < \text{risk\_score} < 0.83$ | $\text{risk\_score} > 0.83$ |
 | $\text{risk}< 0.12\%$ | $\text{risk}< 0.79\%$ | $\text{risk}\le 3.08\%$ |
 
-## Baseline Risk
-
-We may define the baseline risk as $\text{baseline\_risk} = 0.21%$, where the baseline risk is the quantity of fires over total records in the whole dataset.
-
-To make calculations simple, we may assume that the _baseline risk_ represents the ground truth.
-
-Furthermore we can observe that dataset records are hourly taken, so we can state that If
-
 ## The Goal
 
 The main goal of WEDS is to _"Detect wildfires as long as they are in a manageable state"_. This can be reduced to satisfy two requirements:

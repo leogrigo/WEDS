@@ -90,3 +90,7 @@ As we can see we may distinguish three different tresholds.
 This three threshold will define the adaptive duty cycle.
 
 ![FireDistro](assets/graphs/v6f/RiskDiscrimination.png)
+
+Finally we can state that obtaining a _maximal prediction_ of $3.04\%$ starting from a ___baseline___ of $0.21\%$ is a huge result.
+
+Furthermore the three thresholds represents the __Risk__ differences perfectly, with a ratio of $\simeq 7\! \times$ between __Low Risk__ and __Medium Risk__ and $\simeq 3\! \times$ between __Medium Risk__ and __High Risk__.

@@ -169,3 +169,10 @@ PREDICTION DRIFT (Quantization Error):
  - Mean Absolute Error: 0.001759
  - Maximum Single Error: 0.093145
 ==================================================
+
+## Model Dimension
+
+ Total params: 447,201 (1.71 MB)
+ Trainable params: 443,873 (1.69 MB)
+ Non-trainable params: 3,328 (13.00 KB)
+ 
