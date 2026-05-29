@@ -5,7 +5,6 @@
 #include <freertos/event_groups.h>
 #include <freertos/semphr.h>
 
-
 #include "WedsAnomalyDetector.h"
 #include "WedsNodeComm.h"
 #include "WedsNodeConfig.h"
@@ -13,7 +12,6 @@
 #include "WedsNodeState.h"
 #include "WedsRiskScore.h"
 #include "WedsSensors.h"
-
 
 size_t getArduinoLoopTaskStackSize(void) {
   return WEDS_NODE_CYCLE_TASK_STACK_BYTES;
@@ -197,14 +195,12 @@ void commTask(void *parameter) {
     if ((bits & WEDS_CYCLE_RESULTS_READY) == WEDS_CYCLE_RESULTS_READY) {
       break;
     }
-
   }
-
 
   WedsNodeStatusPayload payload{};
   xSemaphoreTake(context->state_mutex, portMAX_DELAY);
   payload =
-  nodeState.buildPayload(context->sample, context->anomaly, context->risk);
+      nodeState.buildPayload(context->sample, context->anomaly, context->risk);
   xSemaphoreGive(context->state_mutex);
 
   const bool sent = sendPayload(payload);
@@ -272,16 +268,9 @@ void setup() {
   }
 
   BaseType_t ok = xTaskCreatePinnedToCore(
-      commTask, "weds_comm", WEDS_NODE_RX_TASK_STACK_BYTES, &cycleContext,
-      WEDS_NODE_RX_TASK_PRIORITY, nullptr, WEDS_NODE_RX_TASK_CORE);
-  if (ok != pdPASS) {
-    fatalError("Failed to create comm task");
-  }
-
-  ok = xTaskCreatePinnedToCore(sampleTask, "weds_sample",
-                               WEDS_NODE_SAMPLE_TASK_STACK_BYTES, &cycleContext,
-                               WEDS_NODE_SAMPLE_TASK_PRIORITY, nullptr,
-                               WEDS_NODE_CYCLE_TASK_CORE);
+      sampleTask, "weds_sample", WEDS_NODE_SAMPLE_TASK_STACK_BYTES,
+      &cycleContext, WEDS_NODE_SAMPLE_TASK_PRIORITY, nullptr,
+      WEDS_NODE_CYCLE_TASK_CORE);
   if (ok != pdPASS) {
     fatalError("Failed to create sample task");
   }
@@ -299,6 +288,13 @@ void setup() {
       WEDS_NODE_RISK_TASK_PRIORITY, nullptr, WEDS_NODE_CYCLE_TASK_CORE);
   if (ok != pdPASS) {
     fatalError("Failed to create risk task");
+  }
+
+  ok = xTaskCreatePinnedToCore(
+      commTask, "weds_comm", WEDS_NODE_RX_TASK_STACK_BYTES, &cycleContext,
+      WEDS_NODE_RX_TASK_PRIORITY, nullptr, WEDS_NODE_RX_TASK_CORE);
+  if (ok != pdPASS) {
+    fatalError("Failed to create comm task");
   }
 }
 

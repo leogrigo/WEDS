@@ -130,6 +130,7 @@ def plot_node_data(node, source_filename, output_dir, show_plots=False):
     # Subplot 5: Anomaly & Risk Scores (bottom-left)
     ax_scores = axes[2, 0]
     ax_scores.plot(timestamps, anomaly_score, color=colors['anomaly'], linewidth=1.5, label='Anomaly Score')
+    ax_scores.axhline(y=1.5, color=colors['anomaly'], linestyle=':', linewidth=1.2, alpha=0.6, label='Anomaly Threshold (1.5)')
     ax_scores.set_title("Anomaly & Risk Scores", fontsize=11, fontweight='semibold', color='#333333')
     ax_scores.set_ylabel("Anomaly Score", color=colors['anomaly'], fontsize=9)
     ax_scores.tick_params(axis='y', labelcolor=colors['anomaly'])

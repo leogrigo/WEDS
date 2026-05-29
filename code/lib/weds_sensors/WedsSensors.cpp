@@ -1,5 +1,6 @@
 #include "WedsSensors.h"
 #include "HardwareSerial.h"
+#include "WedsNodeConfig.h"
 
 #include <Arduino.h>
 
@@ -44,6 +45,15 @@ void weds_sensors_begin() {
 }
 
 WedsSensorSample weds_read_environment_sample() {
+  // Perform a dummy reading to pre-heat the sensor and reach thermal
+  // equilibrium before the actual measurement. This helps stabilize the gas
+  // resistance readings when the deep sleep sampling rate varies.
+  for (int i = 0; i < WEDS_NODE_NUM_PREHEATING; i++) {
+    vTaskDelay(pdMS_TO_TICKS(1000));
+    analogRead(WEDS_MQ2_PIN);
+    Serial.println("[SENSOR] Pre-heating MQ2 " + (String)i);
+  }
+
   sensors_event_t humidity;
   sensors_event_t temp;
 
@@ -128,7 +138,7 @@ WedsSensorSample weds_read_environment_sample() {
   // Perform a dummy reading to pre-heat the sensor and reach thermal
   // equilibrium before the actual measurement. This helps stabilize the gas
   // resistance readings when the deep sleep sampling rate varies.
-  for (int i = 0; i < 15; i++) {
+  for (int i = 0; i < WEDS_NODE_NUM_PREHEATING; i++) {
     bmeSensor.performReading();
     Serial.println("[SENSOR] Pre-heating BME680 " + (String)i);
   }

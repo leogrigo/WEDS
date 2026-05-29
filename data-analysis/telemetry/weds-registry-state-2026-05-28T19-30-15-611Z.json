@@ -1,0 +1,2141 @@
+{
+  "exported_at": "2026-05-28T19:30:15.611Z",
+  "source": "WEDS Dashboard MQTT/SQLite registry",
+  "gateway": {
+    "id": 1,
+    "gateway_id": "weds-gateway-0604a7ac",
+    "online": true,
+    "ip": "192.168.1.106",
+    "known_nodes": 2,
+    "uptime_ms": 7132748,
+    "firmware": "weds-gateway-mqtt",
+    "published_at_s": 1779996609,
+    "updated_at": 1779996609.4801757
+  },
+  "nodes": [
+    {
+      "node_id": 134522796,
+      "last_seen_timestamp_s": 1779996593,
+      "last_sequence_id": 336,
+      "last_msg_type": 2,
+      "temperature": 31.50665,
+      "humidity": 45.02327,
+      "pressure": 101612,
+      "gas_resistance": 198448,
+      "battery_level": 68.11475,
+      "anomaly_state": 1,
+      "anomaly_score": 3.536702,
+      "risk_state": 0,
+      "risk_score": 0.5,
+      "location_known": true,
+      "latitude": 42.056722,
+      "longitude": 12.588989,
+      "pending_alert_mode": false,
+      "streak_open": true,
+      "trend_count": 86,
+      "event_count": 6,
+      "updated_at": 1779996595.51177,
+      "anomaly_state_label": "ALERT",
+      "risk_state_label": "NORMAL",
+      "events": [
+        {
+          "event_id": 11,
+          "node_id": 134522796,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779993466,
+          "end_timestamp_s": 1779996593,
+          "still_open": true,
+          "peak_anomaly_score": 3.559843,
+          "peak_risk_score": 0.5,
+          "max_temperature": 31.50665,
+          "min_humidity": 44.86409,
+          "min_gas_resistance": 197733,
+          "sample_count": 108
+        },
+        {
+          "event_id": 9,
+          "node_id": 134522796,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779992715,
+          "end_timestamp_s": 1779993027,
+          "still_open": false,
+          "peak_anomaly_score": 8.687075,
+          "peak_risk_score": 0.5,
+          "max_temperature": 26.93607,
+          "min_humidity": 52.11099,
+          "min_gas_resistance": 41135,
+          "sample_count": 11
+        },
+        {
+          "event_id": 7,
+          "node_id": 134522796,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779992509,
+          "end_timestamp_s": 1779992629,
+          "still_open": false,
+          "peak_anomaly_score": 7.185742,
+          "peak_risk_score": 0.5,
+          "max_temperature": 26.47678,
+          "min_humidity": 52.77954,
+          "min_gas_resistance": 92105,
+          "sample_count": 4
+        },
+        {
+          "event_id": 5,
+          "node_id": 134522796,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779992300,
+          "end_timestamp_s": 1779992483,
+          "still_open": false,
+          "peak_anomaly_score": 6.971827,
+          "peak_risk_score": 0.5,
+          "max_temperature": 26.17058,
+          "min_humidity": 53.28205,
+          "min_gas_resistance": 101392,
+          "sample_count": 5
+        },
+        {
+          "event_id": 4,
+          "node_id": 134522796,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779991770,
+          "end_timestamp_s": 1779991824,
+          "still_open": false,
+          "peak_anomaly_score": 3.028413,
+          "peak_risk_score": 0.5,
+          "max_temperature": 25.39178,
+          "min_humidity": 54.44275,
+          "min_gas_resistance": 241172,
+          "sample_count": 2
+        },
+        {
+          "event_id": 1,
+          "node_id": 134522796,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779991315,
+          "end_timestamp_s": 1779991377,
+          "still_open": false,
+          "peak_anomaly_score": 3.834858,
+          "peak_risk_score": 0.5,
+          "max_temperature": 24.72805,
+          "min_humidity": 56.69923,
+          "min_gas_resistance": 202101,
+          "sample_count": 1
+        }
+      ],
+      "trend": [
+        {
+          "timestamp_s": 1779986382,
+          "temperature": 26.8264,
+          "humidity": 50.2544,
+          "pressure": 101547,
+          "gas_resistance": 314680,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779986558,
+          "temperature": 26.71038,
+          "humidity": 51.02964,
+          "pressure": 101546,
+          "gas_resistance": 311407,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779986646,
+          "temperature": 26.62861,
+          "humidity": 51.53662,
+          "pressure": 101549,
+          "gas_resistance": 313781,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779987614,
+          "temperature": 25.53061,
+          "humidity": 57.90747,
+          "pressure": 101557,
+          "gas_resistance": 323013,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779987790,
+          "temperature": 25.36294,
+          "humidity": 58.21555,
+          "pressure": 101554,
+          "gas_resistance": 331466,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779987878,
+          "temperature": 25.35628,
+          "humidity": 58.09927,
+          "pressure": 101545,
+          "gas_resistance": 324605,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988054,
+          "temperature": 25.78387,
+          "humidity": 57.03765,
+          "pressure": 101541,
+          "gas_resistance": 321751,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988230,
+          "temperature": 26.21179,
+          "humidity": 56.82891,
+          "pressure": 101550,
+          "gas_resistance": 311113,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988318,
+          "temperature": 26.09799,
+          "humidity": 55.77698,
+          "pressure": 101551,
+          "gas_resistance": 318946,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988406,
+          "temperature": 26.07771,
+          "humidity": 54.77066,
+          "pressure": 101550,
+          "gas_resistance": 330136,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988494,
+          "temperature": 25.8422,
+          "humidity": 54.79806,
+          "pressure": 101538,
+          "gas_resistance": 334835,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988582,
+          "temperature": 25.99688,
+          "humidity": 54.85288,
+          "pressure": 101534,
+          "gas_resistance": 331132,
+          "battery_level": 75.34426,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988758,
+          "temperature": 25.97152,
+          "humidity": 54.15651,
+          "pressure": 101532,
+          "gas_resistance": 327836,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988846,
+          "temperature": 26.17819,
+          "humidity": 54.13838,
+          "pressure": 101535,
+          "gas_resistance": 319256,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988934,
+          "temperature": 25.82001,
+          "humidity": 54.60163,
+          "pressure": 101541,
+          "gas_resistance": 335176,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989022,
+          "temperature": 25.83554,
+          "humidity": 54.40394,
+          "pressure": 101542,
+          "gas_resistance": 340021,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989198,
+          "temperature": 25.89545,
+          "humidity": 54.08622,
+          "pressure": 101540,
+          "gas_resistance": 341785,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989374,
+          "temperature": 26.25489,
+          "humidity": 54.46851,
+          "pressure": 101542,
+          "gas_resistance": 320187,
+          "battery_level": 73.33607,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 0,
+          "temperature": 0,
+          "humidity": 0,
+          "pressure": 0,
+          "gas_resistance": 0,
+          "battery_level": 0,
+          "anomaly_score": 0,
+          "risk_score": 0
+        },
+        {
+          "timestamp_s": 1779989550,
+          "temperature": 26.14047,
+          "humidity": 53.70139,
+          "pressure": 101556,
+          "gas_resistance": 330468,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989638,
+          "temperature": 26.03587,
+          "humidity": 53.76008,
+          "pressure": 101563,
+          "gas_resistance": 327836,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989726,
+          "temperature": 26.07169,
+          "humidity": 54.25676,
+          "pressure": 101569,
+          "gas_resistance": 329806,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989814,
+          "temperature": 26.03809,
+          "humidity": 55.05896,
+          "pressure": 101574,
+          "gas_resistance": 322697,
+          "battery_level": 74.13933,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989902,
+          "temperature": 26.03428,
+          "humidity": 54.97158,
+          "pressure": 101575,
+          "gas_resistance": 316799,
+          "battery_level": 74.13933,
+          "anomaly_score": 0.079881,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989990,
+          "temperature": 26.13635,
+          "humidity": 54.47876,
+          "pressure": 101577,
+          "gas_resistance": 314380,
+          "battery_level": 74.13933,
+          "anomaly_score": 0.150636,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990078,
+          "temperature": 25.92081,
+          "humidity": 54.68222,
+          "pressure": 101581,
+          "gas_resistance": 321751,
+          "battery_level": 74.13933,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990166,
+          "temperature": 25.78102,
+          "humidity": 54.69623,
+          "pressure": 101588,
+          "gas_resistance": 332469,
+          "battery_level": 74.54099,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990254,
+          "temperature": 25.4986,
+          "humidity": 54.93064,
+          "pressure": 101586,
+          "gas_resistance": 313482,
+          "battery_level": 73.33607,
+          "anomaly_score": 0.200817,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990342,
+          "temperature": 25.59464,
+          "humidity": 54.15133,
+          "pressure": 101582,
+          "gas_resistance": 345369,
+          "battery_level": 73.33607,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990430,
+          "temperature": 25.14201,
+          "humidity": 55.81724,
+          "pressure": 101574,
+          "gas_resistance": 350143,
+          "battery_level": 73.33607,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990870,
+          "temperature": 24.56798,
+          "humidity": 57.32349,
+          "pressure": 101563,
+          "gas_resistance": 345007,
+          "battery_level": 73.33607,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990958,
+          "temperature": 24.54104,
+          "humidity": 57.30618,
+          "pressure": 101567,
+          "gas_resistance": 354667,
+          "battery_level": 74.13933,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991046,
+          "temperature": 24.70872,
+          "humidity": 57.411,
+          "pressure": 101570,
+          "gas_resistance": 322381,
+          "battery_level": 73.33607,
+          "anomaly_score": 0.24425,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991134,
+          "temperature": 24.75056,
+          "humidity": 56.91783,
+          "pressure": 101569,
+          "gas_resistance": 327510,
+          "battery_level": 73.33607,
+          "anomaly_score": 0.073773,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991222,
+          "temperature": 24.73344,
+          "humidity": 56.53184,
+          "pressure": 101564,
+          "gas_resistance": 310234,
+          "battery_level": 73.33607,
+          "anomaly_score": 0.592865,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991315,
+          "temperature": 24.72805,
+          "humidity": 56.69923,
+          "pressure": 101564,
+          "gas_resistance": 202101,
+          "battery_level": 73.33607,
+          "anomaly_score": 3.834858,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991377,
+          "temperature": 25.20826,
+          "humidity": 54.95053,
+          "pressure": 101562,
+          "gas_resistance": 352768,
+          "battery_level": 73.33607,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991408,
+          "temperature": 25.43299,
+          "humidity": 54.52829,
+          "pressure": 101565,
+          "gas_resistance": 335518,
+          "battery_level": 73.33607,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991470,
+          "temperature": 25.71858,
+          "humidity": 53.90257,
+          "pressure": 101566,
+          "gas_resistance": 343568,
+          "battery_level": 73.33607,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991625,
+          "temperature": 25.46849,
+          "humidity": 53.79545,
+          "pressure": 101567,
+          "gas_resistance": 386226,
+          "battery_level": 72.93442,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991656,
+          "temperature": 25.11095,
+          "humidity": 55.24418,
+          "pressure": 101571,
+          "gas_resistance": 385337,
+          "battery_level": 72.93442,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991744,
+          "temperature": 24.73597,
+          "humidity": 57.06402,
+          "pressure": 101574,
+          "gas_resistance": 346459,
+          "battery_level": 73.33607,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991770,
+          "temperature": 25.19368,
+          "humidity": 55.32916,
+          "pressure": 101570,
+          "gas_resistance": 241172,
+          "battery_level": 72.93442,
+          "anomaly_score": 3.028413,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991797,
+          "temperature": 25.39178,
+          "humidity": 54.44275,
+          "pressure": 101568,
+          "gas_resistance": 281587,
+          "battery_level": 72.93442,
+          "anomaly_score": 1.860132,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991824,
+          "temperature": 25.52491,
+          "humidity": 54.18165,
+          "pressure": 101570,
+          "gas_resistance": 355817,
+          "battery_level": 72.93442,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991850,
+          "temperature": 25.4108,
+          "humidity": 54.54521,
+          "pressure": 101570,
+          "gas_resistance": 350889,
+          "battery_level": 72.93442,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991970,
+          "temperature": 26.08944,
+          "humidity": 53.78733,
+          "pressure": 101580,
+          "gas_resistance": 330800,
+          "battery_level": 72.93442,
+          "anomaly_score": 0.354623,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992120,
+          "temperature": 25.93158,
+          "humidity": 54.60372,
+          "pressure": 101588,
+          "gas_resistance": 340372,
+          "battery_level": 72.53278,
+          "anomaly_score": 0.02836,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992150,
+          "temperature": 25.8777,
+          "humidity": 55.07672,
+          "pressure": 101590,
+          "gas_resistance": 338622,
+          "battery_level": 72.53278,
+          "anomaly_score": 0.077882,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992180,
+          "temperature": 25.94426,
+          "humidity": 55.31331,
+          "pressure": 101591,
+          "gas_resistance": 339670,
+          "battery_level": 72.53278,
+          "anomaly_score": 0.042319,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992270,
+          "temperature": 26.0159,
+          "humidity": 54.82882,
+          "pressure": 101591,
+          "gas_resistance": 337235,
+          "battery_level": 72.53278,
+          "anomaly_score": 0.076455,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992300,
+          "temperature": 25.92239,
+          "humidity": 55.29688,
+          "pressure": 101592,
+          "gas_resistance": 270931,
+          "battery_level": 72.93442,
+          "anomaly_score": 2.022873,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992331,
+          "temperature": 25.96265,
+          "humidity": 54.76805,
+          "pressure": 101591,
+          "gas_resistance": 261883,
+          "battery_level": 72.53278,
+          "anomaly_score": 2.289117,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992394,
+          "temperature": 25.95536,
+          "humidity": 55.60275,
+          "pressure": 101591,
+          "gas_resistance": 101392,
+          "battery_level": 72.13114,
+          "anomaly_score": 6.971827,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992425,
+          "temperature": 26.17058,
+          "humidity": 53.98442,
+          "pressure": 101592,
+          "gas_resistance": 245852,
+          "battery_level": 72.53278,
+          "anomaly_score": 2.718951,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992456,
+          "temperature": 26.12747,
+          "humidity": 53.28205,
+          "pressure": 101592,
+          "gas_resistance": 227668,
+          "battery_level": 72.53278,
+          "anomaly_score": 3.254285,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992483,
+          "temperature": 26.38612,
+          "humidity": 52.82109,
+          "pressure": 101591,
+          "gas_resistance": 289000,
+          "battery_level": 72.53278,
+          "anomaly_score": 1.448683,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992509,
+          "temperature": 26.47678,
+          "humidity": 53.11771,
+          "pressure": 101590,
+          "gas_resistance": 99112,
+          "battery_level": 72.53278,
+          "anomaly_score": 6.978562,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992540,
+          "temperature": 26.37186,
+          "humidity": 52.77954,
+          "pressure": 101592,
+          "gas_resistance": 241880,
+          "battery_level": 72.53278,
+          "anomaly_score": 2.757258,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992571,
+          "temperature": 26.02953,
+          "humidity": 52.81916,
+          "pressure": 101593,
+          "gas_resistance": 92105,
+          "battery_level": 72.53278,
+          "anomaly_score": 7.185742,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992603,
+          "temperature": 26.07137,
+          "humidity": 53.98409,
+          "pressure": 101594,
+          "gas_resistance": 281587,
+          "battery_level": 72.53278,
+          "anomaly_score": 1.583218,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992629,
+          "temperature": 26.35537,
+          "humidity": 52.89624,
+          "pressure": 101593,
+          "gas_resistance": 292075,
+          "battery_level": 72.53278,
+          "anomaly_score": 1.273113,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992659,
+          "temperature": 26.48311,
+          "humidity": 53.05242,
+          "pressure": 101595,
+          "gas_resistance": 293115,
+          "battery_level": 72.53278,
+          "anomaly_score": 1.173464,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992685,
+          "temperature": 26.63717,
+          "humidity": 52.70313,
+          "pressure": 101594,
+          "gas_resistance": 294953,
+          "battery_level": 72.53278,
+          "anomaly_score": 1.05374,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992715,
+          "temperature": 26.69485,
+          "humidity": 52.81004,
+          "pressure": 101592,
+          "gas_resistance": 84062,
+          "battery_level": 72.53278,
+          "anomaly_score": 7.386192,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992742,
+          "temperature": 26.93607,
+          "humidity": 52.41351,
+          "pressure": 101590,
+          "gas_resistance": 210632,
+          "battery_level": 72.13114,
+          "anomaly_score": 3.550548,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992769,
+          "temperature": 26.8432,
+          "humidity": 52.11099,
+          "pressure": 101589,
+          "gas_resistance": 234642,
+          "battery_level": 72.13114,
+          "anomaly_score": 2.822937,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992795,
+          "temperature": 26.81245,
+          "humidity": 52.33748,
+          "pressure": 101590,
+          "gas_resistance": 78470,
+          "battery_level": 72.13114,
+          "anomaly_score": 7.555655,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992829,
+          "temperature": 26.63273,
+          "humidity": 53.7423,
+          "pressure": 101590,
+          "gas_resistance": 41135,
+          "battery_level": 72.53278,
+          "anomaly_score": 8.687075,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992860,
+          "temperature": 26.35474,
+          "humidity": 53.31297,
+          "pressure": 101590,
+          "gas_resistance": 149287,
+          "battery_level": 72.13114,
+          "anomaly_score": 5.40958,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992894,
+          "temperature": 26.13349,
+          "humidity": 53.87968,
+          "pressure": 101590,
+          "gas_resistance": 210228,
+          "battery_level": 72.53278,
+          "anomaly_score": 3.562791,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992920,
+          "temperature": 26.33097,
+          "humidity": 54.01976,
+          "pressure": 101591,
+          "gas_resistance": 210094,
+          "battery_level": 72.53278,
+          "anomaly_score": 3.566852,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992947,
+          "temperature": 26.69707,
+          "humidity": 53.41272,
+          "pressure": 101590,
+          "gas_resistance": 215596,
+          "battery_level": 72.13114,
+          "anomaly_score": 3.400117,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992974,
+          "temperature": 26.77758,
+          "humidity": 53.45689,
+          "pressure": 101593,
+          "gas_resistance": 234977,
+          "battery_level": 71.7295,
+          "anomaly_score": 2.812785,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993001,
+          "temperature": 26.51703,
+          "humidity": 53.33509,
+          "pressure": 101593,
+          "gas_resistance": 239244,
+          "battery_level": 71.7295,
+          "anomaly_score": 2.683475,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993027,
+          "temperature": 26.23556,
+          "humidity": 53.74095,
+          "pressure": 101594,
+          "gas_resistance": 284998,
+          "battery_level": 72.53278,
+          "anomaly_score": 1.296922,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993084,
+          "temperature": 25.95916,
+          "humidity": 54.31447,
+          "pressure": 101595,
+          "gas_resistance": 284015,
+          "battery_level": 71.7295,
+          "anomaly_score": 1.170164,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993111,
+          "temperature": 26.13096,
+          "humidity": 54.08533,
+          "pressure": 101596,
+          "gas_resistance": 279437,
+          "battery_level": 72.13114,
+          "anomaly_score": 1.2496,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993137,
+          "temperature": 26.17692,
+          "humidity": 53.6533,
+          "pressure": 101597,
+          "gas_resistance": 305061,
+          "battery_level": 72.13114,
+          "anomaly_score": 0.378666,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993167,
+          "temperature": 25.99625,
+          "humidity": 54.25303,
+          "pressure": 101596,
+          "gas_resistance": 296546,
+          "battery_level": 72.13114,
+          "anomaly_score": 0.626286,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993196,
+          "temperature": 26.00956,
+          "humidity": 53.94904,
+          "pressure": 101596,
+          "gas_resistance": 301156,
+          "battery_level": 71.7295,
+          "anomaly_score": 0.442851,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993226,
+          "temperature": 26.27677,
+          "humidity": 53.48126,
+          "pressure": 101595,
+          "gas_resistance": 284260,
+          "battery_level": 71.7295,
+          "anomaly_score": 0.952903,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993256,
+          "temperature": 26.44032,
+          "humidity": 53.33126,
+          "pressure": 101593,
+          "gas_resistance": 293638,
+          "battery_level": 72.13114,
+          "anomaly_score": 0.597451,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993286,
+          "temperature": 26.2606,
+          "humidity": 53.82405,
+          "pressure": 101592,
+          "gas_resistance": 308201,
+          "battery_level": 72.13114,
+          "anomaly_score": 0.097333,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993316,
+          "temperature": 25.93285,
+          "humidity": 54.75059,
+          "pressure": 101607,
+          "gas_resistance": 318638,
+          "battery_level": 71.7295,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993376,
+          "temperature": 26.27803,
+          "humidity": 55.50734,
+          "pressure": 101605,
+          "gas_resistance": 290786,
+          "battery_level": 71.7295,
+          "anomaly_score": 0.652782,
+          "risk_score": 0.5
+        }
+      ]
+    },
+    {
+      "node_id": 3942780732,
+      "last_seen_timestamp_s": 1779996597,
+      "last_sequence_id": 298,
+      "last_msg_type": 2,
+      "temperature": 30.51828,
+      "humidity": 53.17355,
+      "pressure": 101567,
+      "gas_resistance": 39962,
+      "battery_level": 50.44262,
+      "anomaly_state": 1,
+      "anomaly_score": 2.46352,
+      "risk_state": 0,
+      "risk_score": 0.5,
+      "location_known": true,
+      "latitude": 42.056722,
+      "longitude": 12.588889,
+      "pending_alert_mode": false,
+      "streak_open": true,
+      "trend_count": 98,
+      "event_count": 6,
+      "updated_at": 1779996597.9461842,
+      "anomaly_state_label": "ALERT",
+      "risk_state_label": "NORMAL",
+      "events": [
+        {
+          "event_id": 12,
+          "node_id": 3942780732,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779993535,
+          "end_timestamp_s": 1779996597,
+          "still_open": true,
+          "peak_anomaly_score": 2.813133,
+          "peak_risk_score": 0.5,
+          "max_temperature": 30.62697,
+          "min_humidity": 52.99621,
+          "min_gas_resistance": 37588,
+          "sample_count": 107
+        },
+        {
+          "event_id": 10,
+          "node_id": 3942780732,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779992881,
+          "end_timestamp_s": 1779993137,
+          "still_open": false,
+          "peak_anomaly_score": 5.691106,
+          "peak_risk_score": 0.5,
+          "max_temperature": 25.94311,
+          "min_humidity": 60.12354,
+          "min_gas_resistance": 11758,
+          "sample_count": 9
+        },
+        {
+          "event_id": 8,
+          "node_id": 3942780732,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779992573,
+          "end_timestamp_s": 1779992772,
+          "still_open": false,
+          "peak_anomaly_score": 5.822001,
+          "peak_risk_score": 0.5,
+          "max_temperature": 25.89336,
+          "min_humidity": 59.33647,
+          "min_gas_resistance": 10650,
+          "sample_count": 7
+        },
+        {
+          "event_id": 6,
+          "node_id": 3942780732,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779992436,
+          "end_timestamp_s": 1779992490,
+          "still_open": false,
+          "peak_anomaly_score": 3.465901,
+          "peak_risk_score": 0.5,
+          "max_temperature": 25.68993,
+          "min_humidity": 59.89997,
+          "min_gas_resistance": 30728,
+          "sample_count": 2
+        },
+        {
+          "event_id": 3,
+          "node_id": 3942780732,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779991764,
+          "end_timestamp_s": 1779991848,
+          "still_open": false,
+          "peak_anomaly_score": 3.221526,
+          "peak_risk_score": 0.5,
+          "max_temperature": 25.35404,
+          "min_humidity": 60.45078,
+          "min_gas_resistance": 17798,
+          "sample_count": 3
+        },
+        {
+          "event_id": 2,
+          "node_id": 3942780732,
+          "type_label": "ANOMALY_ALERT",
+          "start_timestamp_s": 1779991668,
+          "end_timestamp_s": 1779991730,
+          "still_open": false,
+          "peak_anomaly_score": 1.737433,
+          "peak_risk_score": 0.5,
+          "max_temperature": 25.20764,
+          "min_humidity": 60.71331,
+          "min_gas_resistance": 33301,
+          "sample_count": 1
+        }
+      ],
+      "trend": [
+        {
+          "timestamp_s": 1779987881,
+          "temperature": 26.1532,
+          "humidity": 62.41813,
+          "pressure": 101491,
+          "gas_resistance": 28486,
+          "battery_level": 60.48361,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779987969,
+          "temperature": 26.40702,
+          "humidity": 62.38359,
+          "pressure": 101489,
+          "gas_resistance": 35969,
+          "battery_level": 60.08195,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988057,
+          "temperature": 26.34427,
+          "humidity": 61.74055,
+          "pressure": 101486,
+          "gas_resistance": 41470,
+          "battery_level": 60.48361,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988145,
+          "temperature": 26.49796,
+          "humidity": 61.65745,
+          "pressure": 101492,
+          "gas_resistance": 43591,
+          "battery_level": 60.48361,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988233,
+          "temperature": 26.51444,
+          "humidity": 61.89303,
+          "pressure": 101499,
+          "gas_resistance": 45840,
+          "battery_level": 60.08195,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988321,
+          "temperature": 26.49828,
+          "humidity": 60.78744,
+          "pressure": 101496,
+          "gas_resistance": 48332,
+          "battery_level": 60.08195,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988409,
+          "temperature": 26.46152,
+          "humidity": 60.17973,
+          "pressure": 101499,
+          "gas_resistance": 50102,
+          "battery_level": 59.68032,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988497,
+          "temperature": 26.20421,
+          "humidity": 59.85095,
+          "pressure": 101482,
+          "gas_resistance": 52268,
+          "battery_level": 60.08195,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988585,
+          "temperature": 26.51571,
+          "humidity": 59.71261,
+          "pressure": 101480,
+          "gas_resistance": 52203,
+          "battery_level": 60.08195,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988761,
+          "temperature": 26.1982,
+          "humidity": 59.32973,
+          "pressure": 101477,
+          "gas_resistance": 55465,
+          "battery_level": 59.68032,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988849,
+          "temperature": 26.40924,
+          "humidity": 59.26881,
+          "pressure": 101483,
+          "gas_resistance": 54737,
+          "battery_level": 59.68032,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779988938,
+          "temperature": 26.56546,
+          "humidity": 58.91066,
+          "pressure": 101488,
+          "gas_resistance": 54063,
+          "battery_level": 58.87704,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989026,
+          "temperature": 26.24097,
+          "humidity": 59.40185,
+          "pressure": 101488,
+          "gas_resistance": 55281,
+          "battery_level": 58.87704,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989202,
+          "temperature": 26.39593,
+          "humidity": 59.06306,
+          "pressure": 101486,
+          "gas_resistance": 56099,
+          "battery_level": 59.68032,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989378,
+          "temperature": 26.41304,
+          "humidity": 59.75669,
+          "pressure": 101487,
+          "gas_resistance": 54845,
+          "battery_level": 58.87704,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 0,
+          "temperature": 0,
+          "humidity": 0,
+          "pressure": 0,
+          "gas_resistance": 0,
+          "battery_level": 0,
+          "anomaly_score": 0,
+          "risk_score": 0
+        },
+        {
+          "timestamp_s": 1779989554,
+          "temperature": 26.50905,
+          "humidity": 58.9352,
+          "pressure": 101506,
+          "gas_resistance": 55135,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989642,
+          "temperature": 26.35568,
+          "humidity": 58.89951,
+          "pressure": 101512,
+          "gas_resistance": 55539,
+          "battery_level": 58.87704,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989730,
+          "temperature": 26.40036,
+          "humidity": 59.32013,
+          "pressure": 101517,
+          "gas_resistance": 54917,
+          "battery_level": 58.87704,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989818,
+          "temperature": 26.49796,
+          "humidity": 59.77591,
+          "pressure": 101521,
+          "gas_resistance": 53440,
+          "battery_level": 58.87704,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989906,
+          "temperature": 26.44409,
+          "humidity": 59.6756,
+          "pressure": 101523,
+          "gas_resistance": 54737,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779989994,
+          "temperature": 26.31607,
+          "humidity": 59.91375,
+          "pressure": 101527,
+          "gas_resistance": 53750,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990082,
+          "temperature": 26.25206,
+          "humidity": 59.8053,
+          "pressure": 101529,
+          "gas_resistance": 54451,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990170,
+          "temperature": 26.07715,
+          "humidity": 60.65131,
+          "pressure": 101531,
+          "gas_resistance": 54630,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990258,
+          "temperature": 26.45075,
+          "humidity": 58.70349,
+          "pressure": 101531,
+          "gas_resistance": 59204,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990346,
+          "temperature": 26.16904,
+          "humidity": 59.23996,
+          "pressure": 101527,
+          "gas_resistance": 58994,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990434,
+          "temperature": 26.33224,
+          "humidity": 59.15882,
+          "pressure": 101528,
+          "gas_resistance": 58994,
+          "battery_level": 58.07377,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990522,
+          "temperature": 25.2631,
+          "humidity": 60.60913,
+          "pressure": 101522,
+          "gas_resistance": 60711,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990610,
+          "temperature": 25.07931,
+          "humidity": 61.1312,
+          "pressure": 101517,
+          "gas_resistance": 61291,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990698,
+          "temperature": 25.05554,
+          "humidity": 61.64529,
+          "pressure": 101513,
+          "gas_resistance": 60316,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990786,
+          "temperature": 24.80743,
+          "humidity": 61.77412,
+          "pressure": 101506,
+          "gas_resistance": 62391,
+          "battery_level": 58.47541,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990874,
+          "temperature": 24.7843,
+          "humidity": 62.36307,
+          "pressure": 101508,
+          "gas_resistance": 61246,
+          "battery_level": 58.07377,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779990962,
+          "temperature": 24.82296,
+          "humidity": 62.82275,
+          "pressure": 101511,
+          "gas_resistance": 60099,
+          "battery_level": 58.07377,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991138,
+          "temperature": 24.80902,
+          "humidity": 62.52687,
+          "pressure": 101508,
+          "gas_resistance": 60013,
+          "battery_level": 58.07377,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991226,
+          "temperature": 24.71586,
+          "humidity": 62.3927,
+          "pressure": 101506,
+          "gas_resistance": 61381,
+          "battery_level": 58.07377,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991314,
+          "temperature": 24.71522,
+          "humidity": 62.38594,
+          "pressure": 101512,
+          "gas_resistance": 48756,
+          "battery_level": 58.07377,
+          "anomaly_score": 0.406449,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991402,
+          "temperature": 24.82328,
+          "humidity": 62.73595,
+          "pressure": 101515,
+          "gas_resistance": 49953,
+          "battery_level": 58.07377,
+          "anomaly_score": 0.299097,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991458,
+          "temperature": 25.27514,
+          "humidity": 60.63075,
+          "pressure": 101517,
+          "gas_resistance": 61836,
+          "battery_level": 57.67213,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991488,
+          "temperature": 25.27577,
+          "humidity": 60.42594,
+          "pressure": 101517,
+          "gas_resistance": 63725,
+          "battery_level": 56.46722,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991548,
+          "temperature": 25.17564,
+          "humidity": 60.47715,
+          "pressure": 101520,
+          "gas_resistance": 39359,
+          "battery_level": 56.46722,
+          "anomaly_score": 1.305758,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991608,
+          "temperature": 25.34929,
+          "humidity": 60.53601,
+          "pressure": 101518,
+          "gas_resistance": 52072,
+          "battery_level": 56.46722,
+          "anomaly_score": 0.129205,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991638,
+          "temperature": 25.24377,
+          "humidity": 60.42118,
+          "pressure": 101520,
+          "gas_resistance": 40981,
+          "battery_level": 56.46722,
+          "anomaly_score": 1.128101,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991668,
+          "temperature": 25.20764,
+          "humidity": 60.71331,
+          "pressure": 101522,
+          "gas_resistance": 33301,
+          "battery_level": 56.46722,
+          "anomaly_score": 1.737433,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991730,
+          "temperature": 25.12969,
+          "humidity": 60.89362,
+          "pressure": 101520,
+          "gas_resistance": 44004,
+          "battery_level": 55.66393,
+          "anomaly_score": 0.813049,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991764,
+          "temperature": 25.26278,
+          "humidity": 60.89362,
+          "pressure": 101520,
+          "gas_resistance": 23714,
+          "battery_level": 55.66393,
+          "anomaly_score": 2.668193,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991795,
+          "temperature": 25.11765,
+          "humidity": 60.96466,
+          "pressure": 101521,
+          "gas_resistance": 17798,
+          "battery_level": 56.46722,
+          "anomaly_score": 3.221526,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991822,
+          "temperature": 25.35404,
+          "humidity": 60.45078,
+          "pressure": 101521,
+          "gas_resistance": 21416,
+          "battery_level": 56.46722,
+          "anomaly_score": 2.883129,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991848,
+          "temperature": 25.47889,
+          "humidity": 59.91491,
+          "pressure": 101520,
+          "gas_resistance": 51367,
+          "battery_level": 55.66393,
+          "anomaly_score": 0.081765,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991878,
+          "temperature": 25.49632,
+          "humidity": 60.33318,
+          "pressure": 101522,
+          "gas_resistance": 48985,
+          "battery_level": 54.86065,
+          "anomaly_score": 0.309198,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991908,
+          "temperature": 25.43991,
+          "humidity": 59.8103,
+          "pressure": 101522,
+          "gas_resistance": 61882,
+          "battery_level": 55.26229,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991938,
+          "temperature": 25.56413,
+          "humidity": 60.19798,
+          "pressure": 101526,
+          "gas_resistance": 61517,
+          "battery_level": 55.66393,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991968,
+          "temperature": 25.61926,
+          "humidity": 60.21937,
+          "pressure": 101530,
+          "gas_resistance": 63823,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779991997,
+          "temperature": 25.66901,
+          "humidity": 60.30602,
+          "pressure": 101530,
+          "gas_resistance": 65067,
+          "battery_level": 55.26229,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992027,
+          "temperature": 25.60912,
+          "humidity": 60.71364,
+          "pressure": 101534,
+          "gas_resistance": 66839,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992057,
+          "temperature": 25.54765,
+          "humidity": 60.75741,
+          "pressure": 101535,
+          "gas_resistance": 68373,
+          "battery_level": 55.26229,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992087,
+          "temperature": 25.618,
+          "humidity": 60.60249,
+          "pressure": 101539,
+          "gas_resistance": 66626,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992117,
+          "temperature": 25.60469,
+          "humidity": 60.68652,
+          "pressure": 101539,
+          "gas_resistance": 67162,
+          "battery_level": 54.45901,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992147,
+          "temperature": 25.6519,
+          "humidity": 61.09105,
+          "pressure": 101541,
+          "gas_resistance": 66308,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992177,
+          "temperature": 25.57015,
+          "humidity": 61.43712,
+          "pressure": 101542,
+          "gas_resistance": 67325,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992207,
+          "temperature": 25.54416,
+          "humidity": 61.2407,
+          "pressure": 101541,
+          "gas_resistance": 68654,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992237,
+          "temperature": 25.47223,
+          "humidity": 61.46222,
+          "pressure": 101542,
+          "gas_resistance": 68094,
+          "battery_level": 55.26229,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992267,
+          "temperature": 25.52103,
+          "humidity": 61.49615,
+          "pressure": 101542,
+          "gas_resistance": 67488,
+          "battery_level": 54.45901,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992297,
+          "temperature": 25.63099,
+          "humidity": 61.00173,
+          "pressure": 101543,
+          "gas_resistance": 65941,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992327,
+          "temperature": 25.65824,
+          "humidity": 61.13842,
+          "pressure": 101542,
+          "gas_resistance": 62344,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992383,
+          "temperature": 25.68612,
+          "humidity": 60.87083,
+          "pressure": 101543,
+          "gas_resistance": 62956,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992410,
+          "temperature": 25.67345,
+          "humidity": 61.02135,
+          "pressure": 101543,
+          "gas_resistance": 67162,
+          "battery_level": 54.86065,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992436,
+          "temperature": 25.62148,
+          "humidity": 60.29235,
+          "pressure": 101541,
+          "gas_resistance": 30728,
+          "battery_level": 54.86065,
+          "anomaly_score": 3.465901,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992463,
+          "temperature": 25.68993,
+          "humidity": 59.89997,
+          "pressure": 101541,
+          "gas_resistance": 34946,
+          "battery_level": 54.45901,
+          "anomaly_score": 2.988725,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992490,
+          "temperature": 25.72035,
+          "humidity": 60.34008,
+          "pressure": 101541,
+          "gas_resistance": 55613,
+          "battery_level": 54.86065,
+          "anomaly_score": 0.6507,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992520,
+          "temperature": 25.62782,
+          "humidity": 60.57088,
+          "pressure": 101542,
+          "gas_resistance": 50866,
+          "battery_level": 54.05737,
+          "anomaly_score": 1.168296,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992546,
+          "temperature": 25.68707,
+          "humidity": 59.65577,
+          "pressure": 101543,
+          "gas_resistance": 65527,
+          "battery_level": 54.45901,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992573,
+          "temperature": 25.61863,
+          "humidity": 59.33647,
+          "pressure": 101543,
+          "gas_resistance": 19440,
+          "battery_level": 54.45901,
+          "anomaly_score": 4.799391,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992599,
+          "temperature": 25.7083,
+          "humidity": 59.62598,
+          "pressure": 101544,
+          "gas_resistance": 10861,
+          "battery_level": 54.45901,
+          "anomaly_score": 5.797454,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992630,
+          "temperature": 25.64556,
+          "humidity": 60.19026,
+          "pressure": 101543,
+          "gas_resistance": 10650,
+          "battery_level": 54.45901,
+          "anomaly_score": 5.822001,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992657,
+          "temperature": 25.87213,
+          "humidity": 59.86103,
+          "pressure": 101546,
+          "gas_resistance": 30086,
+          "battery_level": 54.45901,
+          "anomaly_score": 3.560857,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992688,
+          "temperature": 25.84963,
+          "humidity": 60.31969,
+          "pressure": 101545,
+          "gas_resistance": 35063,
+          "battery_level": 54.45901,
+          "anomaly_score": 2.981843,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992719,
+          "temperature": 25.80052,
+          "humidity": 60.65623,
+          "pressure": 101545,
+          "gas_resistance": 34887,
+          "battery_level": 54.45901,
+          "anomaly_score": 3.002318,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992746,
+          "temperature": 25.89336,
+          "humidity": 60.04886,
+          "pressure": 101545,
+          "gas_resistance": 40901,
+          "battery_level": 54.45901,
+          "anomaly_score": 2.302662,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992772,
+          "temperature": 25.94057,
+          "humidity": 59.90414,
+          "pressure": 101543,
+          "gas_resistance": 49071,
+          "battery_level": 54.45901,
+          "anomaly_score": 1.352181,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992799,
+          "temperature": 25.93139,
+          "humidity": 59.6721,
+          "pressure": 101542,
+          "gas_resistance": 54309,
+          "battery_level": 54.45901,
+          "anomaly_score": 0.641885,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992825,
+          "temperature": 25.92315,
+          "humidity": 59.81585,
+          "pressure": 101541,
+          "gas_resistance": 52072,
+          "battery_level": 54.45901,
+          "anomaly_score": 0.871695,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992855,
+          "temperature": 25.78119,
+          "humidity": 60.45489,
+          "pressure": 101540,
+          "gas_resistance": 58294,
+          "battery_level": 54.05737,
+          "anomaly_score": 0.098807,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992881,
+          "temperature": 25.74031,
+          "humidity": 60.17793,
+          "pressure": 101540,
+          "gas_resistance": 13244,
+          "battery_level": 54.05737,
+          "anomaly_score": 5.51243,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992908,
+          "temperature": 25.76693,
+          "humidity": 60.33381,
+          "pressure": 101541,
+          "gas_resistance": 24521,
+          "battery_level": 54.45901,
+          "anomaly_score": 4.156488,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992935,
+          "temperature": 25.7964,
+          "humidity": 61.05971,
+          "pressure": 101541,
+          "gas_resistance": 40583,
+          "battery_level": 54.05737,
+          "anomaly_score": 2.225201,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992961,
+          "temperature": 25.94311,
+          "humidity": 60.55183,
+          "pressure": 101545,
+          "gas_resistance": 43096,
+          "battery_level": 54.05737,
+          "anomaly_score": 1.923039,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779992988,
+          "temperature": 25.86294,
+          "humidity": 60.12354,
+          "pressure": 101545,
+          "gas_resistance": 23863,
+          "battery_level": 54.45901,
+          "anomaly_score": 4.235606,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993015,
+          "temperature": 25.77897,
+          "humidity": 60.5736,
+          "pressure": 101545,
+          "gas_resistance": 11758,
+          "battery_level": 53.65574,
+          "anomaly_score": 5.691106,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993042,
+          "temperature": 25.6744,
+          "humidity": 60.64399,
+          "pressure": 101545,
+          "gas_resistance": 27637,
+          "battery_level": 54.05737,
+          "anomaly_score": 3.781822,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993075,
+          "temperature": 25.54765,
+          "humidity": 61.95242,
+          "pressure": 101546,
+          "gas_resistance": 26959,
+          "battery_level": 54.05737,
+          "anomaly_score": 3.863344,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993106,
+          "temperature": 25.40886,
+          "humidity": 62.21783,
+          "pressure": 101547,
+          "gas_resistance": 39658,
+          "battery_level": 54.45901,
+          "anomaly_score": 2.336422,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993137,
+          "temperature": 25.31823,
+          "humidity": 61.7713,
+          "pressure": 101548,
+          "gas_resistance": 49391,
+          "battery_level": 53.65574,
+          "anomaly_score": 1.166131,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993168,
+          "temperature": 25.39301,
+          "humidity": 61.56321,
+          "pressure": 101547,
+          "gas_resistance": 52235,
+          "battery_level": 53.65574,
+          "anomaly_score": 0.742978,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993199,
+          "temperature": 25.29225,
+          "humidity": 61.62777,
+          "pressure": 101545,
+          "gas_resistance": 55650,
+          "battery_level": 54.05737,
+          "anomaly_score": 0.294619,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993230,
+          "temperature": 25.3946,
+          "humidity": 61.64986,
+          "pressure": 101545,
+          "gas_resistance": 55208,
+          "battery_level": 53.65574,
+          "anomaly_score": 0.339341,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993261,
+          "temperature": 25.50487,
+          "humidity": 61.49371,
+          "pressure": 101543,
+          "gas_resistance": 53750,
+          "battery_level": 54.05737,
+          "anomaly_score": 0.51363,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993323,
+          "temperature": 25.40062,
+          "humidity": 61.81036,
+          "pressure": 101540,
+          "gas_resistance": 58375,
+          "battery_level": 54.05737,
+          "anomaly_score": 0,
+          "risk_score": 0.5
+        },
+        {
+          "timestamp_s": 1779993385,
+          "temperature": 25.49632,
+          "humidity": 62.58476,
+          "pressure": 101550,
+          "gas_resistance": 55539,
+          "battery_level": 53.65574,
+          "anomaly_score": 0.299661,
+          "risk_score": 0.5
+        }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "ac6e31db-8440-4bbe-aa4d-04a86bcab940",
+      "method": "setLocation",
+      "node_id": 3942780732,
+      "success": true,
+      "message": "location_saved",
+      "created_at": 1779988993.751591,
+      "responded_at": 1779988994.4035506,
+      "params": {
+        "latitude": 42.056919,
+        "longitude": 12.588789
+      },
+      "status": "success"
+    },
+    {
+      "id": "17813133-4463-4471-87df-d11138322279",
+      "method": "setLocation",
+      "node_id": 3942780732,
+      "success": true,
+      "message": "location_saved",
+      "created_at": 1779988955.4619308,
+      "responded_at": 1779988956.147691,
+      "params": {
+        "latitude": 41.8917,
+        "longitude": 12.4459
+      },
+      "status": "success"
+    },
+    {
+      "id": "2c29fb40-d7b7-4ae0-b0d7-03bd97722e93",
+      "method": "setLocation",
+      "node_id": 3942780732,
+      "success": true,
+      "message": "location_saved",
+      "created_at": 1779988912.1496537,
+      "responded_at": 1779988912.916445,
+      "params": {
+        "latitude": 42.055719,
+        "longitude": 12.587989
+      },
+      "status": "success"
+    },
+    {
+      "id": "8785e8cd-b236-4c1f-ac7d-d050474cba8b",
+      "method": "setLocation",
+      "node_id": 134522796,
+      "success": true,
+      "message": "location_saved",
+      "created_at": 1779988885.3033469,
+      "responded_at": 1779988886.1662056,
+      "params": {
+        "latitude": 42.056719,
+        "longitude": 12.588989
+      },
+      "status": "success"
+    }
+  ]
+}

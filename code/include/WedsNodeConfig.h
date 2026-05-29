@@ -41,6 +41,9 @@ static constexpr WedsSimulationMode WEDS_SELECTED_SIMULATION_MODE =
 /** @brief Default interval between sensor samples in milliseconds. */
 static constexpr uint32_t WEDS_NODE_DEFAULT_SAMPLE_INTERVAL_MS = 2000;
 
+/** @brief Number of preheating readings for the environmental sensor. */
+static constexpr int WEDS_NODE_NUM_PREHEATING = 10;
+
 /** @brief Temporary switch to bypass TinyML risk inference while model/runtime
  * compatibility is fixed. */
 static constexpr bool WEDS_NODE_SKIP_RISK_INFERENCE = false;
@@ -162,17 +165,17 @@ static constexpr float WEDS_RISK_THRESHOLD_MED = 0.65f;
  *        Default: 5 minutes. Tune to reduce network traffic in benign
  * conditions.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_LOW = 30U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_LOW = 600U;
 
 /**
  * @brief Deep sleep duration in seconds when fire risk is Medium.
  *        Default: 2 minutes. Increases sampling frequency as risk rises.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_MED = 12U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_MED = 60U;
 
 /**
  * @brief Deep sleep duration in seconds when fire risk is High.
  *        Default: 30 seconds. Maximum polling rate during elevated danger
  * conditions.
  */
-static constexpr uint32_t WEDS_SLEEP_SEC_RISK_HIGH = 3U;
+static constexpr uint32_t WEDS_SLEEP_SEC_RISK_HIGH = 30U;

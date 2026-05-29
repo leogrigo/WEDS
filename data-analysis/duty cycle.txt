@@ -1,0 +1,12 @@
+AVG current (not accounting for voltage step-down consumption)= 106.46mA;
+AVG current (accounting for voltage step-down consumption)= 96.66mA;
+Minuti in una stagione (3 mesi da 31 giorni l'uno): 133,920 minuti;
+single preheating time= 2.04s;
+
+Num of preheatings= 15;
+Capacità batteria= 3000mAh;
+
+Duty cycle time = 38.35s;
+Durata batteria (in duty cycles): 2645.28 dc;
+Minuti di sleep (stagione - num_duty_cycles*duty_cycle_time): 112,229 minuti;
+Durata di sleep: (minuti di sleep/ num_duty_cycles): 42.4261 minuti;

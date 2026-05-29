@@ -148,7 +148,11 @@ float WedsAnomalyDetector::negativePart(float value) {
 }
 
 float WedsAnomalyDetector::directionalGasScore(float gas_z) {
+#ifdef WEDS_LEGACY_SENSORS
+  return positivePart(gas_z);
+#else
   return negativePart(gas_z);
+#endif
 }
 
 void printAnomalyResults(const WedsAnomalyResult &result) {
