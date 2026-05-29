@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEDS Inference Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #131c31;
+            --bg-tertiary: #1b2640;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --accent-glow-hover: rgba(59, 130, 246, 0.3);
+            
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-tertiary: #6b7280;
+            
+            --cyan: #06b6d4;
+            --emerald: #10b981;
+            --orange: #f97316;
+            --rose: #f43f5e;
+            --indigo: #6366f1;
+            
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(59, 130, 246, 0.4);
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 1.5rem;
+            background: var(--cyan);
+            border-radius: 4px;
+        }
+
+        /* Layout Grid */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 900px) {
+            .layout-grid {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, var(--accent-glow), transparent 60%);
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .card:hover::before {
+            background: radial-gradient(circle at top right, var(--accent-glow-hover), transparent 65%);
+        }
+
+        /* Interactive Steps */
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1.25rem;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: var(--transition);
+        }
+
+        .step-item:hover {
+            background-color: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--indigo) 100%);
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: #ffffff;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        .badge-cyan { background-color: rgba(6, 182, 212, 0.1); color: var(--cyan); border: 1px solid rgba(6, 182, 212, 0.2); }
+        .badge-emerald { background-color: rgba(16, 182, 212, 0.1); color: var(--emerald); border: 1px solid rgba(16, 182, 212, 0.2); }
+        .badge-orange { background-color: rgba(249, 115, 22, 0.1); color: var(--orange); border: 1px solid rgba(249, 115, 22, 0.2); }
+        .badge-indigo { background-color: rgba(99, 102, 241, 0.1); color: var(--indigo); border: 1px solid rgba(99, 102, 241, 0.2); }
+
+        /* Flowchart / Mermaid styling */
+        .mermaid-container {
+            background-color: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .mermaid {
+            background: transparent !important;
+            font-family: 'Space Grotesk', sans-serif !important;
+        }
+
+        /* Config / Parameters section */
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .param-table th, .param-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .param-table th {
+            color: var(--text-primary);
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .param-table td {
+            color: var(--text-secondary);
+        }
+
+        .param-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        .code-term {
+            font-family: monospace;
+            background-color: rgba(255, 255, 255, 0.06);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            color: #e5e7eb;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TinyML Inference Pipeline</h1>
+            <p class="subtitle">Technical documentation for the TinyML risk prediction models on the WEDS ESP32 Node, focusing on performance, safety, and stability.</p>
+        </header>
+
+        <main class="layout-grid">
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <div class="card">
+                    <h2>Data Pipeline</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        The system processes raw sensor readings through a continuous pipeline. Raw sensor data (Temperature, Humidity, Pressure) is collected and validated to prevent <code>NaN</code> values. 
+                        The data is then aggregated into a 7-day rolling history utilizing RTC-retained memory. Features are scaled using predefined means and standard deviations, and any subnormal (Denormal) floats are zeroed to prevent FPU stalling. The normalized data is then explicitly typed (Float32 or Int8) and packed into the 64KB Tensor Arena for the TFLite Interpreter.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h2>Model Execution & Quantization Handling</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        The firmware dynamically supports both <strong>Float32</strong> and <strong>Int8 (Quantized)</strong> models to prevent FPU hardware crashes and optimize performance. 
+                        Before packing the tensor, the code explicitly checks <code>input_->type</code>. If it expects <code>kTfLiteInt8</code>, the normalized float values are scaled by <code>input_->params.scale</code>, shifted by <code>input_->params.zero_point</code>, and clamped to the <code>[-128, 127]</code> range.
+                        This dynamic type casting logic ensures that the hardware can execute the model safely regardless of whether it's unquantized or quantized, avoiding mismatches that could crash the Xtensa FPU.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h2>Failsafes & FreeRTOS Stability</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        Running Machine Learning on constrained edge devices requires strict hardware safeguards:
+                    </p>
+                    <ul style="list-style-type: none; display: flex; flex-direction: column; gap: 1rem; color: var(--text-secondary); font-size: 0.92rem; margin-top: 1rem;">
+                        <li style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                            <span style="color: var(--cyan); font-weight: bold;">✔</span>
+                            <span><strong>16-byte Memory Alignment:</strong> The Tensor Arena is strictly aligned to 16-byte boundaries (<code>alignas(16)</code>) as required by TFLite Micro's memory allocator. This prevents misaligned memory access that causes repeated stall cycles during SIMD instructions, which would otherwise starve the Task Watchdog Timer.</span>
+                        </li>
+                        <li style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                            <span style="color: var(--cyan); font-weight: bold;">✔</span>
+                            <span><strong>Task Stack Size:</strong> The Arduino <code>loopTask</code> is explicitly provisioned with over <strong>24KB of stack space</strong> (<code>WEDS_NODE_CYCLE_TASK_STACK_BYTES</code>) via a custom override in <code>main.cpp</code>, preventing stack overflow during the deep call chain of <code>interpreter_->Invoke()</code>.</span>
+                        </li>
+                        <li style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                            <span style="color: var(--cyan); font-weight: bold;">✔</span>
+                            <span><strong>Manual Watchdog Feeding:</strong> The FreeRTOS Task Watchdog Timer (TWDT) is manually reset (<code>esp_task_wdt_reset()</code>) right before model invocation and risk scoring to prevent the 30-second watchdog from firing and rebooting the MCU mid-inference.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <div class="card">
+                    <h2>Inference Execution Flow</h2>
+                    <div class="mermaid-container">
+                        <pre class="mermaid">
+flowchart TD
+    classDef collect stroke:#06b6d4,stroke-width:2px,fill:#131c31;
+    classDef safe stroke:#f43f5e,stroke-width:2px,fill:#131c31;
+    classDef process stroke:#6366f1,stroke-width:2px,fill:#131c31;
+    classDef infer stroke:#f97316,stroke-width:2px,fill:#131c31;
+    
+    A([Sensors]) --> B{Failsafe Intercept}:::safe
+    B -- "NaN / Invalid" --> C[Retry / Sleep]:::safe
+    B -- Valid --> D[Anomaly Detection]:::process
+    D --> E[Watchdog Feed]:::process
+    E --> F[TFLite Invoke]:::infer
+    F --> G[Risk Score Extractor]:::process
+    G --> H([Sleep / Swarm logic])
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            themeVariables: {
+                background: 'transparent',
+                primaryColor: '#1e293b',
+                primaryTextColor: '#f3f4f6',
+                lineColor: '#3b82f6'
+            }
+        });
+    </script>
+</body>
+</html>
